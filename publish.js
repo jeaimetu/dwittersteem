@@ -38,7 +38,7 @@ function writingReply(data, id){
 			else{
 				console.log('Success');
 				//update mongo DB
-				saveFlag(id);
+				//saveFlag(id);
 			}
 		}
 		);
@@ -61,8 +61,10 @@ function publishData(){
 				msg += "<br><br>" + "***";
 			}	
 			console.log(msg);
+			if(process.env.pub == true){
 			writingReply(msg, "dabble");
 			return msg;
+			}
 		});
 	});
 }
