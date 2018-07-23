@@ -3,6 +3,7 @@
 
 //require("./airdrop");
 //const bcrypt = require('bcrypt');
+require("./publish.js");
 
 
 
