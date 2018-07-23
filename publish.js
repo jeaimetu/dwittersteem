@@ -13,7 +13,7 @@ function publishData(){
 			for(i = 0;i<result.length;i++){
 				msg += "<h3>";
 				msg+= result[i].account;
-				msg += "</h3>" + "<br>;				
+				msg += "</h3>" + "<br>";				
 				msg += result[i].data;
 				msg += "<br><br>" + "***"";
 			}	
