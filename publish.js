@@ -7,7 +7,7 @@ function publishData(){
   	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dg3d93pq");
 		var tod = Date.now() - 1000*60*60*4;
-		const findquery = { date : {$lt:tod} };
+		const findquery = { date : {$gt:tod} };
 		dbo.collection("board").find(findquery).toArray(function(err, result){
 			for(i = 0;i<result.length;i++){
 				console.log(result[i].data);
