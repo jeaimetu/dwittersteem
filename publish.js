@@ -64,7 +64,7 @@ function publishData(){
 				msg += "<br><br>" + "\n" + "***" + "\n";
 			}	
 			console.log(msg);
-			if(process.env.pub == true){
+			if(process.env.pub == 'true'){
 			writingReply(msg, "dabble");
 			return msg;
 			}
