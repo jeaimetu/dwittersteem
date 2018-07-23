@@ -52,8 +52,8 @@ function publishData(){
 	msg += "Dabble의 짧은 글을 모아 보았습니다.<br><br>";
   	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dg3d93pq");
-		var tod = Date.now() - 1000*60*60*24;
-		var tod1 = Date.now() - 1000*60*60*9;
+		var tod = Date.now() - 1000*60*60*40;
+		var tod1 = Date.now() - 1000*60*60*18;
 		const findquery = { date : {$gt:tod, $lt:tod1} };
 		dbo.collection("board").find(findquery).toArray(function(err, result){
 			for(i = 0;i<result.length;i++){
