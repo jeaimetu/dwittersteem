@@ -20,7 +20,7 @@ function writingReply(data, id){
 
 
 	//const permlink = steem.formatter.commentPermlink(parent_author_permlink, parent_permlink)
-	const perlink = Date.now() + "dabble";
+	const permlink = Date.now() + "dabble";
 	//const permlink = steem.formatter.commentPermlink('jeaimetu', parent_permlink)
 	var content = data;
 	
