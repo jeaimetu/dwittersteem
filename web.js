@@ -1,8 +1,8 @@
 //require("./steembot");
 //require("./pass");
 
-require("./airdrop");
-const bcrypt = require('bcrypt');
+//require("./airdrop");
+//const bcrypt = require('bcrypt');
 
 
 
