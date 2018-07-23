@@ -17,13 +17,13 @@ function publishData(){
 				msg += result[i].data;
 				msg += "<br><br>" + "***";
 			}	
+			console.log(msg);
 			return msg;
 		});
 	});
 }
 
-console.log(publishData());
 		
-		
+publishData();		
 		
 	  
