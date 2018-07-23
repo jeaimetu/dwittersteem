@@ -15,7 +15,7 @@ function publishData(){
 				msg+= result[i].account;
 				msg += "</h3>" + "<br>";				
 				msg += result[i].data;
-				msg += "<br><br>" + "***"";
+				msg += "<br><br>" + "***";
 			}	
 			return msg;
 		});
