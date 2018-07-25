@@ -22,7 +22,7 @@ function getUserVoting(){
 		var cursor = dbo.collection('board').aggregate(agr).toArray( (err, res) => {
 			console.log(res);
 		});
-	});
+	};
 }
 
 
