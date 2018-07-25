@@ -17,7 +17,9 @@ function getUserVoting(){
 		});
 	});
 	var sumVoting = (db, callback) => {
-		var agr = [{$group: {_id:"$acount", all : { $sum : 1}}}];
+		var agr = [
+			{$match: {account: {$exists:true, $ne: null}}},
+			{$group: {_id:"$acount", all : { $sum : 1}}}];
 		var dbo = db.db("heroku_dg3d93pq");
 		var cursor = dbo.collection('board').aggregate(agr).toArray( (err, res) => {
 			console.log(res);
