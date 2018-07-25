@@ -88,8 +88,31 @@ function doAirDrop(){
 
 }
 
+function getUserVoting(){
+	MongoClient.connect(url, (err, db) => {
+		sumVoting(db, (result) => {
+			db.close();
+			console.log("getRank",result);
+		});
+	});
+	var sumCars = (db, callback) => {
+		var agr = [$group: {_id:"$acount", all : { $sum : 1}}}];
+		var dbo = db.db("heroku_dg3d93pq");
+		var cursor = dbo.collection('board').aggregate(agr).toArray( (err, res) => {
+			console.log(res);
+		});
+	});
+}
+
+
+	
+		
+	
+
 //getTotalScore, doAirdrop
-getTotalScore();
+//getTotalScore();
 //time must be 24hours
-setTimeout(doAirDrop, 1000);
+//setTimeout(doAirDrop, 1000);
+
+getUserVoting();
 
