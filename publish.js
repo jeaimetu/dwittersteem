@@ -30,7 +30,7 @@ function writingReply(data, id){
     	parent_permlink,      // main tag for new blog post
     	'dabble',               // same user the private_posting_key is for
     	permlink,             // a slug (lowercase 'a'-'z', '0'-'9', and '-', min 1 character, max 255 characters)
-    	'Dabble 퍼블리슁 2',                // human-readable title
+    	'Dabble 퍼블리슁 0725',                // human-readable title
     	content,                 // body of the post or comment
     	json_metadata,          // arbitrary metadata
 		function (err, result){
@@ -52,8 +52,8 @@ function publishData(){
 	msg += "Dabble의 짧은 글을 모아 보았습니다.<br><br>";
   	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dg3d93pq");
-		var tod = Date.now() - 1000*60*60*40;
-		var tod1 = Date.now() - 1000*60*60*18;
+		var tod = Date.now() - 1000*60*60*36;
+		var tod1 = Date.now();
 		const findquery = { date : {$gt:tod, $lt:tod1} };
 		dbo.collection("board").find(findquery).toArray(function(err, result){
 			for(i = 0;i<result.length;i++){
