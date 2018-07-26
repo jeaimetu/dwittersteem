@@ -42,10 +42,12 @@ function getTotalVoting(res){
 }
 
 function setWallet(account, vote){
+	console.log("setWallet", account, vote);
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
 		const findQuery = {eosid : account};
 		dbo.collection('user').findOne(findQuery, (err, result) => {
+			if(err) throw err;
 			const updatequery = {eosid : account};
 			tokenSize = (vote / totalSumOfVoting + 1) + result.wallet;
 			const myobj = { $set : {wallet : tokenSize}};
