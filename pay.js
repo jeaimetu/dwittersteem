@@ -54,6 +54,10 @@ function setWallet(account, vote){
 				throw err;
 				console.log(err);
 			}
+			if(result === null){
+				db.close();
+				return;
+			}
 			const updatequery = {account : account};
 			tokenSize = (vote / totalSumOfVoting + 1) + result.wallet;
 			const myobj = { $set : {wallet : tokenSize}};
