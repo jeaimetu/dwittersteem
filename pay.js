@@ -10,6 +10,7 @@ var url = process.env.MONGODB_URI;
 var totalUser = 0;
 var totalSumOfVoting = 0;
 const votingFactor = 3;
+const distributionForDay = 1000;
 
 function getUserVoting(){
 	MongoClient.connect(url, (err, db) => {
@@ -61,7 +62,7 @@ function setWallet(account, vote){
 			}
 			const updatequery = {account : account};
 			
-			var tokenSize = (vote / totalSumOfVoting + 1) + result.wallet;
+			var tokenSize = (vote / totalSumOfVoting) * distributionForDay + result.wallet;
 			console.log("tokenSize", tokenSize, vote, totalSumOfVoting, result.wallet);
 			tokenSize = tokenSize.toFixed(4);
 			const myobj = { $set : {wallet : tokenSize}};
