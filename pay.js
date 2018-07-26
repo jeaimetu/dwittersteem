@@ -34,9 +34,10 @@ function getUserVoting(){
 				const updatequery = {eosid : res[i]._id};
 				tokenSize = res[i].vote / totalSumOfVoting + 1;
 				const myobj = { $set : {wallet : tokenSize}};
+				var acc = res[i]._id;
 				dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{					
 					if(err) throw err;
-					console.log("update wallet", res[i]._id, tokenSize);
+					console.log("update wallet", acc, tokenSize);
 				});
 			}
 		});
