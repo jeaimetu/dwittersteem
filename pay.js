@@ -30,7 +30,7 @@ function getUserVoting(){
 			for(i = 0;i < res.length; i++)
 				totalSumOfVoting += res[i].vote;
 			//update each users token in their wallet
-			for(i = 0; i > res.length;i++){
+			for(i = 0; i < res.length;i++){
 				const updatequery = {eosid : res[i].account};
 				tokenSize = res[i].vote / totalSumOfVoting + 1;
 				const myobj = { $set : {wallet : tokenSize}};
@@ -44,7 +44,16 @@ function getUserVoting(){
 }
 
 
-
+function setShareLog(){
+	MongoClient.connect(url, (err, db) => {
+		const dbo = db.db("heroku_dg3d93pq");
+		const dropTime = Date.ow();
+		const myObj = {date : dropTime};
+		dbo.collection('droplog').insertOne(myObj,(err, res) => {
+			console.log("insert drop history");
+		});
+	});		
+}
 
 	
 		
@@ -52,4 +61,5 @@ function getUserVoting(){
 
 
 getUserVoting();
+setShareLog();
 
