@@ -61,11 +61,12 @@ function setWallet(account, vote){
 			}
 			const updatequery = {account : account};
 			
-			const tokenSize = (vote / totalSumOfVoting + 1) + result.wallet;
+			var tokenSize = (vote / totalSumOfVoting + 1) + result.wallet;
 			console.log("tokenSize", tokenSize, vote, totalSumOfVoting, result.wallet);
+			tokenSize = tokenSize.toFixed(4);
 			const myobj = { $set : {wallet : tokenSize}};
 			console.log("update wallet", account, tokenSize);
-			return;
+			
 			dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{
 				if(err){ 
 					throw err;
