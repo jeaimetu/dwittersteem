@@ -27,6 +27,7 @@ function getUserVoting(){
 			console.log(res);
 			totalUser = res.length;
 			//update each users token in their wallet
+			getTotalVoting(res);
 			for(i = 0; i < res.length;i++){
 				setWallet(res[i]._id, res[i].vote);
 			}
