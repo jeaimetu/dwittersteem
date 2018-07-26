@@ -31,12 +31,12 @@ function getUserVoting(){
 				totalSumOfVoting += res[i].vote;
 			//update each users token in their wallet
 			for(i = 0; i < res.length;i++){
-				const updatequery = {eosid : res[i].account};
+				const updatequery = {eosid : res[i]._id};
 				tokenSize = res[i].vote / totalSumOfVoting + 1;
 				const myobj = { $set : {wallet : tokenSize}};
 				dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{					
 					if(err) throw err;
-					console.log("update wallet", res[i].account, tokenSize);
+					console.log("update wallet", res[i]._id, tokenSize);
 				});
 			}
 		});
