@@ -26,22 +26,36 @@ function getUserVoting(){
 		var cursor = dbo.collection('board').aggregate(agr).toArray( (err, res) => {
 			console.log(res);
 			totalUser = res.length;
-			totalSumOfVoting = 0;
-			for(i = 0;i < res.length; i++)
-				totalSumOfVoting += res[i].vote;
 			//update each users token in their wallet
 			for(i = 0; i < res.length;i++){
-				const updatequery = {eosid : res[i]._id};
-				tokenSize = res[i].vote / totalSumOfVoting + 1;
-				const myobj = { $set : {wallet : tokenSize}};
-				var acc = res[i]._id;
-				dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{					
-					if(err) throw err;
-					console.log("update wallet", acc, tokenSize);
-				});
+				setWallet(res[i]._id);
 			}
 		});
 	};
+}
+
+function getTotalVoting(res){
+	totalSumOfVoting = 0;
+	for(i = 0;i < res.length; i++)
+		totalSumOfVoting += res[i].vote;
+	return totalSumOfVoting;
+}
+
+function setWallet(account){
+	MongoClient.connect(url, (err, db) => {
+		const dbo = db.db("heroku_dg3d93pq");
+		const findQuery = {eosid : account};
+		dbo.collection('user').findOne(findQuery, (err, result) => {
+			const updatequery = {eosid : account};
+			tokenSize = (res[i].vote / totalSumOfVoting + 1) + result.wallet;
+			const myobj = { $set : {wallet : tokenSize}};
+			dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{
+				if(err) throw err;
+				console.log("update wallet", acc, tokenSize);
+			});
+		});
+			
+	});
 }
 
 
