@@ -43,10 +43,13 @@ function getTotalVoting(res){
 
 function setWallet(account, vote){
 	console.log("setWallet", account, vote);
+
 	MongoClient.connect(url, (err, db) => {
+		if(err) throw err;
 		const dbo = db.db("heroku_dg3d93pq");
 		const findQuery = {account : account};
 		dbo.collection('user').findOne(findQuery, (err, result) => {
+			console.log(result);
 			if(err){ 
 				throw err;
 				console.log(err);
