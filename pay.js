@@ -45,7 +45,7 @@ function setWallet(account, vote){
 	console.log("setWallet", account, vote);
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
-		const findQuery = {eosid : account};
+		const findQuery = {account : account};
 		dbo.collection('user').findOne(findQuery, (err, result) => {
 			if(err) throw err;
 			const updatequery = {account : account};
