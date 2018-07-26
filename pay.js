@@ -28,7 +28,7 @@ function getUserVoting(){
 			totalUser = res.length;
 			//update each users token in their wallet
 			for(i = 0; i < res.length;i++){
-				setWallet(res[i]._id);
+				setWallet(res[i]._id, res[i].vote);
 			}
 		});
 	};
@@ -41,17 +41,18 @@ function getTotalVoting(res){
 	return totalSumOfVoting;
 }
 
-function setWallet(account){
+function setWallet(account, vote){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
 		const findQuery = {eosid : account};
 		dbo.collection('user').findOne(findQuery, (err, result) => {
 			const updatequery = {eosid : account};
-			tokenSize = (res[i].vote / totalSumOfVoting + 1) + result.wallet;
+			tokenSize = (vote / totalSumOfVoting + 1) + result.wallet;
 			const myobj = { $set : {wallet : tokenSize}};
 			dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{
 				if(err) throw err;
 				console.log("update wallet", acc, tokenSize);
+				db.close();
 			});
 		});
 			
@@ -66,6 +67,7 @@ function setShareLog(){
 		const myObj = {date : dropTime};
 		dbo.collection('droplog').insertOne(myObj,(err, res) => {
 			console.log("insert drop history");
+			db.close();
 		});
 	});		
 }
