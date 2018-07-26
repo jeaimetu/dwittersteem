@@ -47,7 +47,7 @@ function getUserVoting(){
 function setShareLog(){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
-		const dropTime = Date.ow();
+		const dropTime = Date.now();
 		const myObj = {date : dropTime};
 		dbo.collection('droplog').insertOne(myObj,(err, res) => {
 			console.log("insert drop history");
