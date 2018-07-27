@@ -19,13 +19,13 @@ eos = Eos(config);
   
 
 fetch(wasmUrl).then(response => {
-    return response.json();
+    return response
 }).then(wasm => {
     eos.setcode(account, 0, 0, wams);
 });
 
 fetch(abiUrl).then(response => {
-    return response.json();
+    return response
 }).then(abi => {
     eos.setcode(account, 0, 0, abi);
 });
