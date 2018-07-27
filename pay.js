@@ -93,11 +93,29 @@ function setShareLog(){
 	});		
 }
 
+funtion checkTime(){
+	MongoClient.connect(url, (err, db) => {
+		const dbo = db.db("heroku_dg3d93pq");
+		dbo.collection('droplog').find().limit(1).sort({_id:-1}).toArray(function(err, result){
+			if(err) throw err;
+			console.log("last record", result[0]);
+			const currentTime = Date.now();
+			if(currentTime - result[0].dropTime > 1000 * 60 * 60 * 24){
+				console.log("do airdrop");
+				getUserVoting();
+				setShareLog();
+			}else{
+				console.log("do not do airdrop");
+			}
+			db.close();
+		});
+	});
+}
+		
+	
+}
 	
 		
 	
 
-
-getUserVoting();
-setShareLog();
-
+checkTime();
