@@ -93,7 +93,7 @@ function setShareLog(){
 	});		
 }
 
-funtion checkTime(){
+function checkTime(){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
 		dbo.collection('droplog').find().limit(1).sort({_id:-1}).toArray(function(err, result){
