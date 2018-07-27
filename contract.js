@@ -4,6 +4,7 @@ const abiUrl = "https://raw.githubusercontent.com/EOSIO/eos/master/contracts/eos
 const account = "eoscafekorea";
 
 Eos = require('eosjs');
+const fs = require('fs');
 
 config = {
   chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca", // 32 byte (64 char) hex string
@@ -17,19 +18,11 @@ config = {
 
 eos = Eos(config);
   
+wasm = fs.readFileSyne("wasmUrl");  
+abi = fs.readFileSyne("abiUrl");
 
-fetch(wasmUrl).then(response => {
-    return response;
-}).then(wasm => {
-    eos.setcode(account, 0, 0, wasm);
-});
-
-fetch(abiUrl).then(response => {
-    return response;
-}).then(abi => {
-    eos.setcode(account, 0, 0, abi);
-});
-           
+eos.setcode('myaccount', 0, 0, wasm) // @returns {Promise}
+eos.setabi('myaccount', JSON.parse(abi)) // @returns {Promise}
                                  
                                                                                                                      
                                                                                                                      
