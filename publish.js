@@ -59,7 +59,7 @@ function publishData(){
 			for(i = 0;i<result.length;i++){
 				msg += "<h3>";
 				const theDate = new Date(result[i].date);
-				msg+= result[i].account + "  " + theData;
+				msg+= result[i].account + "  " + theDate;
 				msg += "</h3>" + "<br>";				
 				msg += result[i].data;
 				msg += "<br><br>" + "\n" + "***" + "\n";
