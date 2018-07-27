@@ -18,8 +18,8 @@ config = {
 
 eos = Eos(config);
   
-wasm = fs.readFileSyne("wasmUrl");  
-abi = fs.readFileSyne("abiUrl");
+wasm = fs.readFileSync("wasmUrl");  
+abi = fs.readFileSync("abiUrl");
 
 eos.setcode('myaccount', 0, 0, wasm) // @returns {Promise}
 eos.setabi('myaccount', JSON.parse(abi)) // @returns {Promise}
