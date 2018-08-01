@@ -18,6 +18,7 @@ config = {
 
 eos = Eos(config);
 
+/* buy ram success
 eos.transaction(tr => {
 	  tr.buyrambytes({
     payer: 'eoscafekorea',
@@ -27,6 +28,7 @@ eos.transaction(tr => {
 });
 
 return;
+*/
   
 wasm = fs.readFileSync(wasmUrl);  
 abi = fs.readFileSync(abiUrl);
@@ -34,8 +36,8 @@ abi = fs.readFileSync(abiUrl);
 console.log("Wasm", wasm);
 console.log("Abi", abi);
 
-console.log("setcode",eos.setcode("eoscafekorea", 0, 0, wasm)); // @returns {Promise}
-console.log("Setabi",eos.setabi("eoscafekorea", JSON.parse(abi))) // @returns {Promise}
+eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
+eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 
 async function createToken(account){
   await eos.transaction(account, myaccount => {
