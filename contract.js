@@ -66,6 +66,11 @@ async function transfer(from, to, amount){
 
 //createToken("eoscafekorea");
 transfer("eoscafekorea","awesometeddy",1000.0000);
+
+eos.transaction(eos =>
+  {
+    eos.transfer('eoscafekorea', 'awesometeddy', '1111.0000 DAB', ''/*memo*/);
+}};
                                  
                                                                                                                      
                                                                                                                      
