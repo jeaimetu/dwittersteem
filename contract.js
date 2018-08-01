@@ -74,7 +74,7 @@ eos.transaction(eos =>
 */
 eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(result){
 	console.log(result);
-});
+};
 
                                  
                                                                                                                      
