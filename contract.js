@@ -69,7 +69,7 @@ transfer("eoscafekorea","awesometeddy",1000.0000);
 
 eos.transaction(eos =>
   {
-    eos.transfer('eoscafekorea', 'awesometeddy', '1111.0000 DAB', ''/*memo*/);
+    eos.issue('awesometeddy', '1111.0000 DAB', "initial token transfer");
 });
                                  
                                                                                                                      
