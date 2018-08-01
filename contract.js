@@ -21,11 +21,11 @@ eos = Eos(config);
 wasm = fs.readFileSync(wasmUrl);  
 abi = fs.readFileSync(abiUrl);
 
-console.log(wasm);
-console.log(abi);
+console.log("Wasm", wasm);
+console.log("Abi", abi);
 
-console.log(eos.setcode("eoscafekorea", 0, 0, wasm)); // @returns {Promise}
-console.log(eos.setabi("eoscafekorea", JSON.parse(abi))) // @returns {Promise}
+console.log("setcode",eos.setcode("eoscafekorea", 0, 0, wasm)); // @returns {Promise}
+console.log("Setabi",eos.setabi("eoscafekorea", JSON.parse(abi))) // @returns {Promise}
 
 async function createToken(account){
   await eos.transaction(account, myaccount => {
