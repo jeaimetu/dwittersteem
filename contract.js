@@ -17,6 +17,16 @@ config = {
 }
 
 eos = Eos(config);
+
+eos.transaction(tr => {
+	  tr.buyrambytes({
+    payer: 'eoscafekorea',
+    receiver: 'eoscafekorea',
+    bytes: 2000*1024
+  })
+});
+
+return;
   
 wasm = fs.readFileSync(wasmUrl);  
 abi = fs.readFileSync(abiUrl);
