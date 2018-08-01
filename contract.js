@@ -72,9 +72,9 @@ eos.transaction(eos =>
     eos.issue('awesometeddy', '1111.0000 DAB', "initial token transfer");
 });
 */
-eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(result){
+eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
 	console.log(result);
-};
+});
 
                                  
                                                                                                                      
