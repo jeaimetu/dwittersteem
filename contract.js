@@ -76,6 +76,8 @@ eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(resu
 	console.log(result);
 });
 
+eos.transfer('eoscafekorea', 'awesometeddy', '1000.0000 DAB', '')
+
                                  
                                                                                                                      
                                                                                                                      
