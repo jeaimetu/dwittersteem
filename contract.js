@@ -65,7 +65,7 @@ async function transfer(from, to, amount){
 
 
 //createToken("eoscafekorea");
-transfer("eoscafekorea","awesometeddy",1000);
+transfer("eoscafekorea","awesometeddy",1000.0000);
                                  
                                                                                                                      
                                                                                                                      
