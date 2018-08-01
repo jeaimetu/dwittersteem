@@ -30,6 +30,7 @@ eos.transaction(tr => {
 return;
 */
   
+/*
 wasm = fs.readFileSync(wasmUrl);  
 abi = fs.readFileSync(abiUrl);
 
@@ -38,6 +39,8 @@ console.log("Abi", abi);
 
 eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
 eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
+
+*/
 
 async function createToken(account){
   await eos.transaction(account, myaccount => {
@@ -61,8 +64,8 @@ async function transfer(from, to, amount){
 }
 
 
-createToken("eoscafekorea");
-transfer("eoscafekorea");
+//createToken("eoscafekorea");
+transfer("eoscafekorea","awesometeddy",1000);
                                  
                                                                                                                      
                                                                                                                      
