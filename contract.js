@@ -1,5 +1,5 @@
-const wasmUrl = "https://raw.githubusercontent.com/EOSIO/eos/master/contract/eosio.token/eosio.token.wasm";
-const abiUrl = "https://raw.githubusercontent.com/EOSIO/eos/master/contract/eosio.token/eosio.token.abi";
+const wasmUrl = "./contract/eosio.token.wasm";
+const abiUrl = "./contract/eosio.token.abi";
 
 const account = "eoscafekorea";
 
