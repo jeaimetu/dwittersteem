@@ -24,7 +24,7 @@ abi = fs.readFileSync("abiUrl");
 eos.setcode('myaccount', 0, 0, wasm) // @returns {Promise}
 eos.setabi('myaccount', JSON.parse(abi)) // @returns {Promise}
 
-function createToken(account){
+async function createToken(account){
   await eos.transaction(account, myaccount => {
 
   // Create the initial token with its max supply
@@ -40,11 +40,14 @@ function createToken(account){
   console.log('Currency Balance', balance)
 }
 
-function transfer(from, to, amount){
+async function transfer(from, to, amount){
 	const myaccount = await eos.contract(from);
 	await myaccount.transfer(from, to, amount + " " + "DAB","");
 }
 
+
+createToken("eoscafekorea");
+transfer("eoscafekorea");
                                  
                                                                                                                      
                                                                                                                      
