@@ -65,14 +65,14 @@ async function transfer(from, to, amount){
 
 
 //createToken("eoscafekorea");
-transfer("eoscafekorea","awesometeddy",1000.0000);
-
+//transfer("eoscafekorea","awesometeddy",1000.0000);
+/*
 eos.transaction(eos =>
   {
     eos.issue('awesometeddy', '1111.0000 DAB', "initial token transfer");
 });
-
-eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB', (result) =>{
+*/
+eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(result){
 	console.log(result);
 });
 
