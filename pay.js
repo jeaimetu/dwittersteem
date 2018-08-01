@@ -100,7 +100,7 @@ function checkTime(){
 			if(err) throw err;
 			console.log("last record", result[0]);
 			const currentTime = Date.now();
-			if(currentTime - result[0].dropTime > 1000 * 60 * 60 * 24){
+			if(currentTime - result[0].date > 1000 * 60 * 60 * 24){
 				console.log("do airdrop");
 				getUserVoting();
 				setShareLog();
