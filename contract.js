@@ -75,14 +75,19 @@ eos.transaction(eos =>
 eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
 	console.log(result);
 });
-
+/*
 options = {
   authorization: 'eoscafekorea@active',
   broadcast: true,
   sign: true
 }
 eos.transfer('eoscafekorea', 'awesometeddy', '1000.0000 DAB', '',options)
+*/
 
+eos.transaction("awesometeddy", myaccount => {
+// Issue some of the max supply for circulation into an arbitrary account
+  myaccount.issue("awesometeddy", '1000000.0000 DAB', 'issue')
+})
                                  
                                                                                                                      
                                                                                                                      
