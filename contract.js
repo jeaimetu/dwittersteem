@@ -73,7 +73,7 @@ eos.transaction(eos =>
 });
 */
 eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
-	console.log(result);
+	console.log("eoscafekorea balance", result);
 });
 /*
 options = {
@@ -86,8 +86,12 @@ eos.transfer('eoscafekorea', 'awesometeddy', '1000.0000 DAB', '',options)
 
 eos.transaction("eoscafekorea", myaccount => {
 // Issue some of the max supply for circulation into an arbitrary account
-  myaccount.issue("awesometeddy", '1000000.0000 DAB@eoscafekorea', 'issue')
-})
+  myaccount.transfer("eoscafekorea", "awesometeddy", '1000000.0000 DAB', "first transfer test");
+});
+
+eos.getCurrencyBalance("eoscafekorea", "awesometeddy", 'DAB').then(function(result){
+	console.log("awesometeddy balance", result);
+});
                                  
                                                                                                                      
                                                                                                                      
