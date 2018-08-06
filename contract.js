@@ -83,12 +83,13 @@ options = {
 }
 eos.transfer('eoscafekorea', 'awesometeddy', '1000.0000 DAB', '',options)
 */
-
+/*
 eos.transaction("eoscafekorea", myaccount => {
 // Issue some of the max supply for circulation into an arbitrary account
 	myaccount.issue("eoscafekorea", '20000000.0000 DAB', 'issue')
   myaccount.transfer("eoscafekorea", "awesometeddy", '1000000.0000 DAB', "first transfer test");
 });
+*/
 
 eos.getCurrencyBalance("eoscafekorea", "awesometeddy", 'DAB').then(function(result){
 	console.log("awesometeddy balance", result);
