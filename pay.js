@@ -10,7 +10,7 @@ var url = process.env.MONGODB_URI;
 var totalUser = 0;
 var totalSumOfVoting = 0;
 const votingFactor = 3;
-const distributionForDay = 1000;
+const distributionForDay = 100;
 
 function getUserVoting(){
 	MongoClient.connect(url, (err, db) => {
@@ -116,4 +116,4 @@ function checkTime(){
 		
 	
 
-checkTime();
+setInterval(checkTime, 1000*60*60*25);
