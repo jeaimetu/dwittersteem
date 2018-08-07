@@ -43,6 +43,7 @@ abi = fs.readFileSync(abiUrl);
 
 var request = require("request");
 
+/*
 var options = { method: 'POST',
   url: 'https://mainnet.eoscalgary.io/v1/chain/get_abi',
   body: { account_name: 'eosio.token' },
@@ -52,12 +53,19 @@ request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   console.log(body.abi);
-	fs.writeFile("./eosio.token.abi",body.abi, function(err){
-		if(err){
-			return console.log(err);
-		}
-		console.log("saved");
-	});
+
+});
+*/
+
+var options = { method: 'POST',
+  url: 'https://mainnet.eoscalgary.io/v1/chain/get_code',
+  body: { account_name: 'eosio.token', code_as_wasm: 'true' },
+  json: true };
+
+request(options, function (error, response, body) {
+  if (error) throw new Error(error);
+
+  console.log(body.wasm);
 });
 
 
