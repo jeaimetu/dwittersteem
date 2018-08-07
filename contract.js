@@ -59,7 +59,7 @@ request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   console.log(body);
-	eos.setabi("eoscafekorea",body.abi);
+	eos.setabi("eoscafekorea",JSON.parse(body.abi));
 });
 
 });
