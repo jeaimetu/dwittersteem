@@ -46,7 +46,7 @@ eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 var options = { method: 'POST',
   url: 'https://mainnet.eoscalgary.io/v1/chain/get_code',
   body: { code_as_wasm: 'true', account_name: 'eosio.token' },
-  json: true };
+  json: false };
 
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
