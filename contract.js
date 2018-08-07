@@ -11,10 +11,10 @@ const fs = require('fs');
 config = {
   chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906", // 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
-  httpEndpoint: 'https://api.eosnewyork.io:443',
+  httpEndpoint: 'https://mainnet.eoscalgary.io',
   expireInSeconds: 60,
-  broadcast: true,
-  verbose: false, // API activity
+  broadcast: false,
+  verbose: true, // API activity
   sign: true
 }
 
