@@ -51,12 +51,9 @@ var options = { method: 'POST',
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
-  console.log(body);
-	eos.setcode("eoscafekorea", 0, 0, body);
-	options = { method: 'POST',
-  url: 'https://mainnet.eoscalgary.io/v1/chain/get_abi',
-  body: { account_name: 'eosio.token' },
-  json: true };
+  //console.log(body);
+	eos.setcode("eoscafekorea", 0, 0, body.wasm);
+	eos.setabi("eoscafekorea, body.abi);
 /*
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
