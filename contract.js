@@ -7,9 +7,9 @@ Eos = require('eosjs');
 const fs = require('fs');
 
 config = {
-  chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca", // 32 byte (64 char) hex string
+  chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906", // 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
-  httpEndpoint: 'http://193.93.219.219:8888',
+  httpEndpoint: 'https://http://mainnet.eoscalgary.io',
   expireInSeconds: 60,
   broadcast: true,
   verbose: false, // API activity
@@ -30,7 +30,7 @@ eos.transaction(tr => {
 return;
 */
   
-/*
+
 wasm = fs.readFileSync(wasmUrl);  
 abi = fs.readFileSync(abiUrl);
 
@@ -40,7 +40,7 @@ console.log("Abi", abi);
 eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
 eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 
-*/
+
 
 async function createToken(account){
   await eos.transaction(account, myaccount => {
@@ -54,8 +54,8 @@ async function createToken(account){
   myaccount.issue(account, '500000000.0000 DAB', 'issue')
 })
 
-  const balance = await eos.getCurrencyBalance(account, account, 'DAB')
-  console.log('Currency Balance', balance)
+  //const balance = await eos.getCurrencyBalance(account, account, 'DAB')
+  //console.log('Currency Balance', balance)
 }
 
 async function transfer(from, to, amount){
@@ -72,9 +72,9 @@ eos.transaction(eos =>
     eos.issue('awesometeddy', '1111.0000 DAB', "initial token transfer");
 });
 */
-eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
-	console.log("eoscafekorea balance", result);
-});
+//eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
+//	console.log("eoscafekorea balance", result);
+//});
 /*
 options = {
   authorization: 'eoscafekorea@active',
@@ -91,9 +91,9 @@ eos.transaction("eoscafekorea", myaccount => {
 });
 */
 
-eos.getCurrencyBalance("eoscafekorea", "awesometeddy", 'DAB').then(function(result){
-	console.log("awesometeddy balance", result);
-});
+//eos.getCurrencyBalance("eoscafekorea", "awesometeddy", 'DAB').then(function(result){
+//	console.log("awesometeddy balance", result);
+//});
                                  
                                                                                                                      
                                                                                                                      
