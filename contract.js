@@ -38,10 +38,21 @@ abi = fs.readFileSync(abiUrl);
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
 
-eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
-eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
+//eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
+//eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 
+var request = require("request");
 
+var options = { method: 'POST',
+  url: 'https://mainnet.eoscalgary.io/v1/chain/get_abi',
+  body: { account_name: 'eosio.token' },
+  json: true };
+
+request(options, function (error, response, body) {
+  if (error) throw new Error(error);
+
+  console.log(body);
+});
 
 
 
