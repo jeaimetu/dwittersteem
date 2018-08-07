@@ -5,7 +5,7 @@ const account = "eoscafekorea";
 
 Eos = require('eosjs');
 const fs = require('fs');
-
+/*
 config = {
   chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906", // 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
@@ -15,7 +15,12 @@ config = {
   verbose: false, // API activity
   sign: true
 }
+*/
 
+config = {
+	keyProvider: process.env.key
+}
+	
 eos = Eos(config);
 
 /* buy ram success
@@ -38,7 +43,7 @@ abi = fs.readFileSync(abiUrl);
 //console.log("Abi", abi);
 
 eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
-//eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
+eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -68,7 +73,7 @@ async function transfer(from, to, amount){
 }
 
 
-//createToken("eoscafekorea");
+createToken("eoscafekorea");
 //transfer("eoscafekorea","awesometeddy",1000.0000);
 /*
 eos.transaction(eos =>
