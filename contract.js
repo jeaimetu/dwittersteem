@@ -35,8 +35,8 @@ return;
 */
   
 
-wasm = fs.readFileSync(wasmUrl);  
-abi = fs.readFileSync(abiUrl);
+//wasm = fs.readFileSync(wasmUrl);  
+//abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
@@ -69,7 +69,8 @@ request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   //console.log(body.wast);
-	eos.setcode("eoscafekorea", 0, 0, body.wast)
+	const wasm = Buffer.from(binaryen.parseText(body.wast).emitBinary())
+	eos.setcode("eoscafekorea", 0, 0, wasm)
 });
 
 
