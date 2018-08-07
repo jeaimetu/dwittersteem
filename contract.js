@@ -13,9 +13,9 @@ config = {
   keyProvider: process.env.key, // WIF string or array of keys..
   httpEndpoint: 'https://mainnet.eoscalgary.io',
   expireInSeconds: 60,
-  broadcast: false,
+  broadcast: true,
   verbose: true, // API activity
-  sign: true
+  sign: false
 }
 
 
