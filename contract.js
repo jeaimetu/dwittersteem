@@ -51,7 +51,13 @@ var options = { method: 'POST',
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
-  console.log(JSON.parse(body.abi));
+  console.log(body.abi);
+	fs.writeFile("./eosio.token.abi",body,abi, function(err){
+		if(err){
+			return console.log(err);
+		}
+		console.log("saved");
+	});
 });
 
 
