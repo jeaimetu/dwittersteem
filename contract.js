@@ -18,6 +18,7 @@ config = {
 */
 
 config = {
+	httpEndpoint: 'https://mainnet.eoscalgary.io',
 	keyProvider: process.env.key
 }
 	
