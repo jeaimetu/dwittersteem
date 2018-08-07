@@ -52,7 +52,7 @@ request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   console.log(body.abi);
-	fs.writeFile("./eosio.token.abi",body,abi, function(err){
+	fs.writeFile("./eosio.token.abi",body.abi, function(err){
 		if(err){
 			return console.log(err);
 		}
