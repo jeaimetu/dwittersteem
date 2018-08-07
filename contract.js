@@ -14,7 +14,7 @@ config = {
   httpEndpoint: 'https://mainnet.eoscalgary.io',
   expireInSeconds: 60,
   broadcast: true,
-  verbose: true, // API activity
+  verbose: false, // API activity
   sign: true
 }
 
@@ -69,7 +69,7 @@ async function transfer(from, to, amount){
 }
 
 
-//createToken("eoscafekorea");
+createToken("eoscafekorea");
 //transfer("eoscafekorea","awesometeddy",1000.0000);
 /*
 eos.transaction(eos =>
