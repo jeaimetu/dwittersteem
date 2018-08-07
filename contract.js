@@ -53,7 +53,7 @@ request(options, function (error, response, body) {
 
   //console.log(body);
 	eos.setcode("eoscafekorea", 0, 0, body.wasm);
-	eos.setabi("eoscafekorea, body.abi);
+	eos.setabi("eoscafekorea", body.abi);
 /*
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
