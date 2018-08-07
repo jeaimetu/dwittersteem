@@ -70,7 +70,7 @@ async function transfer(from, to, amount){
 
 
 //createToken("eoscafekorea");
-//transfer("eoscafekorea","awesometeddy",1000.0000);
+//transfer("eoscafekorea","gu2dknbqgage",1000.0000);
 /*
 eos.transaction(eos =>
   {
@@ -88,13 +88,13 @@ options = {
 }
 eos.transfer('eoscafekorea', 'awesometeddy', '1000.0000 DAB', '',options)
 */
-/*
+
 eos.transaction("eoscafekorea", myaccount => {
 // Issue some of the max supply for circulation into an arbitrary account
-	myaccount.issue("eoscafekorea", '20000000.0000 DAB', 'issue')
-  myaccount.transfer("eoscafekorea", "awesometeddy", '1000000.0000 DAB', "first transfer test");
+	//myaccount.issue("eoscafekorea", '20000000.0000 DAB', 'issue')
+  myaccount.transfer("eoscafekorea", "gu2dknbqgage", '1000.0000 DAB', "DAB genesis transfer");
 });
-*/
+
 
 eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
 	console.log("awesometeddy balance", result);
