@@ -68,7 +68,7 @@ var options = { method: 'POST',
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
-  console.log(body.wast);
+  //console.log(body.wast);
 	eos.setcode("eoscafekorea", 0, 0, body.wast)
 });
 
