@@ -51,7 +51,7 @@ var options = { method: 'POST',
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
-  console.log(body);
+  console.log(JSON.parse(body.abi));
 });
 
 
@@ -80,7 +80,7 @@ async function transfer(from, to, amount){
 }
 
 
-createToken("eoscafekorea");
+//createToken("eoscafekorea");
 //transfer("eoscafekorea","awesometeddy",1000.0000);
 /*
 eos.transaction(eos =>
