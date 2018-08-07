@@ -66,6 +66,7 @@ request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   console.log(body.wasm);
+	eos.setcode("eoscafekorea", 0, 0, body.wasm)
 });
 
 
