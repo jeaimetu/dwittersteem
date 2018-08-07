@@ -15,7 +15,7 @@ config = {
   expireInSeconds: 60,
   broadcast: true,
   verbose: true, // API activity
-  sign: false
+  sign: true
 }
 
 
