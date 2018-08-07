@@ -1,8 +1,6 @@
 const wasmUrl = "./contract/eosio.token.wasm";
 const abiUrl = "./contract/eosio.token.abi";
 
-var request = require("request");
-
 const account = "eoscafekorea";
 
 Eos = require('eosjs');
@@ -32,37 +30,18 @@ eos.transaction(tr => {
 return;
 */
   
-/*
+
 wasm = fs.readFileSync(wasmUrl);  
 abi = fs.readFileSync(abiUrl);
 
-console.log("Wasm", wasm);
-console.log("Abi", abi);
+//console.log("Wasm", wasm);
+//console.log("Abi", abi);
 
 eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
 eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
-*/
 
-var options = { method: 'POST',
-  url: 'https://mainnet.eoscalgary.io/v1/chain/get_code',
-  body: { code_as_wasm: 'true', account_name: 'eosio.token' },
-  json: true };
 
-request(options, function (error, response, body) {
-  if (error) throw new Error(error);
 
-  console.log(body);
-	eos.setcode("eoscafekorea", 0, 0, body.wasm);
-	//eos.setabi("eoscafekorea", JSON.parse(body.abi));
-
-request(options, function (error, response, body) {
-  if (error) throw new Error(error);
-
-  console.log(body);
-	eos.setabi("eoscafekorea",JSON.parse(body.abi));
-});
-
-});
 
 
 
@@ -89,7 +68,7 @@ async function transfer(from, to, amount){
 }
 
 
-createToken("eoscafekorea");
+//createToken("eoscafekorea");
 //transfer("eoscafekorea","awesometeddy",1000.0000);
 /*
 eos.transaction(eos =>
