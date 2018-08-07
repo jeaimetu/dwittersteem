@@ -51,7 +51,7 @@ async function createToken(account){
   myaccount.create(account, '1000000000.0000 DAB')//, options)
 
   // Issue some of the max supply for circulation into an arbitrary account
-  myaccount.issue(account, '1000000.0000 DAB', 'issue')
+  myaccount.issue(account, '500000000.0000 DAB', 'issue')
 })
 
   const balance = await eos.getCurrencyBalance(account, account, 'DAB')
