@@ -51,17 +51,17 @@ var options = { method: 'POST',
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
-  //console.log(body);
-	eos.setcode("eoscafekorea", 0, 0, body.wasm);
-	eos.setabi("eoscafekorea", JSON.parse(body.abi));
-/*
+  console.log(body);
+	//eos.setcode("eoscafekorea", 0, 0, body.wasm);
+	//eos.setabi("eoscafekorea", JSON.parse(body.abi));
+
 request(options, function (error, response, body) {
   if (error) throw new Error(error);
 
   console.log(body);
-	eos.setabi("eoscafekorea",body);
+	//eos.setabi("eoscafekorea",body);
 });
-*/
+
 });
 
 
