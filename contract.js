@@ -40,7 +40,7 @@ abi = fs.readFileSync(abiUrl);
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
 
-eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
+//eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
 eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 
 
