@@ -94,15 +94,17 @@ eos.transfer('eoscafekorea', 'awesometeddy', '1000.0000 DAB', '',options)
 eos.transaction("eoscafekorea", myaccount => {
 // Issue some of the max supply for circulation into an arbitrary account
 	//myaccount.issue("eoscafekorea", '20000000.0000 DAB', 'issue')
-  myaccount.transfer("eoscafekorea", "guztiojwgige", '1000.0000 DAB', "DAB genesis transfer");
-	  //myaccount.transfer("eoscafekorea", "eoscafeblock", '1000.0000 DAB', "DAB genesis transfer");
-	  //myaccount.transfer("eoscafekorea", "gq4doojsgage", '1000.0000 DAB', "DAB genesis transfer");
-	//myaccount.transfer("eoscafekorea", "gyydoojzgige", '1000.0000 DAB', "DAB genesis transfer");
+  myaccount.transfer("eoscafekorea", "gq4doojsgage", '9000.0000 DAB', "DAB Adviser Fund");
+	  myaccount.transfer("eoscafekorea", "gyydoojzgige", '10000000.0000 DAB', "DAB Founder Fund");
+	  myaccount.transfer("eoscafekorea", "gu3dqnrqgage", '10000000.0000 DAB', "DAB Founder Fund");
+	  myaccount.transfer("eoscafekorea", "gu2dknbqgage", '10000000.0000 DAB', "DAB Founder Fund");
+	  myaccount.transfer("eoscafekorea", "gu3dinjtgage", '10000000.0000 DAB', "DAB Founder Fund");
+	  myaccount.transfer("eoscafekorea", "q1q1q1q1q1q1", '10000000.0000 DAB', "DAB Founder Fund");
 });
 
 
 eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
-	console.log("awesometeddy balance", result);
+	console.log("eoscafekorea balance", result);
 });
                                  
                                                                                                                      
