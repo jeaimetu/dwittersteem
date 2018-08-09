@@ -94,9 +94,9 @@ eos.transfer('eoscafekorea', 'awesometeddy', '1000.0000 DAB', '',options)
 eos.transaction("eoscafekorea", myaccount => {
 // Issue some of the max supply for circulation into an arbitrary account
 	//myaccount.issue("eoscafekorea", '20000000.0000 DAB', 'issue')
-  myaccount.transfer("eoscafekorea", "g44dqnbsg4ge", '9000.0000 DAB', "DAB Adviser Fund");
-	  myaccount.transfer("eoscafekorea", "abraininajar", '10000000.0000 DAB', "DAB Founder Fund");
-	  myaccount.transfer("eoscafekorea", "gu2dmojqgqge", '10000000.0000 DAB', "DAB Founder Fund");
+  myaccount.transfer("eoscafekorea", "g44dqnbsg4ge", '9991000.0000 DAB', "DAB Adviser Fund");
+	  //myaccount.transfer("eoscafekorea", "abraininajar", '10000000.0000 DAB', "DAB Founder Fund");
+	  //myaccount.transfer("eoscafekorea", "gu2dmojqgqge", '10000000.0000 DAB', "DAB Founder Fund");
 	  //myaccount.transfer("eoscafekorea", "gu2dknbqgage", '10000000.0000 DAB', "DAB Founder Fund");
 	  //myaccount.transfer("eoscafekorea", "gu3dinjtgage", '10000000.0000 DAB', "DAB Founder Fund");
 	  //myaccount.transfer("eoscafekorea", "q1q1q1q1q1q1", '10000000.0000 DAB', "DAB Founder Fund");
