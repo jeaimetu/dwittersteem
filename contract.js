@@ -71,7 +71,7 @@ async function transfer(from, to, amount){
 }
 
 
-createToken("eoscafekorea");
+createToken("eoscafebeans");
 //transfer("eoscafekorea","gu2dknbqgage",1000.0000);
 /*
 eos.transaction(eos =>
