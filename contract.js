@@ -1,7 +1,7 @@
 const wasmUrl = "./contract/eosio.token.wasm";
 const abiUrl = "./contract/eosio.token.abi";
 
-const account = "eoscafekorea";
+const account = "eoscafebeans";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -36,14 +36,14 @@ return;
 */
   
 
-//wasm = fs.readFileSync(wasmUrl);  
-//abi = fs.readFileSync(abiUrl);
+wasm = fs.readFileSync(wasmUrl);  
+abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
 
-//eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
-//eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("eoscafebeans", 0, 0, wasm) // @returns {Promise}
+eos.setabi("eoscafebeans", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -55,10 +55,10 @@ async function createToken(account){
   // Create the initial token with its max supply
   // const options = {authorization: 'myaccount'} // default
     //500,000,000 is the base. Annual inflation is 5% to 5 years. Others will be burned.
-  myaccount.create(account, '1000000000.0000 DAB')//, options)
+  myaccount.create(account, ' 11000000000.0000 BEANS')//, options)
 
   // Issue some of the max supply for circulation into an arbitrary account
-  myaccount.issue(account, '500000000.0000 DAB', 'issue')
+  myaccount.issue(account, '10000000000.0000 BEANS', 'issue')
 })
 
   //const balance = await eos.getCurrencyBalance(account, account, 'DAB')
@@ -91,7 +91,7 @@ options = {
 eos.transfer('eoscafekorea', 'awesometeddy', '1000.0000 DAB', '',options)
 */
 
-eos.transaction("eoscafekorea", myaccount => {
+//eos.transaction("eoscafekorea", myaccount => {
 // Issue some of the max supply for circulation into an arbitrary account
 	//myaccount.issue("eoscafekorea", '20000000.0000 DAB', 'issue')
   //myaccount.transfer("eoscafekorea", "g44dqnbsg4ge", '9991000.0000 DAB', "DAB Adviser Fund");
@@ -103,8 +103,8 @@ eos.transaction("eoscafekorea", myaccount => {
 });
 
 
-eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
-	console.log("eoscafekorea balance", result);
+eos.getCurrencyBalance("eoscafebeans", "eoscafebeans", 'BEANS').then(function(result){
+	console.log("eoscafebeans balance", result);
 });
                                  
                                                                                                                      
