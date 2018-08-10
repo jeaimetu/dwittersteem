@@ -100,7 +100,7 @@ eos.transfer('eoscafekorea', 'awesometeddy', '1000.0000 DAB', '',options)
 	  //myaccount.transfer("eoscafekorea", "gu2dknbqgage", '10000000.0000 DAB', "DAB Founder Fund");
 	  //myaccount.transfer("eoscafekorea", "gu3dinjtgage", '10000000.0000 DAB', "DAB Founder Fund");
 	  //myaccount.transfer("eoscafekorea", "q1q1q1q1q1q1", '10000000.0000 DAB', "DAB Founder Fund");
-});
+//});
 
 
 eos.getCurrencyBalance("eoscafebeans", "eoscafebeans", 'BEANS').then(function(result){
