@@ -36,14 +36,14 @@ return;
 */
   
 
-wasm = fs.readFileSync(wasmUrl);  
-abi = fs.readFileSync(abiUrl);
+//wasm = fs.readFileSync(wasmUrl);  
+//abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
 
-eos.setcode("eoscafebeans", 0, 0, wasm) // @returns {Promise}
-eos.setabi("eoscafebeans", JSON.parse(abi)) // @returns {Promise}
+//eos.setcode("eoscafebeans", 0, 0, wasm) // @returns {Promise}
+//eos.setabi("eoscafebeans", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -71,7 +71,7 @@ async function transfer(from, to, amount){
 }
 
 
-//createToken("eoscafekorea");
+createToken("eoscafekorea");
 //transfer("eoscafekorea","gu2dknbqgage",1000.0000);
 /*
 eos.transaction(eos =>
