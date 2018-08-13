@@ -159,8 +159,9 @@ function airdropByWriting(){
 
 		const agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
-			{$group: {_id:"$account", count : { $sum : 1}}},
-			{$match : {date : {$gt:tod, $lt:tod1} }}];
+			{$match : {date : {$gt:tod, $lt:tod1} }},
+			{$group: {account:"$account", count : { $sum : 1}}}
+			];
 		dbo.collection("board").aggregate(agr).toArray(function(err, result){
 			if(err) throw err;
 			const totalPosting = result.length;
