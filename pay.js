@@ -159,6 +159,7 @@ function airdropByWriting(){
 		const findQuery = {date : {$gt:tod, $lt:tod1} };
 		dbo.collection("board").find(findQuery).toArray(function(err, result){
 			const totalPosting = result.legnth;
+			console.log("airdropByWriting totalPosting", totalPosting);
 			for(i=0;i<result.length;i++){
 				var tokenSize = parseFloat(postingDistributionForDay) / parseFloat(totalPosting);
 				tokenSize = parseFloat(tokenSize);
