@@ -100,7 +100,7 @@ function setWallet2(account, vote){
 			}
 			const updatequery = {account : account};
 			
-			var tokenSize = vote + parseFloat(result.wallet);
+			var tokenSize = parseFloat(vote) + parseFloat(result.wallet);
 			console.log("tokenSize", tokenSize, vote, result.wallet);
 			tokenSize = tokenSize.toFixed(4);
 			const myobj = { $set : {wallet : tokenSize}};
