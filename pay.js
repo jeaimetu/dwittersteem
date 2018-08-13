@@ -161,6 +161,7 @@ function airdropByWriting(){
 			const totalPosting = result.legnth;
 			for(i=0;i<result.length;i++){
 				var tokenSize = parseFloat(postingDistributionForDay) / parseFloat(totalPosting);
+				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);			
 				//setWallet2(result[i].account, tokenSize);
 				console.log("airdropByWriting", result[i].account, tokenSize);
