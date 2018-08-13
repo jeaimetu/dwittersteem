@@ -156,12 +156,12 @@ function airdropByWriting(){
 		const dbo = db.db("heroku_dg3d93pq");
 		var tod = Date.now() - 1000*60*60*24;
 		var tod1 = Date.now();
-		const findQuery = {date : {$gt:tod, $lt:tod1} };
-		var agr = [
+
+		const agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
 			{$group: {_id:"$account", count : { $sum : 1}}},
 			{date : {$gt:tod, $lt:tod1} }];
-		dbo.collection("board").find(findQuery).toArray(function(err, result){
+		dbo.collection("board").aggregate(agr).toArray(function(err, result){
 			if(err) throw err;
 			const totalPosting = result.length;
 			console.log("airdropByWriting totalPosting", totalPosting);
