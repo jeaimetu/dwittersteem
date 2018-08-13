@@ -160,7 +160,7 @@ function airdropByWriting(){
 		const agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
 			{$match : {date : {$gt:tod, $lt:tod1} }},
-			{$group: {account:"$account", count : { $sum : 1}}}
+			{$group: {_id:"$account", count : { $sum : 1}}}
 			];
 		dbo.collection("board").aggregate(agr).toArray(function(err, result){
 			if(err) throw err;
@@ -170,8 +170,8 @@ function airdropByWriting(){
 				var tokenSize = result[i].count * parseFloat(postingDistributionForDay) / parseFloat(totalPosting);
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);			
-				//setWallet2(result[i].account, tokenSize);
-				console.log("airdropByWriting", result[i].account, tokenSize);
+				//setWallet2(result[i]._id, tokenSize);
+				console.log("airdropByWriting", result[i].)id, tokenSize);
 			}
 			db.close();
 		});
