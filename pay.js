@@ -165,7 +165,7 @@ function airdropByWriting(){
 				var tokenSize = parseFloat(postingDistributionForDay) / parseFloat(totalPosting);
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);			
-				//setWallet2(result[i].account, tokenSize);
+				setWallet2(result[i].account, tokenSize);
 				console.log("airdropByWriting", result[i].account, tokenSize);
 			}
 			db.close();
@@ -179,6 +179,6 @@ function airdropByWriting(){
 	
 
 //setInterval(checkTime, 1000*60*60*25);
-getUserVoting();
+//getUserVoting();
 setShareLog();
 airdropByWriting();
