@@ -160,7 +160,7 @@ function airdropByWriting(){
 		dbo.collection("board").find(findQuery).toArray(function(err, result){
 			const totalPosting = result.legnth;
 			for(i=0;i<result.length;i++){
-				var tokenSize = postingDistributionForDay / totalPosting;
+				var tokenSize = parseFloat(postingDistributionForDay) / parseFloat(totalPosting);
 				tokenSize = tokenSize.toFixed(4);			
 				//setWallet2(result[i].account, tokenSize);
 				console.log("airdropByWriting", result[i].account, tokenSize);
