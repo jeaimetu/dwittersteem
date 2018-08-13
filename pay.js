@@ -10,8 +10,8 @@ var url = process.env.MONGODB_URI;
 var totalUser = 0;
 var totalSumOfVoting = 0;
 const votingFactor = 3;
-const distributionForDay = 1000;
-const postingDistributionForDay = 1000;
+const distributionForDay = 3000;
+const postingDistributionForDay = 3000;
 
 function getUserVoting(){
 	MongoClient.connect(url, (err, db) => {
@@ -179,6 +179,6 @@ function airdropByWriting(){
 	
 
 //setInterval(checkTime, 1000*60*60*25);
-//getUserVoting();
-//setShareLog();
+getUserVoting();
+setShareLog();
 airdropByWriting();
