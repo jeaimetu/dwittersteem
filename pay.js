@@ -157,15 +157,19 @@ function airdropByWriting(){
 		var tod = Date.now() - 1000*60*60*24;
 		var tod1 = Date.now();
 		const findQuery = {date : {$gt:tod, $lt:tod1} };
+		var agr = [
+			{$match: {account: {$exists:true, $ne: null}}},
+			{$group: {_id:"$account", count : { $sum : 1}}},
+			{date : {$gt:tod, $lt:tod1} }];
 		dbo.collection("board").find(findQuery).toArray(function(err, result){
 			if(err) throw err;
 			const totalPosting = result.length;
 			console.log("airdropByWriting totalPosting", totalPosting);
 			for(i=0;i<result.length;i++){
-				var tokenSize = parseFloat(postingDistributionForDay) / parseFloat(totalPosting);
+				var tokenSize = result[i].count * parseFloat(postingDistributionForDay) / parseFloat(totalPosting);
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);			
-				setWallet2(result[i].account, tokenSize);
+				//setWallet2(result[i].account, tokenSize);
 				console.log("airdropByWriting", result[i].account, tokenSize);
 			}
 			db.close();
