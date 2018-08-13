@@ -164,7 +164,9 @@ function airdropByWriting(){
 			];
 		dbo.collection("board").aggregate(agr).toArray(function(err, result){
 			if(err) throw err;
-			const totalPosting = result.length;
+			var totalPosting = 0;
+			for(i = 0;i<result.legnth;i++)
+				totalPosting += result[i].count;	
 			console.log("airdropByWriting totalPosting", totalPosting);
 			for(i=0;i<result.length;i++){
 				var tokenSize = result[i].count * parseFloat(postingDistributionForDay) / parseFloat(totalPosting);
