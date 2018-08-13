@@ -171,7 +171,7 @@ function airdropByWriting(){
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);			
 				//setWallet2(result[i]._id, tokenSize);
-				console.log("airdropByWriting", result[i].)id, tokenSize);
+				console.log("airdropByWriting", result[i]._id, tokenSize);
 			}
 			db.close();
 		});
