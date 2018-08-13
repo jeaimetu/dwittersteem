@@ -11,6 +11,7 @@ var totalUser = 0;
 var totalSumOfVoting = 0;
 const votingFactor = 3;
 const distributionForDay = 1000;
+const postingDistributionForDay = 1000;
 
 function getUserVoting(){
 	MongoClient.connect(url, (err, db) => {
@@ -80,6 +81,43 @@ function setWallet(account, vote){
 	});
 }
 
+function setWallet2(account, vote){
+	console.log("setWallet2", account, vote);
+
+	MongoClient.connect(url, (err, db) => {
+		if(err) throw err;
+		const dbo = db.db("heroku_dg3d93pq");
+		const findQuery = {account : account};
+		dbo.collection('user').findOne(findQuery, (err, result) => {
+			console.log(result);
+			if(err){ 
+				throw err;
+				console.log(err);
+			}
+			if(result === null){
+				db.close();
+				return;
+			}
+			const updatequery = {account : account};
+			
+			var tokenSize = vote + parseFloat(result.wallet);
+			console.log("tokenSize", tokenSize, vote, result.wallet);
+			tokenSize = tokenSize.toFixed(4);
+			const myobj = { $set : {wallet : tokenSize}};
+			console.log("update wallet", account, tokenSize);
+			
+			dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{
+				if(err){ 
+					throw err;
+					console.log(err);
+				}				
+				db.close();
+			});
+		});
+			
+	});
+}
+
 
 function setShareLog(){
 	MongoClient.connect(url, (err, db) => {
@@ -111,9 +149,33 @@ function checkTime(){
 		});
 	});
 }
+
+//aidrop for dabble writing base
+function airdropByWriting(){
+	MongoClient.connect(url, (err, db) => {
+		const dbo = db.db("heroku_dg3d93pq");
+		var tod = Date.now() - 1000*60*60*24;
+		var tod1 = Date.now();
+		const findQuery = {date : {$gt:tod, $lt:tod1} };
+		dbo.collection("board").find(findQuery).toArray(function(err, result){
+			const totalPosting = result.legnth;
+			for(i=0;i<result.length;i++){
+				var tokenSize = postingDistributionForDay / totalPosting;
+				tokenSize = tokenSize.toFixed(4);			
+				//setWallet2(result[i].account, tokenSize);
+				console.log("airdropByWriting", result[i].account, tokenSize);
+			}
+			db.close();
+		});
+	});
+}
+
 		
 	
 		
 	
 
-setInterval(checkTime, 1000*60*60*25);
+//setInterval(checkTime, 1000*60*60*25);
+//getUserVoting();
+//setShareLog();
+airdropByWriting();
