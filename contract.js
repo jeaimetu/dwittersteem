@@ -26,10 +26,13 @@ function transfer(from, to, amount, msg){
 
 
 	eos.transaction("eoscafekorea").then(myaccount => {
-		myaccount.transfer(from,to, amount + " " + "DAB", msg);
-	}).catch(function(error){
+		myaccount.transfer(from,to, amount + " " + "DAB", msg).then((output)=>{
+			console.log("OK")}).catch((err)=>{
+			console.log("error");
+		});;
+	}).catch((err) => {
 		 console.log("transfer error");
-});
+	});
 
 
 
