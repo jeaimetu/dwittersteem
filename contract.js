@@ -22,15 +22,15 @@ config = {
 
 eos = Eos(config);
 
-async function transfer(from, to, amount, msg){
+function transfer(from, to, amount, msg){
 
-	try{
-	await eos.transaction("eoscafekorea", myaccount => {
+
+	await eos.transaction("eoscafekorea").then(myaccount => {
 		myaccount.transfer(from,to, amount + " " + "DAB", msg);
-	});
-	} catch(error){
-		console.log("transfer error");
-	}
+	}).catch(function(error) => {
+		 console.log("transfer error");
+});
+
 
 
 
