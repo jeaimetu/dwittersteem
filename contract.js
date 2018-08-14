@@ -22,7 +22,7 @@ config = {
 
 eos = Eos(config);
 
-function transfer(from, to, amount, msg){
+async function transfer(from, to, amount, msg){
 
 	try{
 	const result = eos.transaction("eoscafekorea", myaccount => {
