@@ -39,7 +39,10 @@ function transfer(from, to, amount, msg){
 
 }
 
-transfer("eoscafekorea","eoscafebeans","0.0001", "test");
+transfer("eoscafekorea","eoscafebeans","0.0001", "test").then((output)=>{
+	console.log("OK");}).catch((err)=>{
+	console.log("error");
+});
 
 if(process.env.dist != "true")
 	return;
