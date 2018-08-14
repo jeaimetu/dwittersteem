@@ -7,8 +7,7 @@ Eos = require('eosjs');
 const fs = require('fs');
 
 
-if(process.env.dist != "true")
-	return;
+
 
 config = {
   chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906", // 32 byte (64 char) hex string
@@ -22,6 +21,22 @@ config = {
 
 
 eos = Eos(config);
+
+function transfer(from, to, amount, msg){
+	eos.transaction("eoscafekorea", myaccount => {
+	myaccount.transfer(from,to, amount + " " + "DAB", msg);
+	}).catch((e){
+		 console.log(e);
+	console.log("transfer error");
+		 });
+		
+}
+
+transfer("eoscafekorea","eoscafebeans","0.0001", "test");
+
+if(process.env.dist != "true")
+	return;
+
 
 /* buy ram success
 eos.transaction(tr => {
