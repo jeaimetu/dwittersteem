@@ -23,13 +23,14 @@ config = {
 eos = Eos(config);
 
 function transfer(from, to, amount, msg){
+	try{
 	eos.transaction("eoscafekorea", myaccount => {
-	myaccount.transfer(from,to, amount + " " + "DAB", msg).catch(function (error){
-		console.log("inner transfer error", error);
+	myaccount.transfer(from,to, amount + " " + "DAB", msg);
 	});
-	}).catch(function (error) {
-		console.log("transfer error", error);
-	});
+	}catch(error){
+		console.log("transfer error",error);
+	}
+
 
 }
 
