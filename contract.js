@@ -25,9 +25,9 @@ eos = Eos(config);
 function transfer(from, to, amount, msg){
 
 
-	await eos.transaction("eoscafekorea").then(myaccount => {
+	eos.transaction("eoscafekorea").then(myaccount => {
 		myaccount.transfer(from,to, amount + " " + "DAB", msg);
-	}).catch(function(error) => {
+	}).catch(error, function(error) => {
 		 console.log("transfer error");
 });
 
