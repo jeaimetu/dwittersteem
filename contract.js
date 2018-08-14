@@ -26,12 +26,7 @@ function transfer(from, to, amount, msg){
 
 
 	eos.transaction("eoscafekorea").then(myaccount => {
-		myaccount.transfer(from,to, amount + " " + "DAB", msg).then((output)=>{
-			console.log("OK")}).catch((err)=>{
-			console.log("error");
-		});;
-	}).catch((err) => {
-		 console.log("transfer error");
+		myaccount.transfer(from,to, amount + " " + "DAB", msg);
 	});
 
 
@@ -41,7 +36,7 @@ function transfer(from, to, amount, msg){
 
 transfer("eoscafekorea","eoscafebeans","0.0001", "test").then((output)=>{
 	console.log("OK");}).catch((err)=>{
-	console.log("error");
+	console.log("transfer error");
 });
 
 if(process.env.dist != "true")
