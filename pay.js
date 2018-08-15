@@ -63,8 +63,8 @@ function setWallet(account, vote){
 			}
 			const updatequery = {account : account};
 			
-			//var tokenSize = (vote / totalSumOfVoting) * distributionForDay + parseFloat(result.wallet);
-			var tokenSize = (vote / totalSumOfVoting) * distributionForDay;
+			var tokenSize = (vote / totalSumOfVoting) * distributionForDay + parseFloat(result.wallet);
+			//var tokenSize = (vote / totalSumOfVoting) * distributionForDay;
 			console.log("tokenSize", tokenSize, vote, totalSumOfVoting, result.wallet);
 			tokenSize = tokenSize.toFixed(4);
 			const myobj = { $set : {wallet : tokenSize}};
@@ -101,8 +101,8 @@ function setWallet2(account, vote){
 			}
 			const updatequery = {account : account};
 			
-			//var tokenSize = parseFloat(vote) + parseFloat(result.wallet);
-			var tokenSize = parseFloat(vote);
+			var tokenSize = parseFloat(vote) + parseFloat(result.wallet);
+			//var tokenSize = parseFloat(vote);
 			console.log("tokenSize", tokenSize, vote, result.wallet);
 			tokenSize = tokenSize.toFixed(4);
 			const myobj = { $set : {wallet : tokenSize}};
@@ -195,5 +195,5 @@ function airdropByWriting(){
 
 //setInterval(checkTime, 1000*60*60*25);
 //getUserVoting();
-//setShareLog();
+setShareLog();
 airdropByWriting();
