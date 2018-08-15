@@ -165,7 +165,12 @@ function airdropByWriting(){
 			{$group: {_id:"$account", count : { $sum : 1}}}
 			];
 		dbo.collection("board").aggregate(agr).toArray(function(err, result){
-			if(err) throw err;
+			if(err){
+				throw err;
+				console.log("db error", err);
+				db.close();
+			}
+			console.log("db result", result);
 			var totalPosting = 0;
 			console.log("number of users for posting", result.legnth);
 			for(i = 0;i<result.legnth;i++)
