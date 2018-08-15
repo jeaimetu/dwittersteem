@@ -167,6 +167,7 @@ function airdropByWriting(){
 		dbo.collection("board").aggregate(agr).toArray(function(err, result){
 			if(err) throw err;
 			var totalPosting = 0;
+			console.log("number of users for posting", result.legnth);
 			for(i = 0;i<result.legnth;i++)
 				totalPosting += result[i].count;	
 			console.log("airdropByWriting totalPosting", totalPosting);
@@ -174,7 +175,7 @@ function airdropByWriting(){
 				var tokenSize = result[i].count * parseFloat(postingDistributionForDay) / parseFloat(totalPosting);
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);			
-				setWallet2(result[i]._id, tokenSize);
+				//setWallet2(result[i]._id, tokenSize);
 				console.log("airdropByWriting", result[i]._id, tokenSize);
 			}
 			db.close();
@@ -188,6 +189,6 @@ function airdropByWriting(){
 	
 
 //setInterval(checkTime, 1000*60*60*25);
-getUserVoting();
-setShareLog();
-//airdropByWriting();
+//getUserVoting();
+//setShareLog();
+airdropByWriting();
