@@ -170,10 +170,10 @@ function airdropByWriting(){
 				console.log("db error", err);
 				db.close();
 			}
-			console.log("db result", result);
+			//console.log("db result", result);
 			var totalPosting = 0;
-			console.log("number of users for posting", result.legnth);
-			for(i = 0;i<result.legnth;i++)
+			console.log("number of users for posting", result.length);
+			for(i = 0;i<result.length;i++)
 				totalPosting += result[i].count;	
 			console.log("airdropByWriting totalPosting", totalPosting);
 			for(i=0;i<result.length;i++){
