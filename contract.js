@@ -58,6 +58,8 @@ transfer("eoscafekorea","gyydoojzgige","0.0001", "test").then((output)=>{
 }).catch((err)=>{
 	console.log("transfer error");
 });
+		});
+	});
 
 if(process.env.dist != "true")
 	return;
