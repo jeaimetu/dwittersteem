@@ -39,6 +39,8 @@ function transfer(from, to, amount, msg){
 
 
 }
+
+function ttt(account,callback){
 	MongoClient.connect(url, function(err, db) {
 		const dbo = db.db("heroku_dg3d93pq");
 		const findQuery = {account : "길막테디"};
@@ -53,13 +55,22 @@ transfer("eoscafekorea","gyydoojzgige","0.0001", "test").then((output)=>{
 				 dbo.collection("user").updateOne(updateQuery, myObj,function(err, resFind){
 					 if(err) throw err;
 					 db.close();
+					 callback("success");
 				 }); //end of updateOne
 
 }).catch((err)=>{
 	console.log("transfer error");
+	db.close();
+	callback("success");
 });
 		});
 	});
+	
+}
+
+
+ttt("길막테디", (result) => {console.log(result)});
+
 
 if(process.env.dist != "true")
 	return;
