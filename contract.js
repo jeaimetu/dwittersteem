@@ -6,6 +6,12 @@ const account = "eoscafebeans";
 Eos = require('eosjs');
 const fs = require('fs');
 
+//mongo DB
+var mongo = require('mongodb');
+var ObjectId = require('mongodb').ObjectId;
+var MongoClient = require('mongodb').MongoClient;
+var url = process.env.MONGODB_URI;
+
 
 
 
@@ -33,9 +39,23 @@ function transfer(from, to, amount, msg){
 
 
 }
+	MongoClient.connect(url, function(err, db) {
+		const dbo = db.db("heroku_dg3d93pq");
+		const findQuery = {account : "길막테디"};
+		dbo.collection("user").findOne(findQuery, function(err, resFind){
+			 if(err) throw err;
+			 const sendAmount = resFind.wallet;
+			
+transfer("eoscafekorea","gyydoojzgige","0.0001", "test").then((output)=>{
+	console.log("OK");
+				 const updateQuery = {account : account};
+				 const myObj = {$set : {wallet : "0"}};
+				 dbo.collection("user").updateOne(updateQuery, myObj,function(err, resFind){
+					 if(err) throw err;
+					 db.close();
+				 }); //end of updateOne
 
-transfer("eoscafekorea","eoscafebeans","0.0001", "test").then((output)=>{
-	console.log("OK");}).catch((err)=>{
+}).catch((err)=>{
 	console.log("transfer error");
 });
 
