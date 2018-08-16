@@ -30,7 +30,7 @@ function writingReply(data, id){
     	parent_permlink,      // main tag for new blog post
     	'dabble',               // same user the private_posting_key is for
     	permlink,             // a slug (lowercase 'a'-'z', '0'-'9', and '-', min 1 character, max 255 characters)
-    	'Dabble 퍼블리슁 0815',                // human-readable title
+    	'Dabble 퍼블리슁 0816',                // human-readable title
     	content,                 // body of the post or comment
     	json_metadata,          // arbitrary metadata
 		function (err, result){
@@ -49,7 +49,7 @@ function writingReply(data, id){
 
 function publishData(){
 	var msg = "![](https://cdn.steemitimages.com/DQmTuuRkSahdiMaH1X4esGJNUFaqdcA8v2qWn1ZJn7DGKsr/image.png)";
-	msg += "Dabble의 짧은 글을 모아 보았습니다. 친구추가 관련 기능, 간단한 성능 개선 및 몇가지만 완료가되면 이제 정식으로 토큰 발행후 찾아뵐 정입니다.<br><br>";
+	msg += "Dabble의 짧은 글을 모아 보았습니다. 정식으로 토큰 발행을 했고, 현재 MVP 1.0이 릴리즈 되었습니다.<br><br>";
   	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dg3d93pq");
 		var tod = Date.now() - 1000*60*60*24;
