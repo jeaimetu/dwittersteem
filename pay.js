@@ -198,6 +198,7 @@ function communityAirDrop(amount){
 		dbo.collection("user").find(findquery).toArray(function(err, result){
 			for(i = 0; i< result.length; i++){
 				console.log("time airdrop ", result[i].account, result[i].wallet);
+				setWallet2(result[i].account, 1000);
 			}
 		});
 	});	
