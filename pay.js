@@ -189,11 +189,24 @@ function airdropByWriting(){
 }
 
 		
+function communityAirDrop(amount){
+	MongoClient.connect(url, (err, db) => {
+		const dbo = db.db("heroku_dg3d93pq");
+		var tod = Date.now() - 1000*60*60*24;
+		var tod1 = Date.now() - 1000*60*60*18;
+		const findquery = { date : {$gt:tod, $lt:tod1} };
+		dbo.collection("user").find(findquery).toArray(function(err, result){
+			for(i = 0; i< result.length; i++){
+				console.log("time airdrop ", result[i].account, result[i].wallet);
+			}
+		});
+	});	
+}
 	
-		
-	
-
 //setInterval(checkTime, 1000*60*60*25);
-getUserVoting();
-setShareLog();
-airdropByWriting();
+//getUserVoting();
+//setShareLog();
+//airdropByWriting();
+communityAirDrop(1000);
+			    
+							       
