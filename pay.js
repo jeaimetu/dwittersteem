@@ -10,8 +10,8 @@ var url = process.env.MONGODB_URI;
 var totalUser = 0;
 var totalSumOfVoting = 0;
 const votingFactor = 3;
-const distributionForDay = 5000;
-const postingDistributionForDay = 5000;
+const distributionForDay = 10000;
+const postingDistributionForDay = 10000;
 
 function getUserVoting(){
 	MongoClient.connect(url, (err, db) => {
@@ -156,7 +156,7 @@ function checkTime(){
 function airdropByWriting(){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
-		var tod = Date.now() - 1000*60*60*36;
+		var tod = Date.now() - 1000*60*60*52;
 		var tod1 = Date.now();
 
 		const agr = [
@@ -205,9 +205,9 @@ function communityAirDrop(amount){
 }
 	
 //setInterval(checkTime, 1000*60*60*25);
-//getUserVoting();
-//setShareLog();
-//airdropByWriting();
-communityAirDrop(1000);
+getUserVoting();
+setShareLog();
+airdropByWriting();
+//communityAirDrop(1000);
 			    
 							       
