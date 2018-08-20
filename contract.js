@@ -1,5 +1,5 @@
-const wasmUrl = "./contract/eosio.token.wasm";
-const abiUrl = "./contract/eosio.token.abi";
+const wasmUrl = "./newcontract/dab.wasm";
+const abiUrl = "./newcontract/dab.abi";
 
 const account = "eoscafekorea";
 
@@ -24,7 +24,7 @@ config = {
   expireInSeconds: 60,
   broadcast: true,
   verbose: false // API activity
-  //sign: true
+  sign: true
 }
 
 
