@@ -1,7 +1,7 @@
-const wasmUrl = "./newcontract/dab.wasm";
-const abiUrl = "./newcontract/dab.abi";
+const wasmUrl = "./contract/eosio.token.wasm";
+const abiUrl = "./contract/eosio.token.abi";
 
-const account = "eoscafekorea";
+const account = "awesometeddy";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -95,8 +95,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
-eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("awesometeddy", 0, 0, wasm) // @returns {Promise}
+eos.setabi("awesometeddy", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -126,10 +126,10 @@ async function transfer(from, to, amount){
 */
 
 
-createToken("eoscafekorea");
+createToken("awesometeddy");
 
-eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
-	console.log("eoscafekorea balance", result);
+eos.getCurrencyBalance("awesometeddy", "awesometeddy", 'DAB').then(function(result){
+	console.log("awesometeddy balance", result);
 });
                
 
