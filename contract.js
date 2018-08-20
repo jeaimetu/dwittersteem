@@ -16,7 +16,8 @@ var url = process.env.MONGODB_URI;
 
 
 config = {
-  chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906", // 32 byte (64 char) hex string
+  //chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+  chainId: "00000001536fe4bec69c38d68e1b3048ac6896d12a9007ad0d471a575380d82a",// 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
   //httpEndpoint: 'https://mainnet.eoscalgary.io',
   httpEndpoint:	"http://jungle.cryptolions.io:18888",
