@@ -127,6 +127,11 @@ async function transfer(from, to, amount){
 
 createToken("eoscafebeans");
 
+eos.getCurrencyBalance("eoscafebeans", "eoscafebeans", 'BEANS').then(function(result){
+	console.log("eoscafebeans balance", result);
+});
+               
+
 if(process.env.dist != "true")
 	return;
 
@@ -161,9 +166,6 @@ eos.transfer('eoscafekorea', 'awesometeddy', '1000.0000 DAB', '',options)
 //});
 
 
-eos.getCurrencyBalance("eoscafebeans", "eoscafebeans", 'BEANS').then(function(result){
-	console.log("eoscafebeans balance", result);
-});
-                                 
+                  
                                                                                                                      
                                                                                                                      
