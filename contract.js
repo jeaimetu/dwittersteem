@@ -125,10 +125,10 @@ async function transfer(from, to, amount){
 */
 
 
-createToken("eoscafebeans");
+createToken("eoscafekorea");
 
-eos.getCurrencyBalance("eoscafebeans", "eoscafebeans", 'BEANS').then(function(result){
-	console.log("eoscafebeans balance", result);
+eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'BEANS').then(function(result){
+	console.log("eoscafekorea balance", result);
 });
                
 
