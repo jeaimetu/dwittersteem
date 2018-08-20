@@ -1,7 +1,7 @@
 const wasmUrl = "./newcontract/eosio.token.wasm";
 const abiUrl = "./newcontract/eosio.token.abi";
 
-const account = "eoscafebeans";
+const account = "eoscafekorea";
 
 Eos = require('eosjs');
 const fs = require('fs');
