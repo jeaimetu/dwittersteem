@@ -23,8 +23,8 @@ config = {
   httpEndpoint:	"http://jungle.cryptolions.io:18888",
   expireInSeconds: 60,
   broadcast: true,
-  verbose: false, // API activity
-  sign: true
+  verbose: false // API activity
+  //sign: true
 }
 
 
