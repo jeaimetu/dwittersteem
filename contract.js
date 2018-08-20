@@ -19,7 +19,7 @@ config = {
   chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906", // 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
   //httpEndpoint: 'https://mainnet.eoscalgary.io',
-  httpEndpoint:	"http://jungle.cryptolions.io:18888"
+  httpEndpoint:	"http://jungle.cryptolions.io:18888",
   expireInSeconds: 60,
   broadcast: true,
   verbose: false, // API activity
