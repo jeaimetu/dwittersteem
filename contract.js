@@ -121,7 +121,7 @@ async function createToken(account){
 
 async function transfer(from, to, amount){
 	const myaccount = await eos.contract(from);
-	await myaccount.transfer(from, to, amount + " " + "DAB","");
+	await myaccount.transfer(from, to, amount + " " + "BEANS","");
 }
 
 
