@@ -30,6 +30,7 @@ config = {
 
 eos = Eos(config);
 
+/*
 function transfer(from, to, amount, msg){
 
 
@@ -41,6 +42,7 @@ function transfer(from, to, amount, msg){
 
 
 }
+*/
 
 function ttt(account,callback){
 	MongoClient.connect(url, function(err, db) {
@@ -111,7 +113,7 @@ async function createToken(account){
   //myaccount.create(account, '40000000000.0000 BEANS')//, options)
 
   // Issue some of the max supply for circulation into an arbitrary account
-  myaccount.issue(account, '40000000000.0000 BEANS', 'issue')
+  //myaccount.issue(account, '40000000000.0000 BEANS', 'issue')
 })
 
   //const balance = await eos.getCurrencyBalance(account, account, 'DAB')
