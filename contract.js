@@ -126,9 +126,13 @@ async function transfer(from, to, amount){
 */
 
 
-createToken("eoscafekorea");
+//createToken("eoscafekorea");
 
 eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'BEANS').then(function(result){
+	console.log("eoscafekorea balance", result);
+});
+
+eos.getCurrencyBalance("eoscafekorea", "awesometeddy", 'BEANS').then(function(result){
 	console.log("eoscafekorea balance", result);
 });
                
