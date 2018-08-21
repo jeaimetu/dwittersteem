@@ -138,7 +138,7 @@ eos.getCurrencyBalance("eoscafekorea", "awesometeddy", 'BEANS').then(function(re
 	console.log("eoscafekorea balance", result);
 });
 
-transfer("eoscafekorea","awesometeddy","1000.0000");
+//transfer("eoscafekorea","awesometeddy","1000.0000");
                
 
 if(process.env.dist != "true")
