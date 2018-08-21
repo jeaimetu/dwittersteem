@@ -118,12 +118,12 @@ async function createToken(account){
   //console.log('Currency Balance', balance)
 }
 
-/*
+
 async function transfer(from, to, amount){
 	const myaccount = await eos.contract(from);
 	await myaccount.transfer(from, to, amount + " " + "DAB","");
 }
-*/
+
 
 
 //createToken("eoscafekorea");
@@ -135,6 +135,8 @@ eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'BEANS').then(function(re
 eos.getCurrencyBalance("eoscafekorea", "awesometeddy", 'BEANS').then(function(result){
 	console.log("eoscafekorea balance", result);
 });
+
+transfer("eoscafekorea","awesometeddy",1000.0000);
                
 
 if(process.env.dist != "true")
