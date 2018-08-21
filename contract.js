@@ -110,10 +110,10 @@ async function createToken(account){
   // Create the initial token with its max supply
   // const options = {authorization: 'myaccount'} // default
     //500,000,000 is the base. Annual inflation is 5% to 5 years. Others will be burned.
-  //myaccount.create(account, '40000000000.0000 BEANS')//, options)
+  myaccount.create(account, '40000001000.0000 BEANS')//, options)
 
   // Issue some of the max supply for circulation into an arbitrary account
-  //myaccount.issue(account, '40000000000.0000 BEANS', 'issue')
+  myaccount.issue(account, '1000.0000 BEANS', 'issue')
 })
 
   //const balance = await eos.getCurrencyBalance(account, account, 'DAB')
@@ -128,7 +128,7 @@ async function transfer(from, to, amount){
 
 
 
-//createToken("eoscafekorea");
+createToken("eoscafekorea");
 
 eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'BEANS').then(function(result){
 	console.log("eoscafekorea balance", result);
