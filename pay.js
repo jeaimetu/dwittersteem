@@ -10,8 +10,8 @@ var url = process.env.MONGODB_URI;
 var totalUser = 0;
 var totalSumOfVoting = 0;
 const votingFactor = 3;
-const distributionForDay = 6500;
-const postingDistributionForDay = 6500;
+const distributionForDay = 5000;
+const postingDistributionForDay = 5000;
 
 function getUserVoting(){
 	MongoClient.connect(url, (err, db) => {
