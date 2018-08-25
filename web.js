@@ -7,6 +7,8 @@
 //require("./pay.js");
 //require("./contract");
 
+require("./scatter");
+
 
 
 
