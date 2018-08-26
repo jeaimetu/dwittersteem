@@ -1,3 +1,5 @@
+import * as Eos from 'eosjs';
+
 
 document.addEventListener('scatterLoaded', scatterExtension => {
     // Scatter will now be available from the window scope.
@@ -10,7 +12,7 @@ const requiredFields = {
     accounts:[ { blockchain:'eos', chainId:'aca....' } ]
 };
 	function gfScatterLogin(){
-		import * as Eos from 'eosjs';
+
 		
 		const network = {
     blockchain:'eos',
