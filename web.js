@@ -540,7 +540,7 @@ function readData(account, page, cb){
 
 app.get("/", (req, res, next) => {
     const data = "something else";
-    req.vueOptions: {
+    let req.vueOptions = {
         head: {
             title: 'Page Title',
             metas: [
