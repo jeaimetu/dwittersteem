@@ -539,9 +539,7 @@ function readData(account, page, cb){
   });
 
 app.get("/", (req, res, next) => {
-    const data: {
-        otherData: 'Something Else' 
-    };
+    const data = "something else";
     req.vueOptions: {
         head: {
             title: 'Page Title',
