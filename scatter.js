@@ -1,4 +1,4 @@
-//import * as Eos from 'eosjs';
+import * as Eos from 'eosjs';
 
 
 document.addEventListener('scatterLoaded', scatterExtension => {
