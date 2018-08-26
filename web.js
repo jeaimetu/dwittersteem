@@ -538,7 +538,7 @@ function readData(account, page, cb){
 
   });
 
-app.get("/", (req, res) => {
+app.get("/index.html", (req, res) => {
 	console.log("calling vue case");
     const data = "something else";
      req.vueOptions = {
