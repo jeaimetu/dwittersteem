@@ -550,7 +550,8 @@ app.get("/index.html", (req, res) => {
             ]
         }    
     }
-    res.renderVue('main.vue', data, req.vueOptions);
+    //res.renderVue('main.vue', data, req.vueOptions);
+	res.renderVue('main.vue');
 });
 
  /* serves all the static files */
