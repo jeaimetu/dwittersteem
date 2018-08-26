@@ -13,6 +13,7 @@
 
 
 var express = require('express');
+var exprocessVue = require("express-vue");
 var bodyParser     =        require("body-parser");
 var app = express();
 var path = require('path');
@@ -38,6 +39,8 @@ store.on('error', function(error) {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+const expressVueMiddleware = expressVue.init();
+app.use(expressVueMiddleware);
 
 //mongo DB
 var mongo = require('mongodb');
@@ -534,6 +537,22 @@ function readData(account, page, cb){
 	  
 
   });
+
+app.get("/", (req, res, next) => {
+    const data: {
+        otherData: 'Something Else' 
+    };
+    req.vueOptions: {
+        head: {
+            title: 'Page Title',
+            metas: [
+                { property:'og:title', content: 'Page Title'},
+                { name:'twitter:title', content: 'Page Title'},
+            ]
+        }    
+    }
+    res.renderVue('main.vue', data, req.vueOptions);
+});
 
  /* serves all the static files */
  app.get(/^(.+)$/, function(req, res){ 
