@@ -13,7 +13,7 @@
 
 
 var express = require('express');
-Const expressVue = require("express-vue");
+const expressVue = require("express-vue");
 var bodyParser     =        require("body-parser");
 var app = express();
 var path = require('path');
