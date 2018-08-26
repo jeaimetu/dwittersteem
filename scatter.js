@@ -7,11 +7,8 @@ document.addEventListener('scatterLoaded', scatterExtension => {
     // and ready for use.
     const scatter = window.scatter;
 })
-const blockchain = Blockchains.EOS;
-const requiredFields = {
-    accounts:[ { blockchain:'eos', chainId:'aca....' } ]
-};
-	function gfScatterLogin(){
+
+function gfScatterLogin(){
 
 		
 		const network = {
