@@ -4,7 +4,7 @@
 //require("./airdrop");
 //const bcrypt = require('bcrypt');
 //require("./publish.js");
-//require("./pay.js");
+require("./pay.js");
 //require("./contract");
 
 //require("./scatter");
