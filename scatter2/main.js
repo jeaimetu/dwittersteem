@@ -145,7 +145,7 @@ function vote(){
     //var account = document.getElementById('eos-account').value;
     
     //eosScatter = scatter.eos(network, Eos, eosOptions, "http");
-    const account = eos.identity.accounts.find(x => x.blockchain === 'eos')
+    const account = scatter.identity.accounts.find(x => x.blockchain === 'eos')
     //const account = document.getElementById('eos-account').value;
     const options = {authorization:[{actor:account.name, permission:account.authority }] };
     
