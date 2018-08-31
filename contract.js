@@ -92,13 +92,13 @@ return;
 */
   
 
-wasm = fs.readFileSync(wasmUrl);  
-abi = fs.readFileSync(abiUrl);
+//wasm = fs.readFileSync(wasmUrl);  
+//abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("publytoken11", 0, 0, wasm) // @returns {Promise}
-eos.setabi("publytoken11", JSON.parse(abi)) // @returns {Promise}
+//eos.setcode("publytoken11", 0, 0, wasm) // @returns {Promise}
+//eos.setabi("publytoken11", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -128,7 +128,7 @@ async function transfer(from, to, amount){
 
 
 
-createToken("publytoken11 ");
+createToken("publytoken11");
 
 eos.getCurrencyBalance("publytoken11", "publytoken11", 'PUB').then(function(result){
 	console.log("publytoken11 balance", result);
