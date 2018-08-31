@@ -145,11 +145,11 @@ function vote(){
     //var account = document.getElementById('eos-account').value;
     
     //eosScatter = scatter.eos(network, Eos, eosOptions, "http");
-    //const account = scatter.identity.accounts.find(x => x.blockchain === 'eos')
-    const account = document.getElementById('eos-account').value;
+    const account = eos.identity.accounts.find(x => x.blockchain === 'eos')
+    //const account = document.getElementById('eos-account').value;
     const options = {authorization:[{actor:account.name, permission:account.authority }] };
     
-    scatter.contract('elements').then(contract => {
+    eos.contract('elements').then(contract => {
         contract.transfer(account,"awesometeddy", "2000.0000 DAB", "Scatter test");
     })
     .catch(err => {
