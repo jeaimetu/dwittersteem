@@ -1,7 +1,7 @@
-const wasmUrl = "./leapcontract/eosio.token.wasm";
-const abiUrl = "./leapcontract/eosio.token.abi";
+const wasmUrl = "./contract/eosio.token.wasm";
+const abiUrl = "./contract/eosio.token.abi";
 
-const account = "eoscafekorea";
+const account = "publytoken11";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -16,11 +16,11 @@ var url = process.env.MONGODB_URI;
 
 
 config = {
-  //chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-  chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca",// 32 byte (64 char) hex string
+  chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+  //chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca",// 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
-  //httpEndpoint: 'https://mainnet.eoscalgary.io',
-  httpEndpoint:	"http://193.93.219.219:8888",
+  httpEndpoint: 'https://mainnet.eoscalgary.io',
+  //httpEndpoint:	"http://193.93.219.219:8888",
   expireInSeconds: 60,
   broadcast: true,
   verbose: false, // API activity
@@ -97,8 +97,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-//eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
-//eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("publytoken11", 0, 0, wasm) // @returns {Promise}
+eos.setabi("publytoken11", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -110,10 +110,10 @@ async function createToken(account){
   // Create the initial token with its max supply
   // const options = {authorization: 'myaccount'} // default
     //500,000,000 is the base. Annual inflation is 5% to 5 years. Others will be burned.
-  myaccount.create(account, '40000003000.0000 BEANS')//, options)
+  myaccount.create(account, '10000000000.0000 PUB')//, options)
 
   // Issue some of the max supply for circulation into an arbitrary account
-  myaccount.issue(account, '2000.0000 BEANS', 'issue')
+  myaccount.issue(account, '10000000000.0000 PUB', 'issue')
 })
 
   //const balance = await eos.getCurrencyBalance(account, account, 'DAB')
@@ -128,14 +128,14 @@ async function transfer(from, to, amount){
 
 
 
-//createToken("eoscafekorea");
+createToken("publytoken11 ");
 
-eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'BEANS').then(function(result){
-	console.log("eoscafekorea balance", result);
+eos.getCurrencyBalance("publytoken11", "publytoken11", 'PUB').then(function(result){
+	console.log("publytoken11 balance", result);
 });
 
-eos.getCurrencyBalance("eoscafekorea", "awesometeddy", 'BEANS').then(function(result){
-	console.log("eoscafekorea balance", result);
+eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'PUB').then(function(result){
+	console.log("publytoken11 balance", result);
 });
 
 //transfer("eoscafekorea","awesometeddy","1000.0000");
