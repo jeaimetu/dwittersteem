@@ -185,7 +185,7 @@ function vote2 () {
         
         document.getElementById('vote').disabled = false;
     }).catch(err => {
-        console.error(err);
+        console.log(err);
         if (typeof err == "string") {
             err = JSON.parse(err);
             var message = `Error: ${err.error.details[0].message}`;
