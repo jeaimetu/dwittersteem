@@ -142,8 +142,9 @@ function refreshKeys() {
 
 function vote(){
     const eos = getEos();
-    scatter.getIdentity();
+    scatter.getIdentity({ accounts:[this.eosNetwork] } );
     //var account = document.getElementById('eos-account').value;
+    scatter.authenticate();
     eos.transfer("eoscafekorea","awesometeddy" , "1000.0000 DAB", "Scatter test");
 
 
