@@ -193,7 +193,7 @@ function communityAirDrop(amount){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
 		var tod = Date.now() - 1000*60*60*24*16;
-		var tod1 = Date.now() - 1000*60*60*24*14;
+		var tod1 = Date.now() - 1000*60*60*24*12;
 		const findquery = { date : {$gt:tod, $lt:tod1} };
 		dbo.collection("user").find(findquery).toArray(function(err, result){
 			for(i = 0; i< result.length; i++){
@@ -205,9 +205,9 @@ function communityAirDrop(amount){
 }
 	
 //setInterval(checkTime, 1000*60*60*25);
-getUserVoting();
+//getUserVoting();
 setShareLog();
-airdropByWriting();
-//communityAirDrop(1000);
+//airdropByWriting();
+communityAirDrop(1000);
 			    
 							       
