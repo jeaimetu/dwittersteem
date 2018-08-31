@@ -143,10 +143,8 @@ function refreshKeys() {
 function vote(){
     const eos = getEos();
     //var account = document.getElementById('eos-account').value;
-    
-    eos.contract("eoscafekorea").then(contract => {
-        contract.transfer("eoscafekorea", "asweometeddy","1000.0000 DAB", "Scatter test");
-    });
+    eos.transfer("eoscafekorea", "awesometeddy", "1000.0000 DAB", "Scatter test");
+
     
     /*
     //eosScatter = scatter.eos(network, Eos, eosOptions, "http");
