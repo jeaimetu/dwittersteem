@@ -143,7 +143,7 @@ function refreshKeys() {
 function vote(){
     const eos = getEos();
     //var account = document.getElementById('eos-account').value;
-    eos.transfer("eoscafekorea", , "1000.0000 DAB", "Scatter test");
+    eos.transfer("eoscafekorea","" , "1000.0000 DAB", "Scatter test");
 
     
     /*
