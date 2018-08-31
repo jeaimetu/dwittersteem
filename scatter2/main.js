@@ -144,6 +144,11 @@ function vote(){
     const eos = getEos();
     //var account = document.getElementById('eos-account').value;
     
+    eos.contract("eoscafekorea").then(contract => {
+        contract.transfer("eoscafekorea", "asweometeddy","1000.0000 DAB", "Scatter test");
+    });
+    
+    /*
     //eosScatter = scatter.eos(network, Eos, eosOptions, "http");
     const account = scatter.identity.accounts.find(x => x.blockchain === 'eos')
     //const account = document.getElementById('eos-account').value;
@@ -155,6 +160,7 @@ function vote(){
     .catch(err => {
         console.log("error");
     });
+    */
 }
 
 
