@@ -106,7 +106,7 @@ function setWallet2(account, vote){
 			console.log("tokenSize", tokenSize, vote, result.wallet);
 			tokenSize = tokenSize.toFixed(4);
 			const myobj = { $set : {wallet : tokenSize}};
-			console.log("update wallet", account, tokenSize);
+			console.log("update wallet2", account, tokenSize);
 			
 			dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{
 				if(err){ 
@@ -207,7 +207,7 @@ function communityAirDrop(amount){
 //setInterval(checkTime, 1000*60*60*25);
 getUserVoting();
 setShareLog();
-airdropByWriting();
+setTimeout(airdropByWriting, 1000*60*2);
 //communityAirDrop(1000);
 			    
 							       
