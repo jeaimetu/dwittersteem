@@ -146,6 +146,7 @@ function checkTime(){
 				getUserVoting();
 				setShareLog();
 				setTimeout(airdropByWriting, 1000*60*2);
+				setTimeout(airdropByStaking, 1000*60*3);
 			}else{
 				console.log("do not do airdrop");
 			}
@@ -203,7 +204,7 @@ function airdropByStaking(){
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);
 				const account = result[i].account;
-				//setWallet2(account, tokenSize);				
+				setWallet2(account, tokenSize);				
 				console.log("airdropByStaking", account, tokenSize, totalStaking);
 			}
 			db.close();
@@ -228,11 +229,11 @@ function communityAirDrop(amount){
 	});	
 }
 	
-//setInterval(checkTime, 1000*60*10);
+setInterval(checkTime, 1000*60*10);
 //getUserVoting();
 //setShareLog();
 //setTimeout(airdropByWriting, 1000*60*2);
 //communityAirDrop(1000);
-airdropByStaking();
+//airdropByStaking();
 			    
 							       
