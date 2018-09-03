@@ -97,8 +97,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("thebeantoken", 0, 0, wasm) // @returns {Promise}
-eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
+//eos.setcode("thebeantoken", 0, 0, wasm) // @returns {Promise}
+//eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
 
 
 
