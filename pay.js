@@ -193,7 +193,7 @@ function airdropByWriting(){
 function airdropByStaking(){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
-		dbo.collection("user").fine({}).toArray(function(err, result){
+		dbo.collection("user").find({}).toArray(function(err, result){
 			const totalStaking = 0;
 			for(i = 0; i < result.length ; i++)
 				totalStaking += result[i].wallet;
