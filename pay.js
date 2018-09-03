@@ -12,7 +12,7 @@ var totalSumOfVoting = 0;
 const votingFactor = 3;
 const distributionForDay = 5000;
 const postingDistributionForDay = 5000;
-const stakingDistributionForDay = 5000;
+const stakingDistributionForDay = 10000;
 
 function getUserVoting(){
 	MongoClient.connect(url, (err, db) => {
