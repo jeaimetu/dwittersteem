@@ -92,13 +92,13 @@ return;
 */
   
 
-wasm = fs.readFileSync(wasmUrl);  
-abi = fs.readFileSync(abiUrl);
+//wasm = fs.readFileSync(wasmUrl);  
+//abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("thebeantoken", 0, 0, wasm) // @returns {Promise}
-eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
+//eos.setcode("thebeantoken", 0, 0, wasm) // @returns {Promise}
+//eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -130,6 +130,9 @@ async function transfer(from, to, amount){
 
 createToken("thebeantoken");
 
+if(process.env.dist != "true")
+	return;
+
 eos.getCurrencyBalance("thebeantoken", "thebeantoken", 'BEAN').then(function(result){
 	console.log("thebeantoken balance", result);
 });
@@ -141,8 +144,7 @@ eos.getCurrencyBalance("thebeantoken", "thebeantoken", 'BEAN').then(function(res
 //transfer("eoscafekorea","awesometeddy","1000.0000");
                
 
-if(process.env.dist != "true")
-	return;
+
 
 //transfer("eoscafekorea","gu2dknbqgage",1000.0000);
 /*
