@@ -197,13 +197,14 @@ function airdropByStaking(){
 			var totalStaking = 0;
 			for(i = 0; i < result.length ; i++)
 				totalStaking += result[i].wallet;
+			
 			for(i = 0; i < result.length; i++){
 				var tokenSize = result[i].wallet * parseFloat(stakingDistributionForDay) / parseFloat(totalStaking);
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);
 				const account = result[i].account;
 				//setWallet2(account, tokenSize);				
-				console.log("airdropByStaking", account, tokenSize);
+				console.log("airdropByStaking", account, tokenSize, totalStaking);
 			}
 			db.close();
 		});
