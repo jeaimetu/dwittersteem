@@ -41,7 +41,7 @@ function getUserVoting(){
 function getTotalVoting(res){
 	totalSumOfVoting = 0;
 	for(i = 0;i < res.length; i++)
-		totalSumOfVoting += res[i].vote;
+		totalSumOfVoting += parseFloat(res[i].vote);
 	return totalSumOfVoting;
 }
 
@@ -196,10 +196,10 @@ function airdropByStaking(){
 		dbo.collection("user").find({}).toArray(function(err, result){
 			var totalStaking = 0;
 			for(i = 0; i < result.length ; i++)
-				totalStaking += result[i].wallet;
+				totalStaking += parseFloat(result[i].wallet);
 			
 			for(i = 0; i < result.length; i++){
-				var tokenSize = result[i].wallet * parseFloat(stakingDistributionForDay) / parseFloat(totalStaking);
+				var tokenSize = parseFloat(result[i].wallet) * parseFloat(stakingDistributionForDay) / parseFloat(totalStaking);
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);
 				const account = result[i].account;
