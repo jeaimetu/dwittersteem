@@ -110,10 +110,10 @@ async function createToken(account){
   // Create the initial token with its max supply
   // const options = {authorization: 'myaccount'} // default
     //500,000,000 is the base. Annual inflation is 5% to 5 years. Others will be burned.
-  myaccount.create(account, '21000000.0000 HARVEST')//, options)
+  myaccount.create(account, '21000000.0000 HONEYDAC')//, options)
 
   // Issue some of the max supply for circulation into an arbitrary account
-  myaccount.issue(account, '21000000.0000 HARVEST', 'issue')
+  myaccount.issue(account, '21000000.0000 HONEYDAC', 'issue')
 })
 
   //const balance = await eos.getCurrencyBalance(account, account, 'DAB')
