@@ -130,12 +130,18 @@ function prettyNumber(num) {
 }
 
 function refreshKeys() {
+    
+    var network = document.getElementById('network').value;
+    var ip = network.slice(network.lastIndexOf("/") + 1, network.lastIndexOf(":"));
+    var port = network.slice(network.lastIndexOf(":") + 1);
+    
     const requiredFields = {
         personal:['firstname'],
         accounts:[
             {blockchain:'eos', host:ip, port:port}
         ]
         };
+
     
     scatter.forgetIdentity()
         .then(scatter.getIdentity(requiredFields))
