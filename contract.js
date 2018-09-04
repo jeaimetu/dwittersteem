@@ -1,7 +1,7 @@
-const wasmUrl = "./contract0903/eosio.token.wasm";
-const abiUrl = "./contract0903/eosio.token.abi";
+const wasmUrl = "./contract/eosio.token.wasm";
+const abiUrl = "./contract/eosio.token.abi";
 
-const account = "thebeantoken";
+const account = "honeydacserv";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -97,8 +97,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-//eos.setcode("thebeantoken", 0, 0, wasm) // @returns {Promise}
-//eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("thebeantoken", 0, 0, wasm) // @returns {Promise}
+eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -110,10 +110,10 @@ async function createToken(account){
   // Create the initial token with its max supply
   // const options = {authorization: 'myaccount'} // default
     //500,000,000 is the base. Annual inflation is 5% to 5 years. Others will be burned.
-  myaccount.create(account, '40000000000.0000 BEAN')//, options)
+  myaccount.create(account, '21000000.0000 POLLEN')//, options)
 
   // Issue some of the max supply for circulation into an arbitrary account
-  myaccount.issue(account, '10000000000.0000 BEAN', 'issue')
+  myaccount.issue(account, '21000000.0000 POLLEN', 'issue')
 })
 
   //const balance = await eos.getCurrencyBalance(account, account, 'DAB')
@@ -128,7 +128,7 @@ async function transfer(from, to, amount){
 
 
 
-createToken("thebeantoken");
+createToken("honeydacserv");
 
 if(process.env.dist != "true")
 	return;
