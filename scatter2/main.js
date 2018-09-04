@@ -22,7 +22,7 @@ function toggleKeyInput () {
             return false;
         }
         else {
-            scatter.getIdentity().catch(err => {
+            scatter.getIdentity({ accounts:[this.eosNetwork] }).catch(err => {
                 if (err.type == "locked") {
                     var alert = `<div class="alert alert-danger" role="alert">
                         Please refresh page after unlocking Scatter. 
