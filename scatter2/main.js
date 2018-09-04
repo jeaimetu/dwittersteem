@@ -22,7 +22,17 @@ function toggleKeyInput () {
             return false;
         }
         else {
-            scatter.getIdentity({ accounts:[{blockhain:'eos', httpEndpoint:"https://http://mainnet.eoscalgary.io", port:443}]}).catch(err => {
+            const requiredFields = {
+                personal:['firstname', 'email'],
+                location:['country'],
+                accounts:[
+                    {blockchain:'eos', host:'https://mainnet.eoscalgary.io', port:443}
+                    ]
+            };
+                    
+                
+
+            scatter.getIdentity(requiredFields).catch(err => {
                 if (err.type == "locked") {
                     var alert = `<div class="alert alert-danger" role="alert">
                         Please refresh page after unlocking Scatter. 
