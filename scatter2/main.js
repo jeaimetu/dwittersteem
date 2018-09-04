@@ -130,8 +130,16 @@ function prettyNumber(num) {
 }
 
 function refreshKeys() {
+    const requiredFields = {
+        personal:['firstname', 'email'],
+        accounts:[
+            {blockchain:'eos', host:'127.0.0.1', port:8888},
+            {blockchain:'eth', chainId:1}
+        ]
+        };
+    
     scatter.forgetIdentity()
-        .then(scatter.getIdentity)
+        .then(scatter.getIdentity(requiredFields))
         .then(() => {
             var alert = `<div class="alert alert-info" role="alert">
                 Keys refreshed.
