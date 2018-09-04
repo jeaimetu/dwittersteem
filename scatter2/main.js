@@ -23,7 +23,6 @@ function toggleKeyInput () {
         }
         else {
             const requiredFields = {
-                personal:['firstname'],
                 accounts:[
                     {blockchain:'eos', host:'https://mainnet.eoscalgary.io', port:443}
                     ]
