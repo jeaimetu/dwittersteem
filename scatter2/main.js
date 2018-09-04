@@ -61,6 +61,7 @@ function getEos() {
     var network = document.getElementById('network').value;
     var ip = network.slice(network.lastIndexOf("/") + 1, network.lastIndexOf(":"));
     var port = network.slice(network.lastIndexOf(":") + 1);
+    console.log("getEos", method, network, ip, port);
     if (method == "scatter") {
         var scatterNetwork = {
             blockchain: 'eos',
