@@ -22,14 +22,14 @@ function toggleKeyInput () {
             return false;
         }
         else {
-            const requiredFields = {
-                accounts:[
-                    {blockchain:'eos', host:'https://mainnet.eoscalgary.io', port:443}
-                    ]
-            };
-                    
-                
-
+            const network = {
+                blockchain:'eos',
+                protocol:'https',
+                host:'nodes.get-scatter.com',
+                port:443,
+                chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
+            }
+            const requiredFields = { accounts:[network] };
             scatter.getIdentity(requiredFields).catch(err => {
                 if (err.type == "locked") {
                     var alert = `<div class="alert alert-danger" role="alert">
