@@ -1,5 +1,5 @@
-import ScatterJS from 'scatter.esm';
-import Eos from "eosjs";
+import ScatterJS from './scatter.esm';
+import Eos from "../eosjs";
 
 const network = {
     blockchain:'eos',
