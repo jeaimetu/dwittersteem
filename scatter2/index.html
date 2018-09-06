@@ -18,8 +18,8 @@
 	<script src="scatter.min.js"></script>
 	    <script src="main2.js"></script>
 	<script>
-		document.addEventListener('scatterLoaded', scatterExtension => {
-			const scatter = window.scatter;
+		document.addEventListener('scatterLoaded', () => {
+			this.scatter = window.scatter;
 			window.scatter = null;
 		});
 	</script>	
