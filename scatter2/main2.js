@@ -9,8 +9,8 @@ const network = {
 }
 
 
-function toggleKeyInput () {'scatterLoaded', scatterExtension => {
-  document.addEventListener(    
+function toggleKeyInput () {
+  document.addEventListener('scatterLoaded', scatterExtension => {    
       const scatter = window.scatter;
       window.scatter = null;
 
