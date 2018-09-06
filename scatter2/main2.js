@@ -13,7 +13,8 @@ function toggleKeyInput () {
   scatter.connect('My App').then(connected => {
     if(!connected) return false;
     
-    const scatter = scatter;
+      this.scatter = scatter;
+      window.scatter = null;
     
     const requiredFields = { accounts:[network] };
     scatter.getIdentity(requiredFields).then(() => {
