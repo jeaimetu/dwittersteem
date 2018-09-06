@@ -1,4 +1,4 @@
-
+import ScatterJS from 'scatter.esm';
 
 const network = {
     blockchain:'eos',
