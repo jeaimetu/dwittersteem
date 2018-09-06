@@ -13,9 +13,9 @@ const network = {
 
 
 function toggleKeyInput () {    
-    ScatterJS.scatter.connect('My App').then(connected => {
+    scatter.connect('My App').then(connected => {
         if(!connected) return false;
-        const scatter = ScatterJS.scatter;
+        
         
     const requiredFields = { accounts:[network] };
     scatter.getIdentity(requiredFields).then(() => {
