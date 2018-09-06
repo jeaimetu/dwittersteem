@@ -9,12 +9,13 @@ const network = {
 }
 
 
-function toggleKeyInput () {
-  scatter.connect('My App').then(connected => {
-    if(!connected) return false;
-    
-      this.scatter = scatter;
+function toggleKeyInput () {'scatterLoaded', scatterExtension => {
+  document.addEventListener(    
+      const scatter = window.scatter;
       window.scatter = null;
+
+
+
     
     const requiredFields = { accounts:[network] };
     scatter.getIdentity(requiredFields).then(() => {
