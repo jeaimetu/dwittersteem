@@ -1,4 +1,4 @@
-<script src="./scatter.min.js"></script>
+include('./scatter.min.js');
 
 const network = {
     blockchain:'eos',
