@@ -9,14 +9,7 @@ const network = {
 }
 
 
-function toggleKeyInput () {
-  document.addEventListener('scatterLoaded', scatterExtension => {    
-      const scatter = window.scatter;
-      window.scatter = null;
-
-
-
-    
+function toggleKeyInput () {    
     const requiredFields = { accounts:[network] };
     scatter.getIdentity(requiredFields).then(() => {
       const account = scatter.identity.accounts.find(x => x.blockchain === 'eos');
@@ -33,5 +26,5 @@ function toggleKeyInput () {
     }).catch(error => {
       console.error(error);
     });
-  });  
+
 }
