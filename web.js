@@ -9,7 +9,7 @@ require("./contract");
 
 //require("./scatter");
 
-const ScatterJS = require('scatter-js/dist/scatter.<SUFFIX>');
+const ScatterJS = require('scatter-js/dist/scatter.esm');
 
 
 
