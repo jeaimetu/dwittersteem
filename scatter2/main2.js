@@ -43,8 +43,9 @@ function toggleKeyInput () {
     }).catch(error => {
       console.error(error);
     });
-
-    });    */
+*/});
+    });
+}
     
 
-}
+
