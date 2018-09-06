@@ -1,4 +1,5 @@
 import ScatterJS from 'scatter.esm';
+import Eos from "eosjs";
 
 const network = {
     blockchain:'eos',
@@ -12,6 +13,10 @@ const network = {
 
 
 function toggleKeyInput () {    
+    ScatterJS.scatter.connect('My App').then(connected => {
+        if(!connected) return false;
+        const scatter = ScatterJS.scatter;
+        
     const requiredFields = { accounts:[network] };
     scatter.getIdentity(requiredFields).then(() => {
       const account = scatter.identity.accounts.find(x => x.blockchain === 'eos');
@@ -27,6 +32,7 @@ function toggleKeyInput () {
       });
     }).catch(error => {
       console.error(error);
+    });
     });
 
 }
