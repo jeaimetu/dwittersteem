@@ -30,7 +30,18 @@ function toggleKeyInput () {
                 chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
             }
             const requiredFields = { accounts:[network] };
-            scatter.getIdentity(requiredFields).catch(err => {
+            scatter.getIdentity(requiredFields).then(()=> {
+                const account = scatter.identity.accounts.find(x => x.blockchain === 'eos');
+                const eosOptions = { expireInSeconds:60 };
+                const eos = scatter.eos(network, Eos, eosOptions);
+                const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
+                eos.transfer(account.name, 'eoscafekorea', '1.0000 EOS', 'memo', transactionOptions).then(trx => {
+                    console.log(`Transaction ID: ${trx.transaction_id}`);
+                }).catch(error => {
+                    console.error(error);
+                });
+            }).catch(err => {
+                console.log(err);
                 if (err.type == "locked") {
                     var alert = `<div class="alert alert-danger" role="alert">
                         Please refresh page after unlocking Scatter. 
