@@ -9,6 +9,8 @@ require("./contract");
 
 //require("./scatter");
 
+import ScatterJS from 'scatter-js/dist/scatter.esm';
+
 
 
 
@@ -535,6 +537,17 @@ function readData(account, page, cb){
 	  //query Mongo DB
 	  readData(user, page,(result) => {res.send(result)});
 	  
+
+  });
+
+  app.post("/scat", function(req, res) { 
+	  ScatterJS.scatter.connect('YOUR_APP_NAME').then(connected => {
+		  if(connected){
+			  this.scatter = ScatterJS.scatter;
+			  window.scatter = null;
+			  console.log("connection success");
+		  }
+	  });
 
   });
 
