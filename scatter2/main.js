@@ -22,7 +22,9 @@ function toggleKeyInput () {
             return false;
         }
         else {
-            scatter.forgetIdentity().catch(error => {
+            scatter.forgetIdentity().then(()=>{
+            console.log("forget success");
+            }).catch(error => {
                 console.log(error);
             });
             const network = {
