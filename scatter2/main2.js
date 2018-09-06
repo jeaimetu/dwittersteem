@@ -26,7 +26,14 @@ function toggleKeyInput () {
       const transactionOptions = { authorization:[`${account.name}@${account.authority}`], broadcast: true, sign: true };
       console.log("acc", account);
         
+        async function transfer(from, to, amount){
+	const myaccount = await eos.contract(from);
+	await myaccount.transfer(from, to, amount + " " + "DAB",transactionOptions);
+}
+        
+        transfer(account.name, "eoscafekorea", "1.0000");
   
+        /*
 
       eos.transfer(account.name, 'eoscafekorea', '1.0000 DAB', '', transactionOptions).then(trx => {
         console.log(`Transaction ID: ${trx.transaction_id}`);
@@ -36,6 +43,7 @@ function toggleKeyInput () {
     }).catch(error => {
       console.error(error);
     });
+    */
     });
     
 
