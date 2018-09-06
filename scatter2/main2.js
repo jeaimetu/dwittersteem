@@ -46,7 +46,9 @@ function toggleKeyInput () {
        }
      }
    ]
- }).then(trx => {
+ })
+            
+            /*.then(trx => {
       //eos.transfer(account.name, 'eoscafekorea', '1.0000 DAB', '').then(trx => {
         console.log(`Transaction ID: ${trx.transaction_id}`);
       }).catch(error => {
@@ -56,5 +58,6 @@ function toggleKeyInput () {
       console.error(error);
     });
     });
+    */
 
 }
