@@ -9,7 +9,7 @@ require("./contract");
 
 //require("./scatter");
 
-import ScatterJS from 'scatter-js/dist/scatter.esm';
+const ScatterJS = require('scatter-js/dist/scatter.<SUFFIX>');
 
 
 
