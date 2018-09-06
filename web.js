@@ -540,16 +540,7 @@ function readData(account, page, cb){
 
   });
 
-  app.post("/scat", function(req, res) { 
-	  ScatterJS.scatter.connect('YOUR_APP_NAME').then(connected => {
-		  if(connected){
-			  this.scatter = ScatterJS.scatter;
-			  window.scatter = null;
-			  console.log("connection success");
-		  }
-	  });
 
-  });
 
 app.get("/index.html", (req, res) => {
 	console.log("calling vue case");
