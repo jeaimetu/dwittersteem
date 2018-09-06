@@ -6,8 +6,7 @@ const network = {
     protocol:'https',
     host:'mainnet.eoscalgary.io',
     port:443,
-    chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
-    sign : false
+    chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'
 }
 
 
@@ -24,7 +23,7 @@ function toggleKeyInput () {
       const eosOptions = { expireInSeconds:60 };
       const eos = scatter.eos(network, Eos, eosOptions);
       
-      const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
+      const transactionOptions = { authorization:[`${account.name}@${account.authority}`], broadcast: true, sign: true };
       console.log("acc", account);
         
   
