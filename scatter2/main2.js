@@ -1,3 +1,5 @@
+<script src="./scatter.min.js"></script>
+
 const network = {
     blockchain:'eos',
     protocol:'https',
