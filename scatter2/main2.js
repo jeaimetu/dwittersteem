@@ -10,7 +10,7 @@ const network = {
 
 ScatterJS.scatter.connect("Dabble").then(connected => {
     if(connected) return false;
-}
+});
 
 
 function toggleKeyInput () {    
