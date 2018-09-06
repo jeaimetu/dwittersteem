@@ -9,6 +9,8 @@ require("./contract");
 
 //require("./scatter");
 
+const ScatterJS = require('scatter-js');
+
 
 
 
@@ -537,6 +539,8 @@ function readData(account, page, cb){
 	  
 
   });
+
+
 
 app.get("/index.html", (req, res) => {
 	console.log("calling vue case");

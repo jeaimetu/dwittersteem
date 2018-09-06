@@ -1,5 +1,3 @@
-import ScatterJS from 'scatter-js/dist/scatter.esm';
-import Eos from 'eosjs';
 
 getProducers().then(checkLibertyBlock);
 
