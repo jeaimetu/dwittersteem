@@ -24,7 +24,7 @@ function toggleKeyInput () {
             return false;
         }
         else {
-            scatter.connect('My App').then(connected => {
+            //scatter.connect('My App').then(connected => {
             /*
             scatter.forgetIdentity().then(()=>{
             console.log("forget success");
@@ -44,12 +44,18 @@ function toggleKeyInput () {
                 const account = scatter.identity.accounts.find(x => x.blockchain === 'eos');
                 const eosOptions = { expireInSeconds:60 };
                 const eos = scatter.eos(network, Eos, eosOptions);
+                 eos.transaction(tr => {
+                     const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
+                    tr.transfer(account.name, 'eoscafekorea', '1.0000 DAB', 'memo', transactionOptions);
+                 })
+                /*
                 const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
                 eos.transfer(account.name, 'eoscafekorea', '1.0000 DAB', 'memo', transactionOptions).then(trx => {
                     console.log(`Transaction ID: ${trx.transaction_id}`);
                 }).catch(error => {
                     console.error(error);
                 });
+                */
             }).catch(err => {
                 console.log(err);
                 if (err.type == "locked") {
@@ -59,7 +65,7 @@ function toggleKeyInput () {
                     document.getElementById('alerts').innerHTML = alert;
                 }
             });
-            });
+            //});
         }
     }
 }
