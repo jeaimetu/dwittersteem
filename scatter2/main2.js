@@ -25,7 +25,29 @@ function toggleKeyInput () {
       
       //const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
       console.log("acc", account);
-      eos.transfer(account.name, 'eoscafekorea', '1.0000 DAB', '').then(trx => {
+        
+        eos
+ .transaction({
+   actions: [
+     {
+       account: “eoscafekorea”,
+       name: “transfer”,
+       authorization: [
+         {
+           actor: account.name,
+           permission: “active”
+         }
+       ],
+       data: {
+         from: account.name,
+         to: “eoscafekorea”,
+         quantity: `1.0000 DAB`,
+         memo: “some description of the transaction”
+       }
+     }
+   ]
+ }).then(trx => {
+      //eos.transfer(account.name, 'eoscafekorea', '1.0000 DAB', '').then(trx => {
         console.log(`Transaction ID: ${trx.transaction_id}`);
       }).catch(error => {
         console.error(error);
