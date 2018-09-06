@@ -15,14 +15,7 @@
 
 		gtag('config', 'UA-120276710-1');
 	</script>
-	<script src="scatter.min.js"></script>
-	    <script src="main2.js"></script>
-	<script>
-		document.addEventListener('scatterLoaded', () => {
-			this.scatter = window.scatter;
-			window.scatter = null;
-		});
-	</script>	
+	
 		
 
 </head>
@@ -61,6 +54,23 @@
         <label>Scatter</label>
     </div>
         
+		<script src="scatter.min.js"></script>
+	    <script src="main2.js"></script>
+	<script>
+		document.addEventListener('scatterLoaded', () => {
+			this.scatter = window.scatter;
+			window.scatter = null;
+		});
+		scatter.connect("Dabble").then(connected => {
+    if(connected){
+        this.scatter = scatter;
+        window.scatter = null;
+    }
+});
+	</script>
+	
+	
+	
     <div class="form-group">
         <input type="radio" name="signing-method" onchange="toggleKeyInput()" value="key" checked>
         <label>Private Key</label>
