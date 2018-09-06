@@ -1,4 +1,4 @@
-import ScatterJS from './scatter.esm.js';
+import ScatterJS from './scatter.min.js';
 //import Eos from "../eosjs.js";
 
 const network = {
