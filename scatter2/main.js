@@ -22,7 +22,9 @@ function toggleKeyInput () {
             return false;
         }
         else {
-            scatter.forgetIdentity();
+            scatter.forgetIdentity().catch(error => {
+                console.log(error);
+            });
             const network = {
                 blockchain:'eos',
                 protocol:'https',
