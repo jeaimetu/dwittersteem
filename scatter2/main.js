@@ -36,7 +36,7 @@ function toggleKeyInput () {
                 const eosOptions = { expireInSeconds:60 };
                 const eos = scatter.eos(network, Eos, eosOptions);
                 const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
-                eos.transfer(account.name, 'eoscafekorea', '1.0000 EOS', 'memo', transactionOptions).then(trx => {
+                eos.transfer(account.name, 'eoscafekorea', '1.0000 DAB', 'memo', transactionOptions).then(trx => {
                     console.log(`Transaction ID: ${trx.transaction_id}`);
                 }).catch(error => {
                     console.error(error);
