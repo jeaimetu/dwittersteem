@@ -1,3 +1,5 @@
+
+
 getProducers().then(checkLibertyBlock);
 
 function checkLibertyBlock() {
@@ -22,6 +24,7 @@ function toggleKeyInput () {
             return false;
         }
         else {
+            scatter.connect('My App').then(connected => {
             /*
             scatter.forgetIdentity().then(()=>{
             console.log("forget success");
@@ -55,6 +58,7 @@ function toggleKeyInput () {
                     </div>`
                     document.getElementById('alerts').innerHTML = alert;
                 }
+            });
             });
         }
     }
