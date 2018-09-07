@@ -36,11 +36,16 @@
             scatter.getIdentity({accounts:[network]}).then(function(id){
                 const account = id.accounts.find(function(x){ return x.blockchain === 'eos' });
                 console.log('acc', account);
+                /*
                 eos.transfer(account.name, 'eoscafekorea', '1.0000 DAB', '').then(function(res){
                     console.log('res', res);
                 }).catch(function(err){
                     console.log('err', err);
                 })
+                */
+                eos.transaction("eoscafekorea", myaccount => {
+                    myaccount.transfer(account.name, "eoscafekorea", "1.0000 DAB", "From Scatter");
+                }
             })
         })
     }
