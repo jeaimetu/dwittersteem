@@ -44,11 +44,7 @@
                 })
                 */
                 eos.transaction("eoscafekorea", myaccount => {
-                    myaccount.transfer(account.name, "eoscafekorea", "1.0000 DAB", "From Scatter", (error, result) => {
-                        if(error)
-                            console.log(error);
-                        console.log("transaction ID : ${result.transaction_id}");
-                    });
+                    myaccount.transfer(account.name, "eoscafekorea", "1.0000 DAB", "From Scatter");
                 });
             })
         })
