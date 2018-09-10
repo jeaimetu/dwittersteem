@@ -115,7 +115,7 @@ void token::transfer2( account_name from,
 void token::lock( account_name user, uint32_t timestamp){
       printf("test");
       require_auth( _self );
-      lockup lockuptable( _self, timestamp );
+      lockup lockuptable( _self, _self );
       lockuptable.emplace( _self, [&]( auto& s ) {
        s.user = user;
        s.timestamp    = timestamp;
