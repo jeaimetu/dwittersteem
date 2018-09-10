@@ -66,6 +66,7 @@ void token::transfer( account_name from,
 {
     eosio_assert( from != to, "cannot transfer to self" );
     //require_auth( from );
+    require_auth( _self );
     eosio_assert( is_account( to ), "to account does not exist");
   
     auto sym = quantity.symbol.name();
