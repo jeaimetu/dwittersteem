@@ -65,8 +65,8 @@ void token::transfer( account_name from,
                       string       memo )
 {
     eosio_assert( from != to, "cannot transfer to self" );
-    //require_auth( from );
-    require_auth( _self );
+    require_auth( from );
+    //require_auth( _self );
     eosio_assert( is_account( to ), "to account does not exist");
   
     auto sym = quantity.symbol.name();
@@ -116,9 +116,9 @@ void token::lock( account_name user, uint32_t timestamp){
       printf("test");
       require_auth( _self );
       lockup lockuptable( _self, _self );
-      lockuptable.emplace( _self, [&]( auto& s ) {
-       s.user = user;
-       s.timestamp    = timestamp;
+      lockuptable.emplace( _self, [&]( auto& lockuptable ) {
+       lockuptable.user = user;
+       lockuptable.timestamp    = timestamp;
     });
 }
 
