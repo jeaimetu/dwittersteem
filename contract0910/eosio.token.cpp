@@ -126,6 +126,25 @@ void token::lock( account_name user, uint32_t timestamp){
        lockuptable.timestamp    = timestamp;
     });
 }
+  
+void hi(account_name user){
+            _ttab ttabs(_self,_self);
+            
+            auto iter=ttabs.find(user);
+            if(iter==ttabs.end())
+            {
+                print("need insert\t"); 
+                ttabs.emplace(_self,[&](auto& ttab)
+                {
+                    ttab.to = user;
+                });
+            }
+            else
+            {
+                print("data already exist\t");
+            }
+            print("hello, world : ", name{user}, " 6");
+}
 
 void token::sub_balance( account_name owner, asset value ) {
    accounts from_acnts( _self, owner );
