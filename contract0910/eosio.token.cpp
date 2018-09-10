@@ -71,8 +71,8 @@ void token::transfer( account_name from,
   
   
     lockup lockuptable( _self, from );
-    auto existing = statstable.find( from );
-    eosio_assert( existing == statstable.end(), "send lockup is enabled" );
+    auto existing = lockuptable.find( from );
+    eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
   
     auto sym = quantity.symbol.name();
     stats statstable( _self, sym );
