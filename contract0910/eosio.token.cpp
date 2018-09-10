@@ -131,6 +131,7 @@ void token::hi(account_name user){
             _ttab ttabs(_self,_self);
             
             auto iter=ttabs.find(user);
+            eosio_assert(iter==ttabs.end(), "name already exists");
             if(iter==ttabs.end())
             {
                 print("need insert\t"); 
