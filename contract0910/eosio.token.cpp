@@ -127,7 +127,7 @@ void token::lock( account_name user, uint32_t timestamp){
     });
 }
   
-void hi(account_name user){
+void token::hi(account_name user){
             _ttab ttabs(_self,_self);
             
             auto iter=ttabs.find(user);
