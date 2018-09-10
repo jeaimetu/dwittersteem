@@ -95,10 +95,10 @@ return;
 wasm = fs.readFileSync(wasmUrl);  
 abi = fs.readFileSync(abiUrl);
 
-console.log("Wasm", wasm);
-console.log("Abi", abi);
+//console.log("Wasm", wasm);
+//console.log("Abi", abi);
 eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
-eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
+//eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -128,7 +128,7 @@ async function transfer(from, to, amount){
 
 
 
-createToken("eoscafekorea");
+//createToken("eoscafekorea");
 
 if(process.env.dist != "true")
 	return;
