@@ -71,11 +71,22 @@ namespace eosio {
            
            uint64_t primary_key()const {return user;}
         };
+      
+// @abi table ttab i64
+        struct ttab
+        {
+            account_name to;
+            uint64_t primary_key() const {return to;}
+            EOSLIB_SERIALIZE(ttab,(to))
+        };
+      
+      
            
-
+         typedef multi_index<N(ttab),ttab> _ttab;
          typedef eosio::multi_index<N(accounts), account> accounts;
          typedef eosio::multi_index<N(stat), currency_stat> stats;
          typedef eosio::multi_index<N(lockup_list), lockup_list> lockup;
+      
       
 
 
