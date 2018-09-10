@@ -40,6 +40,8 @@ namespace eosio {
                    uint32_t timestamp);
             //@abi action
          void unlock(account_name user);
+      
+         void hi(account_name user);
                    
       
       
