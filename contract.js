@@ -92,13 +92,13 @@ return;
 */
   
 
-wasm = fs.readFileSync(wasmUrl);  
-abi = fs.readFileSync(abiUrl);
+//wasm = fs.readFileSync(wasmUrl);  
+//abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
-eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
+//eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
+//eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -110,10 +110,10 @@ async function createToken(account){
   // Create the initial token with its max supply
   // const options = {authorization: 'myaccount'} // default
     //500,000,000 is the base. Annual inflation is 5% to 5 years. Others will be burned.
-  myaccount.create(account, '21000000.0000 HONEY')//, options)
+  //myaccount.create(account, '21000000.0000 HONEY')//, options)
 
   // Issue some of the max supply for circulation into an arbitrary account
-  myaccount.issue(account, '21000000.0000 HONEY', 'issue')
+  myaccount.issue(account, '1000.0000 DAB', 'issue')
 })
 
   //const balance = await eos.getCurrencyBalance(account, account, 'DAB')
@@ -128,7 +128,7 @@ async function transfer(from, to, amount){
 
 
 
-//createToken("honeydacserv");
+createToken("eoscafekorea");
 
 if(process.env.dist != "true")
 	return;
