@@ -118,13 +118,22 @@ void token::transfer2( account_name from,
 }
   
 void token::lock( account_name user, uint32_t timestamp){
-      printf("test");
-      require_auth( _self );
-      lockup lockuptable( _self, _self );
-      lockuptable.emplace( _self, [&]( auto& lockuptable ) {
-       lockuptable.user = user;
-       lockuptable.timestamp    = timestamp;
-    });
+
+      //require_auth( _self );
+    lockup lockuptable( _self, _self );
+	auto iter=lockuptable.find(user);
+	
+  
+  
+	if(iter == lockuptable.end())
+	{
+        lockuptable.emplace( _self, [&]( auto& lockuptable ) {
+        lockuptable.user = user;
+        lockuptable.timestamp    = timestamp;
+    	});
+	}else{
+		eosio_assert(iter==ttabs.end(), "name already exists");
+	}
 }
   
 void token::hi(account_name user){
