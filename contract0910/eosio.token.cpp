@@ -132,7 +132,7 @@ void token::lock( account_name user, uint32_t timestamp){
         lockuptable.timestamp    = timestamp;
     	});
 	}else{
-		eosio_assert(iter==ttabs.end(), "name already exists");
+		eosio_assert(iter==lockuptable.end(), "name already exists");
 	}
 }
   
