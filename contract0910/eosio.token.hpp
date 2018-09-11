@@ -72,6 +72,7 @@ namespace eosio {
            uint32_t timestamp;
            
            uint64_t primary_key()const {return user;}
+           EOSLIB_SERIALIZE(lockup_list,(user))
         };
       
 // @abi table ttab i64
