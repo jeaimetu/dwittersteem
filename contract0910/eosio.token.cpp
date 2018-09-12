@@ -137,6 +137,19 @@ void token::lock( account_name user, uint32_t duedate){
 		eosio_assert(iter==lockuptable.end(), "name already exists");
 	}
 }
+	
+void token::unlock( account_name user){
+	//check whether the account exists or not
+	//if accoint exists, then delete that account
+}
+	
+void token::updatelock( account_name user, uint32_t amount){
+	//change the account amount to use
+}
+	
+	
+	
+	
   
 void token::hi(account_name user){
             _ttab ttabs(_self,_self);
