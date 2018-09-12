@@ -7279,6 +7279,52 @@
      (i32.const 8)
     )
    )
+   (call $eosio_assert
+    (i32.ne
+     (i32.and
+      (get_local $4)
+      (i32.const -8)
+     )
+     (i32.const 8)
+    )
+    (i32.const 384)
+   )
+   (drop
+    (call $memcpy
+     (i32.add
+      (get_local $6)
+      (i32.const 8)
+     )
+     (i32.add
+      (get_local $7)
+      (i32.const 8)
+     )
+     (i32.const 8)
+    )
+   )
+   (call $eosio_assert
+    (i32.ne
+     (i32.and
+      (get_local $4)
+      (i32.const -4)
+     )
+     (i32.const 16)
+    )
+    (i32.const 384)
+   )
+   (drop
+    (call $memcpy
+     (i32.add
+      (get_local $6)
+      (i32.const 16)
+     )
+     (i32.add
+      (get_local $7)
+      (i32.const 16)
+     )
+     (i32.const 4)
+    )
+   )
    (i32.store offset=28
     (get_local $6)
     (get_local $1)
@@ -9096,7 +9142,7 @@
      (i32.load offset=4
       (i32.const 0)
      )
-     (i32.const 80)
+     (i32.const 96)
     )
    )
   )
@@ -9219,6 +9265,46 @@
       (i32.const 8)
      )
     )
+    (call $eosio_assert
+     (i32.const 1)
+     (i32.const 272)
+    )
+    (drop
+     (call $memcpy
+      (i32.or
+       (i32.add
+        (get_local $7)
+        (i32.const 64)
+       )
+       (i32.const 8)
+      )
+      (i32.add
+       (get_local $0)
+       (i32.const 8)
+      )
+      (i32.const 8)
+     )
+    )
+    (call $eosio_assert
+     (i32.const 1)
+     (i32.const 272)
+    )
+    (drop
+     (call $memcpy
+      (i32.add
+       (i32.add
+        (get_local $7)
+        (i32.const 64)
+       )
+       (i32.const 16)
+      )
+      (i32.add
+       (get_local $0)
+       (i32.const 16)
+      )
+      (i32.const 4)
+     )
+    )
     (i32.store offset=28
      (get_local $0)
      (tee_local $2
@@ -9243,7 +9329,7 @@
         (get_local $7)
         (i32.const 64)
        )
-       (i32.const 8)
+       (i32.const 20)
       )
      )
     )
@@ -9254,8 +9340,11 @@
        (i64.load
         (tee_local $4
          (i32.add
-          (get_local $7)
-          (i32.const 24)
+          (i32.add
+           (get_local $7)
+           (i32.const 8)
+          )
+          (i32.const 16)
          )
         )
        )
@@ -9462,7 +9551,7 @@
    (i32.const 0)
    (i32.add
     (get_local $7)
-    (i32.const 80)
+    (i32.const 96)
    )
   )
  )
