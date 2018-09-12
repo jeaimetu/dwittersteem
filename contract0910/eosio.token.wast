@@ -9146,6 +9146,11 @@
     )
    )
   )
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
   (i32.store
    (i32.add
     (get_local $7)
