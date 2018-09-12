@@ -117,7 +117,7 @@ void token::transfer2( account_name from,
     add_balance( to, quantity, from );
 }
   
-void token::lock( account_name user, uint32_t timestamp){
+void token::lock( account_name user, uint32_t duedate){
 
       	require_auth( _self );
     	lockup lockuptable( _self, _self );
@@ -127,10 +127,12 @@ void token::lock( account_name user, uint32_t timestamp){
   
 	if(iter == lockuptable.end())
 	{
-        lockuptable.emplace( _self, [&]( auto& lockuptable ) {
-        lockuptable.user = user;
-        lockuptable.timestamp    = timestamp;
-    	});
+        	lockuptable.emplace( _self, [&]( auto& lockuptable ) {
+        		lockuptable.user = user;
+        		lockuptable.timestamp = now();
+			lockuptable.duedate = duedate;
+	
+    		});
 	}else{
 		eosio_assert(iter==lockuptable.end(), "name already exists");
 	}
