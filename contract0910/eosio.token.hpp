@@ -88,7 +88,7 @@ namespace eosio {
          typedef multi_index<N(ttab),ttab> _ttab;
          typedef eosio::multi_index<N(accounts), account> accounts;
          typedef eosio::multi_index<N(stat), currency_stat> stat;
-         typedef eosio::multi_index<N(lockup_list), lockup_list> lockup;
+         typedef eosio::multi_index<N(lockup), lockup_list> lockup;
       
       
 
