@@ -119,8 +119,8 @@ void token::transfer2( account_name from,
   
 void token::lock( account_name user, uint32_t timestamp){
 
-      //require_auth( _self );
-    lockup lockuptable( _self, _self );
+      	require_auth( _self );
+    	lockup lockuptable( _self, _self );
 	auto iter=lockuptable.find(user);
 	
   
