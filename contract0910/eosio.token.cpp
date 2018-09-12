@@ -156,7 +156,7 @@ void token::updatelock( account_name user, uint64_t amount){
 	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account");
 	
 	lockuptable.modify(itr, _self, [&]( auto& lockuptable ) {
-		lockuptable.amount = amount;
+		lockuptable.amount += amount;
 	});	
 }
 	
@@ -182,6 +182,13 @@ void token::hi(account_name user){
                 print("data already exist\t");
             }
             print("hello, world : ", name{user}, " 6");
+}
+	
+void token::sub_modify(account_name owner, unit64_t amount){
+	//change account amount of _self without autority
+	//find owner
+	//change amount when tx, amount += amount
+	//change amount when rx, amount -= amount
 }
 
 void token::sub_balance( account_name owner, asset value ) {
