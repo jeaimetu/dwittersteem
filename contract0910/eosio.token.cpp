@@ -101,7 +101,7 @@ void token::transfer2( account_name from,
     eosio_assert( is_account( to ), "to account does not exist");
   
     auto sym = quantity.symbol.name();
-    stats statstable( _self, sym );
+    stat statstable( _self, sym );
     const auto& st = statstable.get( sym );
 
     require_recipient( from );
