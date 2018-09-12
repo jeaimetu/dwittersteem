@@ -17,7 +17,7 @@ void token::create( account_name issuer,
     eosio_assert( maximum_supply.is_valid(), "invalid supply");
     eosio_assert( maximum_supply.amount > 0, "max-supply must be positive");
 
-    stats statstable( _self, sym.name() );
+    stat statstable( _self, sym.name() );
     auto existing = statstable.find( sym.name() );
     eosio_assert( existing == statstable.end(), "token with symbol already exists" );
 
@@ -36,7 +36,7 @@ void token::issue( account_name to, asset quantity, string memo )
     eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
 
     auto sym_name = sym.name();
-    stats statstable( _self, sym_name );
+    stat statstable( _self, sym_name );
     auto existing = statstable.find( sym_name );
     eosio_assert( existing != statstable.end(), "token with symbol does not exist, create token before issue" );
     const auto& st = *existing;
@@ -75,7 +75,7 @@ void token::transfer( account_name from,
     eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
   
     auto sym = quantity.symbol.name();
-    stats statstable( _self, sym );
+    stat statstable( _self, sym );
     const auto& st = statstable.get( sym );
 
     require_recipient( from );
