@@ -69,10 +69,10 @@ namespace eosio {
         struct lockup_list {
            account_name user;
            uint64_t amount;
-           uint32_t timestamp;
+           uint32_t duedate;
            
            uint64_t primary_key()const {return user;}
-           EOSLIB_SERIALIZE(lockup_list,(user)(amount) (timestamp))
+           EOSLIB_SERIALIZE(lockup_list,(user)(amount) (duedate))
         };
       
 // @abi table ttab i64
