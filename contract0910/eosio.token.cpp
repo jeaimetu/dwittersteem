@@ -141,10 +141,23 @@ void token::lock( account_name user, uint32_t duedate){
 void token::unlock( account_name user){
 	//check whether the account exists or not
 	//if accoint exists, then delete that account
+	require_auth( _self );
+	lockup lockuptable(_self, _self);
+	auto itr = lockuptable.find(user);
+	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account");
+	lockuptable.erase(itr);	
 }
 	
-void token::updatelock( account_name user, uint32_t amount){
+void token::updatelock( account_name user, uint64_t amount){
 	//change the account amount to use
+	require_auth( _self );
+	lockup lockuptable(_self, _self);
+	auto itr = lockuptable.find(user);
+	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account");
+	
+	lockuptable.modify(itr, _self, [&]( auto& lockuptable ) {
+		lockuptable.amount = amount;
+	});	
 }
 	
 	
@@ -204,4 +217,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(hi)(lock) )
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(updatelock) )
