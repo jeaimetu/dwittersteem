@@ -72,7 +72,8 @@ namespace eosio {
             
 
          typedef eosio::multi_index<N(accounts), account> accounts;
-         typedef eosio::multi_index<N(stat), currency_stats> stats;
+         typedef eosio::multi_index<N(stat), currency_stats> stat;
+         typedef eosio::multi_index<N(lockup), lockup_list> lockup;
 
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
