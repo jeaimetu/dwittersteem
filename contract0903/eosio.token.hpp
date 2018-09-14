@@ -67,7 +67,7 @@ namespace eosio {
             uint32_t set_time;
             
             uint64_t primary_key()const {return user;}
-            OSLIB_SERIALIZE(lockup_list,(user)(allow_amount)(lockup_period)(set_time))
+            EOSLIB_SERIALIZE(lockup_list,(user)(allow_amount)(lockup_period)(set_time))
          };
             
 
