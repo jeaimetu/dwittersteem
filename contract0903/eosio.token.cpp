@@ -109,6 +109,33 @@ void token::transfer( account_name from,
     sub_balance( from, quantity );
     add_balance( to, quantity, payer );
 }
+  
+void token::lock( account_name user, uint32_t period){
+	require_auth( _self ); //only contract owner can do this
+	lockup lockuptable( _self, _self );
+	
+	auto iter=lockuptable.find(user);
+	
+	if(iter == lockuptable.end()){
+		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
+			lockuptable.user = user;
+			lockuptable.allow_amount = 0;
+			lockuptable.lockup_period = period;
+			lockuptable.set_time = now();
+		});
+	}else{
+		eosio_assert(iter==lockuptable.end(), "name already exists");
+	}
+}
+	
+void token::unlock( account_name user){
+	require_auth( _self );
+	lockup lockuptable(_self, _self);
+	auto itr = lockuptable.find(user);
+	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account");
+	lockuptable.erase(itr);	
+}
+	
 
 void token::sub_balance( account_name owner, asset value ) {
    accounts from_acnts( _self, owner );
@@ -146,4 +173,4 @@ void token::close( account_name owner, symbol_type symbol ) {
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(close)(retire) )
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(close)(retire)(lock)(unlock) )
