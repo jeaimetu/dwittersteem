@@ -92,6 +92,15 @@ void token::transfer( account_name from,
     eosio_assert( from != to, "cannot transfer to self" );
     require_auth( from );
     eosio_assert( is_account( to ), "to account does not exist");
+    
+    //check whether from is locked or not in the case of PUB token
+	if(quantity.symbol.compare("PUB") == 0){
+		lockuptbl lockuptable( _self, from );
+		auto existing = lockuptable.find( from );
+		eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
+	}
+
+	
     auto sym = quantity.symbol.name();
     stat statstable( _self, sym );
     const auto& st = statstable.get( sym );
@@ -111,6 +120,9 @@ void token::transfer( account_name from,
 }
   
 void token::lock( account_name user, uint32_t period){
+	
+	eosio_assert( is_account( user ), "lock account does not exist");
+
 	require_auth( _self ); //only contract owner can do this
 	locktbl lockuptable( _self, _self );
 	
@@ -124,15 +136,16 @@ void token::lock( account_name user, uint32_t period){
 			lockuptable.set_time = now();
 		});
 	}else{
-		eosio_assert(iter==lockuptable.end(), "name already exists");
+		eosio_assert(iter==lockuptable.end(), "lock account already exists in the table");
 	}
 }
 	
 void token::unlock( account_name user){
+	eosio_assert( is_account( user ), "unlock account does not exist");
 	require_auth( _self );
 	locktbl lockuptable(_self, _self);
 	auto itr = lockuptable.find(user);
-	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account");
+	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account in the table");
 	lockuptable.erase(itr);	
 }
 	
