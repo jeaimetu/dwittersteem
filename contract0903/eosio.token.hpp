@@ -34,18 +34,23 @@ namespace eosio {
                         string       memo );
 
          void close( account_name owner, symbol_type symbol );
+         //@abi action
+         void lock(account_name user, uint32_t period);
+         //@abi action
+         void unlock(account_name user);
 
          inline asset get_supply( symbol_name sym )const;
          
          inline asset get_balance( account_name owner, symbol_name sym )const;
 
       private:
+         //@abi table accounts i64
          struct account {
             asset    balance;
 
             uint64_t primary_key()const { return balance.symbol.name(); }
          };
-
+         //@abi table accounts i64
          struct currency_stats {
             asset          supply;
             asset          max_supply;
@@ -53,6 +58,18 @@ namespace eosio {
 
             uint64_t primary_key()const { return supply.symbol.name(); }
          };
+      
+         //@abi table accounts i64
+         struct lockup_list {
+            account_name user;
+            uint64_t allow_amount;
+            uint32_t lockup_period;
+            uint32_t set_time;
+            
+            uint64_t primary_key()const {return user;}
+            OSLIB_SERIALIZE(lockup_list,(user)(allow_amount)(lockup_period)(set_time))
+         }
+            
 
          typedef eosio::multi_index<N(accounts), account> accounts;
          typedef eosio::multi_index<N(stat), currency_stats> stats;
