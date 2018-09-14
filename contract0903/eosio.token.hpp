@@ -68,7 +68,7 @@ namespace eosio {
             
             uint64_t primary_key()const {return user;}
             OSLIB_SERIALIZE(lockup_list,(user)(allow_amount)(lockup_period)(set_time))
-         }
+         };
             
 
          typedef eosio::multi_index<N(accounts), account> accounts;
@@ -89,7 +89,7 @@ namespace eosio {
 
    asset token::get_supply( symbol_name sym )const
    {
-      stats statstable( _self, sym );
+      stat statstable( _self, sym );
       const auto& st = statstable.get( sym );
       return st.supply;
    }
