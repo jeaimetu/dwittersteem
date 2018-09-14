@@ -112,7 +112,7 @@ void token::transfer( account_name from,
   
 void token::lock( account_name user, uint32_t period){
 	require_auth( _self ); //only contract owner can do this
-	lockup lockuptable( _self, _self );
+	locktbl lockuptable( _self, _self );
 	
 	auto iter=lockuptable.find(user);
 	
@@ -130,7 +130,7 @@ void token::lock( account_name user, uint32_t period){
 	
 void token::unlock( account_name user){
 	require_auth( _self );
-	lockup lockuptable(_self, _self);
+	locktbl lockuptable(_self, _self);
 	auto itr = lockuptable.find(user);
 	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account");
 	lockuptable.erase(itr);	
