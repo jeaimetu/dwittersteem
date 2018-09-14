@@ -50,7 +50,7 @@ namespace eosio {
 
             uint64_t primary_key()const { return balance.symbol.name(); }
          };
-         //@abi table accounts i64
+         //@abi table stat i64
          struct currency_stat {
             asset          supply;
             asset          max_supply;
@@ -59,7 +59,7 @@ namespace eosio {
             uint64_t primary_key()const { return supply.symbol.name(); }
          };
       
-         //@abi table accounts i64
+         //@abi table lockup i64
          struct lockup_list {
             account_name user;
             uint64_t allow_amount;
