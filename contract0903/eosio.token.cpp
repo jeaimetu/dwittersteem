@@ -93,17 +93,17 @@ void token::transfer( account_name from,
     require_auth( from );
     eosio_assert( is_account( to ), "to account does not exist");
     
-    //check whether from is locked or not in the case of PUB token
-	if(quantity.symbol.compare("PUB") == 0){
-		lockuptbl lockuptable( _self, from );
-		auto existing = lockuptable.find( from );
-		eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
-	}
-
 	
     auto sym = quantity.symbol.name();
     stat statstable( _self, sym );
     const auto& st = statstable.get( sym );
+	
+	//check whether from is locked or not in the case of PUB token
+	if(quantity.symbol.name() == st.supply.symbol.name()){
+		locktbl lockuptable( _self, from );
+		auto existing = lockuptable.find( from );
+		eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
+	}
 
     require_recipient( from );
     require_recipient( to );
