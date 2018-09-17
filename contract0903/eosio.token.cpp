@@ -100,7 +100,7 @@ void token::transfer( account_name from,
 	
 	//check whether from is locked or not in the case of PUB token
 	if(quantity.symbol.name() == st.supply.symbol.name()){
-		locktbl lockuptable( _self, from );
+		locktbl lockuptable( _self, _self );
 		auto existing = lockuptable.find( from );
 		eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
 	}
