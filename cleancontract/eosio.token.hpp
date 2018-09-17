@@ -30,6 +30,11 @@ namespace eosio {
                         account_name to,
                         asset        quantity,
                         string       memo );
+        
+         void transfer2( account_name from,
+                        account_name to,
+                        asset        quantity,
+                        string       memo );
       
       
          inline asset get_supply( symbol_name sym )const;
@@ -37,12 +42,13 @@ namespace eosio {
          inline asset get_balance( account_name owner, symbol_name sym )const;
 
       private:
+         //@abi table accounts i64
          struct account {
             asset    balance;
 
             uint64_t primary_key()const { return balance.symbol.name(); }
          };
-
+         //@abi table stat i64
          struct currency_stats {
             asset          supply;
             asset          max_supply;
