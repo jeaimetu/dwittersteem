@@ -7629,9 +7629,9 @@
  (func $_ZN5eosio5token8transferEyyNS_5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE (type $FUNCSIG$vijjii) (param $0 i32) (param $1 i64) (param $2 i64) (param $3 i32) (param $4 i32)
   (local $5 i64)
   (local $6 i32)
-  (local $7 i64)
+  (local $7 i32)
   (local $8 i32)
-  (local $9 i32)
+  (local $9 i64)
   (local $10 i32)
   (local $11 i64)
   (local $12 i32)
@@ -7749,7 +7749,7 @@
    )
    (i64.store offset=64
     (get_local $14)
-    (tee_local $7
+    (tee_local $9
      (i64.load
       (get_local $0)
      )
@@ -7757,16 +7757,16 @@
    )
    (i64.store offset=72
     (get_local $14)
-    (get_local $1)
+    (get_local $9)
    )
    (block $label$1
     (block $label$2
      (br_if $label$2
       (i32.lt_s
-       (tee_local $9
+       (tee_local $8
         (call $db_find_i64
-         (get_local $7)
-         (get_local $1)
+         (get_local $9)
+         (get_local $9)
          (i64.const -8281824366476394496)
          (get_local $1)
         )
@@ -7782,7 +7782,7 @@
           (get_local $14)
           (i32.const 64)
          )
-         (get_local $9)
+         (get_local $8)
         )
        )
        (i32.add
@@ -7804,7 +7804,7 @@
    )
    (br_if $label$0
     (i32.eqz
-     (tee_local $8
+     (tee_local $7
       (i32.load offset=88
        (get_local $14)
       )
@@ -7825,11 +7825,11 @@
          )
         )
        )
-       (get_local $8)
+       (get_local $7)
       )
      )
      (loop $label$5
-      (set_local $9
+      (set_local $8
        (i32.load
         (tee_local $13
          (i32.add
@@ -7846,16 +7846,16 @@
       (block $label$6
        (br_if $label$6
         (i32.eqz
-         (get_local $9)
+         (get_local $8)
         )
        )
        (call $_ZdlPv
-        (get_local $9)
+        (get_local $8)
        )
       )
       (br_if $label$5
        (i32.ne
-        (get_local $8)
+        (get_local $7)
         (get_local $13)
        )
       )
@@ -7871,12 +7871,12 @@
      (br $label$3)
     )
     (set_local $13
-     (get_local $8)
+     (get_local $7)
     )
    )
    (i32.store
     (get_local $10)
-    (get_local $8)
+    (get_local $7)
    )
    (call $_ZdlPv
     (get_local $13)
@@ -7892,7 +7892,7 @@
    (br_if $label$7
     (i64.gt_u
      (i64.add
-      (tee_local $7
+      (tee_local $9
        (i64.load
         (get_local $3)
        )
@@ -7991,7 +7991,7 @@
   )
   (call $eosio_assert
    (i64.gt_s
-    (get_local $7)
+    (get_local $9)
     (i64.const 0)
    )
    (i32.const 1376)
@@ -8047,7 +8047,7 @@
    )
   )
   (i64.store
-   (tee_local $9
+   (tee_local $8
     (i32.add
      (i32.add
       (get_local $14)
@@ -8057,7 +8057,7 @@
     )
    )
    (i64.load
-    (tee_local $8
+    (tee_local $7
      (i32.add
       (get_local $3)
       (i32.const 8)
@@ -8097,7 +8097,7 @@
     (i32.const 8)
    )
    (i32.load
-    (get_local $9)
+    (get_local $8)
    )
   )
   (i64.store offset=48
@@ -8125,7 +8125,7 @@
    )
   )
   (i64.store
-   (tee_local $9
+   (tee_local $8
     (i32.add
      (i32.add
       (get_local $14)
@@ -8135,7 +8135,7 @@
     )
    )
    (i64.load
-    (get_local $8)
+    (get_local $7)
    )
   )
   (set_local $11
@@ -8164,7 +8164,7 @@
     (i32.const 8)
    )
    (i32.load
-    (get_local $9)
+    (get_local $8)
    )
   )
   (i64.store offset=32
@@ -8196,7 +8196,7 @@
   (block $label$14
    (br_if $label$14
     (i32.eqz
-     (tee_local $8
+     (tee_local $7
       (i32.load offset=128
        (get_local $14)
       )
@@ -8217,11 +8217,11 @@
          )
         )
        )
-       (get_local $8)
+       (get_local $7)
       )
      )
      (loop $label$17
-      (set_local $9
+      (set_local $8
        (i32.load
         (tee_local $13
          (i32.add
@@ -8238,16 +8238,16 @@
       (block $label$18
        (br_if $label$18
         (i32.eqz
-         (get_local $9)
+         (get_local $8)
         )
        )
        (call $_ZdlPv
-        (get_local $9)
+        (get_local $8)
        )
       )
       (br_if $label$17
        (i32.ne
-        (get_local $8)
+        (get_local $7)
         (get_local $13)
        )
       )
@@ -8263,12 +8263,12 @@
      (br $label$15)
     )
     (set_local $13
-     (get_local $8)
+     (get_local $7)
     )
    )
    (i32.store
     (get_local $3)
-    (get_local $8)
+    (get_local $7)
    )
    (call $_ZdlPv
     (get_local $13)
