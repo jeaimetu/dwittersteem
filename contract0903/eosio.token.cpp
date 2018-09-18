@@ -116,10 +116,22 @@ void token::transfer( account_name from,
 				t2 = (t2 - t1) / 60; //converting to milli seconds to minutes for testing
 				if(t2 == 0){
 					eosio_assert(false, "send lock is enable");
+				}else if(t2 > existing->lockup_period){
+					;//do nothing. Lock period expired
 				}else{
-					allow_amount = current_amount - existing->initial_amount;
-					allow_amount += (existing->initial_amount * t2) / existing->lockup_period;
-					eosio_assert(allow_amount.amount > 0, "send lock is enable");
+					if(current_amount <= existing->initial_amount){
+						allow_amount = ((existing->initial_amount * t2) / 
+								existing->lockup_period)(existing->initial_amount * t2) / 
+								existing->lockup_period - 
+								(existing->initial_amount - current_amount);
+						eosio_assert(allow_amount.amount >= quantity.amount, "send lock is enable");
+					}else(){
+						allow_amount = ((existing->initial_amount * t2) /
+								existing->lockup_period)(existing->initial_amount * t2) /
+								existing->lockup_period +
+								(current_amount - existing->initial_amount);
+						eosio_assert(allow_amount.amount >= quantity.amount, "send lock is enable");
+					}
 				}
 			}
 		}
