@@ -100,7 +100,7 @@ void token::transfer( account_name from,
 	
 	//check whether from is locked or not in the case of PUB token
 	if(quantity.symbol.name() == st.supply.symbol.name()){
-		locktbl lockuptable( _self, _self );
+		locktbl2 lockuptable( _self, _self );
 		auto existing = lockuptable.find( from );
 		if(existing != lockuptable.end()){
 			if(existing->lockup_period == 0){
@@ -139,7 +139,7 @@ void token::lock( account_name user, uint32_t period){
 	eosio_assert( is_account( user ), "lock account does not exist");
 
 	require_auth( _self ); //only contract owner can do this
-	locktbl lockuptable( _self, _self );
+	locktbl2 lockuptable( _self, _self );
 	
 	auto iter=lockuptable.find(user);
 	
@@ -159,7 +159,7 @@ void token::lock( account_name user, uint32_t period){
 void token::unlock( account_name user){
 	eosio_assert( is_account( user ), "unlock account does not exist");
 	require_auth( _self );
-	locktbl lockuptable(_self, _self);
+	locktbl2 lockuptable(_self, _self);
 	auto itr = lockuptable.find(user);
 	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account in the table");
 	lockuptable.erase(itr);	
