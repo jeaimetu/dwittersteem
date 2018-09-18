@@ -103,16 +103,16 @@ void token::transfer( account_name from,
 		locktbl lockuptable( _self, _self );
 		auto existing = lockuptable.find( from );
 		if(existing != lockuptable.end()){
-			if(existing.lockup_period == 0){
+			if(existing->lockup_period == 0){
 				eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
 			}else{
 				asset temp;
-				uint32_t t1 = existing.start_time;
+				uint32_t t1 = existing->start_time;
 				uint32_t t2 = now();
 				//converting to hour
 				//t2 = (t2 - t1) / (1000*60*60*24); //converting to milli seconds to days
 				t2 = (t2 - t1) / (1000*60); //converting to milli seconds to minutes for testing
-				temp = existing.initial_amount * t1;
+				temp = existing->initial_amount * t1;
 				temp /= t2;
 				eosio_assert(temp.amount <= 0, "send lock is enable");
 			}
@@ -146,9 +146,9 @@ void token::lock( account_name user, uint32_t period){
 	if(iter == lockuptable.end()){
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
-			lockuptable.allow_amount = 0;
+			lockuptable.initial_amount = 0;
 			lockuptable.lockup_period = period;
-			lockuptable.set_time = now();
+			lockuptable.start_time = now();
 		});
 	}else{
 		eosio_assert(iter==lockuptable.end(), "lock account already exists in the table");
