@@ -113,11 +113,14 @@ void token::transfer( account_name from,
 				uint32_t t2 = now();
 				//converting to hour
 				//t2 = (t2 - t1) / (1000*60*60*24); //converting to milli seconds to days
-				t2 = (t2 - t1) / (1000*60); //converting to milli seconds to minutes for testing
-				
-				allow_amount = current_amount - existing->initial_amount;
-				allow_amount = (existing->initial_amount * t1) / t2;
-				eosio_assert(allow_amount.amount <= 0, "send lock is enable");
+				t2 = (t2 - t1) / 60; //converting to milli seconds to minutes for testing
+				if(t2 == 0){
+					eosio_assert(false, "send lock is enable");
+				}else{
+					allow_amount = current_amount - existing->initial_amount;
+					allow_amount = (existing->initial_amount * t1) / t2;
+					eosio_assert(allow_amount.amount <= 0, "send lock is enable");
+				}
 			}
 		}
 		
