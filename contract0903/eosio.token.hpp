@@ -59,7 +59,7 @@ namespace eosio {
             uint64_t primary_key()const { return supply.symbol.name(); }
          };
       
-         //@abi table locktbl i64
+         //@abi table locktbl2 i64
          struct lockup_list {
             account_name user;
             asset initial_amount;
@@ -73,7 +73,7 @@ namespace eosio {
 
          typedef eosio::multi_index<N(accounts), account> accounts;
          typedef eosio::multi_index<N(stat), currency_stat> stat;
-         typedef eosio::multi_index<N(locktbl), lockup_list> locktbl;
+         typedef eosio::multi_index<N(locktbl2), lockup_list> locktbl2;
 
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
