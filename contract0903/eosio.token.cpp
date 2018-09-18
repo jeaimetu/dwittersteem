@@ -145,7 +145,7 @@ void token::lock( account_name user, uint32_t period){
 	
 	if(iter == lockuptable.end()){
 		//asset quantity = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "DAB")));
-		asset quantity = get_balance(user, "DAB");
+		asset quantity = get_balance(user, eosio::symbol_type(eosio::string_to_symbol(4, "DAB")));
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
 			lockuptable.initial_amount = quantity;
