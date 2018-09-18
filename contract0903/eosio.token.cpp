@@ -105,11 +105,9 @@ void token::transfer( account_name from,
 		if(existing != lockuptable.end()){
 			if(existing->lockup_period == 0){
 				eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
-			}else{
-				symbol_type current_amount = eosio::symbol_type(eosio::string_to_symbol(4, "DAB"));
-				asset current_amount = get_balance(user, temp.name());
-				
+			}else{				
 				asset allow_amount = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "DAB")));
+				asset current_amount = get_balance(from, allow_amount.symbol.name());
 				
 				uint32_t t1 = existing->start_time;
 				uint32_t t2 = now();
