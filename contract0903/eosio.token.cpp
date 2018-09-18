@@ -102,7 +102,22 @@ void token::transfer( account_name from,
 	if(quantity.symbol.name() == st.supply.symbol.name()){
 		locktbl lockuptable( _self, _self );
 		auto existing = lockuptable.find( from );
-		eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
+		if(existing != lockuptable.end()){
+			if(existing.lockup_period == 0){
+				eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
+			}else{
+				asset temp;
+				uint32_t t1 = existing.start_time;
+				uint32_t t2 = now();
+				//converting to hour
+				//t2 = (t2 - t1) / (1000*60*60*24); //converting to milli seconds to days
+				t2 = (t2 - t1) / (1000*60); //converting to milli seconds to minutes for testing
+				temp = existing.initial_amount * t1;
+				temp /= t2;
+				eosio_assert(temp.amount <= 0, "send lock is enable");
+			}
+		}
+		
 	}
 
     require_recipient( from );
