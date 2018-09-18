@@ -121,15 +121,13 @@ void token::transfer( account_name from,
 				}else{
 					if(current_amount <= existing->initial_amount){
 						allow_amount = ((existing->initial_amount * t2) / 
-								existing->lockup_period)(existing->initial_amount * t2) / 
-								existing->lockup_period - 
+								existing->lockup_period) - 
 								(existing->initial_amount - current_amount);
 						eosio_assert(allow_amount.amount >= quantity.amount, "send lock is enable");
-					}else(){
+					}else{
 						allow_amount = ((existing->initial_amount * t2) /
-								existing->lockup_period)(existing->initial_amount * t2) /
-								existing->lockup_period +
-								(current_amount - existing->initial_amount);
+								existing->lockup_period) - 
+								(current_amount - existing->initial_amount);								
 						eosio_assert(allow_amount.amount >= quantity.amount, "send lock is enable");
 					}
 				}
