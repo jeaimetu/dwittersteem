@@ -8320,9 +8320,9 @@
       (i32.const 832)
      )
      (call $eosio_assert
-      (i64.lt_s
+      (i64.gt_s
        (get_local $15)
-       (i64.const 1)
+       (i64.const 0)
       )
       (i32.const 1376)
      )
