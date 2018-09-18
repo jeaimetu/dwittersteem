@@ -62,9 +62,9 @@ namespace eosio {
          //@abi table locktbl i64
          struct lockup_list {
             account_name user;
-            uint64_t allow_amount;
+            asset initial_amount;
             uint32_t lockup_period;
-            uint32_t set_time;
+            uint32_t start_time;
             
             uint64_t primary_key()const {return user;}
             EOSLIB_SERIALIZE(lockup_list,(user)(allow_amount)(lockup_period)(set_time))
