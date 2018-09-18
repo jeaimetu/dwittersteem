@@ -147,6 +147,7 @@ void token::lock( account_name user, uint32_t period){
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
 			lockuptable.initial_amount.amount = 0;
+			lockuptable.initial_amount.symbol = "DAB";
 			lockuptable.lockup_period = period;
 			lockuptable.start_time = now();
 		});
