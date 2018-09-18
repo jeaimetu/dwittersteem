@@ -118,7 +118,7 @@ void token::transfer( account_name from,
 					eosio_assert(false, "send lock is enable");
 				}else{
 					allow_amount = current_amount - existing->initial_amount;
-					allow_amount = (existing->initial_amount * t1) / t2;
+					allow_amount += existing->initial_amount / t2;
 					eosio_assert(allow_amount.amount <= 0, "send lock is enable");
 				}
 			}
