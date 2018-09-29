@@ -26,14 +26,11 @@ namespace eosio {
 
          void issue( account_name to, asset quantity, string memo );
 
-         void retire( asset quantity, string memo );
-
          void transfer( account_name from,
                         account_name to,
                         asset        quantity,
                         string       memo );
 
-         void close( account_name owner, symbol_type symbol );
          //@abi action
          void lock(account_name user, uint32_t period);
          //@abi action
