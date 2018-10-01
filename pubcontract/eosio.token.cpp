@@ -7,27 +7,27 @@
 
 namespace eosio {
 
-void token::check_acc(account_name user, string memo){
+void token::check(account_name user, string memo){
 	require_auth(user);
 }
 
-void token::save_pub(account_name user, asset quantity){
+void token::save(account_name user, asset quantity){
 	require_auth(_self);
 }
 
-void token::draw_pub(account_name user, asset quantity){
+void token::draw(account_name user, asset quantity){
 	require_auth(_self);
 }
 
-void token::stake_pub(account_name from, account_name to, asset quantity){
+void token::stake(account_name from, account_name to, asset quantity){
 	require_auth(from);
 }
 
-void token::unstake_pub(account_name from, account_name to, asset quantity){
+void token::unstake(account_name from, account_name to, asset quantity){
 	require_auth(from);
 }
 
-void token::unstake_ink(account_name from){
+void token::update(account_name from){
 	require_auth(from);
 }
   
@@ -63,4 +63,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (check_account)(save_pub)(draw_pub)(stake_pub)(unstake_pub)(update_ink) )
+EOSIO_ABI( eosio::token, (check)(save)(draw)(stake)(unstake)(update) )
