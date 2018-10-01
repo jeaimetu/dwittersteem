@@ -7,7 +7,7 @@
 
 namespace eosio {
 
-void token::check_account(account_name user, string memo){
+void token::check_acc(account_name user, string memo){
 	require_auth(user);
 }
 
