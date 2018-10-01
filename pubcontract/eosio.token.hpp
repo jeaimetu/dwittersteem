@@ -22,7 +22,7 @@ namespace eosio {
          token( account_name self ):contract(self){}
 	   
          //@abi action
-         void check_account(account_name user, string memo);
+         void check_acc(account_name user, string memo);
          //@abi action
          void save_pub(account_name user, asset quantity);
 	     //@abi action
