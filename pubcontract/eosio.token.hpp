@@ -22,17 +22,17 @@ namespace eosio {
          token( account_name self ):contract(self){}
 	   
          //@abi action
-         void check_acc(account_name user, string memo);
+         void check(account_name user, string memo);
          //@abi action
-         void save_pub(account_name user, asset quantity);
+         void save(account_name user, asset quantity);
 	     //@abi action
-         void draw_pub(account_name user, asset quantity);
+         void draw(account_name user, asset quantity);
 	     //@abi action
-         void stake_pub(account_name from, account_name to, asset quantity);
+         void stake(account_name from, account_name to, asset quantity);
 	     //@abi action
-         void unstake_pub(account_name from,  account_name to, asset quantity);
+         void unstake(account_name from,  account_name to, asset quantity);
 	     //@abi action
-         void update_ink(account_name user);
+         void update(account_name user);
 	   
      
 
