@@ -265,9 +265,9 @@ function communityAirDrop(amount){
 	});	
 }
 	
-//setInterval(checkTime, 1000*60*10);
-getUserVoting();
-getUserVoting2();
+setInterval(checkTime, 1000*60*10);
+//getUserVoting();
+//getUserVoting2();
 //setShareLog();
 //setTimeout(airdropByWriting, 1000*60*2);
 //communityAirDrop(1000);
