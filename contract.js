@@ -84,11 +84,11 @@ eos.transaction(tr => {
 	  tr.buyrambytes({
     payer: 'publytokenio',
     receiver: 'publytokenio',
-    bytes: 2000*1024
+    bytes: 400*1024
   })
 });
 
-return;
+
 
   
 
