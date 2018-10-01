@@ -12,8 +12,10 @@ var totalSumOfVoting = 0;
 const votingFactor = 3;
 const distributionForDay = 5000;
 const postingDistributionForDay = 5000;
-const stakingDistributionForDay = 10000;
+const votingDistributionForDay = 5000;
+const stakingDistributionForDay = 5000;
 
+//distribution by voted article
 function getUserVoting(){
 	MongoClient.connect(url, (err, db) => {
 		sumVoting(db, (result) => {
@@ -22,8 +24,11 @@ function getUserVoting(){
 		});
 	});
 	var sumVoting = (db, callback) => {
+		var tod = Date.now() - 1000*60*60*24;
+		var tod1 = Date.now();
 		var agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
+			{$match : {date : {$gt:tod, $lt:tod1} }},
 			{$group: {_id:"$account", vote : { $sum : "$voting"}}}];
 		var dbo = db.db("heroku_dg3d93pq");
 		var cursor = dbo.collection('board').aggregate(agr).toArray( (err, res) => {
@@ -32,7 +37,35 @@ function getUserVoting(){
 			//update each users token in their wallet
 			getTotalVoting(res);
 			for(i = 0; i < res.length;i++){
-				setWallet(res[i]._id, res[i].vote);
+				setWallet(res[i]._id, res[i].vote, distributionForDay);
+			}
+		});
+	};
+}
+
+//distribution by my voting acitivity
+function getUserVoting2(){
+	MongoClient.connect(url, (err, db) => {
+		sumVoting(db, (result) => {
+			db.close();
+			console.log("getUserVoting2", result);
+		});
+	});
+	var sumVoting = (db, callback) => {
+		var tod = Date.now() - 1000*60*60*24;
+		var tod1 = Date.now();
+		var agr = [
+			{$match: {account: {$exists:true, $ne: null}}},
+			{$match : {date : {$gt:tod, $lt:tod1} }},
+			{$group: {_id:"$account", vote : { $sum : 1}}}];
+		var dbo = db.db("heroku_dg3d93pq");
+		var cursor = dbo.collection('voting').aggregate(agr).toArray( (err, res) => {
+			console.log(res);
+			totalUser = res.length;
+			//update each users token in their wallet
+			getTotalVoting(res);
+			for(i = 0; i < res.length;i++){
+				setWallet(res[i]._id, res[i].vote,votingDistributionForDay);
 			}
 		});
 	};
@@ -45,7 +78,7 @@ function getTotalVoting(res){
 	return totalSumOfVoting;
 }
 
-function setWallet(account, vote){
+function setWallet(account, vote, distSize){
 	console.log("setWallet", account, vote);
 
 	MongoClient.connect(url, (err, db) => {
@@ -64,13 +97,13 @@ function setWallet(account, vote){
 			}
 			const updatequery = {account : account};
 			
-			var tokenSize = (vote / totalSumOfVoting) * distributionForDay + parseFloat(result.wallet);
+			var tokenSize = (vote / totalSumOfVoting) * distSize + parseFloat(result.wallet);
 			//var tokenSize = (vote / totalSumOfVoting) * distributionForDay;
 			console.log("tokenSize", tokenSize, vote, totalSumOfVoting, result.wallet);
 			tokenSize = tokenSize.toFixed(4);
 			const myobj = { $set : {wallet : tokenSize}};
 			console.log("update wallet", account, tokenSize);
-			
+			/* commenting out for testing
 			dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{
 				if(err){ 
 					throw err;
@@ -78,6 +111,7 @@ function setWallet(account, vote){
 				}				
 				db.close();
 			});
+			*/
 		});
 			
 	});
@@ -146,7 +180,9 @@ function checkTime(){
 				getUserVoting();
 				setShareLog();
 				setTimeout(airdropByWriting, 1000*60*2);
-				setTimeout(airdropByStaking, 1000*60*3);
+				setTimeout(airdropByStaking, 1000*60*3);				
+				setTimeout(getUserVoting2, 1000*60*4);
+				
 			}else{
 				console.log("do not do airdrop");
 			}
@@ -229,8 +265,9 @@ function communityAirDrop(amount){
 	});	
 }
 	
-setInterval(checkTime, 1000*60*10);
-//getUserVoting();
+//setInterval(checkTime, 1000*60*10);
+getUserVoting();
+getUserVoting2();
 //setShareLog();
 //setTimeout(airdropByWriting, 1000*60*2);
 //communityAirDrop(1000);
