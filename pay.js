@@ -103,7 +103,7 @@ function setWallet(account, vote, distSize){
 			tokenSize = tokenSize.toFixed(4);
 			const myobj = { $set : {wallet : tokenSize}};
 			console.log("update wallet", account, tokenSize);
-			/* commenting out for testing
+
 			dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{
 				if(err){ 
 					throw err;
@@ -111,7 +111,7 @@ function setWallet(account, vote, distSize){
 				}				
 				db.close();
 			});
-			*/
+
 		});
 			
 	});
