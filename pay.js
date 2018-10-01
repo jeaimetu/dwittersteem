@@ -13,7 +13,7 @@ const votingFactor = 3;
 const distributionForDay = 5000;
 const postingDistributionForDay = 7500;
 const votingDistributionForDay = 2500;
-const stakingDistributionForDay = 5000;
+const stakingDistributionForDay = 10000;
 
 //distribution by voted article
 function getUserVoting(){
