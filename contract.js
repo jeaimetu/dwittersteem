@@ -1,7 +1,7 @@
-const wasmUrl = "./contract0903/eosio.token.wasm";
-const abiUrl = "./contract0903/eosio.token.abi";
+const wasmUrl = "./pubcontract/eosio.token.wasm";
+const abiUrl = "./pubcontract/eosio.token.abi";
 
-const account = "publytoken11";
+const account = "publytokenio";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -16,11 +16,11 @@ var url = process.env.MONGODB_URI;
 
 
 config = {
-  chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-  //chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca",// 32 byte (64 char) hex string
+  //chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+  chainId: "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca",// 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
-  httpEndpoint: 'https://mainnet.eoscalgary.io',
-  //httpEndpoint:	"http://193.93.219.219:8888",
+  //httpEndpoint: 'https://mainnet.eoscalgary.io',
+  httpEndpoint:	"http://193.93.219.219:8888",
   expireInSeconds: 60,
   broadcast: true,
   verbose: false, // API activity
@@ -79,17 +79,17 @@ transfer("eoscafekorea","gyydoojzgige","0.0001", "test").then((output)=>{
 
 
 
-/* buy ram success
+/* buy ram success */
 eos.transaction(tr => {
 	  tr.buyrambytes({
-    payer: 'eoscafekorea',
-    receiver: 'eoscafekorea',
-    bytes: 2000*1024
+    payer: 'publytokenio',
+    receiver: 'publytokenio',
+    bytes: 4000*1024
   })
 });
 
 return;
-*/
+
   
 
 wasm = fs.readFileSync(wasmUrl);  
@@ -97,8 +97,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("publytoken11", 0, 0, wasm) // @returns {Promise}
-eos.setabi("publytoken11", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("publytokenio", 0, 0, wasm) // @returns {Promise}
+eos.setabi("publytokenio", JSON.parse(abi)) // @returns {Promise}
 
 
 
