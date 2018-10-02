@@ -65,9 +65,10 @@ namespace eosio {
 	    uint32 updated_at;
 	    uint32 unstaked_at;
 	    asset ink;
+	    bool is_internal;
             
             uint64_t primary_key()const {return user;}
-            EOSLIB_SERIALIZE(lockup_list,(user)(balance)(staked)(refund)(updated_at)(unstaked_at)(ink))
+            EOSLIB_SERIALIZE(lockup_list,(user)(balance)(staked)(refund)(updated_at)(unstaked_at)(ink)(is_internal))
          };
             
 
