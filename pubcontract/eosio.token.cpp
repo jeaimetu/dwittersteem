@@ -22,8 +22,8 @@ void token::save(account_name user, asset quantity){
 			pubtable.user = user;
 			pubtable.balance = quantity;
 			pubtable.is_internal = true;
-			pubtable.refund = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));;
-			pubtable.staked = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));;
+			pubtable.refund = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "PUB")));;
+			pubtable.staked = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "PUB")));;
 			pubtable.ink = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));
 ;
 		});
