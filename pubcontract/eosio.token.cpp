@@ -40,7 +40,7 @@ void token::draw(account_name user, asset quantity){
 	
 	if(iter == pubtable.end()){
 		eosio_assert(iter != pubtable.end(), "draw account is not exist");
-		printf("draw account %s is not exist", user);
+		printf("draw account %s is not exist");
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
 			pubtable.balance += quantity;
@@ -50,7 +50,7 @@ void token::draw(account_name user, asset quantity){
 
 void token::stake(account_name from, account_name to, asset quantity){
 	require_auth(from);
-	
+	pubtbl pubtable(_self, _self);
 	//need to implement delegate case
 	auto iter = pubtable.find(to);
 	
@@ -68,6 +68,7 @@ void token::stake(account_name from, account_name to, asset quantity){
 void token::unstake(account_name from, account_name to, asset quantity){
 	require_auth(from);
 	//need to implement delegate case
+	pubtbl pubtable(_self, _self);
 	auto iter = pubtable.find(to);
 	
 	if(iter == pubtable.end()){
