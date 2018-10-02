@@ -24,11 +24,11 @@ void token::save(account_name user, asset quantity){
 			pubtable.is_internal = true;
 			pubtable.refund = 0;
 			pubtable.staked = 0;
-		}
+		});
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
 			pubtable.balance += quantity;		
-		}
+		});
 	}
 }
 
@@ -44,7 +44,7 @@ void token::draw(account_name user, asset quantity){
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
 			pubtable.balance += quantity;
-		}
+		});
 	}
 }
 
@@ -61,7 +61,7 @@ void token::stake(account_name from, account_name to, asset quantity){
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
 			pubtable.staked += quantity;
 			pubtable.updated_at = now();
-		}
+		});
 	}
 }
 
@@ -78,7 +78,7 @@ void token::unstake(account_name from, account_name to, asset quantity){
 			pubtable.staked -= quantity;
 			pubtable.unstaked_at = now();
 			pubtable.refund += quantity;
-		}
+		});
 	}
 }
 
