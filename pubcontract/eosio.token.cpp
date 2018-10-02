@@ -22,8 +22,10 @@ void token::save(account_name user, asset quantity){
 			pubtable.user = user;
 			pubtable.balance = quantity;
 			pubtable.is_internal = true;
-			pubtable.refund = 0;
-			pubtable.staked = 0;
+			pubtable.refund = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));;
+			pubtable.staked = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));;
+			pubtable.ink = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));
+;
 		});
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
@@ -40,7 +42,7 @@ void token::draw(account_name user, asset quantity){
 	
 	if(iter == pubtable.end()){
 		eosio_assert(iter != pubtable.end(), "draw account is not exist");
-		printf("draw account %s is not exist");
+		printf("draw account is not exist");
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
 			pubtable.balance += quantity;
@@ -56,11 +58,12 @@ void token::stake(account_name from, account_name to, asset quantity){
 	
 	if(iter == pubtable.end()){
 		eosio_assert(iter != pubtable.end(), "stake account is not exist");
-		printf("stake account %s is not exist", to);
+		printf("stake account is not exist");
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
 			pubtable.staked += quantity;
 			pubtable.updated_at = now();
+			pubtable.ink += quantity;
 		});
 	}
 }
@@ -72,8 +75,8 @@ void token::unstake(account_name from, account_name to, asset quantity){
 	auto iter = pubtable.find(to);
 	
 	if(iter == pubtable.end()){
-		eosio_assert(iter != pubtable.end(), "stake account is not exist");
-		printf("stake account %s is not exist", to);
+		eosio_assert(iter != pubtable.end(), "unstake account is not exist");
+		printf("unstake accountis not exist");
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
 			pubtable.staked -= quantity;
