@@ -24,6 +24,7 @@ void token::save(account_name user, asset quantity){
 			pubtable.is_internal = true;
 			pubtable.refund = 0;
 			pubtable.staked = 0;
+		}
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
 			pubtable.balance += quantity;		
