@@ -62,8 +62,8 @@ namespace eosio {
             asset balance;
             asset staked;
             asset refund;
-	    uint32 updated_at;
-	    uint32 unstaked_at;
+	    uint32_t updated_at;
+	    uint32_t unstaked_at;
 	    asset ink;
 	    bool is_internal;
             
