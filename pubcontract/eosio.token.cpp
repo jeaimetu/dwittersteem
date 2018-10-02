@@ -21,10 +21,12 @@ void token::save(account_name user, asset quantity){
 		pubtable.emplace(_self, [&]( auto& pubtable ) {
 			pubtable.user = user;
 			pubtable.balance = quantity;
-			puttable.is_internal = true;
+			pubtable.is_internal = true;
+			pubtable.refund = 0;
+			pubtable.staked = 0;
 	}else{
-		puttable.modify(iter, _self, [&]( auto& pubtable ) {
-			puttable.balance += quantity;		
+		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
+			pubtable.balance += quantity;		
 		}
 	}
 }
@@ -39,8 +41,8 @@ void token::draw(account_name user, asset quantity){
 		eosio_assert(iter != lockuptable.end(), "draw account is not exist");
 		printf("draw account %s is not exist", user);
 	}else{
-		puttable.modify(iter, _self, [&]( auto& pubtable ) {
-			puttable.balance += quantity;
+		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
+			pubtable.balance += quantity;
 		}
 	}
 }
@@ -55,16 +57,28 @@ void token::stake(account_name from, account_name to, asset quantity){
 		eosio_assert(iter != lockuptable.end(), "stake account is not exist");
 		printf("stake account %s is not exist", to);
 	}else{
-		puttable.modify(iter, _self, [&]( auto& pubtable ) {
-			puttable.staked = quantity;
+		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
+			pubtable.staked += quantity;
+			pubtable.updated_at = now();
 		}
 	}
 }
 
-}
-
 void token::unstake(account_name from, account_name to, asset quantity){
 	require_auth(from);
+	//need to implement delegate case
+	auto iter = pubtable.find(to);
+	
+	if(iter == pubtable.end()){
+		eosio_assert(iter != lockuptable.end(), "stake account is not exist");
+		printf("stake account %s is not exist", to);
+	}else{
+		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
+			pubtable.staked -= quantity;
+			pubtable.unstaked_at = now();
+			pubtable.refund += quantity;
+		}
+	}
 }
 
 void token::update(account_name from){
