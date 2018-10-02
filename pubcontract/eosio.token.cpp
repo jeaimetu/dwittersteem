@@ -13,14 +13,54 @@ void token::check(account_name user, string memo){
 
 void token::save(account_name user, asset quantity){
 	require_auth(_self);
+	pubtbl pubtable(_self, _self);
+	
+	auto iter = pubtable.find(user);
+	
+	if(iter == pubtable.end()){
+		pubtable.emplace(_self, [&]( auto& pubtable ) {
+			pubtable.user = user;
+			pubtable.balance = quantity;
+			puttable.is_internal = true;
+	}else{
+		puttable.modify(iter, _self, [&]( auto& pubtable ) {
+			puttable.balance += quantity;		
+		}
+	}
 }
 
 void token::draw(account_name user, asset quantity){
 	require_auth(_self);
+	pubtbl pubtable(_self, _self);
+	
+	auto iter = pubtable.find(user);
+	
+	if(iter == pubtable.end()){
+		eosio_assert(iter != lockuptable.end(), "draw account is not exist");
+		printf("draw account %s is not exist", user);
+	}else{
+		puttable.modify(iter, _self, [&]( auto& pubtable ) {
+			puttable.balance += quantity;
+		}
+	}
 }
 
 void token::stake(account_name from, account_name to, asset quantity){
 	require_auth(from);
+	
+	//need to implement delegate case
+	auto iter = pubtable.find(to);
+	
+	if(iter == pubtable.end()){
+		eosio_assert(iter != lockuptable.end(), "stake account is not exist");
+		printf("stake account %s is not exist", to);
+	}else{
+		puttable.modify(iter, _self, [&]( auto& pubtable ) {
+			puttable.staked = quantity;
+		}
+	}
+}
+
 }
 
 void token::unstake(account_name from, account_name to, asset quantity){
