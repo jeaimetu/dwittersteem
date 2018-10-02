@@ -59,6 +59,7 @@ namespace eosio {
          //@abi table pubtbl i64
          struct pub_table {
             account_name user;
+	    account_name delegated;
             asset balance;
             asset staked;
             asset refund;
@@ -68,7 +69,7 @@ namespace eosio {
 	    bool is_internal;
             
             uint64_t primary_key()const {return user;}
-            EOSLIB_SERIALIZE(pub_table,(user)(balance)(staked)(refund)(updated_at)(unstaked_at)(ink)(is_internal))
+            EOSLIB_SERIALIZE(pub_table,(user)(delegated)(balance)(staked)(refund)(updated_at)(unstaked_at)(ink)(is_internal))
          };
             
 
