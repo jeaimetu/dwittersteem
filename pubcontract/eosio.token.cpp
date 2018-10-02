@@ -63,7 +63,7 @@ void token::stake(account_name from, account_name to, asset quantity){
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
 			pubtable.staked += quantity;
 			pubtable.updated_at = now();
-			pubtable.ink += quantity;
+			pubtable.ink.amount += quantity.amount;
 		});
 	}
 }
@@ -79,7 +79,7 @@ void token::unstake(account_name from, account_name to, asset quantity){
 		printf("unstake accountis not exist");
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
-			pubtable.staked -= quantity;
+			pubtable.staked.amount -= quantity.amount;
 			pubtable.unstaked_at = now();
 			pubtable.refund += quantity;
 		});
