@@ -68,7 +68,7 @@ namespace eosio {
 	    bool is_internal;
             
             uint64_t primary_key()const {return user;}
-            EOSLIB_SERIALIZE(lockup_list,(user)(balance)(staked)(refund)(updated_at)(unstaked_at)(ink)(is_internal))
+            EOSLIB_SERIALIZE(pub_table,(user)(balance)(staked)(refund)(updated_at)(unstaked_at)(ink)(is_internal))
          };
             
 
