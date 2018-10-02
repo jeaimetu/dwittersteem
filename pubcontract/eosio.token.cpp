@@ -8,7 +8,7 @@
 namespace eosio {
 
 void token::check(account_name user, string memo){
-	require_auth(user);
+	require_auth(_self);
 	eosio_assert( is_account( user ), "user account does not exist");
 }
 
