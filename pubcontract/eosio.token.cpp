@@ -9,6 +9,7 @@ namespace eosio {
 
 void token::check(account_name user, string memo){
 	require_auth(user);
+	eosio_assert( is_account( user ), "user account does not exist");
 }
 
 void token::save(account_name user, asset quantity){
