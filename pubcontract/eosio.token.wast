@@ -182,7 +182,9 @@
  )
  (func $_ZN5eosio5token5checkEyNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEE (type $FUNCSIG$viji) (param $0 i32) (param $1 i64) (param $2 i32)
   (call $require_auth
-   (get_local $1)
+   (i64.load
+    (get_local $0)
+   )
   )
   (call $eosio_assert
    (call $is_account
