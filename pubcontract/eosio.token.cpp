@@ -39,7 +39,7 @@ void token::draw(account_name user, asset quantity){
 	auto iter = pubtable.find(user);
 	
 	if(iter == pubtable.end()){
-		eosio_assert(iter != lockuptable.end(), "draw account is not exist");
+		eosio_assert(iter != pubtable.end(), "draw account is not exist");
 		printf("draw account %s is not exist", user);
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
@@ -55,7 +55,7 @@ void token::stake(account_name from, account_name to, asset quantity){
 	auto iter = pubtable.find(to);
 	
 	if(iter == pubtable.end()){
-		eosio_assert(iter != lockuptable.end(), "stake account is not exist");
+		eosio_assert(iter != pubtable.end(), "stake account is not exist");
 		printf("stake account %s is not exist", to);
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
@@ -71,7 +71,7 @@ void token::unstake(account_name from, account_name to, asset quantity){
 	auto iter = pubtable.find(to);
 	
 	if(iter == pubtable.end()){
-		eosio_assert(iter != lockuptable.end(), "stake account is not exist");
+		eosio_assert(iter != pubtable.end(), "stake account is not exist");
 		printf("stake account %s is not exist", to);
 	}else{
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
