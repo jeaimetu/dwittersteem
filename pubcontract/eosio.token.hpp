@@ -59,23 +59,41 @@ namespace eosio {
          //@abi table pubtbl i64
          struct pub_table {
             account_name user;
-	    account_name delegated;
             asset balance;
-            asset staked;
-            asset refund;
-	    uint32_t updated_at;
-	    uint32_t unstaked_at;
 	    asset ink;
 	    bool is_internal;
             
             uint64_t primary_key()const {return user;}
-            EOSLIB_SERIALIZE(pub_table,(user)(delegated)(balance)(staked)(refund)(updated_at)(unstaked_at)(ink)(is_internal))
+            EOSLIB_SERIALIZE(pub_table,(user)(balance)(ink)(is_internal))
          };
+	   
+	   //@abi table staketbl i64
+	   struct stake_table {
+		   account_name user;
+		   account_name owner;
+		   asset balance;
+		   uint32_t staked_at;
+		   
+		   uint64_t primary_key()const {return user;}
+		   EOSLIB_SERIALIZE(stake_table,(user)(owner)(balancec)(staked_at))
+	   }; 
+	   
+	   //@abi table unstaketbl i64
+	   struct unstake_table {
+		   account_name user;
+		   asset balance;
+		   uint32_t unstaked_at;
+		   
+		   uint64_t primary_key()const {return user;}
+		   EOSLIB_SERIALIZE(unstaketbl,(user)(balancec)(unstaked_at))
+	   }; 
             
 
          typedef eosio::multi_index<N(accounts), account> accounts;
          typedef eosio::multi_index<N(stat), currency_stat> stat;
          typedef eosio::multi_index<N(pubtbl), pub_table> pubtbl;
+	   typedef eosio::multi_index<N(staketbl), stake_table> staketbl;
+	   typedef eosio::multi_index<N(unstaketbl), unstake_table> unstaketbl;
 
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
