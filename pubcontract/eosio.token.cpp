@@ -14,20 +14,28 @@ void token::check(account_name user, string memo){
 	
 void token::transfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo){
 	require_auth(from);
+	
 	//internal to internal
 	save(to, balance);
 	draw(from, balance);
 	//internal to external
 	draw(from, balance);
-	SEND_INLINE_ACTION(N(publytokenio), transfer)( N(eosio.token), {from,N(active)},
-						     { N(publytokenio), to, balance, std::string("pub transfer") } );
+
+	action(
+		permission_level{N(publytokenio), N(active)},
+		N(publytoken11),
+		N(transfer),
+		N(publytokenio),
+		to,
+		balance,
+		std::string("pub transfer")
+		).send();
+				 
 	//external to internal
 	save(to, balance);
-	SEND_INLINE_ACTION(N(publytokenio), transfer)( N(eosio.token), {from,N(active)},
-						     { from, N(publytokenio), balance, std::string("pub transfer") } );
+
 	//external to external case
-	SEND_INLINE_ACTION(N(publytokenio), transfer)( N(eosio.token), {from,N(active)},
-						     { from, to, balance, std::string("pub transfer") } );
+
 						     
 }
 
