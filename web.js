@@ -539,9 +539,10 @@ function readData(account, page, cb){
   });
 
 app.get("/", function(req, res){
-	res.render("index", {
-		title: "MY HOMEPAGE",
-		length: 5
+	readData("길막테디", 1, (result) => {
+		res.render("index", {
+			data : result
+		});
 	});
 });
 
