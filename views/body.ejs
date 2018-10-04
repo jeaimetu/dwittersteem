@@ -16,9 +16,10 @@
 	</td>
 	
 	<td  style="text-align:right; margin: 0px">
-	var profilePath = <%= eachData.profile %>
-	<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 40px; max-width: 40px;" src="' + profilePath + '">
+	
+	<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 40px; max-width: 40px;" src=<%= eachData.profile %>>
 	</td>
+	</table>
 	
 	<div name="viewDefault" class="preConDetail">   
 	<%= eachData.data %> </div> 
