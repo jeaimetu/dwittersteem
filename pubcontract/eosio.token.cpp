@@ -23,8 +23,6 @@ void token::save(account_name user, asset quantity){
 			pubtable.user = user;
 			pubtable.balance = quantity;
 			pubtable.is_internal = true;
-			pubtable.refund = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "PUB")));;
-			pubtable.staked = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "PUB")));;
 			pubtable.ink = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));
 ;
 		});
@@ -53,18 +51,17 @@ void token::draw(account_name user, asset quantity){
 
 void token::stake(account_name from, account_name to, asset quantity){
 	require_auth(from);
-	pubtbl pubtable(_self, _self);
+	staketbl staketbl(_self, _self);
 	//need to implement delegate case
-	auto iter = pubtable.find(to);
+	auto iter = staketbl.find(to);
 	
-	if(iter == pubtable.end()){
-		eosio_assert(iter != pubtable.end(), "stake account is not exist");
+	if(iter == staketbl.end()){
+		eosio_assert(iter != staketbl.end(), "stake account is not exist");
 		printf("stake account is not exist");
 	}else{
-		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
-			pubtable.staked += quantity;
-			pubtable.updated_at = now();
-			pubtable.ink.amount += quantity.amount;
+		staketbl.modify(iter, _self, [&]( auto& staketbl ) {
+			staketbl.balance += quantity;
+			staketbl.staked_at = now();
 		});
 	}
 }
@@ -72,17 +69,16 @@ void token::stake(account_name from, account_name to, asset quantity){
 void token::unstake(account_name from, account_name to, asset quantity){
 	require_auth(from);
 	//need to implement delegate case
-	pubtbl pubtable(_self, _self);
-	auto iter = pubtable.find(to);
+	unstaketbl unstaketbl(_self, _self);
+	auto iter = unstaketbl.find(to);
 	
-	if(iter == pubtable.end()){
-		eosio_assert(iter != pubtable.end(), "unstake account is not exist");
+	if(iter == unstaketbl.end()){
+		eosio_assert(iter != unstaketbl.end(), "unstake account is not exist");
 		printf("unstake accountis not exist");
 	}else{
-		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
-			pubtable.staked.amount -= quantity.amount;
-			pubtable.unstaked_at = now();
-			pubtable.refund += quantity;
+		pubtable.modify(iter, _self, [&]( auto& unstaketbl ) {
+			unstaketbl.balance.amount -= quantity.amount;
+			unstaketbl.unstaked_at = now();
 		});
 	}
 }
