@@ -7,9 +7,22 @@
 
     <% data.forEach(function( eachData){ %>
         
-        <li> <div class="element tile-1 home calc bg-change"> <div name="viewDefault" class="preConDetail"> 
-	<%= eachData.account %>  
-	<%= eachData.data %> </div> </div> </li>
+        <li> <div class="element tile-1 home calc bg-change"> 
+	<table style="width: 100%;">
+	<tr>
+	<td>
+	<h4 class="header icon-to-the-right">
+	<%= eachData.account %> </h4>
+	</td>
+	
+	<td  style="text-align:right; margin: 0px>
+	var profilePath = <%= eachData.profile %>
+	<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 40px; max-width: 40px;" src="' + profilePath + '">
+	</td>
+	
+	<div name="viewDefault" class="preConDetail">   
+	<%= eachData.data %> </div> 
+	</div> </li>
         
     <% }) %>
 
