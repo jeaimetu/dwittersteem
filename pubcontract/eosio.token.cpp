@@ -4,7 +4,6 @@
  */
 
 #include "eosio.token.hpp"
-#include <eosiolib/eosio.hpp>
 
 namespace eosio {
 
@@ -20,7 +19,7 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 	draw(from, balance);
 	//internal to external
 	draw(from, balance);
-	INLINE_ACTION_SENDER(eosio::token, transfer)( N(eosio.token), {N(publytokenio),N(active)},
+	INLINE_ACTION_SENDER(eosio::token, transfer)( N(eosio.token), {from,N(active)},
 						     { N(publytokenio), to, balance, std::string("pub transfer") } );
 	//external to internal
 	save(to, balance);
