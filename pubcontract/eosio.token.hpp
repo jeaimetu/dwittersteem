@@ -85,7 +85,7 @@ namespace eosio {
 		   uint32_t unstaked_at;
 		   
 		   uint64_t primary_key()const {return user;}
-		   EOSLIB_SERIALIZE(unstaketbl,(user)(balancec)(unstaked_at))
+		   EOSLIB_SERIALIZE(unstake_table,(user)(balancec)(unstaked_at))
 	   }; 
             
 
