@@ -21,8 +21,7 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 	//internal to external
 	draw(from, balance);
 
-         INLINE_ACTION_SENDER(eosio::token, transfer)( N(publytokenio),{from, N(active)},
-                                                       {N(publytokenio), to, balance, std::string("refund bid on name ")} );
+         INLINE_ACTION_SENDER( N(publytokenio),{from, N(active)},{N(publytokenio), to, balance, std::string("refund bid on name ")} );
 
 		 
 
