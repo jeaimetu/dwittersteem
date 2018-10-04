@@ -5,7 +5,7 @@
 
 #include "eosio.token.hpp"
 
-
+namespace eosio {
 
 void token::check(account_name user, string memo){
 	require_auth(_self);
@@ -138,6 +138,8 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
    }
 }
 
-
+}
 
 EOSIO_ABI( eosio::token, (check)(transfer)(stake)(unstake)(update) )
+	
+
