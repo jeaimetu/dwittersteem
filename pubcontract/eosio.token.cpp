@@ -23,7 +23,7 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 
          INLINE_ACTION_SENDER(eosio::token, transfer, {N(publytokenio),N(active)},
                                                        { N(publytokenio), to, balance,
-                                                       std::string("refund bid on name ")  } );
+                                                       std::string("refund bid on name ")} );
 
 		 
 
