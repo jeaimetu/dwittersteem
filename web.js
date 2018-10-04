@@ -541,6 +541,7 @@ function readData(account, page, cb){
 app.get("/", function(req, res){
 	readData("길막테디", 1, (result) => {
 		res.render("index", {
+			title : "EJS test",
 			data : result
 		});
 	});
