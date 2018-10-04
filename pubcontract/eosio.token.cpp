@@ -12,7 +12,7 @@ void token::check(account_name user, string memo){
 	eosio_assert( is_account( user ), "user account does not exist");
 }
 	
-void token::void transfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo){
+void token::transfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo){
 	require_auth(from);
 	//internal to internal
 	save(to, balance);
@@ -138,4 +138,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (check)(save)(draw)(stake)(unstake)(update) )
+EOSIO_ABI( eosio::token, (check)(transfer)(stake)(unstake)(update) )
