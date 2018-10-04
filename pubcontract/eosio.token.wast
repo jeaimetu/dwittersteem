@@ -53,7 +53,7 @@
  (memory $0 1)
  (data (i32.const 4) "@t\00\00")
  (data (i32.const 16) "user account does not exist\00")
- (data (i32.const 48) "active\00")
+ (data (i32.const 48) "eosio.code\00")
  (data (i32.const 64) "eoscafekorea\00")
  (data (i32.const 80) "trasnfer\00")
  (data (i32.const 96) "PUB transfer\00")
@@ -245,7 +245,7 @@
         (br_if $label$5
          (i64.gt_u
           (get_local $10)
-          (i64.const 5)
+          (i64.const 9)
          )
         )
         (br_if $label$4
