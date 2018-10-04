@@ -4,7 +4,6 @@
  */
 
 #include "eosio.token.hpp"
-#include <eosio.token/eosio.token.hpp>
 
 namespace eosio {
 
