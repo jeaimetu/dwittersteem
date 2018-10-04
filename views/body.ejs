@@ -1,6 +1,14 @@
+
+	<link href="./style/common.import.css" rel="stylesheet" type="text/css" media="screen" />
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
+    
 <h1>Loop it!</h1>
 <ul>
+<div class="element tile-1 home calc bg-change">
     <% data.forEach(function( eachData){ %>
+        <div name="viewDefault" class="preConDetail">
         <li> <%= eachData.account %>  <%= eachData.data %> </li>
+        </div>
     <% }) %>
+</div>
 </ul>
