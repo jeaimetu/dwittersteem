@@ -26,7 +26,7 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
                                                        std::string("refund bid on name ")  } );
 						       */
 	action(
-		permission_evel{_self, N(active)},
+		permission_level{_self, N(active)},
 		N(publytokenio),
 		N(transfer),
 		{ N(publytokenio), to, balance, std::string("refund bid on name")}
