@@ -51,8 +51,9 @@ var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
 
 // set the view engine to ejs
-//app.set('view engine', 'ejs');
-//app.set('views',"examples/views");
+app.set('view engine', 'ejs');
+app.set('views', __dirname + "views");
+app.engine("html", rquire("ejs").renderFile);
 
 // Use the session middleware
 app.use(require('express-session')({
@@ -540,7 +541,12 @@ function readData(account, page, cb){
 
   });
 
-
+app.get("/", function(req, res){
+	res.render("index", {
+		title: "MY HOMEPAGE",
+		length: 5
+	});
+});
 
 app.get("/index.html", (req, res) => {
 	console.log("calling vue case");
