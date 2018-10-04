@@ -33,6 +33,8 @@ namespace eosio {
          void unstake(account_name from,  account_name to, asset quantity);
 	     //@abi action
          void update(account_name user);
+	 //@abi action
+         void transfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo)
 	   
      
 
