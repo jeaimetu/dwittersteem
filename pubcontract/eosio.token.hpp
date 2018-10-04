@@ -23,10 +23,7 @@ namespace eosio {
 	   
          //@abi action
          void check(account_name user, string memo);
-         //@abi action
-         void save(account_name user, asset quantity);
-	     //@abi action
-         void draw(account_name user, asset quantity);
+
 	     //@abi action
          void stake(account_name from, account_name to, asset quantity);
 	     //@abi action
@@ -99,6 +96,11 @@ namespace eosio {
 
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
+	   
+	 //@abi action
+         void save(account_name user, asset quantity);
+	 //@abi action
+         void draw(account_name user, asset quantity);
 
       public:
          struct transfer_args {
