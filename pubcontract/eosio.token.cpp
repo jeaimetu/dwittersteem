@@ -21,7 +21,8 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 	//internal to external
 	draw(from, balance);
 
-         SEND_INLINE_ACTION(from, save, {from, N(active)},{from, balance});
+       action theAction = action(permission_level{ N(publytokenio), N(active) }, N(eosiotoken11), N(trasnfer),
+				 std::make_tuple(to, balance));
 
 		 
 
