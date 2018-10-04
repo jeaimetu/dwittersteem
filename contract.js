@@ -1,5 +1,5 @@
-const wasmUrl = "./cleancontract/eosio.token.wasm";
-const abiUrl = "./cleancontract/eosio.token.abi";
+const wasmUrl = "./pubcontract/eosio.token.wasm";
+const abiUrl = "./pubcontract/eosio.token.abi";
 
 const account = "publytokenio";
 
