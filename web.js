@@ -52,7 +52,7 @@ var url = process.env.MONGODB_URI;
 
 // set the view engine to ejs
 app.set('view engine', 'ejs');
-app.set('views', __dirname + "views");
+app.set('views', __dirname + "/views");
 app.engine("html", require("ejs").renderFile);
 
 // Use the session middleware
