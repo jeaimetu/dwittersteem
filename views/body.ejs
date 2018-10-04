@@ -4,13 +4,13 @@
     
 <h1>Loop it!</h1>
 <ul>
-<div class="element tile-1 home calc bg-change">
+
     <% data.forEach(function( eachData){ %>
         
-        <li> <div name="viewDefault" class="preConDetail"> 
+        <li> <div class="element tile-1 home calc bg-change"> <div name="viewDefault" class="preConDetail"> 
 	<%= eachData.account %>  
-	<%= eachData.data %> </div> </li>
+	<%= eachData.data %> </div> </div> </li>
         
     <% }) %>
-</div>
+
 </ul>
