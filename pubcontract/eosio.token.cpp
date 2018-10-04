@@ -21,7 +21,7 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 	//internal to external
 	draw(from, balance);
 
-         SEND_INLINE_ACTION((account_name) "publytokin11", save, {from, N(active)},{from, balance});
+         SEND_INLINE_ACTION(from, save, {from, N(active)},{from, balance});
 
 		 
 
