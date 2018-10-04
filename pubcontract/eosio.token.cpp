@@ -11,9 +11,28 @@ void token::check(account_name user, string memo){
 	require_auth(_self);
 	eosio_assert( is_account( user ), "user account does not exist");
 }
+	
+void token::void transfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo){
+	require_auth(from);
+	//internal to internal
+	save(to, balance);
+	draw(from, balance);
+	//internal to external
+	draw(from, balance);
+	INLINE_ACTION_SENDER(eosio::token, transfer)( N(eosio.token), {N(publytokenio),N(active)},
+						     { N(publytokenio), to, balance, std::string("pub transfer") } );
+	//external to internal
+	save(to, balance);
+	INLINE_ACTION_SENDER(eosio::token, transfer)( N(eosio.token), {from,N(active)},
+						     { from, N(publytokenio), balance, std::string("pub transfer") } );
+	//external to external case
+	INLINE_ACTION_SENDER(eosio::token, transfer)( N(eosio.token), {from,N(active)},
+						     { from, to, balance, std::string("pub transfer") } );
+						     
+}
 
 void token::save(account_name user, asset quantity){
-	require_auth(_self);
+
 	pubtbl pubtable(_self, _self);
 	
 	auto iter = pubtable.find(user);
@@ -32,9 +51,9 @@ void token::save(account_name user, asset quantity){
 		});
 	}
 }
-
+	
 void token::draw(account_name user, asset quantity){
-	require_auth(_self);
+
 	pubtbl pubtable(_self, _self);
 	
 	auto iter = pubtable.find(user);
