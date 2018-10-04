@@ -288,16 +288,20 @@ function readData(account, page, cb){
 		//ToDo : add image path to response
    		//dbo.collection("board").find({}).sort({date: -1}).toArray(function(err, result){
 		
-		var agr = [{ $lookup:
+		var agr = [	
+			
+
+			  {$sort: {"date" : -1}},
+			{$skip : (pageSize * page) - pageSize},
+			   {$limit : pageSize},
+			{$lookup:
 			    { from: 'user',
 			   localField: 'account',
 			   foreignField : 'account',
 			   as : 'userdetails'
 			    }
-			   },
-			  {$sort: {"date" : -1}}
+			   }
 			];
-		
 		dbo.collection("board").aggregate(agr).toArray(function(err, result){
 			    			if (err) throw err;
 			var body = []; // empty array
