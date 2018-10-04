@@ -20,7 +20,9 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 	draw(from, balance);
 	//internal to external
 	draw(from, balance);
-	SEND_INLINE_ACTION( eosio::token, transfer, {_self, N(active)}, {N(publytokenio), to, balance, std:string("pub transfer")} );
+         INLINE_ACTION_SENDER(eosio::token, transfer)( N(eosio.token), {N(eosio.names),N(active)},
+                                                       { N(eosio.names), to, balance,
+                                                       std::string("refund bid on name ")+(name{newname}).to_string()  } );
 
 	//external to internal
 	save(to, balance);
