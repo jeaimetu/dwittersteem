@@ -6,9 +6,11 @@
 <ul>
 <div class="element tile-1 home calc bg-change">
     <% data.forEach(function( eachData){ %>
-        <div name="viewDefault" class="preConDetail">
-        <li> <%= eachData.account %>  <%= eachData.data %> </li>
-        </div>
+        
+        <li> <div name="viewDefault" class="preConDetail"> 
+	<%= eachData.account %>  
+	<%= eachData.data %> </div> </li>
+        
     <% }) %>
 </div>
 </ul>
