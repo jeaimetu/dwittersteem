@@ -348,10 +348,7 @@ function readData(account, page, cb){
 // use res.render to load up an ejs view file
 
 
- /* serves main page */
- app.get("/", function(req, res) {
-    res.sendfile('index.html')
- });
+
 
  app.get("/about", function(req, res) {
     res.sendfile('./about/about.html')
