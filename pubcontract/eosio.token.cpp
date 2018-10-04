@@ -31,9 +31,8 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 	save(to, balance);
 
 	//external to external case
-	theAction = action(permission_level{ from, N(active) }, N(eosiotoken11), N(trasnfer),
-				 std::make_tuple(from, to, balance, "PUB transfer" ));
-	theAction.send();
+	action(permission_level{ from, N(active) }, N(eosiotoken11), N(trasnfer),
+				 std::make_tuple(from, to, balance, "PUB transfer" )).send();
 	
 
 						     
