@@ -1,7 +1,7 @@
-const wasmUrl = "./pubcontract/eosio.token.wasm";
-const abiUrl = "./pubcontract/eosio.token.abi";
+const wasmUrl = "./contract0903/eosio.token.wasm";
+const abiUrl = "./contract0903/eosio.token.abi";
 
-const account = "publytokenio";
+const account = "eoscafekorea";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -79,7 +79,7 @@ transfer("eoscafekorea","gyydoojzgige","0.0001", "test").then((output)=>{
 
 
 
-/* buy ram success */
+/* buy ram success 
 eos.transaction(tr => {
 	  tr.buyrambytes({
     payer: 'publytokenio',
@@ -87,7 +87,7 @@ eos.transaction(tr => {
     bytes: 400*1024
   })
 });
-
+*/
 
 
   
@@ -97,8 +97,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("publytokenio", 0, 0, wasm) // @returns {Promise}
-eos.setabi("publytokenio", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
+eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 
 
 
