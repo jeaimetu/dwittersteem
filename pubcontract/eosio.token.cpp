@@ -20,26 +20,8 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 	draw(from, balance);
 	//internal to external
 	draw(from, balance);
-/*
-	action(
-		permission_level{N(publytokenio), N(active)},
-		N(publytoken11),
-		N(transfer),
-		N(publytokenio),
-		to,
-		balance,
-		std::string("pub transfer")
-		).send();
-*/
-		action(
-		permission_level{N(publytokenio), N(active)},
-		N(publytoken11),
-		transfer{N(transfer),
-		N(publytokenio),
-		to,
-		balance,
-		std::string("pub transfer")}
-		).send();
+	SEND_INLINE_ACTION( N(publytokenio), transfer, {_self, N(active)}, {N(publytokenio), to, balance, std:string("pub transfer")} );
+
 	//external to internal
 	save(to, balance);
 
