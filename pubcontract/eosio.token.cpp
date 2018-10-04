@@ -76,7 +76,7 @@ void token::unstake(account_name from, account_name to, asset quantity){
 		eosio_assert(iter != unstaketbl.end(), "unstake account is not exist");
 		printf("unstake accountis not exist");
 	}else{
-		pubtable.modify(iter, _self, [&]( auto& unstaketbl ) {
+		unstaketbl.modify(iter, _self, [&]( auto& unstaketbl ) {
 			unstaketbl.balance.amount -= quantity.amount;
 			unstaketbl.unstaked_at = now();
 		});
