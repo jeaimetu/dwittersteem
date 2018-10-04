@@ -20,17 +20,11 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 	draw(from, balance);
 	//internal to external
 	draw(from, balance);
-	/*
-         INLINE_ACTION_SENDER(eosio::token, transfer)( N(eosio.token), {N(publytokenio),N(active)},
+
+         INLINE_ACTION_SENDER(eosio::token, transfer, {N(publytokenio),N(active)},
                                                        { N(publytokenio), to, balance,
                                                        std::string("refund bid on name ")  } );
-						       */
-	action(
-		permission_level{_self, N(active)},
-		(account_name) "publytokenio",
-		(action_name) "transfer",
-		{ N(publytokenio), to, balance, std::string("refund bid on name")}
-		).send();
+
 		 
 
 	//external to internal
