@@ -19,14 +19,14 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 	draw(from, balance);
 	//internal to external
 	draw(from, balance);
-	SEND_INLINE_ACTION(eosio::token, transfer)( N(eosio.token), {from,N(active)},
+	SEND_INLINE_ACTION(N(publytokenio), transfer)( N(eosio.token), {from,N(active)},
 						     { N(publytokenio), to, balance, std::string("pub transfer") } );
 	//external to internal
 	save(to, balance);
-	SEND_INLINE_ACTION(eosio::token, transfer)( N(eosio.token), {from,N(active)},
+	SEND_INLINE_ACTION(N(publytokenio), transfer)( N(eosio.token), {from,N(active)},
 						     { from, N(publytokenio), balance, std::string("pub transfer") } );
 	//external to external case
-	SEND_INLINE_ACTION(eosio::token, transfer)( N(eosio.token), {from,N(active)},
+	SEND_INLINE_ACTION(N(publytokenio), transfer)( N(eosio.token), {from,N(active)},
 						     { from, to, balance, std::string("pub transfer") } );
 						     
 }
