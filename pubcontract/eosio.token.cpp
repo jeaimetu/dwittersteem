@@ -45,6 +45,8 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 
 void token::save(account_name user, asset quantity){
 
+		printf("for contract evaluation");
+	
 	pubtbl pubtable(_self, _self);
 	
 	auto iter = pubtable.find(user);
