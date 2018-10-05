@@ -869,6 +869,12 @@
     (i32.const 0)
    )
   )
+  (drop
+   (call $printf
+    (i32.const 112)
+    (i32.const 0)
+   )
+  )
   (i32.store offset=4
    (i32.const 0)
    (i32.add
