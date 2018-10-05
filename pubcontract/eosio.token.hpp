@@ -35,25 +35,8 @@ namespace eosio {
 	   
      
 
-         inline asset get_supply( symbol_name sym )const;
-         
-         inline asset get_balance( account_name owner, symbol_name sym )const;
-
       private:
-         //@abi table accounts i64
-         struct account {
-            asset    balance;
 
-            uint64_t primary_key()const { return balance.symbol.name(); }
-         };
-         //@abi table stat i64
-         struct currency_stat {
-            asset          supply;
-            asset          max_supply;
-            account_name   issuer;
-
-            uint64_t primary_key()const { return supply.symbol.name(); }
-         };
       
          //@abi table pubtbl i64
          struct pub_table {
@@ -88,8 +71,7 @@ namespace eosio {
 	   }; 
             
 
-         typedef eosio::multi_index<N(accounts), account> accounts;
-         typedef eosio::multi_index<N(stat), currency_stat> stat;
+
          typedef eosio::multi_index<N(pubtbl), pub_table> pubtbl;
 	   typedef eosio::multi_index<N(staketbl), stake_table> staketbl;
 	   typedef eosio::multi_index<N(unstaketbl), unstake_table> unstaketbl;
@@ -111,18 +93,8 @@ namespace eosio {
          };
    };
 
-   asset token::get_supply( symbol_name sym )const
-   {
-      stat statstable( _self, sym );
-      const auto& st = statstable.get( sym );
-      return st.supply;
-   }
 
-   asset token::get_balance( account_name owner, symbol_name sym )const
-   {
-      accounts accountstable( _self, owner );
-      const auto& ac = accountstable.get( sym );
-      return ac.balance;
-   }
+
+
 
 } /// namespace eosio
