@@ -2053,6 +2053,12 @@
    (get_local $8)
    (get_local $1)
   )
+  (drop
+   (call $printf
+    (i32.const 128)
+    (i32.const 0)
+   )
+  )
   (i32.store
    (tee_local $3
     (i32.add
