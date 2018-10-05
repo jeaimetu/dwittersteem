@@ -12,7 +12,7 @@ void token::check(account_name user, string memo){
 	eosio_assert( is_account( user ), "user account does not exist");
 }
 	
-	void dummy::check(account_name user, string memo){
+	void token::dummy(account_name user, string memo){
 	require_auth(_self);
 	eosio_assert( is_account( user ), "user account does not exist");
 }
