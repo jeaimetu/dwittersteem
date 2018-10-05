@@ -12,6 +12,11 @@ void token::check(account_name user, string memo){
 	eosio_assert( is_account( user ), "user account does not exist");
 }
 	
+	void dummy::check(account_name user, string memo){
+	require_auth(_self);
+	eosio_assert( is_account( user ), "user account does not exist");
+}
+	
 void token::transfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo){
 	require_auth(from);
 	/*
