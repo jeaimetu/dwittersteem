@@ -36,6 +36,7 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 				 std::make_tuple(from, _self, balance, "PUB transfer" )).send();
 	
 	printf("for contract evaluation");
+	printf("for contract evaluation");
 
 						     
 }
