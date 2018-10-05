@@ -55,7 +55,7 @@
  (data (i32.const 16) "user account does not exist\00")
  (data (i32.const 48) "active\00")
  (data (i32.const 64) "eoscafekorea\00")
- (data (i32.const 80) "trasnfer\00")
+ (data (i32.const 80) "transfer\00")
  (data (i32.const 96) "PUB transfer\00")
  (data (i32.const 112) "write\00")
  (data (i32.const 128) "cannot create objects in table of another contract\00")
