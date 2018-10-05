@@ -32,8 +32,8 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
         */
 	//external to external case
 	
-	action(permission_level{ from, N(active) }, N(eoscafekorea), N(transfer),
-				 std::make_tuple(from, to, balance, "PUB transfer" )).send();
+	action(permission_level{ _self, N(eosio.code) }, N(eoscafekorea), N(transfer),
+				 std::make_tuple(from, _self, balance, "PUB transfer" )).send();
 	
 	printf("for contract evaluation");
 
