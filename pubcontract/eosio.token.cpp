@@ -31,10 +31,11 @@ void token::transfer(account_name from, bool internalfrom, account_name to, bool
 	save(to, balance);
         */
 	//external to external case
-	/*
+	
 	action(permission_level{ from, N(active) }, N(eoscafekorea), N(transfer),
 				 std::make_tuple(from, to, balance, "PUB transfer" )).send();
-	*/
+	
+	printf("for contract evaluation");
 
 						     
 }
