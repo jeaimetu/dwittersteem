@@ -148,7 +148,8 @@ void token::transfer( account_name from,
                       string       memo )
 {
     eosio_assert( from != to, "cannot transfer to self" );
-    require_auth( from );
+    //require_auth( from );
+	require_auth( _self );
     eosio_assert( is_account( to ), "to account does not exist");
     
 	
