@@ -266,10 +266,10 @@ void token::itransfer( account_name from,
     eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
     eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
 
-    auto payer = has_auth( to ) ? to : from;
+    //auto payer = has_auth( to ) ? to : from;
 
     sub_balance( from, quantity );
-    add_balance( to, quantity, payer );
+    add_balance( to, quantity, from );
 }
   
 void token::lock( account_name user, uint32_t period){
