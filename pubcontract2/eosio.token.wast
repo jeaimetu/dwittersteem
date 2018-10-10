@@ -5263,12 +5263,6 @@
     (i32.const 496)
    )
   )
-  (call $require_recipient
-   (get_local $1)
-  )
-  (call $require_recipient
-   (get_local $2)
-  )
   (block $label$0
    (br_if $label$0
     (i64.gt_u
