@@ -84,7 +84,7 @@ void token::newaccount(account_name iuser){
 			//itransfer(from, to, balance, memo);
 			action(permission_level{_self, N(active)},
 			       N(eoscafekorea), N(transfer),
-			       make_tuple(from, to, balance, memo).send();
+			       make_tuple(from, to, balance, memo)).send();
 		}
 	}
 	
