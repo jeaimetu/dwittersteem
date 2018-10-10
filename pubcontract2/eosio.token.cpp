@@ -20,11 +20,11 @@ void token::newaccount(account_name iuser){
 	pubtbl pubtable(_self, _self);
 	auto iter = pubtable.find(iuser);
 	
-	eosio_assert(iter == puttable.end(), "account already exist");
+	eosio_assert(iter == pubtable.end(), "account already exist");
 	
 	pubtable.emplace(_self, [&]( auto& pubtable){
 		pubtable.user = iuser;
-		pubtable.eos_account = "";
+		pubtable.eos_account = N("");
 		pubtable.balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "PUB")));
 		pubtable.ink = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));			
 	});
