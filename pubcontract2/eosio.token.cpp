@@ -302,7 +302,8 @@ void token::sub_balance( account_name owner, asset value ) {
    const auto& from = from_acnts.get( value.symbol.name(), "no balance object found" );
    eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
 
-   from_acnts.modify( from, owner, [&]( auto& a ) {
+   //from_acnts.modify( from, owner, [&]( auto& a ) {
+	from_acnts.modify( from, 0, [&]( auto& a ) {
          a.balance -= value;
       });
 }
@@ -312,7 +313,8 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
    accounts to_acnts( _self, owner );
    auto to = to_acnts.find( value.symbol.name() );
    if( to == to_acnts.end() ) {
-      to_acnts.emplace( ram_payer, [&]( auto& a ){
+      //to_acnts.emplace( ram_payer, [&]( auto& a ){
+	   to_acnts.emplace( _self, [&]( auto& a ){
         a.balance = value;
       });
    } else {
