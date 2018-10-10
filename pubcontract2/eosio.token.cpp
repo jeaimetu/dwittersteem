@@ -303,7 +303,7 @@ void token::sub_balance( account_name owner, asset value ) {
    eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
 
    //from_acnts.modify( from, owner, [&]( auto& a ) {
-	from_acnts.modify( from, 0, [&]( auto& a ) {
+	from_acnts.modify( from, _self, [&]( auto& a ) {
          a.balance -= value;
       });
 }
