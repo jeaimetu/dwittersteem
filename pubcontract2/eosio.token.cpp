@@ -53,7 +53,7 @@ void token::newaccount(account_name iuser){
 			eosio_assert(iter != pubtable.end(), "to account does not exist");
 			
 			const auto& st = *iter;
-			if(st.eos_account != null){
+			if(st.eos_account != N("")){
 				itransfer(from, st.eos_account, balance, memo);
 			}else{			
 				itransfer(from, N(eoscafekorea), balance, memo);
@@ -69,7 +69,7 @@ void token::newaccount(account_name iuser){
 			eosio_assert(iter != pubtable.end(), "from account does not exist");
 			
 			const auto& st = *iter;
-			if(st.eos_account != null){
+			if(st.eos_account != N("")){
 				itransfer(st.eos_account, to , balance, memo);
 			}else{
 				itransfer(N(eoscafekorea), from, balance, memo);
