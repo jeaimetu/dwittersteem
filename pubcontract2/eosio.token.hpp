@@ -40,7 +40,7 @@ namespace eosio {
          void check(account_name euser, account_name iuser, string memo);
 	   
 	     //@abi action
-	 void newaccount(account_name);
+	 void newaccount(account_name iuser);
 
 	     //@abi action
          void stake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity);
