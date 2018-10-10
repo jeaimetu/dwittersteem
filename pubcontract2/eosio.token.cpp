@@ -39,8 +39,8 @@ void token::newaccount(account_name iuser){
 			pubtbl pubtable(_self, _self);
 			auto iter = pubtable.find(from);
 			eosio_assert(iter != pubtable.end(), "from account does not exist");
-			iter = pubtable.find(to);
-			eosio_assert(iter != pubtable.end(), "to account does not exist");
+			auto iter2 = pubtable.find(to);
+			eosio_assert(iter2 != pubtable.end(), "to account does not exist");
 			
 			save(to, balance);
 			draw(from, balance);
@@ -79,10 +79,10 @@ void token::newaccount(account_name iuser){
 			}
 		}
 		
-		//if(internalfrom == 0 && internalto == 0){
+		if(internalfrom == 0 && internalto == 0){
 			//external transfer
 			itransfer(from, to, balance, memo);
-		//}
+		}
 	}
 	
 	
@@ -345,6 +345,7 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 		auto iter = pubtable.find(user);
 		
 		eosio_assert(iter != pubtable.end(), "account does not exist");
+		
 		
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
 			pubtable.balance += quantity;
