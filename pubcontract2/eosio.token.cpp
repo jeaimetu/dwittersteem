@@ -209,6 +209,37 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
       });
    }
 }
+	void token::save(account_name user, asset quantity){
+		pubtbl pubtable(_self, _self);
+		auto iter = pubtable.find(user);
+		
+		eosio_assert(iter != pubtable.end(), "account does not exist");
+		
+		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
+			pubtable.balance += quantity;
+		});
+	}
+	
+	void token::draw(account_name user, asset quantity){
+		pubtbl pubtable(_self, _self);
+		auto iter = pubtable.find(user);
+		
+		eosio_assert(iter != pubtable.end(), "account does not exist");
+		
+		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
+			pubtable.balance += quantity;
+		});
+	}
+		
+		
+
+
+	
+	
+
+		
+	
+
 
 } /// namespace eosio
 
