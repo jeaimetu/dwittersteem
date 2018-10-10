@@ -2341,6 +2341,11 @@
     )
    )
   )
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
   (set_local $8
    (i32.xor
     (get_local $4)
