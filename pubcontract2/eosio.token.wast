@@ -4672,12 +4672,12 @@
      )
     )
    )
-   (i32.const 880)
+   (i32.const 768)
   )
   (i64.store offset=16
    (get_local $6)
    (tee_local $5
-    (i64.add
+    (i64.sub
      (i64.load offset=16
       (get_local $6)
      )
@@ -4692,7 +4692,7 @@
     (get_local $5)
     (i64.const -4611686018427387904)
    )
-   (i32.const 928)
+   (i32.const 816)
   )
   (call $eosio_assert
    (i64.lt_s
@@ -4701,7 +4701,7 @@
     )
     (i64.const 4611686018427387904)
    )
-   (i32.const 960)
+   (i32.const 848)
   )
   (call $eosio_assert
    (i64.eq
@@ -4900,6 +4900,11 @@
      )
      (i32.const 208)
     )
+   )
+  )
+  (call $require_auth
+   (i64.load
+    (get_local $0)
    )
   )
   (call $eosio_assert
