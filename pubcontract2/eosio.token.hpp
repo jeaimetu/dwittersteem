@@ -70,7 +70,7 @@ namespace eosio {
          //@abi table pubtbl i64
          struct pub_table {
             account_name user;
-            account_name eos_account
+            account_name eos_account;
             asset balance;
 	         asset ink;	         
             
