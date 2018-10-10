@@ -91,6 +91,7 @@ void token::newaccount(account_name iuser){
 	void token::stake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity){
 		//quantity check
 		require_auth( _self );
+		
 		staketbl staketbl(_self, _self);
 		auto iter = staketbl.find(from);
 
@@ -103,7 +104,8 @@ void token::newaccount(account_name iuser){
 				staketbl.balance = quantity;
 				staketbl.staked_at = now();
 				staketbl.user = from;
-				staketbl.owner = to;					
+				staketbl.owner = to;	
+			});
 		}else{
 			staketbl.modify(iter, _self, [&]( auto& staketbl ) {
 				staketbl.balance += quantity;
@@ -261,7 +263,8 @@ void token::itransfer( account_name from,
     //auto payer = has_auth( to ) ? to : from;
 
     sub_balance( from, quantity );
-    add_balance( to, quantity, from );
+    //add_balance( to, quantity, from );
+	add_balance( to, quantity, _self );
 }
   
 void token::lock( account_name user, uint32_t period){
