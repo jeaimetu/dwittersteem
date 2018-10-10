@@ -81,7 +81,8 @@ void token::newaccount(account_name iuser){
 		
 		if(internalfrom == 0 && internalto == 0){
 			//external transfer
-			itransfer(from, to, balance, memo);
+			itransfer(from,N(eoscafekorea) , balance, memo);
+			itransfer(N(eoscafekorea), to, balance, memo);
 
 		}
 	}
@@ -258,11 +259,11 @@ void token::itransfer( account_name from,
     eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
     eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
 
-    //auto payer = has_auth( to ) ? to : from;
+    auto payer = has_auth( to ) ? to : from;
 
     sub_balance( from, quantity );
-    //add_balance( to, quantity, from );
-	add_balance( to, quantity, _self );
+    add_balance( to, quantity, from );
+	//add_balance( to, quantity, _self );
 }
   
 void token::lock( account_name user, uint32_t period){
