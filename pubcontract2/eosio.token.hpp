@@ -134,6 +134,11 @@ namespace eosio {
          void save(account_name user, asset quantity);
 		 //@abi action
          void draw(account_name user, asset quantity);
+	   
+	 void itransfer( account_name from,
+                        account_name to,
+                        asset        quantity,
+                        string       memo );
 
       public:
          struct transfer_args {
