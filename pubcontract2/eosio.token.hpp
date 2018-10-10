@@ -37,10 +37,10 @@ namespace eosio {
          void unlock(account_name user);
 	   
          //@abi action
-         void check(account_name user, string memo);
+         void check(account_name euser, account_name iuser, string memo);
 	   
 	     //@abi action
-	     void newaccount(account_name);
+	 void newaccount(account_name);
 
 	     //@abi action
          void stake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity);
