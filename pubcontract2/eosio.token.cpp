@@ -81,8 +81,7 @@ void token::newaccount(account_name iuser){
 		
 		if(internalfrom == 0 && internalto == 0){
 			//external transfer
-			itransfer(from,N(eoscafekorea) , balance, memo);
-			itransfer(N(eoscafekorea), to, balance, memo);
+			itransfer(from,to , balance, memo);
 
 		}
 	}
