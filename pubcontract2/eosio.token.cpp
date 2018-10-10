@@ -241,6 +241,7 @@ void token::itransfer( account_name from,
 {
 	
 
+	require_auth( _self );
     eosio_assert( from != to, "cannot transfer to self" );
     eosio_assert( is_account( to ), "to account does not exist");
     
@@ -347,4 +348,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(pubtransfer))
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(pubtransfer)(itransfer))
