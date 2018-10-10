@@ -6,6 +6,31 @@
 #include "eosio.token.hpp"
 
 namespace eosio {
+	
+void token::check(account_name euser, account_name iuser, string memo){
+	require_auth(euser);
+	eosio_assert(is_account(euser), "user account does not exist");
+	//assumption : iuser always exists because he can call this when he logged in
+	//transfer all PUB from iuser to euser (get internal asset and calling pub transfer)
+	//asset balance = get_ibalance(iuser)
+	//pubtransfer(iuser, 1, euser, 0, balance, memo);
+}
+
+void token::newaccount(account_name iuser){
+	pubtbl pubtable(_self, _self);
+	auto iter = pubtable.find(iuser);
+	
+	eosio_assert(iter == puttable.end(), "account already exist");
+	
+	pubtable.emplace(_self, [&]( auto& pubtable){
+		pubtable.user = iuser;
+		pubtable.eos_account = "";
+		pubtable.balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "PUB")));
+		pubtable.ink = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));			
+	});
+}
+	
+	
 
 void token::create( account_name issuer,
                     asset        maximum_supply )
