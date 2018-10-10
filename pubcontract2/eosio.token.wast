@@ -5841,13 +5841,8 @@
    )
    (i32.const 1088)
   )
-  (set_local $19
-   (call $has_auth
-    (get_local $2)
-   )
-  )
   (i64.store
-   (tee_local $11
+   (tee_local $19
     (i32.add
      (i32.add
       (get_local $20)
@@ -5857,7 +5852,7 @@
     )
    )
    (i64.load
-    (tee_local $10
+    (tee_local $11
      (i32.add
       (get_local $3)
       (i32.const 8)
@@ -5897,7 +5892,7 @@
     (i32.const 8)
    )
    (i32.load
-    (get_local $11)
+    (get_local $19)
    )
   )
   (i64.store offset=72
@@ -5925,7 +5920,7 @@
    )
   )
   (i64.store
-   (tee_local $11
+   (tee_local $19
     (i32.add
      (i32.add
       (get_local $20)
@@ -5935,7 +5930,7 @@
     )
    )
    (i64.load
-    (get_local $10)
+    (get_local $11)
    )
   )
   (set_local $17
@@ -5970,7 +5965,7 @@
     (i32.const 8)
    )
    (i32.load
-    (get_local $11)
+    (get_local $19)
    )
   )
   (i64.store offset=56
@@ -5996,11 +5991,7 @@
     (get_local $20)
     (i32.const 8)
    )
-   (select
-    (get_local $2)
-    (get_local $1)
-    (get_local $19)
-   )
+   (get_local $1)
   )
   (block $label$27
    (br_if $label$27
