@@ -210,6 +210,8 @@ void token::itransfer( account_name from,
                       asset        quantity,
                       string       memo )
 {
+	
+	require_auth(_self);
     eosio_assert( from != to, "cannot transfer to self" );
     eosio_assert( is_account( to ), "to account does not exist");
     
@@ -348,17 +350,9 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 		
 		
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
-			pubtable.balance += quantity;
+			pubtable.balance -= quantity;
 		});
 	}
-		
-		
-
-
-	
-	
-
-		
 	
 
 
