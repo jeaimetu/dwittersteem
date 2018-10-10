@@ -88,6 +88,30 @@ void token::newaccount(account_name iuser){
 		}
 	}
 	
+	void token::stake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity){
+		//quantity check
+		require_auth( _self );
+		staketbl staketbl(_self, _self);
+		auto iter = staketbl.find(from);
+
+		draw(from, quantity);
+		//update stake table
+		//increase INK table by quantity
+		//You can stake PUB to many others
+		if(iter == staketbl.end()){
+			staketbl.emplace( _self, [&]( auto& staketbl) {
+				staketbl.balance = quantity;
+				staketbl.staked_at = now();
+				staketbl.user = from;
+				staketbl.owner = to;					
+		}else{
+			staketbl.modify(iter, _self, [&]( auto& staketbl ) {
+				staketbl.balance += quantity;
+				staketbl.staked_at = now();
+			});
+		}
+	}
+	
 	
 
 void token::create( account_name issuer,
