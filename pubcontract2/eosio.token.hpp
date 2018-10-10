@@ -90,7 +90,7 @@ namespace eosio {
 	    	asset ink;	         
             
             uint64_t primary_key()const {return user;}
-            EOSLIB_SERIALIZE(pub_table,(user)(balance)(ink))
+            EOSLIB_SERIALIZE(pub_table,(user)(eos_account)(balance)(ink))
          };
 	      //@abi table staketbl i64
 	      struct stake_table {
