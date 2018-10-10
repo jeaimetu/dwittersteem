@@ -30,6 +30,59 @@ void token::newaccount(account_name iuser){
 	});
 }
 	
+	void token::pubtransfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo){
+		//Internal to internal case
+		if(internalfrom == 1 && internalto == 1){
+			//account validation
+			pubtbl pubtable(_self, _self);
+			auto iter = pubtable.find(from);
+			eosio_assert(iter != pubtable.end(), "from account does not exist");
+			iter = pubtable.find(to);
+			eosio_assert(iter != pubtable.end(), "to account does not exist");
+			
+			save(to, balance);
+			draw(from, balance);
+		}
+		
+		if(internalfrom == 0 && internalto == 1){
+			//external to internal
+			//check whether it is mapped to external then
+			//calling external to external
+			pubtbl pubtable(_self, _self);
+			auto iter = pubtable.find(to);
+			eosio_assert(iter != pubtable.end(), "to account does not exist");
+			
+			const auto& st = *iter;
+			if(st.eos_account != null){
+				itransfer(from, st.eos_account, balance, memo);
+			}else{			
+				itransfer(from, N(eoscafekorea), balance, memo);
+				save(to, balance);
+			}
+			
+		}
+		
+		if(internalfrom == 1 && internalto == 0){
+			//internal to external
+			pubtbl pubtable(_self, _self);
+			auto iter = pubtable.find(from);
+			eosio_assert(iter != pubtable.end(), "from account does not exist");
+			
+			const auto& st = *iter;
+			if(st.eos_account != null){
+				itransfer(st.eos_account, to , balance, memo);
+			}else{
+				itransfer(N(eoscafekorea), from, balance, memo);
+				draw(from, balance);			
+			}
+		}
+		
+		if(internalfrom == 0 && internalto == 0){
+			//external transfer
+			itransfer(from, to, balance, memo);
+		}
+	}
+	
 	
 
 void token::create( account_name issuer,
@@ -91,6 +144,71 @@ void token::transfer( account_name from,
 {
     eosio_assert( from != to, "cannot transfer to self" );
     require_auth( from );
+    eosio_assert( is_account( to ), "to account does not exist");
+    
+	
+    auto sym = quantity.symbol.name();
+    stat statstable( _self, sym );
+    const auto& st = statstable.get( sym );
+	
+	//check whether from is locked or not in the case of PUB token
+	if(quantity.symbol.name() == st.supply.symbol.name()){
+		locktbl2 lockuptable( _self, _self );
+		auto existing = lockuptable.find( from );
+		if(existing != lockuptable.end()){
+			if(existing->lockup_period == 0){
+				eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
+			}else{				
+				asset allow_amount = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "DAB")));
+				asset current_amount = get_balance(from, allow_amount.symbol.name());
+				
+				uint32_t t1 = existing->start_time;
+				uint32_t t2 = now();
+				//converting to hour
+				t2 = (t2 - t1) / (60*60*24*30); //converting to milli seconds to 30days
+				//t2 = (t2 - t1) / 60; //converting to milli seconds to minutes for testing
+				if(t2 == 0){
+					eosio_assert(false, "send lock is enable");
+				}else if(t2 > existing->lockup_period){
+					;//do nothing. Lock period expired
+				}else{
+					//lockup period is valid
+					if(current_amount <= existing->initial_amount){
+						allow_amount = ((existing->initial_amount * t2) / existing->lockup_period) - 
+								(existing->initial_amount - current_amount);
+						eosio_assert(allow_amount.amount >= quantity.amount, "send lock is enable");
+					}else{
+						allow_amount = ((existing->initial_amount * t2) /
+								existing->lockup_period) + 
+								(current_amount - existing->initial_amount);								
+						eosio_assert(allow_amount.amount >= quantity.amount, "send lock is enable");
+					}
+				}
+			}
+		}
+		
+	}
+
+    require_recipient( from );
+    require_recipient( to );
+
+    eosio_assert( quantity.is_valid(), "invalid quantity" );
+    eosio_assert( quantity.amount > 0, "must transfer positive quantity" );
+    eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
+
+    auto payer = has_auth( to ) ? to : from;
+
+    sub_balance( from, quantity );
+    add_balance( to, quantity, payer );
+}
+	
+void token::itransfer( account_name from,
+                      account_name to,
+                      asset        quantity,
+                      string       memo )
+{
+    eosio_assert( from != to, "cannot transfer to self" );
     eosio_assert( is_account( to ), "to account does not exist");
     
 	
