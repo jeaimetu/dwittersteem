@@ -77,10 +77,10 @@ void token::newaccount(account_name iuser){
 			}
 		}
 		
-		if(internalfrom == 0 && internalto == 0){
+		//if(internalfrom == 0 && internalto == 0){
 			//external transfer
 			itransfer(from, to, balance, memo);
-		}
+		//}
 	}
 	
 	
