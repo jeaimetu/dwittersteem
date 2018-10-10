@@ -134,7 +134,7 @@ namespace eosio {
          void save(account_name user, asset quantity);
 		 //@abi action
          void draw(account_name user, asset quantity);
-	   
+	    //@abi action
 	 void itransfer( account_name from,
                         account_name to,
                         asset        quantity,
