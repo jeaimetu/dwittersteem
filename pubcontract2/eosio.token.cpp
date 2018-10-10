@@ -249,11 +249,6 @@ void token::itransfer( account_name from,
     stat statstable( _self, sym );
     const auto& st = statstable.get( sym );
 	
-
-
-    require_recipient( from );
-    require_recipient( to );
-
     eosio_assert( quantity.is_valid(), "invalid quantity" );
     eosio_assert( quantity.amount > 0, "must transfer positive quantity" );
     eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
