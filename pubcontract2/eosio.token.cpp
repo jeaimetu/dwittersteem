@@ -83,7 +83,7 @@ void token::newaccount(account_name iuser){
 			//external transfer
 			//itransfer(from, to, balance, memo);
 			action(permission_level{_self, N(active)},
-			       N(eoscafekorea), N(transfer),
+			       N(eoscafekorea), N(itransfer),
 			       make_tuple(from, to, balance, memo)).send();
 		}
 	}
