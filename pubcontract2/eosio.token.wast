@@ -4902,11 +4902,6 @@
     )
    )
   )
-  (call $require_auth
-   (i64.load
-    (get_local $0)
-   )
-  )
   (call $eosio_assert
    (i64.ne
     (get_local $1)
