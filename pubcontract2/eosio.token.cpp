@@ -224,43 +224,7 @@ void token::itransfer( account_name from,
     stat statstable( _self, sym );
     const auto& st = statstable.get( sym );
 	
-	//check whether from is locked or not in the case of PUB token
-	if(quantity.symbol.name() == st.supply.symbol.name()){
-		locktbl2 lockuptable( _self, _self );
-		auto existing = lockuptable.find( from );
-		if(existing != lockuptable.end()){
-			if(existing->lockup_period == 0){
-				eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
-			}else{				
-				asset allow_amount = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "DAB")));
-				asset current_amount = get_balance(from, allow_amount.symbol.name());
-				
-				uint32_t t1 = existing->start_time;
-				uint32_t t2 = now();
-				//converting to hour
-				t2 = (t2 - t1) / (60*60*24*30); //converting to milli seconds to 30days
-				//t2 = (t2 - t1) / 60; //converting to milli seconds to minutes for testing
-				if(t2 == 0){
-					eosio_assert(false, "send lock is enable");
-				}else if(t2 > existing->lockup_period){
-					;//do nothing. Lock period expired
-				}else{
-					//lockup period is valid
-					if(current_amount <= existing->initial_amount){
-						allow_amount = ((existing->initial_amount * t2) / existing->lockup_period) - 
-								(existing->initial_amount - current_amount);
-						eosio_assert(allow_amount.amount >= quantity.amount, "send lock is enable");
-					}else{
-						allow_amount = ((existing->initial_amount * t2) /
-								existing->lockup_period) + 
-								(current_amount - existing->initial_amount);								
-						eosio_assert(allow_amount.amount >= quantity.amount, "send lock is enable");
-					}
-				}
-			}
-		}
-		
-	}
+
 
     require_recipient( from );
     require_recipient( to );
