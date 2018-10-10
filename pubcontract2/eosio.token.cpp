@@ -31,6 +31,8 @@ void token::newaccount(account_name iuser){
 }
 	
 	void token::pubtransfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo){
+		require_auth( _self );
+		
 		//Internal to internal case
 		if(internalfrom == 1 && internalto == 1){
 			//account validation
