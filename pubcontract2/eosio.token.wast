@@ -1497,10 +1497,7 @@
   )
   (i32.store offset=8
    (get_local $9)
-   (i32.add
-    (get_local $3)
-    (i32.const -8)
-   )
+   (get_local $3)
   )
   (drop
    (call $_ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNS_5token9pub_tableE
@@ -1526,7 +1523,7 @@
      )
     )
     (get_local $4)
-    (i32.const 40)
+    (i32.const 48)
    )
   )
   (block $label$16
@@ -1944,6 +1941,41 @@
     )
     (i32.add
      (get_local $1)
+     (i32.const 8)
+    )
+    (i32.const 8)
+   )
+  )
+  (i32.store offset=4
+   (get_local $0)
+   (tee_local $2
+    (i32.add
+     (i32.load offset=4
+      (get_local $0)
+     )
+     (i32.const 8)
+    )
+   )
+  )
+  (call $eosio_assert
+   (i32.gt_s
+    (i32.sub
+     (i32.load offset=8
+      (get_local $0)
+     )
+     (get_local $2)
+    )
+    (i32.const 7)
+   )
+   (i32.const 320)
+  )
+  (drop
+   (call $memcpy
+    (i32.load offset=4
+     (get_local $0)
+    )
+    (i32.add
+     (get_local $1)
      (i32.const 16)
     )
     (i32.const 8)
@@ -2084,6 +2116,41 @@
   (drop
    (call $memcpy
     (get_local $1)
+    (i32.load offset=4
+     (get_local $0)
+    )
+    (i32.const 8)
+   )
+  )
+  (i32.store offset=4
+   (get_local $0)
+   (tee_local $2
+    (i32.add
+     (i32.load offset=4
+      (get_local $0)
+     )
+     (i32.const 8)
+    )
+   )
+  )
+  (call $eosio_assert
+   (i32.gt_u
+    (i32.sub
+     (i32.load offset=8
+      (get_local $0)
+     )
+     (get_local $2)
+    )
+    (i32.const 7)
+   )
+   (i32.const 368)
+  )
+  (drop
+   (call $memcpy
+    (i32.add
+     (get_local $1)
+     (i32.const 8)
+    )
     (i32.load offset=4
      (get_local $0)
     )
@@ -12929,7 +12996,7 @@
      (get_local $7)
      (i32.const 48)
     )
-    (i32.const 40)
+    (i32.const 48)
    )
   )
   (i32.store offset=100
@@ -12964,7 +13031,7 @@
     (get_local $7)
     (i32.const 48)
    )
-   (i32.const 40)
+   (i32.const 48)
   )
   (block $label$1
    (br_if $label$1
@@ -13269,7 +13336,7 @@
      (get_local $7)
      (i32.const 48)
     )
-    (i32.const 40)
+    (i32.const 48)
    )
   )
   (i32.store offset=100
@@ -13304,7 +13371,7 @@
     (get_local $7)
     (i32.const 48)
    )
-   (i32.const 40)
+   (i32.const 48)
   )
   (block $label$1
    (br_if $label$1
