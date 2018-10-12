@@ -14,6 +14,22 @@ void token::check(account_name euser, account_name iuser, string memo){
 	//transfer all PUB from iuser to euser (get internal asset and calling pub transfer)
 	//asset balance = get_ibalance(iuser)
 	//pubtransfer(iuser, 1, euser, 0, balance, memo);
+	maptbl maptable(_self, _self);
+	auto iter = maptable.find(euser);
+	
+	eosio_assert(iter == maptable.end(), "external account already exist");
+	
+	maptable.empalce(_self, [&]( auto& maptable){
+		maptable.iuser = iuser;
+	});
+	pubtbl pubtable(_self, iuser);
+	auto iter2 = pubtable.find(iuser);
+	
+	/* auth need to be delegated (eosio.code -> active permission of contract owner) 
+	before that, eosjs do this transfer as following parameter
+	if(iter2->balance > 0)
+		pubtransfer(iuser, 1, euser, 0, iter2->balance, "link internal account to external account");
+		*/
 }
 
 	//internal account should have scope with "iuser"
