@@ -19,7 +19,7 @@ void token::check(account_name euser, account_name iuser, string memo){
 	
 	eosio_assert(iter == maptable.end(), "external account already exist");
 	
-	maptable.empalce(_self, [&]( auto& maptable){
+	maptable.emplace(_self, [&]( auto& maptable){
 		maptable.iuser = iuser;
 	});
 	pubtbl pubtable(_self, iuser);
