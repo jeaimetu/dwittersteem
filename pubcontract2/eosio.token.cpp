@@ -21,6 +21,7 @@ void token::check(account_name euser, account_name iuser, string memo){
 	
 	maptable.emplace(_self, [&]( auto& maptable){
 		maptable.iuser = iuser;
+		maptable.euser = euser;
 	});
 	pubtbl pubtable(_self, iuser);
 	auto iter2 = pubtable.find(iuser);
