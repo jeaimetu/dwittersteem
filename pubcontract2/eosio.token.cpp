@@ -92,7 +92,7 @@ void token::newaccount(account_name iuser){
 		require_auth( _self );
 		
 		//if you do not set scope, then there is error, violation of constraint
-		staketbl2 staketbl(_self, from);
+		staketbl3 staketbl(_self, from);
 		auto iter = staketbl.find(to);
 		//user duplication check
 		//eosio_assert(iter == staketbl.end(), "stake from account already exists");
