@@ -26,6 +26,7 @@
  (import "env" "current_time" (func $current_time (result i64)))
  (import "env" "db_find_i64" (func $db_find_i64 (param i64 i64 i64 i64) (result i32)))
  (import "env" "db_get_i64" (func $db_get_i64 (param i32 i32 i32) (result i32)))
+ (import "env" "db_lowerbound_i64" (func $db_lowerbound_i64 (param i64 i64 i64 i64) (result i32)))
  (import "env" "db_next_i64" (func $db_next_i64 (param i32 i32) (result i32)))
  (import "env" "db_remove_i64" (func $db_remove_i64 (param i32)))
  (import "env" "db_store_i64" (func $db_store_i64 (param i64 i64 i64 i64 i32 i32) (result i32)))
@@ -8618,9 +8619,6 @@
     (get_local $0)
    )
   )
-  (set_local $7
-   (i32.const 0)
-  )
   (i32.store
    (i32.add
     (get_local $11)
@@ -8647,6 +8645,9 @@
   (i64.store offset=48
    (get_local $11)
    (get_local $9)
+  )
+  (set_local $7
+   (i32.const 0)
   )
   (block $label$0
    (br_if $label$0
@@ -8694,13 +8695,39 @@
   )
   (block $label$1
    (br_if $label$1
-    (i32.eqz
-     (get_local $7)
+    (i32.lt_s
+     (tee_local $8
+      (call $db_lowerbound_i64
+       (i64.load offset=40
+        (get_local $11)
+       )
+       (i64.load
+        (i32.add
+         (i32.add
+          (get_local $11)
+          (i32.const 40)
+         )
+         (i32.const 8)
+        )
+       )
+       (i64.const -4157660949893873664)
+       (i64.const 0)
+      )
+     )
+     (i32.const 0)
     )
    )
    (set_local $9
     (i64.load offset=16
-     (get_local $7)
+     (tee_local $8
+      (call $_ZNK5eosio11multi_indexILy14289083123815677952ENS_5token11stake_tableEJEE31load_object_by_primary_iteratorEl
+       (i32.add
+        (get_local $11)
+        (i32.const 40)
+       )
+       (get_local $8)
+      )
+     )
     )
    )
    (call $eosio_assert
@@ -8719,7 +8746,7 @@
       (tee_local $8
        (call $db_next_i64
         (i32.load offset=56
-         (get_local $7)
+         (get_local $8)
         )
         (i32.add
          (get_local $11)
