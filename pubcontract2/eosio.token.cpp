@@ -93,14 +93,14 @@ void token::newaccount(account_name iuser){
 		staketbl2 staketbl(_self, _self);
 		auto iter = staketbl.find(from);
 		//user duplication check
-		eosio_assert(iter == staketbl.end(), "stake from account already exists");
+		//eosio_assert(iter == staketbl.end(), "stake from account already exists");
 		//owner duplication check
 		bool find_flag = 0; //initial value is false = 0
 		for(auto i = staketbl.begin();i != staketbl.end(); i++){
 			if(i->owner == to)
 				find_flag = 1;
 		}
-		eosio_assert(find_flag == 0, "stake to account already exists");
+		eosio_assert(find_flag == 0 && iter == staketbl.end(), "stake account pair already exists");
 
 		draw(from, quantity);
 		//update stake table
