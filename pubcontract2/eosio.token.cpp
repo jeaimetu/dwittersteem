@@ -16,8 +16,9 @@ void token::check(account_name euser, account_name iuser, string memo){
 	//pubtransfer(iuser, 1, euser, 0, balance, memo);
 }
 
+	//internal account should have scope with "iuser"
 void token::newaccount(account_name iuser){
-	pubtbl pubtable(_self, _self);
+	pubtbl pubtable(_self, iuser);
 	auto iter = pubtable.find(iuser);
 	
 	eosio_assert(iter == pubtable.end(), "account already exist");
@@ -36,7 +37,7 @@ void token::newaccount(account_name iuser){
 		//Internal to internal case
 		if(internalfrom == 1 && internalto == 1){
 			//account validation
-			pubtbl pubtable(_self, _self);
+			pubtbl pubtable(_self, from);
 			auto iter = pubtable.find(from);
 			eosio_assert(iter != pubtable.end(), "from account does not exist");
 			auto iter2 = pubtable.find(to);
@@ -90,7 +91,8 @@ void token::newaccount(account_name iuser){
 		//quantity check
 		require_auth( _self );
 		
-		staketbl2 staketbl(_self, _self);
+		//if you do not set scope, then there is error, violation of constraint
+		staketbl2 staketbl(_self, from);
 		auto iter = staketbl.find(from);
 		//user duplication check
 		//eosio_assert(iter == staketbl.end(), "stake from account already exists");
