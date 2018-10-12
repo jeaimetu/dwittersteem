@@ -97,8 +97,8 @@ namespace eosio {
             uint64_t primary_key()const {return user;}
             EOSLIB_SERIALIZE(pub_table,(user)(eos_account)(balance)(ink))
          };
-	      //@abi table staketbl i64
-	      struct stake_table2 {
+	      //@abi table staketbl2 i64
+	      struct stake_table {
 			account_name user;
             bool user_internal;
 		    account_name owner;
@@ -107,7 +107,7 @@ namespace eosio {
 		    uint32_t staked_at;
 		   
 		    uint64_t primary_key()const {return user;}
-		    EOSLIB_SERIALIZE(stake_table2,(user)(user_internal)(owner)(owner_internal)(balance)(staked_at))
+		    EOSLIB_SERIALIZE(stake_table,(user)(user_internal)(owner)(owner_internal)(balance)(staked_at))
 	      }; 
 	   
 	      //@abi table unstaketbl i64
@@ -129,7 +129,7 @@ namespace eosio {
          typedef eosio::multi_index<N(locktbl2), lockup_list> locktbl2;
       
          typedef eosio::multi_index<N(pubtbl), pub_table> pubtbl;
-	     typedef eosio::multi_index<N(staketbl2), stake_table2> staketbl2;
+	     typedef eosio::multi_index<N(staketbl2), stake_table> staketbl2;
 	     typedef eosio::multi_index<N(unstaketbl), unstake_table> unstaketbl;
 
          void sub_balance( account_name owner, asset value );
