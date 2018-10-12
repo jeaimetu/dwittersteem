@@ -93,27 +93,28 @@ void token::newaccount(account_name iuser){
 		
 		//if you do not set scope, then there is error, violation of constraint
 		staketbl2 staketbl(_self, from);
-		auto iter = staketbl.find(from);
+		auto iter = staketbl.find(to);
 		//user duplication check
 		//eosio_assert(iter == staketbl.end(), "stake from account already exists");
 		//owner duplication check
+		/*
 		bool find_flag = 0; //initial value is false = 0
 		for(auto i = staketbl.begin();i != staketbl.end(); i++){
 			if(i->owner == to)
 				find_flag = 1;
 		}
-		//eosio_assert(find_flag == 0 && iter == staketbl.end(), "stake account pair already exists");
+		eosio_assert(find_flag == 0 && iter == staketbl.end(), "stake account pair already exists");
+		*/
 
 		draw(from, quantity);
 		//update stake table
 		//increase INK table by quantity
 		//You can stake PUB to many others
-		if(iter == staketbl.end() || find_flag == 0){
+		if(iter == staketbl.end()){
 			staketbl.emplace( _self, [&]( auto& staketbl) {
 				staketbl.balance = quantity;
 				staketbl.staked_at = now();
-				staketbl.user = from;
-				staketbl.owner = to;	
+				staketbl.user = to;
 			});
 		}else{
 			staketbl.modify(iter, _self, [&]( auto& staketbl ) {
