@@ -25,6 +25,10 @@ void token::check(account_name euser, account_name iuser, string memo){
 	pubtbl pubtable(_self, iuser);
 	auto iter2 = pubtable.find(iuser);
 	
+	pubtable.modify(iter2, _self, [&]( auto& pubtable ) {
+		pubtable.eos_account = euser;
+	});
+	
 	/* auth need to be delegated (eosio.code -> active permission of contract owner) 
 	before that, eosjs do this transfer as following parameter
 	if(iter2->balance > 0)
