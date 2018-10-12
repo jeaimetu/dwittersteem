@@ -219,6 +219,10 @@
    )
    (i32.const 0)
   )
+  (i64.store offset=16
+   (get_local $7)
+   (get_local $1)
+  )
   (i64.store offset=24
    (get_local $7)
    (i64.const -1)
@@ -235,10 +239,6 @@
     )
    )
   )
-  (i64.store offset=16
-   (get_local $7)
-   (get_local $5)
-  )
   (block $label$0
    (block $label$1
     (br_if $label$1
@@ -246,7 +246,7 @@
       (tee_local $2
        (call $db_find_i64
         (get_local $5)
-        (get_local $5)
+        (get_local $1)
         (i64.const -5868309319417593856)
         (get_local $1)
        )
@@ -282,7 +282,7 @@
    (get_local $4)
    (i32.const 112)
   )
-  (set_local $5
+  (set_local $1
    (i64.load
     (get_local $0)
    )
@@ -296,7 +296,7 @@
   )
   (i64.store offset=88
    (get_local $7)
-   (get_local $5)
+   (get_local $1)
   )
   (call $eosio_assert
    (i64.eq
@@ -354,7 +354,7 @@
   )
   (i64.store offset=64
    (get_local $7)
-   (tee_local $5
+   (tee_local $1
     (i64.load
      (get_local $0)
     )
@@ -389,7 +389,7 @@
     )
     (i64.store offset=8
      (get_local $4)
-     (get_local $5)
+     (get_local $1)
     )
     (i32.store offset=16
      (get_local $4)
@@ -2389,7 +2389,7 @@
    )
    (i64.store offset=384
     (get_local $19)
-    (get_local $16)
+    (get_local $1)
    )
    (set_local $14
     (i32.const 0)
@@ -2400,7 +2400,7 @@
       (tee_local $13
        (call $db_find_i64
         (get_local $16)
-        (get_local $16)
+        (get_local $1)
         (i64.const -5868309319417593856)
         (get_local $1)
        )
@@ -8624,6 +8624,10 @@
    )
    (i32.const 0)
   )
+  (i64.store offset=40
+   (get_local $11)
+   (get_local $1)
+  )
   (i64.store offset=48
    (get_local $11)
    (i64.const -1)
@@ -8640,12 +8644,8 @@
     )
    )
   )
-  (i64.store offset=40
-   (get_local $11)
-   (get_local $9)
-  )
   (set_local $8
-   (get_local $9)
+   (get_local $1)
   )
   (set_local $6
    (i32.const 0)
@@ -8656,7 +8656,7 @@
      (tee_local $10
       (call $db_find_i64
        (get_local $9)
-       (get_local $9)
+       (get_local $1)
        (i64.const -4157660949893873664)
        (get_local $1)
       )
@@ -8684,7 +8684,7 @@
     )
     (i32.const 48)
    )
-   (set_local $9
+   (set_local $8
     (i64.load
      (i32.add
       (get_local $11)
@@ -8692,7 +8692,7 @@
      )
     )
    )
-   (set_local $8
+   (set_local $9
     (i64.load offset=32
      (get_local $11)
     )
@@ -8704,8 +8704,8 @@
      (i32.lt_s
       (tee_local $10
        (call $db_lowerbound_i64
-        (get_local $8)
         (get_local $9)
+        (get_local $8)
         (i64.const -4157660949893873664)
         (i64.const 0)
        )
