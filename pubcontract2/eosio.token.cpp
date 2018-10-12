@@ -100,13 +100,13 @@ void token::newaccount(account_name iuser){
 			if(i->owner == to)
 				find_flag = 1;
 		}
-		eosio_assert(find_flag == 0 && iter == staketbl.end(), "stake account pair already exists");
+		//eosio_assert(find_flag == 0 && iter == staketbl.end(), "stake account pair already exists");
 
 		draw(from, quantity);
 		//update stake table
 		//increase INK table by quantity
 		//You can stake PUB to many others
-		if(iter == staketbl.end()){
+		if(iter == staketbl.end() || find_flag == 0){
 			staketbl.emplace( _self, [&]( auto& staketbl) {
 				staketbl.balance = quantity;
 				staketbl.staked_at = now();
