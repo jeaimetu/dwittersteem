@@ -107,7 +107,7 @@ namespace eosio {
 		    uint32_t staked_at;
 		   
 		    uint64_t primary_key()const {return user;}
-		    EOSLIB_SERIALIZE(stake_table,(user_internal)(owner)(owner_internal)(balance)(staked_at))
+		    EOSLIB_SERIALIZE(stake_table,(user)(user_internal)(owner)(owner_internal)(balance)(staked_at))
 	      }; 
 	   
 	      //@abi table unstaketbl i64
