@@ -4238,7 +4238,7 @@
   )
   (i64.store offset=16
    (get_local $7)
-   (get_local $3)
+   (get_local $1)
   )
   (set_local $6
    (i32.const 0)
@@ -4249,7 +4249,7 @@
      (tee_local $4
       (call $db_find_i64
        (get_local $3)
-       (get_local $3)
+       (get_local $1)
        (i64.const -5868309319417593856)
        (get_local $1)
       )
@@ -4287,7 +4287,7 @@
    )
    (i32.const 1168)
   )
-  (set_local $1
+  (set_local $3
    (i64.load
     (get_local $0)
    )
@@ -4317,7 +4317,7 @@
    )
    (i32.const 752)
   )
-  (set_local $3
+  (set_local $1
    (i64.load
     (get_local $6)
    )
@@ -4367,7 +4367,7 @@
   )
   (call $eosio_assert
    (i64.eq
-    (get_local $3)
+    (get_local $1)
     (i64.load
      (get_local $6)
     )
@@ -4411,7 +4411,7 @@
    (i32.load offset=52
     (get_local $6)
    )
-   (get_local $1)
+   (get_local $3)
    (i32.add
     (get_local $7)
     (i32.const 48)
@@ -4421,7 +4421,7 @@
   (block $label$1
    (br_if $label$1
     (i64.lt_u
-     (get_local $3)
+     (get_local $1)
      (i64.load
       (tee_local $6
        (i32.add
@@ -4437,11 +4437,11 @@
     (select
      (i64.const -2)
      (i64.add
-      (get_local $3)
+      (get_local $1)
       (i64.const 1)
      )
      (i64.gt_u
-      (get_local $3)
+      (get_local $1)
       (i64.const -3)
      )
     )
@@ -4578,7 +4578,7 @@
   )
   (i64.store offset=16
    (get_local $7)
-   (get_local $3)
+   (get_local $1)
   )
   (set_local $6
    (i32.const 0)
@@ -4589,7 +4589,7 @@
      (tee_local $4
       (call $db_find_i64
        (get_local $3)
-       (get_local $3)
+       (get_local $1)
        (i64.const -5868309319417593856)
        (get_local $1)
       )
@@ -4627,7 +4627,7 @@
    )
    (i32.const 1168)
   )
-  (set_local $1
+  (set_local $3
    (i64.load
     (get_local $0)
    )
@@ -4657,7 +4657,7 @@
    )
    (i32.const 752)
   )
-  (set_local $3
+  (set_local $1
    (i64.load
     (get_local $6)
    )
@@ -4707,7 +4707,7 @@
   )
   (call $eosio_assert
    (i64.eq
-    (get_local $3)
+    (get_local $1)
     (i64.load
      (get_local $6)
     )
@@ -4751,7 +4751,7 @@
    (i32.load offset=52
     (get_local $6)
    )
-   (get_local $1)
+   (get_local $3)
    (i32.add
     (get_local $7)
     (i32.const 48)
@@ -4761,7 +4761,7 @@
   (block $label$1
    (br_if $label$1
     (i64.lt_u
-     (get_local $3)
+     (get_local $1)
      (i64.load
       (tee_local $6
        (i32.add
@@ -4777,11 +4777,11 @@
     (select
      (i64.const -2)
      (i64.add
-      (get_local $3)
+      (get_local $1)
       (i64.const 1)
      )
      (i64.gt_u
-      (get_local $3)
+      (get_local $1)
       (i64.const -3)
      )
     )
