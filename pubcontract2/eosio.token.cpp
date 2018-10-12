@@ -123,8 +123,8 @@ void token::newaccount(account_name iuser){
 				staketbl.staked_at = now();
 				staketbl.user = to;
 				//increase INK power
-				pubtbl pubtable(_self, from);
-				auto iter2 = pubtable.find(from);
+				pubtbl pubtable(_self, to);
+				auto iter2 = pubtable.find(to);
 				pubtable.modify(iter2, _self, [&]( auto& pubtable ) {
 					pubtable.ink = asset(quantity.amount, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));	
 				});
