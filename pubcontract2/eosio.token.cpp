@@ -96,7 +96,7 @@ void token::newaccount(account_name iuser){
 		eosio_assert(iter == staketbl.end(), "stake from account already exists");
 		//owner duplication check
 		bool find_flag = 0; //initial value is false = 0
-		for(auto i = iter;i < staketbl.end(); i++){
+		for(auto i = iter;i != staketbl.end(); i++){
 			if(i->owner == to)
 				find_flag = 1;
 		}
