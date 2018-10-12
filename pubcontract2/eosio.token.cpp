@@ -90,7 +90,7 @@ void token::newaccount(account_name iuser){
 		//quantity check
 		require_auth( _self );
 		
-		staketbl staketbl(_self, _self);
+		staketbl2 staketbl(_self, _self);
 		auto iter = staketbl.find(from);
 		//user duplication check
 		eosio_assert(iter == staketbl.end(), "stake from account already exists");
@@ -107,14 +107,14 @@ void token::newaccount(account_name iuser){
 		//increase INK table by quantity
 		//You can stake PUB to many others
 		if(iter == staketbl.end()){
-			staketbl.emplace( _self, [&]( auto& staketbl) {
+			staketbl.emplace( _self, [&]( auto& staketbl2) {
 				staketbl.balance = quantity;
 				staketbl.staked_at = now();
 				staketbl.user = from;
 				staketbl.owner = to;	
 			});
 		}else{
-			staketbl.modify(iter, _self, [&]( auto& staketbl ) {
+			staketbl.modify(iter, _self, [&]( auto& staketbl2 ) {
 				staketbl.balance += quantity;
 				staketbl.staked_at = now();
 			});
