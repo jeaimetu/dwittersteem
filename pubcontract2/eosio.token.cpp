@@ -98,8 +98,9 @@ void token::newaccount(account_name iuser){
 			pubtbl pubtable(_self, from);
 			auto iter = pubtable.find(from);
 			eosio_assert(iter != pubtable.end(), "from account does not exist");
-			auto iter2 = pubtable.find(to);
-			eosio_assert(iter2 != pubtable.end(), "to account does not exist");
+			pubtbl pubtable2(_self, to);
+			auto iter2 = pubtable2.find(to);
+			eosio_assert(iter2 != pubtable2.end(), "to account does not exist");
 			
 			save(to, balance);
 			draw(from, balance);
