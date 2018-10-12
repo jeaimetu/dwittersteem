@@ -52,6 +52,26 @@ void token::newaccount(account_name iuser){
 	});
 }
 	
+	void token::thanks(account_name user, asset quantity, string boardid){
+		//permission check
+		require_auth( _self );
+		//check precondition
+		pubtbl pubtable(_self, user);
+		auto iter = pubtable.find(user);
+		eosio_assert(iter == pubtable.end(), "account already exist");
+		
+		//decrease ink power from pubtable
+		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
+			pubtable.ink.amount -= quantity.amount;
+		});
+	}
+	
+	void token::refund(account_name user){
+		//check whether unstake is done or not.
+		//if done, erase unstake row
+		//move balance to the owner by using pubtransfer)
+	}
+	
 	void token::pubtransfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo){
 		require_auth( _self );
 		
@@ -155,6 +175,45 @@ void token::newaccount(account_name iuser){
 			staketbl.modify(iter, _self, [&]( auto& staketbl ) {
 				staketbl.balance += quantity;
 				staketbl.staked_at = now();
+			});
+		}
+	}
+	
+	
+	void token::unstake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity){
+		//quantity check
+		require_auth( _self );
+		
+		
+		//existence check, from always be there
+		pubtbl pubtable(_self, to);
+		auto iter = pubtable.find(to);
+		eosio_assert(iter != pubtable.end(), "to account does not exist");
+		
+		//check stake table, staketbl
+		staketbl  stake_table (_self, from);
+		auto iter = stake_table.find(to);
+		eosio_assert(iter != stake_table.end(), "there is no staked amount");
+		
+		eosio_assert(iter->balance.amount >= quantity.amount, "unstake amount overdue");
+		//decrease staked amount
+		stake_table.modify(iter, _self, [&]( auto& staketbl ) {
+			staketbl.balance.amount -= quantity.amount;
+		});
+		
+		unstaketbl  unstake_table (_self, from);
+		auto iter2 = unstake_table.find(to);
+
+		if(iter2 == unstake_table.end()){
+			unstake_table.emplace( _self, [&]( auto& unstaketbl) {
+				unstaketbl.balance = quantity;
+				unstaketbl.unstaked_at = now();
+				unstaketbl.user = to;				
+			});
+		}else{
+			unstake_table.modify(iter2, _self, [&]( auto& unstaketbl ) {
+				unstaketbl.balance += quantity;
+				unstaketbl.unstaked_at = now();
 			});
 		}
 	}
@@ -397,4 +456,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(pubtransfer)(itransfer)(stake))
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(pubtransfer)(itransfer)(stake)(unstake)(refund)(thanks))
