@@ -75,7 +75,7 @@ void token::newaccount(account_name iuser){
 		
 		pubtbl pubtable(_self, from);
 		auto iter2 = pubtable.find(from);
-		if(iter2->eos_account == ""){
+		if(iter2->eos_account == N("")){
 			//internal to internal transfer
 			save(from, iter->balance);			
 		}else{
