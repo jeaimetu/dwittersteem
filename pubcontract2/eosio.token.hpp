@@ -51,7 +51,7 @@ namespace eosio {
 	 	 //@abi action
          void pubtransfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo);
 	   
-	     void refund(account_name user);
+	     void refund(account_name from, account_name user);
 	     void thanks(account_name user, asset quantity, string boardid);
 
          inline asset get_supply( symbol_name sym )const;
