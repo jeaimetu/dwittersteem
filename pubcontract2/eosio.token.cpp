@@ -53,7 +53,7 @@ void token::newaccount(account_name iuser){
 			//external to internal
 			//check whether it is mapped to external then
 			//calling external to external
-			pubtbl pubtable(_self, _self);
+			pubtbl pubtable(_self, to);
 			auto iter = pubtable.find(to);
 			eosio_assert(iter != pubtable.end(), "to account does not exist");
 			
@@ -95,7 +95,7 @@ void token::newaccount(account_name iuser){
 		
 		
 		//existence check, from always be there
-		pubtbl pubtable(_self, from);
+		pubtbl pubtable(_self, to);
 		auto iter2 = pubtable.find(to);
 		eosio_assert(iter2 != pubtable.end(), "to account does not exist");
 		//if you do not set scope, then there is error, violation of constraint
