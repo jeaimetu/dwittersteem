@@ -66,10 +66,25 @@ void token::newaccount(account_name iuser){
 		});
 	}
 	
-	void token::refund(account_name user){
+	void token::refund(account_name from, account_name user){
 		//check whether unstake is done or not.
 		//if done, erase unstake row
 		//move balance to the owner by using pubtransfer)
+		unstaketbl unstake_table(_self, from);
+		auto iter = unstake_table.find(user);
+		
+		pubtbl pubtable(_self, from);
+		auto iter2 = pubtable.find(from);
+		if(iter2->eos_account == ""){
+			//internal to internal transfer
+			save(from, iter->balance);			
+		}else{
+			//internal to external transfer
+			pubtransfer(N(eoscafekorea), 0, iter->eos_account, 0, iter->balance, "refund");
+		}
+		//delete unstake table row
+		unstake_table.erase(iter);
+		
 	}
 	
 	void token::pubtransfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo){
