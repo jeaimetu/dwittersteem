@@ -8975,7 +8975,7 @@
          (get_local $11)
          (i32.const 80)
         )
-        (i32.const 30)
+        (i32.const 38)
        )
       )
       (i32.store offset=132
@@ -9010,7 +9010,7 @@
         (get_local $11)
         (i32.const 80)
        )
-       (i32.const 30)
+       (i32.const 38)
       )
       (br_if $label$6
        (i64.lt_u
@@ -9220,7 +9220,7 @@
         (get_local $11)
         (i32.const 80)
        )
-       (i32.const 30)
+       (i32.const 38)
       )
      )
      (i32.store offset=132
@@ -9270,7 +9270,7 @@
          (get_local $11)
          (i32.const 80)
         )
-        (i32.const 30)
+        (i32.const 38)
        )
       )
      )
@@ -9931,6 +9931,40 @@
     )
    )
   )
+  (call $eosio_assert
+   (i32.gt_s
+    (i32.sub
+     (i32.load offset=8
+      (get_local $0)
+     )
+     (i32.load offset=4
+      (get_local $0)
+     )
+    )
+    (i32.const 7)
+   )
+   (i32.const 320)
+  )
+  (drop
+   (call $memcpy
+    (i32.load offset=4
+     (get_local $0)
+    )
+    (get_local $1)
+    (i32.const 8)
+   )
+  )
+  (i32.store offset=4
+   (get_local $0)
+   (tee_local $2
+    (i32.add
+     (i32.load offset=4
+      (get_local $0)
+     )
+     (i32.const 8)
+    )
+   )
+  )
   (i32.store8 offset=14
    (get_local $3)
    (i32.load8_u offset=8
@@ -9943,9 +9977,7 @@
      (i32.load offset=8
       (get_local $0)
      )
-     (i32.load offset=4
-      (get_local $0)
-     )
+     (get_local $2)
     )
     (i32.const 0)
    )
@@ -10502,13 +10534,45 @@
    )
   )
   (call $eosio_assert
+   (i32.gt_u
+    (i32.sub
+     (i32.load offset=8
+      (get_local $0)
+     )
+     (i32.load offset=4
+      (get_local $0)
+     )
+    )
+    (i32.const 7)
+   )
+   (i32.const 368)
+  )
+  (drop
+   (call $memcpy
+    (get_local $1)
+    (i32.load offset=4
+     (get_local $0)
+    )
+    (i32.const 8)
+   )
+  )
+  (i32.store offset=4
+   (get_local $0)
+   (tee_local $2
+    (i32.add
+     (i32.load offset=4
+      (get_local $0)
+     )
+     (i32.const 8)
+    )
+   )
+  )
+  (call $eosio_assert
    (i32.ne
     (i32.load offset=8
      (get_local $0)
     )
-    (i32.load offset=4
-     (get_local $0)
-    )
+    (get_local $2)
    )
    (i32.const 368)
   )
