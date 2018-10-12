@@ -107,14 +107,14 @@ void token::newaccount(account_name iuser){
 		//increase INK table by quantity
 		//You can stake PUB to many others
 		if(iter == staketbl.end()){
-			staketbl.emplace( _self, [&]( auto& staketbl2) {
+			staketbl.emplace( _self, [&]( auto& staketbl) {
 				staketbl.balance = quantity;
 				staketbl.staked_at = now();
 				staketbl.user = from;
 				staketbl.owner = to;	
 			});
 		}else{
-			staketbl.modify(iter, _self, [&]( auto& staketbl2 ) {
+			staketbl.modify(iter, _self, [&]( auto& staketbl ) {
 				staketbl.balance += quantity;
 				staketbl.staked_at = now();
 			});
