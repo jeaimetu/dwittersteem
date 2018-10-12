@@ -335,7 +335,7 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
    }
 }
 	void token::save(account_name user, asset quantity){
-		pubtbl pubtable(_self, _self);
+		pubtbl pubtable(_self, user);
 		auto iter = pubtable.find(user);
 		
 		eosio_assert(iter != pubtable.end(), "account does not exist");
@@ -346,7 +346,7 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 	}
 	
 	void token::draw(account_name user, asset quantity){
-		pubtbl pubtable(_self, _self);
+		pubtbl pubtable(_self, user);
 		auto iter = pubtable.find(user);
 		
 		eosio_assert(iter != pubtable.end(), "account does not exist");
