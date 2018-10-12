@@ -34,6 +34,8 @@ void token::newaccount(account_name iuser){
 	void token::pubtransfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo){
 		require_auth( _self );
 		
+		//for any internal account, check existence of external then change internalfrom or internalto value
+		
 		//Internal to internal case
 		if(internalfrom == 1 && internalto == 1){
 			//account validation
@@ -67,7 +69,7 @@ void token::newaccount(account_name iuser){
 		
 		if(internalfrom == 1 && internalto == 0){
 			//internal to external
-			pubtbl pubtable(_self, _self);
+			pubtbl pubtable(_self, from);
 			auto iter = pubtable.find(from);
 			eosio_assert(iter != pubtable.end(), "from account does not exist");
 			
@@ -91,6 +93,11 @@ void token::newaccount(account_name iuser){
 		//quantity check
 		require_auth( _self );
 		
+		
+		//existence check, from always be there
+		pubtbl pubtable(_self, from);
+		auto iter2 = pubtable.find(to);
+		eosio_assert(iter2 != pubtable.end(), "to account does not exist");
 		//if you do not set scope, then there is error, violation of constraint
 		staketbl3 staketbl(_self, from);
 		auto iter = staketbl.find(to);
@@ -115,6 +122,13 @@ void token::newaccount(account_name iuser){
 				staketbl.balance = quantity;
 				staketbl.staked_at = now();
 				staketbl.user = to;
+				//increase INK power
+				pubtbl pubtable(_self, from);
+				auto iter2 = pubtable.find(from);
+				pubtable.modify(iter2, _self, [&]( auto& pubtable ) {
+					pubtable.ink = asset(quantity.amount, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));	
+				});
+				
 			});
 		}else{
 			staketbl.modify(iter, _self, [&]( auto& staketbl ) {
@@ -350,6 +364,7 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 		auto iter = pubtable.find(user);
 		
 		eosio_assert(iter != pubtable.end(), "account does not exist");
+		eosio_assert( user.balance.amount >= quantity.amount, "overdrawn balance" );
 		
 		
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
