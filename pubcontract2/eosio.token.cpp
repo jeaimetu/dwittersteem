@@ -187,11 +187,11 @@ void token::newaccount(account_name iuser){
 		
 		//existence check, from always be there
 		pubtbl pubtable(_self, to);
-		auto iter = pubtable.find(to);
-		eosio_assert(iter != pubtable.end(), "to account does not exist");
+		auto iter3 = pubtable.find(to);
+		eosio_assert(iter3 != pubtable.end(), "to account does not exist");
 		
 		//check stake table, staketbl
-		staketbl  stake_table (_self, from);
+		staketbl3  stake_table (_self, from);
 		auto iter = stake_table.find(to);
 		eosio_assert(iter != stake_table.end(), "there is no staked amount");
 		
