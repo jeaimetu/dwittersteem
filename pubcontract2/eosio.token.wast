@@ -8666,7 +8666,7 @@
     (i32.eq
      (i32.load offset=52
       (tee_local $7
-       (call $_ZNK5eosio11multi_indexILy14289083123815677952ENS_5token12stake_table2EJEE31load_object_by_primary_iteratorEl
+       (call $_ZNK5eosio11multi_indexILy14289083123815677952ENS_5token11stake_tableEJEE31load_object_by_primary_iteratorEl
         (i32.add
          (get_local $11)
          (i32.const 40)
@@ -8734,7 +8734,7 @@
      (set_local $9
       (i64.load offset=16
        (tee_local $8
-        (call $_ZNK5eosio11multi_indexILy14289083123815677952ENS_5token12stake_table2EJEE31load_object_by_primary_iteratorEl
+        (call $_ZNK5eosio11multi_indexILy14289083123815677952ENS_5token11stake_tableEJEE31load_object_by_primary_iteratorEl
          (i32.add
           (get_local $11)
           (i32.const 40)
@@ -8993,7 +8993,7 @@
        )
       )
       (drop
-       (call $_ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNS_5token12stake_table2E
+       (call $_ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNS_5token11stake_tableE
         (i32.add
          (get_local $11)
          (i32.const 128)
@@ -9238,7 +9238,7 @@
       )
      )
      (drop
-      (call $_ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNS_5token12stake_table2E
+      (call $_ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNS_5token11stake_tableE
        (i32.add
         (get_local $11)
         (i32.const 128)
@@ -9366,7 +9366,7 @@
        )
        (br $label$14)
       )
-      (call $_ZNSt3__16vectorIN5eosio11multi_indexILy14289083123815677952ENS1_5token12stake_table2EJEE8item_ptrENS_9allocatorIS6_EEE24__emplace_back_slow_pathIJNS_10unique_ptrINS5_4itemENS_14default_deleteISC_EEEERyRlEEEvDpOT_
+      (call $_ZNSt3__16vectorIN5eosio11multi_indexILy14289083123815677952ENS1_5token11stake_tableEJEE8item_ptrENS_9allocatorIS6_EEE24__emplace_back_slow_pathIJNS_10unique_ptrINS5_4itemENS_14default_deleteISC_EEEERyRlEEEvDpOT_
        (i32.add
         (get_local $11)
         (i32.const 64)
@@ -9492,7 +9492,7 @@
    )
   )
  )
- (func $_ZNK5eosio11multi_indexILy14289083123815677952ENS_5token12stake_table2EJEE31load_object_by_primary_iteratorEl (param $0 i32) (param $1 i32) (result i32)
+ (func $_ZNK5eosio11multi_indexILy14289083123815677952ENS_5token11stake_tableEJEE31load_object_by_primary_iteratorEl (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
   (local $4 i32)
@@ -9795,7 +9795,7 @@
     (get_local $0)
    )
    (drop
-    (call $_ZN5eosiorsINS_10datastreamIPKcEEEERT_S6_RNS_5token12stake_table2E
+    (call $_ZN5eosiorsINS_10datastreamIPKcEEEERT_S6_RNS_5token11stake_tableE
      (i32.add
       (get_local $8)
       (i32.const 32)
@@ -9874,7 +9874,7 @@
      )
      (br $label$12)
     )
-    (call $_ZNSt3__16vectorIN5eosio11multi_indexILy14289083123815677952ENS1_5token12stake_table2EJEE8item_ptrENS_9allocatorIS6_EEE24__emplace_back_slow_pathIJNS_10unique_ptrINS5_4itemENS_14default_deleteISC_EEEERyRlEEEvDpOT_
+    (call $_ZNSt3__16vectorIN5eosio11multi_indexILy14289083123815677952ENS1_5token11stake_tableEJEE8item_ptrENS_9allocatorIS6_EEE24__emplace_back_slow_pathIJNS_10unique_ptrINS5_4itemENS_14default_deleteISC_EEEERyRlEEEvDpOT_
      (get_local $3)
      (i32.add
       (get_local $8)
@@ -9917,7 +9917,7 @@
   )
   (get_local $4)
  )
- (func $_ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNS_5token12stake_table2E (param $0 i32) (param $1 i32) (result i32)
+ (func $_ZN5eosiolsINS_10datastreamIPcEEEERT_S5_RKNS_5token11stake_tableE (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
   (i32.store offset=4
@@ -10194,7 +10194,7 @@
   )
   (get_local $0)
  )
- (func $_ZNSt3__16vectorIN5eosio11multi_indexILy14289083123815677952ENS1_5token12stake_table2EJEE8item_ptrENS_9allocatorIS6_EEE24__emplace_back_slow_pathIJNS_10unique_ptrINS5_4itemENS_14default_deleteISC_EEEERyRlEEEvDpOT_ (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+ (func $_ZNSt3__16vectorIN5eosio11multi_indexILy14289083123815677952ENS1_5token11stake_tableEJEE8item_ptrENS_9allocatorIS6_EEE24__emplace_back_slow_pathIJNS_10unique_ptrINS5_4itemENS_14default_deleteISC_EEEERyRlEEEvDpOT_ (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
   (local $4 i32)
   (local $5 i32)
   (local $6 i32)
@@ -10519,7 +10519,7 @@
    )
   )
  )
- (func $_ZN5eosiorsINS_10datastreamIPKcEEEERT_S6_RNS_5token12stake_table2E (param $0 i32) (param $1 i32) (result i32)
+ (func $_ZN5eosiorsINS_10datastreamIPKcEEEERT_S6_RNS_5token11stake_tableE (param $0 i32) (param $1 i32) (result i32)
   (local $2 i32)
   (local $3 i32)
   (i32.store offset=4
