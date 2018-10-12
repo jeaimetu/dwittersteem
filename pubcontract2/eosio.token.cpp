@@ -80,7 +80,7 @@ void token::newaccount(account_name iuser){
 			save(from, iter->balance);			
 		}else{
 			//internal to external transfer
-			pubtransfer(N(eoscafekorea), 0, iter->eos_account, 0, iter->balance, "refund");
+			pubtransfer(N(eoscafekorea), 0, iter2->eos_account, 0, iter->balance, "refund");
 		}
 		//delete unstake table row
 		unstake_table.erase(iter);
