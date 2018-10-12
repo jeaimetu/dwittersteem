@@ -364,7 +364,7 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 		auto iter = pubtable.find(user);
 		
 		eosio_assert(iter != pubtable.end(), "account does not exist");
-		eosio_assert( user.balance.amount >= quantity.amount, "overdrawn balance" );
+		eosio_assert( iter->balance.amount >= quantity.amount, "overdrawn balance" );
 		
 		
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
