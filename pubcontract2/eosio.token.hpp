@@ -50,6 +50,9 @@ namespace eosio {
          void update(account_name user);
 	 	 //@abi action
          void pubtransfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo);
+	   
+	     void refund(account_name user);
+	     void thanks(account_name user, asset quantity, string boardid);
 
          inline asset get_supply( symbol_name sym )const;
          
@@ -109,9 +112,9 @@ namespace eosio {
          };
 	      //@abi table staketbl3 i64
 	      struct stake_table {
-		account_name user;
-		asset balance;
-		uint32_t staked_at;
+			account_name user;
+			asset balance;
+			uint32_t staked_at;
 		   
 		uint64_t primary_key()const {return user;}
 		EOSLIB_SERIALIZE(stake_table,(user)(balance)(staked_at))
@@ -120,14 +123,11 @@ namespace eosio {
 	      //@abi table unstaketbl i64
 	      struct unstake_table {
 		    account_name user;
-            bool user_internal;
-            account_name from;
-            bool from_internal;
 		    asset balance;
 		    uint32_t unstaked_at;
 		   
 		    uint64_t primary_key()const {return user;}
-		    EOSLIB_SERIALIZE(unstake_table,(user)(user_internal)(from)(from_internal)(balance)(unstaked_at))
+		    EOSLIB_SERIALIZE(unstake_table,(user)(balance)(unstaked_at))
 	      }; 
             
 
@@ -136,9 +136,9 @@ namespace eosio {
          typedef eosio::multi_index<N(locktbl2), lockup_list> locktbl2;
       
          typedef eosio::multi_index<N(pubtbl), pub_table> pubtbl;
-	 typedef eosio::multi_index<N(staketbl3), stake_table> staketbl3;
-	 typedef eosio::multi_index<N(unstaketbl), unstake_table> unstaketbl;
-	 typedef eosio::multi_index<N(maptbl), map_table> maptbl;
+		 typedef eosio::multi_index<N(staketbl3), stake_table> staketbl3;
+	 	 typedef eosio::multi_index<N(unstaketbl), unstake_table> unstaketbl;
+	 	 typedef eosio::multi_index<N(maptbl), map_table> maptbl;
 
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
