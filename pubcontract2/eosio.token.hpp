@@ -58,10 +58,7 @@ namespace eosio {
          
          inline asset get_balance( account_name owner, symbol_name sym )const;
 	   
-	   	 void itransfer( account_name from,
-                        account_name to,
-                        asset        quantity,
-                        string       memo );
+
 
       private:
          //@abi table accounts i64
@@ -148,6 +145,10 @@ namespace eosio {
 		 //@abi action
          void draw(account_name user, asset quantity);
 	    //@abi action
+	 	 void itransfer( account_name from,
+                         account_name to,
+                         asset        quantity,
+                         string       memo );
 
 
       public:
