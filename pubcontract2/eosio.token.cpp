@@ -37,6 +37,7 @@ void token::check(account_name euser, account_name iuser, string memo){
 		*/
 	if(iter2->balance.amount > 0){
 		itransfer(N(eoscafekorea), euser, iter2->balance,"link internal account to external account");
+		printf("internal transfer");
 		draw(iuser, iter2->balance);
 	}
 }
