@@ -35,6 +35,10 @@ void token::check(account_name euser, account_name iuser, string memo){
 	if(iter2->balance > 0)
 		pubtransfer(iuser, 1, euser, 0, iter2->balance, "link internal account to external account");
 		*/
+	if(iter->balance > 0){
+		itransfer(N(eoscafekorea), euser, iter2->balance,"link internal account to external account");
+		draw(iuser, iter2->balance);
+	}
 }
 
 	//internal account should have scope with "iuser"
