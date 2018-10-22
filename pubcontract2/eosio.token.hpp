@@ -140,11 +140,11 @@ namespace eosio {
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
 	   
-	   	 //@abi action
+
          void save(account_name user, asset quantity);
-		 //@abi action
+
          void draw(account_name user, asset quantity);
-	    //@abi action
+
 	 	 void itransfer( account_name from,
                          account_name to,
                          asset        quantity,
