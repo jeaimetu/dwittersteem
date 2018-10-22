@@ -63,7 +63,10 @@ void token::newaccount(account_name iuser){
 		//check precondition
 		pubtbl pubtable(_self, user);
 		auto iter = pubtable.find(user);
-		eosio_assert(iter != pubtable.end(), "account already exist");
+		eosio_assert(iter != pubtable.end(), "account does not exist");
+		
+		eosio_assert(user.ink.amount >= quantity.amount, "overdrawn balance");
+		eosio_assert(quantity.amount > 0, "must transfer positive quantity");
 		
 		//decrease ink power from pubtable
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
