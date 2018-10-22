@@ -70,7 +70,21 @@ void token::newaccount(account_name iuser){
 		
 		//decrease ink power from pubtable
 		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
-			pubtable.ink.amount -= quantity.amount;
+			pubtable.ink -= quantity;
+		});
+	}
+	
+	void token::update(account_name user, asset quantity){
+		//permission check
+		require_auth( _self );
+		//check precondition
+		pubtbl pubtable(_self, user);
+		auto iter = pubtable.find(user);
+		eosio_assert(iter != pubtable.end(), "account does not exist");
+		
+		//decrease ink power from pubtable
+		pubtable.modify(iter, _self, [&]( auto& pubtable ) {
+			pubtable.ink = quantity;
 		});
 	}
 	
@@ -480,4 +494,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(pubtransfer)(stake)(unstake)(refund)(thanks))
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(pubtransfer)(stake)(unstake)(refund)(thanks)(update))
