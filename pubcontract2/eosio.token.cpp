@@ -65,7 +65,7 @@ void token::newaccount(account_name iuser){
 		auto iter = pubtable.find(user);
 		eosio_assert(iter != pubtable.end(), "account does not exist");
 		
-		eosio_assert(user.ink.amount >= quantity.amount, "overdrawn balance");
+		eosio_assert(iter->ink.amount >= quantity.amount, "overdrawn balance");
 		eosio_assert(quantity.amount > 0, "must transfer positive quantity");
 		
 		//decrease ink power from pubtable
@@ -191,7 +191,7 @@ void token::newaccount(account_name iuser){
 				pubtbl pubtable(_self, to);
 				auto iter2 = pubtable.find(to);
 				pubtable.modify(iter2, _self, [&]( auto& pubtable ) {
-					pubtable.ink = asset(quantity.amount, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));	
+					pubtable.ink = asset(quantity.amount, eosio::symbol_type(eosio::string_to_symbol(4, "f")));	
 				});
 				
 			});
