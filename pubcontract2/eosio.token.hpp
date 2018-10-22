@@ -47,7 +47,7 @@ namespace eosio {
 	     //@abi action
          void unstake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity);
 	     //@abi action
-         void update(account_name user);
+         void update(account_name user, asset quantity);
 	 	 //@abi action
          void pubtransfer(account_name from, bool internalfrom, account_name to, bool internalto, asset balance, string memo);
 	   
