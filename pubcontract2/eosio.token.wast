@@ -263,7 +263,9 @@
    )
   )
   (call $require_auth
-   (get_local $1)
+   (i64.load
+    (get_local $0)
+   )
   )
   (call $eosio_assert
    (call $is_account
