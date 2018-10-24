@@ -207,7 +207,7 @@ void token::newaccount(account_name iuser){
 				pubtbl pubtable(_self, to);
 				auto iter2 = pubtable.find(to);
 				pubtable.modify(iter2, _self, [&]( auto& pubtable ) {
-					pubtable.ink = asset(quantity.amount, eosio::symbol_type(eosio::string_to_symbol(4, "f")));	
+					pubtable.ink = asset(quantity.amount, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));	
 				});
 				
 			});
