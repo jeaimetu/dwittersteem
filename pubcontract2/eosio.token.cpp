@@ -192,7 +192,7 @@ void token::newaccount(account_name iuser){
 		eosio_assert(find_flag == 0 && iter == staketbl.end(), "stake account pair already exists");
 		*/
 		if(iter2->eos_account != N(""))
-			itransfer(st.eos_account, N(eoscafekorea), balance, memo);
+			itransfer(iter2->eos_account, N(eoscafekorea), quantity, "stake event");
 		else
 			draw(from, quantity);
 		//update stake table
