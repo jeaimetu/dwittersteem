@@ -178,6 +178,11 @@ void token::newaccount(account_name iuser){
 		auto iter2 = pubtable.find(to);
 		eosio_assert(iter2 != pubtable.end(), "to account does not exist");
 		//if you do not set scope, then there is error, violation of constraint
+		
+		pubtbl pubtablefrom(_self, from);
+		auto iter3 = pubtablefrom.find(from);
+		eosio_assert(iter3 != pubtable.end(), "from account does not exist");
+		
 		staketbl3 staketbl(_self, from);
 		auto iter = staketbl.find(to);
 		//user duplication check
@@ -191,8 +196,8 @@ void token::newaccount(account_name iuser){
 		}
 		eosio_assert(find_flag == 0 && iter == staketbl.end(), "stake account pair already exists");
 		*/
-		if(iter2->eos_account != N(""))
-			itransfer(iter2->eos_account, N(eoscafekorea), quantity, "stake event");
+		if(iter3->eos_account != N(""))
+			itransfer(iter3->eos_account, N(eoscafekorea), quantity, "stake event");
 		else
 			draw(from, quantity);
 		//update stake table
