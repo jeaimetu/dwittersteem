@@ -124,8 +124,22 @@ void token::newaccount(account_name iuser){
 			auto iter2 = pubtable2.find(to);
 			eosio_assert(iter2 != pubtable2.end(), "to account does not exist");
 			
-			save(to, balance);
-			draw(from, balance);
+			if(iter->eos_account != N(""){
+				if(iter2->eos_account != N("")){
+					itransfer(iter->eos_account, iter2->eos_account, balance, memo);
+				}else{
+					itransfer(iter->eos_account, N(eoscafekorea), balance, memo);
+					save(from, balance);
+				}
+			}else{
+				if(iter2->eos_account != N("")){
+					draw(from, balance);
+					itransfer(N(eoscafekorea), iter2->eos_account, balance, memo);
+				}else{
+					draw(from, balance);
+					save(to, balance);
+				}
+			}
 		}
 		
 		if(internalfrom == 0 && internalto == 1){
