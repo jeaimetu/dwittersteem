@@ -156,8 +156,8 @@ void token::newaccount(account_name iuser){
 			if(st.eos_account != N("")){
 				itransfer(st.eos_account, to , balance, memo);
 			}else{
-				itransfer(N(eoscafekorea), from, balance, memo);
-				draw(from, balance);			
+				draw(from, balance);	
+				itransfer(N(eoscafekorea), to, balance, memo);		
 			}
 		}
 		
