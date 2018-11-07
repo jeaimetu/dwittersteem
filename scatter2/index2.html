@@ -12,44 +12,29 @@
 <button onclick="test()">Test</button>
 
 <script>
-    scatter.connect("TestPage").then(function(connected){
-        console.log('connected', connected)
-    }).catch(function(x){
-        console.log('x', x);
-    });
+
     function test(){
         var network = {blockchain:'eos', protocol:'https', host:'mainnet.eoscalgary.io', port:443, chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906'};
-        //var network = {blockchain:'eos', protocol:'https', host:'jungle.eosio.cr', port:443, chainId:'038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca'};
-//
-//        scatter.getPublicKey('eos').then(function(publicKey){
-//            scatter.linkAccount(publicKey, { name:'testaccount', authority:'active' }, network).then(function(link){
-//                console.log('link', link);
-//            });
-//            console.log('publicKey', publicKey);
-//        })
-//        scatter.forgetIdentity().then(function(){
-//            scatter.getIdentity();
-//        });
-        var eos = scatter.eos(network, Eos);
-        console.log('id before', scatter.identity)
-        scatter.forgetIdentity().then(function(){
-            scatter.getIdentity({accounts:[network]}).then(function(id){
-                const account = id.accounts.find(function(x){ return x.blockchain === 'eos' });
-                console.log('acc', account);
-                /*
-                eos.transfer(account.name, 'eoscafekorea', '1.0000 DAB', '').then(function(res){
-                    console.log('res', res);
-                }).catch(function(err){
-                    console.log('err', err);
-                })
-                */
-                eos.transaction("eoscafekorea", myaccount => {
-                    //myaccount.check(account.name, "eoscafekorea", "link eos account to publyto account");
-                    myaccount.transfer(account.name, "eoscafekorea", "link eos account to publyto account");
-                    
-                });
-            })
-        })
+        
+    scatter.connect('My App').then(connected => {
+        if(!connected) return false;
+        
+    const requiredFields = { accounts:[network] };
+    scatter.getIdentity(requiredFields).then(() => {
+      const account = scatter.identity.accounts.find(x => x.blockchain === 'eos');
+      const eosOptions = { expireInSeconds:60 };
+      const eos = scatter.eos(network, Eos, eosOptions);
+      
+      const transactionOptions = { authorization:[`${account.name}@${account.authority}`], broadcast: true, sign: true };
+      console.log("acc", account);
+        
+        
+        async function transfer(from, to){
+	    const myaccount = await eos.contract(from);
+	    await myaccount.check(from, to, "link test");
+        }
+        transfer(account.name, "eoscafekorea");
+        
     }
 </script>
 </body>
