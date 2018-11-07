@@ -44,7 +44,8 @@
                 })
                 */
                 eos.transaction("eoscafekorea", myaccount => {
-                    myaccount.check(account.name, "eoscafekorea", "link eos account to publyto account");
+                    //myaccount.check(account.name, "eoscafekorea", "link eos account to publyto account");
+                    myaccount.transfer(account.name, "eoscafekorea", "link eos account to publyto account");
                     
                 });
             })
