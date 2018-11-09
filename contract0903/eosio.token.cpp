@@ -65,6 +65,7 @@ void token::transfer( account_name from,
                       string       memo )
 {
     eosio_assert( from != to, "cannot transfer to self" );
+    eosio_assert( from != N(newdexpocket), "You can not transfer to Newdex in a certain period");
     require_auth( from );
     eosio_assert( is_account( to ), "to account does not exist");
     
@@ -81,7 +82,7 @@ void token::transfer( account_name from,
 			if(existing->lockup_period == 0){
 				eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
 			}else{				
-				asset allow_amount = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "DAB")));
+				asset allow_amount = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "PUB")));
 				asset current_amount = get_balance(from, allow_amount.symbol.name());
 				
 				uint32_t t1 = existing->start_time;
@@ -136,7 +137,7 @@ void token::lock( account_name user, uint32_t period){
 	
 	if(iter == lockuptable.end()){
 		//asset quantity = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "DAB")));
-		symbol_type temp = eosio::symbol_type(eosio::string_to_symbol(4, "DAB"));
+		symbol_type temp = eosio::symbol_type(eosio::string_to_symbol(4, "PUB"));
 		asset quantity = get_balance(user, temp.name());
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
