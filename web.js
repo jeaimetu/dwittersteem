@@ -161,7 +161,7 @@ const readEosAccount = async (cb) => {
 			{$sort: {total: -1}}
 			 ]
 	const rest = await db.collection("user").aggregate(agr).toArray();
-			console.log(res);
+			console.log(rest);
 	
 	//get eos balance for all account
 
