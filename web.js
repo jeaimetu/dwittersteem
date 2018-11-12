@@ -185,7 +185,7 @@ const readEosAccount = async (cb) => {
 			 ]
 	const res = await db.collection("user").aggregate(agr).toArray();
 			console.log(res);
-			console.log(err);
+
 	cb.send(res);
 }
 
