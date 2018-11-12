@@ -148,7 +148,7 @@ function increasePay(id, vote){
         });
 }
 
-const readEosAccount = async (cb) => {
+const readEosAccount = async (res, cb) => {
 	console.log("calling readEosAccount");
 	
 	var original;
@@ -164,6 +164,11 @@ const readEosAccount = async (cb) => {
 			console.log(rest);
 	
 	//get eos balance for all account
+	
+	 res.writeHead(200, {
+    		'Content-Type': 'text/plain',
+    		'Transfer-Encoding': 'chunked'
+ 	 });
 
 	for(i=0;i<rest.length;i++){
 		if(rest[i]._id != null){
@@ -179,7 +184,10 @@ const readEosAccount = async (cb) => {
 			else
 				rest[i].DabBalance = 0;
 			
-			console.log(rest[i]);			
+			console.log(rest[i]);	
+			reswrite)JSON.stringifu({
+				result : rest[i]
+			})+"\n");
 		}	
 	}
 	var body = {
@@ -187,8 +195,8 @@ const readEosAccount = async (cb) => {
 		"list" : rest
 	}
 	
-
-	cb(body);
+	res.end();
+	//cb(body);
 
 }
 
@@ -608,7 +616,7 @@ app.get("/", function(req, res){
 
 app.post("/readEosAccount", function(req, res){
 	req.setTimeout(0);
-	readEosAccount((result) => {res.send(result)});
+	readEosAccount(res, (result) => {res.send(result)});
 });
 
 
