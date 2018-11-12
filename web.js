@@ -646,7 +646,7 @@ app.post("/readEosAccount", function(req, res){
 
 app.post("getInternalDab", function(req, res){
 	getInternalDab((result) => {res.send(result)});
-}
+});
 
 
 app.get("/index.html", (req, res) => {
