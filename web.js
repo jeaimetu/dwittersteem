@@ -9,6 +9,13 @@ require("./contract");
 
 //require("./scatter");
 
+EosApi = require('eosjs-api')
+eosconfig = {
+ httpEndpoint: "https://mainnet.eoscalgary.io"
+}
+
+eos = EosApi(eosconfig)
+
 
 
 
