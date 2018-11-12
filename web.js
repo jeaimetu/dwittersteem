@@ -148,7 +148,8 @@ function increasePay(id, vote){
         });
 }
 
-async function readEosBalance(result, cb){
+async function readEosBalance(orig, cb){
+	result = orig.slice();
 	console.log("calling readEosBalance", result.length);
 			for(i=0;i<result.length;i++){
 				if(result[i]._id != null){
@@ -158,7 +159,6 @@ async function readEosBalance(result, cb){
 						table : "accounts",
 						}).catch((err) => {
 						 console.log(err);
-						 continue;
 					});
 						
 					result[i].DabBalance = temp.rows[0].balance;
@@ -185,7 +185,6 @@ function readEosAccount(cb){
 		dbo.collection("user").aggregate(agr).toArray(function(err, result){
 			console.log(result);
 			console.log(err);
-			original = result.slice();
 			readEosBalance(original, cb);
 
 			});	
