@@ -150,7 +150,7 @@ function increasePay(id, vote){
 
 async function readEosAccount(cb){
 	console.log("calling readEosAccount");
-	MongoClient.connect(url, function(err, db) {
+	async MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dg3d93pq");
 		var agr = [
 			{$group : { _id : "$walletAccount", total : {$sum : 1}}},
