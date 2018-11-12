@@ -148,9 +148,9 @@ function increasePay(id, vote){
         });
 }
 
-async function readEosAccount(cb){
+function readEosAccount(cb){
 	console.log("calling readEosAccount");
-	async MongoClient.connect(url, function(err, db) {
+	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dg3d93pq");
 		var agr = [
 			{$group : { _id : "$walletAccount", total : {$sum : 1}}},
@@ -162,11 +162,13 @@ async function readEosAccount(cb){
 			console.log(err);
 			for(i=0;i<result.length;i++){
 				if(result[i]._id != null){
-					temp = await eos.getTableRows({json : true,
+					temp = async () => {
+						await eos.getTableRows({json : true,
 						code : "eoscafekorea",
 						scope : result[i]._id,
 						table : "accounts",
 						});
+					}
 					result[i].DabBalance = temp.rows[0].balance;
 				}
 				
