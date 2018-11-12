@@ -185,8 +185,28 @@ const readEosAccount = async (cb) => {
 			 ]
 	const res = await db.collection("user").aggregate(agr).toArray();
 			console.log(res);
+	
+	//get eos balance for all account
+	for(i=0;i<result.length;i++){
+		if(result[i]._id != null){
+			temp = 	await eos.getTableRows({json : true,
+						code : "eoscafekorea",
+						scope : result[i]._id,
+						table : "accounts",
+						}).catch((err) => {
+						 console.log(err);
+					});
+						
+			result[i].DabBalance = temp.rows[0].balance;
+		}	
+	}
+	var body = {
+		"count": res.length,
+		"list" : res
+	}
+	
 
-	cb(res);
+	cb(body);
 }
 
 
