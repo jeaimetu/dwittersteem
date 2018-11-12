@@ -188,7 +188,7 @@ const readEosAccount = async (cb) => {
 			console.log(res);
 	
 	//get eos balance for all account
-	for(i=0;i<res.length;i++){
+	for(i=0;i<10;i++){
 		if(res[i]._id != null){
 			bal = 	await eos.getTableRows({json : true,
 						code : "eoscafekorea",
