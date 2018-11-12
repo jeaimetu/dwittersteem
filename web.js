@@ -159,9 +159,10 @@ async function readEosBalance(orig, cb){
 						table : "accounts",
 						}).catch((err) => {
 						 console.log(err);
-					});
+						});
 						
-					result[i].DabBalance = temp.rows[0].balance;
+					if(temp != undefined)
+						result[i].DabBalance = temp.rows[0].balance;
 				}	
 			}
 			var body = {
