@@ -147,7 +147,7 @@ function readEosAccount(cb){
 		var dbo = db.db("heroku_dg3d93pq");
 		var agr = [
 			{$group : { _id : "$walletAccount", total : {$sum : 1}}},
-			{$addfields" : { "DabBalance" : 1 }},
+			{"$addfields" : { "DabBalance" : 1 }},
 			{$sort: {total: -1}}
 			 ]
 		dbo.collection("user").aggregate(agr).toArray(function(err, result){
