@@ -176,7 +176,7 @@ const readEosAccount = async (cb) => {
 	
 	var original;
 	const client = await MongoClient.connect(url);
-	var db = db.db("heroku_dg3d93pq");
+	var db = client.db("heroku_dg3d93pq");
 		
 		var agr = [
 			{$group : { _id : "$walletAccount", total : {$sum : 1}}},
