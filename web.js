@@ -141,6 +141,20 @@ function increasePay(id, vote){
         });
 }
 
+function readEosAccount(cb){
+	MongoClient.connect(url, function(err, db) {
+		var dbo = db.db("heroku_dg3d93pq");
+		var agr = [
+			{$group : { account : "$walletAccount", total : {$sum : 1}}
+			 ]
+		dbo.collection("user").aggregate(agr).toArray(function(err, result){
+			 cb(result);
+			});
+	
+	});
+		
+}
+
 
 function increaseVote(id, vote, account){
 	  MongoClient.connect(url, function(err, db) {
@@ -552,6 +566,13 @@ app.get("/", function(req, res){
 		});
 	});
 });
+
+
+
+app.post("/readEosAccount", function(req, res){
+	readEosAccount((result) => {res.send(result)});
+});
+
 
 app.get("/index.html", (req, res) => {
 	console.log("calling vue case");
