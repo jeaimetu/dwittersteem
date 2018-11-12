@@ -108,6 +108,21 @@ function saveAccount(account, pass){
   	}); 
 }
 
+function getInternalDab(cb){
+	MongoClient.connect(url, function(err, db) {
+   		var dbo = db.db("heroku_dg3d93pq");
+		dbo.collection("user").find({}).toArray(function(err, res){
+    			if (err) throw err;
+			sum = 0;
+			for(i=0;i<res.length;i++){
+				sum += parseFloat(res.wallet);
+			}
+			
+			cb(sum);
+		});
+	});
+}
+
 function readTotalUser(cb){
 	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dg3d93pq");
@@ -628,6 +643,10 @@ app.post("/readEosAccount", function(req, res){
 	req.setTimeout(0);
 	readEosAccount(res, (result) => {res.send(result)});
 });
+
+app.post("getInternalDab", function(req, res){
+	getInternalDab((result) => {res.send(result)});
+}
 
 
 app.get("/index.html", (req, res) => {
