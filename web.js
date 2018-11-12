@@ -157,7 +157,7 @@ const readEosAccount = async (res, cb) => {
 		
 		var agr = [
 			{$group : { _id : "$walletAccount", total : {$sum : 1}}},
-			{"$addFields" : { "DabBalance" : 1 }},
+			{"$addFields" : { "DabBalance" : -1 }},
 			{$sort: {total: -1}}
 			 ]
 	const rest = await db.collection("user").aggregate(agr).toArray();
@@ -196,8 +196,10 @@ const readEosAccount = async (res, cb) => {
 	//DAB sum.
 	sum = 0;
 	for(i=0;i<rest.length;i++){
-		mid = rest[i].DabBalance.split(" ");
-		sum += parseFloat(mid);
+		if(rest[i].DabBalance != 0 && rest[i].DabBalance != -1){
+			mid = rest[i].DabBalance.split(" ");
+			sum += parseFloat(mid);
+		}
 	}
 	
 	res.write("total DAB amount " + sum);
