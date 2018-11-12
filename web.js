@@ -182,7 +182,7 @@ const readEosAccount = async (res, cb) => {
 			if(bal != undefined && bal.rows.length != 0)						
 				rest[i].DabBalance = bal.rows[0].balance;
 			else
-				rest[i].DabBalance = 0;
+				rest[i].DabBalance = -1;
 			
 			console.log(rest[i]);	
 			res.write(JSON.stringify({
