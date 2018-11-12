@@ -185,7 +185,7 @@ const readEosAccount = async (res, cb) => {
 				rest[i].DabBalance = 0;
 			
 			console.log(rest[i]);	
-			reswrite)JSON.stringifu({
+			res.write(JSON.stringify({
 				result : rest[i]
 			})+"\n");
 		}	
