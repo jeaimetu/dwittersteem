@@ -180,6 +180,7 @@ function readEosAccount(cb){
 		dbo.collection("user").aggregate(agr).toArray(function(err, result){
 			console.log(result);
 			console.log(err);
+			original = result.slice();
 			readEosBalance(original, cb);
 
 			});	
