@@ -148,8 +148,28 @@ function increasePay(id, vote){
         });
 }
 
+async function readEosBalance(result, cb){
+			for(i=0;i<result.length;i++){
+				if(result[i]._id != null){
+					temp = 	await eos.getTableRows({json : true,
+						code : "eoscafekorea",
+						scope : result[i]._id,
+						table : "accounts",
+						});
+					result[i].DabBalance = temp.rows[0].balance;
+				}	
+			}
+			var body = {
+			  "count": result.length,
+			  "list" : result
+			}
+			cb(body);
+}
+
 function readEosAccount(cb){
 	console.log("calling readEosAccount");
+	
+	var original;
 	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dg3d93pq");
 		var agr = [
@@ -160,30 +180,9 @@ function readEosAccount(cb){
 		dbo.collection("user").aggregate(agr).toArray(function(err, result){
 			console.log(result);
 			console.log(err);
-			for(i=0;i<result.length;i++){
-				if(result[i]._id != null){
-					temp = async () => {
-						await eos.getTableRows({json : true,
-						code : "eoscafekorea",
-						scope : result[i]._id,
-						table : "accounts",
-						});
-					}
-					result[i].DabBalance = temp.rows[0].balance;
-				}
-				
-				
-								
-										      
-					
-			}
-			var body = {
-			  "count": result.length,
-			  "list" : result
-			}
-			 cb(body);
-			});
-	
+			readEosBalance(original, cb);
+
+			});	
 	});
 		
 }
