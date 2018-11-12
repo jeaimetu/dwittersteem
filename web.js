@@ -115,7 +115,7 @@ function getInternalDab(cb){
     			if (err) throw err;
 			sum = 0;
 			for(i=0;i<res.length;i++){
-				sum += parseFloat(res.wallet);
+				sum += parseFloat(res[i].wallet);
 			}
 			
 			cb("total sum of internal EOS is " + sum);
