@@ -160,26 +160,26 @@ const readEosAccount = async (res, cb) => {
 			{"$addFields" : { "DabBalance" : 1 }},
 			{$sort: {total: -1}}
 			 ]
-	const res = await db.collection("user").aggregate(agr).toArray();
+	const rest = await db.collection("user").aggregate(agr).toArray();
 			console.log(res);
 	
 	//get eos balance for all account
 	res.setHeader('Content-Type', 'text/html');
 	for(i=0;i<10;i++){
-		if(res[i]._id != null){
+		if(rest[i]._id != null){
 			bal = 	await eos.getTableRows({json : true,
 						code : "eoscafekorea",
-						scope : res[i]._id,
+						scope : rest[i]._id,
 						table : "accounts",
 						}).catch((err) => {
 						 console.log(err);
 					});
 			if(bal != undefined && bal.rows.length != 0)						
-				res[i].DabBalance = bal.rows[0].balance;
+				rest[i].DabBalance = bal.rows[0].balance;
 			else
-				res[i].DabBalance = 0;
+				rest[i].DabBalance = 0;
 			
-			res.write("retrieving " + i);			
+			rest.write("retrieving " + i);			
 		}	
 	}
 	var body = {
