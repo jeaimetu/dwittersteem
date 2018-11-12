@@ -179,11 +179,11 @@ const readEosAccount = async (res, cb) => {
 			else
 				rest[i].DabBalance = 0;
 			
-			rest.write("retrieving " + i);			
+			res.write("retrieving " + i);			
 		}	
 	}
 	var body = {
-		"count": res.length,
+		"count": rest.length,
 		"list" : res
 	}
 	
