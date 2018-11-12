@@ -182,7 +182,7 @@ const readEosAccount = async (res, cb) => {
 			if(bal != undefined && bal.rows.length != 0)						
 				rest[i].DabBalance = bal.rows[0].balance;
 			else
-				rest[i].DabBalance = -1;
+				rest[i].DabBalance = 0;
 			
 			console.log(rest[i]);	
 			res.write(JSON.stringify({
@@ -190,10 +190,18 @@ const readEosAccount = async (res, cb) => {
 			})+"\n");
 		}	
 	}
-	var body = {
-		"count": rest.length,
-		"list" : rest
+	
+	//total number
+	res.write("total EOS account " + rest.length +"\n");
+	//DAB sum.
+	sum = 0;
+	for(i=0;i<rest.length;i++){
+		mid = rest[i].DabBalance.split(" ");
+		sum += parseFloat(mid);
 	}
+	
+	res.write("total DAB amount " + sum);
+
 	
 	res.end();
 	//cb(body);
