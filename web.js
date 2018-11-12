@@ -190,15 +190,17 @@ const readEosAccount = async (cb) => {
 	//get eos balance for all account
 	for(i=0;i<res.length;i++){
 		if(res[i]._id != null){
-			temp = 	await eos.getTableRows({json : true,
+			bal = 	await eos.getTableRows({json : true,
 						code : "eoscafekorea",
 						scope : res[i]._id,
 						table : "accounts",
 						}).catch((err) => {
 						 console.log(err);
 					});
-						
-			res[i].DabBalance = temp.rows[0].balance;
+			if(bal != undefined && bal.rows.length != 0)						
+				res[i].DabBalance = bal.rows[0].balance;
+			else
+				res[i].DabBalance = 0;
 		}	
 	}
 	var body = {
