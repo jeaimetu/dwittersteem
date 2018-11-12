@@ -171,7 +171,7 @@ async function readEosBalance(orig, cb){
 			cb(body);
 }
 
-function readEosAccount = async (cb) => {
+const readEosAccount = async (cb) => {
 	console.log("calling readEosAccount");
 	
 	var original;
