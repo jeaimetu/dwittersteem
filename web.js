@@ -171,25 +171,22 @@ async function readEosBalance(orig, cb){
 			cb(body);
 }
 
-function readEosAccount(cb){
+function readEosAccount = async (cb) => {
 	console.log("calling readEosAccount");
 	
 	var original;
-	MongoClient.connect(url, function(err, db) {
-		var dbo = db.db("heroku_dg3d93pq");
+	const client = await MongoClient.connect(url);
+	var db = db.db("heroku_dg3d93pq");
+		
 		var agr = [
 			{$group : { _id : "$walletAccount", total : {$sum : 1}}},
 			{"$addFields" : { "DabBalance" : 1 }},
 			{$sort: {total: -1}}
 			 ]
-		dbo.collection("user").aggregate(agr).toArray(function(err, result){
-			console.log(result);
+	const res = await db.collection("user").aggregate(agr).toArray();
+			console.log(res);
 			console.log(err);
-			readEosBalance(original, cb);
-
-			});	
-	});
-		
+	cb.send(res);
 }
 
 
