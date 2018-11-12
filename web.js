@@ -184,7 +184,7 @@ const readEosAccount = async (cb) => {
 	}
 	var body = {
 		"count": rest.length,
-		"list" : res
+		"list" : rest
 	}
 	
 
@@ -607,6 +607,7 @@ app.get("/", function(req, res){
 
 
 app.post("/readEosAccount", function(req, res){
+	req.setTimeout(0);
 	readEosAccount((result) => {res.send(result)});
 });
 
