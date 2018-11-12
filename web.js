@@ -152,7 +152,11 @@ function readEosAccount(cb){
 		dbo.collection("user").aggregate(agr).toArray(function(err, result){
 			console.log(result);
 			console.log(err);
-			 cb(result);
+			var body = {
+			  "count": result.length,
+			  "list" : result
+			}
+			 cb(body);
 			});
 	
 	});
