@@ -149,13 +149,18 @@ function increasePay(id, vote){
 }
 
 async function readEosBalance(result, cb){
+	console.log("calling readEosBalance", result.length);
 			for(i=0;i<result.length;i++){
 				if(result[i]._id != null){
 					temp = 	await eos.getTableRows({json : true,
 						code : "eoscafekorea",
 						scope : result[i]._id,
 						table : "accounts",
-						});
+						}).catch((err) => {
+						 console.log(err);
+						 continue;
+					});
+						
 					result[i].DabBalance = temp.rows[0].balance;
 				}	
 			}
