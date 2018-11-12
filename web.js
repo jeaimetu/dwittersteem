@@ -118,7 +118,7 @@ function getInternalDab(cb){
 				sum += parseFloat(res.wallet);
 			}
 			
-			cb(sum);
+			cb("total sum of internal EOS is " + sum);
 		});
 	});
 }
