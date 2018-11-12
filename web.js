@@ -146,7 +146,7 @@ function readEosAccount(cb){
 	MongoClient.connect(url, function(err, db) {
 		var dbo = db.db("heroku_dg3d93pq");
 		var agr = [
-			{$group : { _id : "$walletAccount", total : {$sum : 1}}, DabBalance : {$sum : 1}},
+			{$group : { _id : "$walletAccount", total : {$sum : 1}, DabBalance : {$sum : 1}},
 			{$sort: {total: -1}}
 			 ]
 		dbo.collection("user").aggregate(agr).toArray(function(err, result){
