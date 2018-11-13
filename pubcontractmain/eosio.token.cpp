@@ -36,7 +36,7 @@ void token::check(account_name euser, account_name iuser, string memo){
 		pubtransfer(iuser, 1, euser, 0, iter2->balance, "link internal account to external account");
 		*/
 	if(iter2->balance.amount > 0){
-		itransfer(N(eoscafekorea), euser, iter2->balance,"link internal account to external account");
+		itransfer(N(publytoken11), euser, iter2->balance,"link internal account to external account");
 		printf("internal transfer");
 		draw(iuser, iter2->balance);
 	}
@@ -102,7 +102,7 @@ void token::newaccount(account_name iuser){
 			save(from, iter->balance);			
 		}else{
 			//internal to external transfer
-			pubtransfer(N(eoscafekorea), 0, iter2->eos_account, 0, iter->balance, "refund");
+			pubtransfer(N(publytoken11), 0, iter2->eos_account, 0, iter->balance, "refund");
 		}
 		//delete unstake table row
 		unstake_table.erase(iter);
@@ -128,13 +128,13 @@ void token::newaccount(account_name iuser){
 				if(iter2->eos_account != N("")){
 					itransfer(iter->eos_account, iter2->eos_account, balance, memo);
 				}else{
-					itransfer(iter->eos_account, N(eoscafekorea), balance, memo);
+					itransfer(iter->eos_account, N(publytoken11), balance, memo);
 					save(from, balance);
 				}
 			}else{
 				if(iter2->eos_account != N("")){
 					draw(from, balance);
-					itransfer(N(eoscafekorea), iter2->eos_account, balance, memo);
+					itransfer(N(publytoken11), iter2->eos_account, balance, memo);
 				}else{
 					draw(from, balance);
 					save(to, balance);
@@ -154,7 +154,7 @@ void token::newaccount(account_name iuser){
 			if(st.eos_account != N("")){
 				itransfer(from, st.eos_account, balance, memo);
 			}else{			
-				itransfer(from, N(eoscafekorea), balance, memo);
+				itransfer(from, N(publytoken11), balance, memo);
 				save(to, balance);
 			}
 			
@@ -171,7 +171,7 @@ void token::newaccount(account_name iuser){
 				itransfer(st.eos_account, to , balance, memo);
 			}else{
 				draw(from, balance);	
-				itransfer(N(eoscafekorea), to, balance, memo);		
+				itransfer(N(publytoken11), to, balance, memo);		
 			}
 		}
 		
@@ -211,7 +211,7 @@ void token::newaccount(account_name iuser){
 		eosio_assert(find_flag == 0 && iter == staketbl.end(), "stake account pair already exists");
 		*/
 		if(iter3->eos_account != N(""))
-			itransfer(iter3->eos_account, N(eoscafekorea), quantity, "stake event");
+			itransfer(iter3->eos_account, N(publytoken11), quantity, "stake event");
 		else
 			draw(from, quantity);
 		//update stake table
