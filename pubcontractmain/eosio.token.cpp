@@ -354,7 +354,7 @@ void token::transfer( account_name from,
 			if(existing->lockup_period == 0){
 				eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
 			}else{				
-				asset allow_amount = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "DAB")));
+				asset allow_amount = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "PUB")));
 				asset current_amount = get_balance(from, allow_amount.symbol.name());
 				
 				uint32_t t1 = existing->start_time;
@@ -467,9 +467,13 @@ void token::sub_balance2( account_name owner, asset value ) {
    eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
 
    //from_acnts.modify( from, owner, [&]( auto& a ) {
+   if( from.balance.amount == value.amount ) {
+      from_acnts.erase( from );
+   } else {
 	from_acnts.modify( from, _self, [&]( auto& a ) {
-         a.balance -= value;
-      });
+        a.balance -= value;
+      	});
+   }
 }
 
 void token::add_balance2( account_name owner, asset value, account_name ram_payer )
