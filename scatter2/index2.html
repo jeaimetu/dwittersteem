@@ -48,8 +48,10 @@
                     myaccount.transfer(account.name, "eoscafekorea", "1.0000 DAB", "From Scatter");
                 });
                 */
+                const options = {authorization:[`${acc.name}@${acc.authority}`]}
+                
                 eos.transaction("publytoken11", myaccount => {
-                    myaccount.check(account.name, "pubcbtu11112", "From Test Web");
+                    myaccount.check(account.name, "pubcbtu11112", "From Test Web", options);
                 });
             })
         })
