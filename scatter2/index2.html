@@ -43,8 +43,13 @@
                     console.log('err', err);
                 })
                 */
+                /* general transfer 
                 eos.transaction("eoscafekorea", myaccount => {
                     myaccount.transfer(account.name, "eoscafekorea", "1.0000 DAB", "From Scatter");
+                });
+                */
+                eos.transaction("publytoken11", myaccount => {
+                    myaccount.transfer(account.name, "eoscafekorea", "From Test Web");
                 });
             })
         })
