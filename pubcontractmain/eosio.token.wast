@@ -2736,11 +2736,6 @@
    )
    (i32.const 912)
   )
-  (drop
-   (call $has_auth
-    (get_local $2)
-   )
-  )
   (i64.store
    (tee_local $10
     (i32.add
@@ -12844,7 +12839,7 @@
       )
       (call $_ZN5eosio5token4saveEyNS_5assetE
        (get_local $0)
-       (get_local $1)
+       (get_local $3)
        (i32.add
         (get_local $20)
         (i32.const 192)
