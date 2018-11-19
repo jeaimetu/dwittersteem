@@ -129,7 +129,7 @@ void token::newaccount(account_name iuser){
 					itransfer(iter->eos_account, iter2->eos_account, balance, memo);
 				}else{
 					itransfer(iter->eos_account, N(publytoken11), balance, memo);
-					save(from, balance);
+					save(to, balance);
 				}
 			}else{
 				if(iter2->eos_account != N("")){
@@ -419,7 +419,7 @@ void token::itransfer( account_name from,
     eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
     eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
 
-    auto payer = has_auth( to ) ? to : from;
+    //auto payer = has_auth( to ) ? to : from;
 
     sub_balance2( from, quantity );
     add_balance2( to, quantity, from );
