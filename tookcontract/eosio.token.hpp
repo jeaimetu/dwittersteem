@@ -69,7 +69,7 @@ namespace eosio {
 
    asset token::get_supply( symbol_name sym )const
    {
-      stats statstable( _self, sym );
+      stat statstable( _self, sym );
       const auto& st = statstable.get( sym );
       return st.supply;
    }
