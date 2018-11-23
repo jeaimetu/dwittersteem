@@ -65,6 +65,7 @@ void token::transfer( account_name from,
                       string       memo )
 {
     eosio_assert( from != to, "cannot transfer to self" );
+    eosio_assert( to != N(newdexpocket), "You can not transfer to Newdex in a certain period");
     require_auth( from );
     eosio_assert( is_account( to ), "to account does not exist");
     auto sym = quantity.symbol.name();
