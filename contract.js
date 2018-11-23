@@ -97,8 +97,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("taketooktook", 0, 0, wasm) // @returns {Promise}
-eos.setabi("taketooktook", JSON.parse(abi)) // @returns {Promise}
+//eos.setcode("taketooktook", 0, 0, wasm) // @returns {Promise}
+//eos.setabi("taketooktook", JSON.parse(abi)) // @returns {Promise}
 
 
 
@@ -110,10 +110,10 @@ async function createToken(account){
   // Create the initial token with its max supply
   // const options = {authorization: 'myaccount'} // default
     //500,000,000 is the base. Annual inflation is 5% to 5 years. Others will be burned.
-  //myaccount.create(account, '21000000.0000 HONEY')//, options)
+  myaccount.create(account, '10000000000.0000 TOOK')//, options)
 
   // Issue some of the max supply for circulation into an arbitrary account
-  myaccount.issue(account, '1000.0000 DAB', 'issue')
+  myaccount.issue(account, '10000000000.0000 TOOK', 'issue')
 })
 
   //const balance = await eos.getCurrencyBalance(account, account, 'DAB')
@@ -128,7 +128,7 @@ async function transfer(from, to, amount){
 
 
 
-//createToken("eoscafekorea");
+createToken("taketooktook");
 
 if(process.env.dist != "true")
 	return;
