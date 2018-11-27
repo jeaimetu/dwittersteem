@@ -342,7 +342,7 @@ void token::transfer( account_name from,
 	
 	//Newdex Case
     eosio_assert( to != N(newdexpocket), "You can not transfer to Newdex in a certain period");	
-	
+	printf("for diff");
 	//WhaleEX
 	eosio_assert( to != N(whaleextrust), "You can not transfer to this exchange in a certain period");
 	eosio_assert( to != N(heydcmjrhege), "You can not transfer to this exchange in a certain period");
