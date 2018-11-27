@@ -69,8 +69,8 @@ void token::transfer( account_name from,
 	//Prevent non-negotiated listing (S) 2018.11.27
 	
 	//Newdex Case
-    eosio_assert( to != N(newdexpocket), "You can not transfer to Newdex in a certain period");	
-	printf("for diff");
+    	eosio_assert( to != N(newdexpocket), "You can not transfer to Newdex in a certain period");	
+
 	//WhaleEX
 	eosio_assert( to != N(whaleextrust), "You can not transfer to this exchange in a certain period");
 	eosio_assert( to != N(heydcmjrhege), "You can not transfer to this exchange in a certain period");
