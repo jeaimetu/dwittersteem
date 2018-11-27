@@ -1,7 +1,7 @@
 const wasmUrl = "./pubcontractmain/eosio.token.wasm";
 const abiUrl = "./pubcontractmain/eosio.token.abi";
 
-const account = "publytoken11";
+const account = "taketooktook";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -97,8 +97,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("publytoken11", 0, 0, wasm) // @returns {Promise}
-eos.setabi("publytoken11", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("taketooktook", 0, 0, wasm) // @returns {Promise}
+eos.setabi("taketooktook", JSON.parse(abi)) // @returns {Promise}
 
 
 
