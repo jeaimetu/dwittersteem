@@ -233,7 +233,7 @@ void token::newaccount(account_name iuser){
 					a.balance = quantity;
 				});
 			}else{
-				stakesumothers.modify(to, 0, [&]( auto& a ) {
+				stakesumothers.modify(stakeiter, 0, [&]( auto& a ) {
 					a.balance += quantity;
 				});
 			}
@@ -292,7 +292,7 @@ void token::newaccount(account_name iuser){
 			stakesum stakesumothers(_self, to);
 			auto stakeiter = stakesumothers.find(quantity.symbol.name());
 			eosio_assert(stakeiter == stakesumothers.end(), "there is no already staked one");
-			stakesumothers.modify(to, 0, [&]( auto& a ) {
+			stakesumothers.modify(stakeiter, 0, [&]( auto& a ) {
 				a.balance += quantity;
 			});			
 		}
