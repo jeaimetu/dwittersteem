@@ -56,6 +56,16 @@ void token::newaccount(account_name iuser){
 		pubtable.ink = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));			
 	});
 }
+	void token:delaccount(account_name euser){
+		require_auth(_self);
+		maptbl maptable(_self, _self);
+		auto iter = maptable.find(euser);
+		
+		eosio_assert(iter != maptable.end(), "nothing to delete");
+		
+		maptable.erase(iter);
+	}
+	
 	
 	void token::thanks(account_name user, asset quantity, string boardid){
 		//permission check
@@ -578,4 +588,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(pubtransfer)(stake)(unstake)(refund)(thanks)(update))
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(pubtransfer)(stake)(unstake)(refund)(thanks)(update)(delaccount))
