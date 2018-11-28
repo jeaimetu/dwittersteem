@@ -229,7 +229,7 @@ void token::newaccount(account_name iuser){
 			stakesum stakesumothers(_self, to);
 			auto stakeiter = stakesumothers.find(quantity.symbol.name());
 			if(stakeiter == stakesumothers.end()){
-				stakesumothers.empalce(_self, [&]( auto& a ){
+				stakesumothers.emplace(_self, [&]( auto& a ){
 					a.balance = quantity;
 				});
 			}else{
