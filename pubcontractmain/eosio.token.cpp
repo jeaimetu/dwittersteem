@@ -56,7 +56,7 @@ void token::newaccount(account_name iuser){
 		pubtable.ink = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));			
 	});
 }
-	void token:delaccount(account_name euser){
+	void token::delaccount(account_name euser){
 		require_auth(_self);
 		maptbl maptable(_self, _self);
 		auto iter = maptable.find(euser);
