@@ -224,20 +224,37 @@ void token::newaccount(account_name iuser){
 			itransfer(iter3->eos_account, N(publytoken11), quantity, "stake event");
 		else
 			draw(from, quantity);
+		//update stakesum table if only from != to case
+		if(from != to){
+			stakesum stakesumothers(_self, to);
+			auto stakeiter = stakesumothers.find(quantity.symbol.name());
+			if(stakeiter = stakesumothers.end()){
+				stakesumothers.empalce(_self, [&]( auto& a ){
+					a.balance = quantity;
+				});
+			}else{
+				stakesumothers.modify(to, 0, [&]( auto& a ) {
+					a.balance += quantity;
+				});
+			}
+			
+		}
 		//update stake table
-		//increase INK table by quantity
+		//increase INK table by quantity - obsolsted
 		//You can stake PUB to many others
 		if(iter == staketbl.end()){
 			staketbl.emplace( _self, [&]( auto& staketbl) {
 				staketbl.balance = quantity;
 				staketbl.staked_at = now();
 				staketbl.user = to;
+				/* delete this, because INK refill is done by server
 				//increase INK power
 				pubtbl pubtable(_self, to);
 				auto iter2 = pubtable.find(to);
 				pubtable.modify(iter2, _self, [&]( auto& pubtable ) {
 					pubtable.ink = asset(quantity.amount, eosio::symbol_type(eosio::string_to_symbol(4, "INK")));	
 				});
+				*/
 				
 			});
 		}else{
@@ -269,6 +286,16 @@ void token::newaccount(account_name iuser){
 		stake_table.modify(iter, _self, [&]( auto& staketbl ) {
 			staketbl.balance.amount -= quantity.amount;
 		});
+		
+		//decrease stake amount from others
+		if(from != to){
+			stakesum stakesumothers(_self, to);
+			auto stakeiter = stakesumothers.find(quantity.symbol.name());
+			eosio_assert(stakeiter = stakesumothers.end(), "there is no already staked one");
+			stakesumothers.modify(to, 0, [&]( auto& a ) {
+				a.balance += quantity;
+			});			
+		}
 		
 		unstaketbl  unstake_table (_self, from);
 		auto iter2 = unstake_table.find(to);
