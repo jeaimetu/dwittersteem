@@ -291,10 +291,12 @@ void token::newaccount(account_name iuser){
 		if(from != to){
 			stakesum stakesumothers(_self, to);
 			auto stakeiter = stakesumothers.find(quantity.symbol.name());
-			eosio_assert(stakeiter == stakesumothers.end(), "there is no already staked one");
-			stakesumothers.modify(stakeiter, 0, [&]( auto& a ) {
-				a.balance -= quantity;
-			});			
+			//eosio_assert(stakeiter == stakesumothers.end(), "there is no already staked one");
+			if(stakeiter != stakesumothers.end()){
+				stakesumothers.modify(stakeiter, 0, [&]( auto& a ) {
+					a.balance -= quantity;
+				});
+			}
 		}
 		
 		unstaketbl  unstake_table (_self, from);
