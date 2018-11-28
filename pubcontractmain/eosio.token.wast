@@ -19390,12 +19390,12 @@
       )
      )
     )
-    (i32.const 944)
+    (i32.const 608)
    )
    (i64.store
     (get_local $14)
     (tee_local $13
-     (i64.add
+     (i64.sub
       (i64.load
        (get_local $14)
       )
@@ -19410,7 +19410,7 @@
      (get_local $13)
      (i64.const -4611686018427387904)
     )
-    (i32.const 992)
+    (i32.const 656)
    )
    (call $eosio_assert
     (i64.lt_s
@@ -19419,7 +19419,7 @@
      )
      (i64.const 4611686018427387904)
     )
-    (i32.const 1024)
+    (i32.const 688)
    )
    (call $eosio_assert
     (i64.eq
