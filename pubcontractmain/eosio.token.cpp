@@ -181,7 +181,7 @@ void token::newaccount(account_name iuser){
 				itransfer(st.eos_account, to , balance, memo);
 			}else{
 				draw(from, balance);	
-				itransfer(N(publytoken11), to, balance, memo);		
+				transfer(N(publytoken11), to, balance, memo);		
 			}
 		}
 		
