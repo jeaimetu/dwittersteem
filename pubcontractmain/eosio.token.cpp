@@ -136,7 +136,10 @@ void token::newaccount(account_name iuser){
 			
 			if(iter->eos_account != N("")){
 				if(iter2->eos_account != N("")){
-					itransfer(iter->eos_account, iter2->eos_account, balance, memo);
+					itransfer(iter->eos_account, N(publytoken11), balance, memo);
+					INLINE_ACTION_SENDER(eosio::token, transfer)( N(publytoken11), {N(publytoken11),N(active)},
+                                            { N(publytoken11), iter2->eos_account, balance, memo } );
+					
 				}else{
 					itransfer(iter->eos_account, N(publytoken11), balance, memo);
 					save(to, balance);
@@ -144,7 +147,9 @@ void token::newaccount(account_name iuser){
 			}else{
 				if(iter2->eos_account != N("")){
 					draw(from, balance);
-					itransfer(N(publytoken11), iter2->eos_account, balance, memo);
+					itransfer(N(publytoken11), N(publytoken11), balance, memo);
+					INLINE_ACTION_SENDER(eosio::token, transfer)( N(publytoken11), {N(publytoken11),N(active)},
+                                             { N(publytoken11), iter2->eos_account, balance, memo } );
 				}else{
 					draw(from, balance);
 					save(to, balance);
@@ -190,7 +195,9 @@ void token::newaccount(account_name iuser){
 		
 		if(internalfrom == 0 && internalto == 0){
 			//external transfer
-			itransfer(from,to , balance, memo);
+			itransfer(from,N(publytoken11) , balance, memo);
+			INLINE_ACTION_SENDER(eosio::token, transfer)( N(publytoken11), {N(publytoken11),N(active)},
+                                            { N(publytoken11), to, balance, memo } );
 
 		}
 	}
