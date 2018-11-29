@@ -181,7 +181,10 @@ void token::newaccount(account_name iuser){
 				itransfer(st.eos_account, to , balance, memo);
 			}else{
 				draw(from, balance);	
-				transfer(N(publytoken11), to, balance, memo);		
+				//transfer(N(publytoken11), to, balance, memo);
+				INLINE_ACTION_SENDER(eosio::token, transfer)( N(publytoken11), {N(publytoken11),N(active)},
+                                                { N(publytoken11), to, balance, memo } );
+
 			}
 		}
 		
