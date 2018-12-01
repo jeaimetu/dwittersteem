@@ -302,7 +302,7 @@ void token::newaccount(account_name iuser){
 		});
 		
 		//delete stake table when remaining amount is zero.
-		if(stake_table.balance.amount == 0){
+		if(iter->balance.amount == 0){
 			stake_table.erase(iter);
 		}
 		
