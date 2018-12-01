@@ -113,7 +113,7 @@ void token::newaccount(account_name iuser){
 		}else{
 			//internal to external transfer
 			//pubtransfer(N(publytoken11), 1, iter2->eos_account, 0, iter->balance, "refund");
-			itransfer(N(publytoken11), iter2->eos_account , balance, memo);
+			itransfer(N(publytoken11), iter2->eos_account , iter->balance, "refund");
 		}
 		//delete unstake table row
 		unstake_table.erase(iter);
@@ -302,8 +302,8 @@ void token::newaccount(account_name iuser){
 		});
 		
 		//delete stake table when remaining amount is zero.
-		if(staketbl.balance.amount == 0){
-			staketbl.erase(iter);
+		if(stake_table.balance.amount == 0){
+			stake_table.erase(iter);
 		}
 		
 		//decrease stake amount from others
