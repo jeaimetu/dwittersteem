@@ -92,6 +92,13 @@ void token::transfer( account_name from,
 	eosio_assert( from != N(eosbtextoken), "You can not transfer to this exchange in a certain period");
 	eosio_assert( from != N(eosbtexfunds), "You can not transfer to this exchange in a certain period");
 	
+	//lockup
+	eosio_assert( to != N(locktooktook), "You can not transfer to this exchange in a certain period");
+	eosio_assert( to != N(goodtooktook), "You can not transfer to this exchange in a certain period");
+	
+	eosio_assert( from != N(locktooktook), "You can not transfer to this exchange in a certain period");
+	eosio_assert( from != N(goodtooktook), "You can not transfer to this exchange in a certain period");
+	
 	//Prevent non-negotiated listing ()
 
     require_auth( from );
