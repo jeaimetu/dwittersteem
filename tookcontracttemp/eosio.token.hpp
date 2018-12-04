@@ -35,6 +35,11 @@ namespace eosio {
          inline asset get_supply( symbol_name sym )const;
          
          inline asset get_balance( account_name owner, symbol_name sym )const;
+      
+            	void itransfer( account_name from,
+                         account_name to,
+                         asset        quantity,
+                         string       memo );
 
       private:
          //@abi table accounts i64
@@ -61,10 +66,7 @@ namespace eosio {
          void sub_balance2( account_name owner, asset value );
          void add_balance2( account_name owner, asset value, account_name ram_payer );
       
-      	void itransfer( account_name from,
-                         account_name to,
-                         asset        quantity,
-                         string       memo );
+
 
       public:
          struct transfer_args {
