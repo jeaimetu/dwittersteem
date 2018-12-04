@@ -112,6 +112,35 @@ void token::transfer( account_name from,
     sub_balance( from, quantity );
     add_balance( to, quantity, from );
 }
+	
+	
+	void token::itransfer( account_name from,
+                      account_name to,
+                      asset        quantity,
+                      string       memo )
+{
+	
+
+	require_auth( _self );
+    eosio_assert( from != to, "cannot transfer to self" );
+    eosio_assert( is_account( to ), "to account does not exist");
+    
+	
+    auto sym = quantity.symbol.name();
+    stat statstable( _self, sym );
+    const auto& st = statstable.get( sym );
+	
+    eosio_assert( quantity.is_valid(), "invalid quantity" );
+    eosio_assert( quantity.amount > 0, "must transfer positive quantity" );
+    eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
+
+    //auto payer = has_auth( to ) ? to : from;
+
+    sub_balance2( from, quantity );
+    add_balance2( to, quantity, from );
+	//add_balance( to, quantity, _self );
+}
 
 void token::sub_balance( account_name owner, asset value ) {
    accounts from_acnts( _self, owner );
@@ -143,7 +172,39 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
       });
    }
 }
+	
+	void token::sub_balance2( account_name owner, asset value ) {
+   accounts from_acnts( _self, owner );
+
+   const auto& from = from_acnts.get( value.symbol.name(), "no balance object found" );
+   eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
+
+   //from_acnts.modify( from, owner, [&]( auto& a ) {
+   if( from.balance.amount == value.amount ) {
+      from_acnts.erase( from );
+   } else {
+	from_acnts.modify( from, _self, [&]( auto& a ) {
+        a.balance -= value;
+      	});
+   }
+}
+
+void token::add_balance2( account_name owner, asset value, account_name ram_payer )
+{
+   accounts to_acnts( _self, owner );
+   auto to = to_acnts.find( value.symbol.name() );
+   if( to == to_acnts.end() ) {
+      //to_acnts.emplace( ram_payer, [&]( auto& a ){
+	   to_acnts.emplace( _self, [&]( auto& a ){
+        a.balance = value;
+      });
+   } else {
+      to_acnts.modify( to, 0, [&]( auto& a ) {
+        a.balance += value;
+      });
+   }
+}
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer) )
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(itransfer) )
