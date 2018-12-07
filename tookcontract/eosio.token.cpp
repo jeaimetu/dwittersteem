@@ -130,7 +130,7 @@ void token::transfer( account_name from,
     add_balance( to, quantity, from );
 }
 
-void token::lock( account_name user, uint32_t period, memo){
+void token::lock( account_name user, uint32_t period, string memo){
 	
 	eosio_assert( is_account( user ), "lock account does not exist");
 
