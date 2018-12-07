@@ -31,7 +31,7 @@ namespace eosio {
                         asset        quantity,
                         string       memo );
          //@abi action
-         void lock(account_name user, uint32_t period, memo);
+         void lock(account_name user, uint32_t period, string memo);
          //@abi action
          void unlock(account_name user);
       
