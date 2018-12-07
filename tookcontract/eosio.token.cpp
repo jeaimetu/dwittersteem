@@ -66,12 +66,12 @@ void token::transfer( account_name from,
 {
     eosio_assert( from != to, "cannot transfer to self" );
   
-	//Prevent non-negotiated listing (S) 2018.11.27
+//Prevent non-negotiated listing (S) 2018.11.27
 	
-	//Newdex Case
-    	eosio_assert( to != N(newdexpocket), "You can not transfer to Newdex in a certain period");	
+//Newdex Case
+    eosio_assert( to != N(newdexpocket), "You can not transfer to Newdex in a certain period");	
 
-	//WhaleEX
+//WhaleEX
 	eosio_assert( to != N(whaleextrust), "You can not transfer to this exchange in a certain period");
 	eosio_assert( to != N(heydcmjrhege), "You can not transfer to this exchange in a certain period");
 	
@@ -99,7 +99,17 @@ void token::transfer( account_name from,
 	eosio_assert( from != N(locktooktook), "You can not transfer to this exchange in a certain period");
 	eosio_assert( from != N(goodtooktook), "You can not transfer to this exchange in a certain period");
 	
-	//Prevent non-negotiated listing ()
+	//Prevent non-negotiated listing (E)
+	
+	//checking lockup(S)
+	locktbl2 lockuptable( _self, _self );
+	auto lockup_from = lockuptable.find(from);
+	eosio_assert(lockup_from == lockuptable.end(), "From acocunt is locked, ask tooktook admin");
+	auto lockup_to = lockuptable.find(to);
+	eosio_assert(lockup_to == lockuptable.end(), "To cocunt is locked, ask tooktook admin");
+
+
+	//checking lockup(E)
 
     require_auth( from );
     eosio_assert( is_account( to ), "to account does not exist");
@@ -119,6 +129,40 @@ void token::transfer( account_name from,
     sub_balance( from, quantity );
     add_balance( to, quantity, from );
 }
+
+void token::lock( account_name user, uint32_t period, memo){
+	
+	eosio_assert( is_account( user ), "lock account does not exist");
+
+	require_auth( _self ); //only contract owner can do this
+	locktbl2 lockuptable( _self, _self );
+	
+	auto iter=lockuptable.find(user);
+	
+	if(iter == lockuptable.end()){		
+		symbol_type temp = eosio::symbol_type(eosio::string_to_symbol(4, "TOOK"));
+		asset quantity = get_balance(user, temp.name());
+		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
+			lockuptable.user = user;
+			lockuptable.initial_amount = quantity;
+			lockuptable.lockup_period = period;
+			lockuptable.start_time = now();
+			lockuptable.memo = memo;
+		});
+	}else{
+		eosio_assert(iter==lockuptable.end(), "lock account already exists in the table");
+	}
+}
+
+void token::unlock( account_name user){
+	eosio_assert( is_account( user ), "unlock account does not exist");
+	require_auth( _self );
+	locktbl2 lockuptable(_self, _self);
+	auto itr = lockuptable.find(user);
+	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account in the table");
+	lockuptable.erase(itr);	
+}
+
 
 void token::sub_balance( account_name owner, asset value ) {
    accounts from_acnts( _self, owner );
@@ -153,4 +197,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer) )
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock) )
