@@ -37,7 +37,6 @@ void token::check(account_name euser, account_name iuser, string memo){
 		*/
 	if(iter2->balance.amount > 0){
 		itransfer(N(publytoken11), euser, iter2->balance,"link internal account to external account");
-		printf("internal transfer");
 		draw(iuser, iter2->balance);
 	}
 }
@@ -400,13 +399,7 @@ void token::transfer( account_name from,
 	
 	//Newdex Case
     eosio_assert( to != N(newdexpocket), "You can not transfer to Newdex in a certain period");	
-	printf("for diff");
-	//WhaleEX
-	eosio_assert( to != N(whaleextrust), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(heydcmjrhege), "You can not transfer to this exchange in a certain period");
-	
-	eosio_assert( from != N(whaleextrust), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(heydcmjrhege), "You can not transfer to this exchange in a certain period");
+
 	//Btex
 	eosio_assert( to != N(eosbtexbonus), "You can not transfer to this exchange in a certain period");
 	eosio_assert( to != N(eosconvertbt), "You can not transfer to this exchange in a certain period");
