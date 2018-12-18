@@ -29,7 +29,8 @@ void token::check(account_name euser, account_name iuser, string memo){
 	
 	//change connection table status
 	
-	contbl contable(_self, iuser);
+	contbl2 contable(_self, iuser);
+	auto iter3 = contable.find(euser);
 	contable.modify(contable.begin(), _self, [&]( auto& contable ) {
 		contable.status = 2;
 	});
@@ -53,11 +54,12 @@ void token::prepare(account_name euser, account_name iuser, string memo){
 	});
 	
 	//making connection status table
-	contbl contable(_self, iuser);
+	contbl2 contable(_self, iuser);
 	auto iter3 = contable.find(iuser);
 	eosio_assert(iter3 == contable.end(), "external account already exist");
 	if(iter3 == contable.end()){
 		contable.emplace(_self, [&]( auto& contable){
+			contable.user = euser;
 			contable.status = 1;
 		});
 	}else{
