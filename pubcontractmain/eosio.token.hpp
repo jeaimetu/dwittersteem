@@ -87,7 +87,7 @@ namespace eosio {
             uint64_t primary_key()const { return balance.symbol.name(); }
          };
 	   
-	     //@abi table contbl i64
+	     //@abi table contbl2 i64
          struct conn_table {
 	    account_name user;	 
             uint64_t    status;
