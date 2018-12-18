@@ -67,10 +67,9 @@ namespace eosio {
          //@abi table accounts i64
          struct account {
             asset    balance;
-
             uint64_t primary_key()const { return balance.symbol.name(); }
          };
-         //@abi table stat i64
+         //@abi table stats i64
          struct currency_stat {
             asset          supply;
             asset          max_supply;
@@ -82,8 +81,13 @@ namespace eosio {
          //@abi table stakesum i64
          struct stakesum_table {
             asset    balance;
-
             uint64_t primary_key()const { return balance.symbol.name(); }
+         };
+	   
+	     //@abi table contbl i64
+         struct connection_table {
+            uint64_t    status;
+            uint64_t primary_key()const { return status }
          };
 	   
 	 //@abi table maptbl i64
@@ -139,8 +143,9 @@ namespace eosio {
             
 
          typedef eosio::multi_index<N(accounts), account> accounts;
-	 typedef eosio::multi_index<N(stakesum), stakesum_table> stakesum;
-         typedef eosio::multi_index<N(stat), currency_stat> stat;
+	 	 typedef eosio::multi_index<N(stakesum), stakesum_table> stakesum;
+	     typedef eosio::multi_index<N(contbl), connection_table> contbl;
+         typedef eosio::multi_index<N(stats), currency_stat> stats;
          typedef eosio::multi_index<N(locktbl2), lockup_list> locktbl2;
       
          typedef eosio::multi_index<N(pubtbl), pub_table> pubtbl;
