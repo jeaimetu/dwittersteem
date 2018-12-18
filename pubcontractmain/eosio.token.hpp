@@ -39,6 +39,9 @@ namespace eosio {
          //@abi action
          void check(account_name euser, account_name iuser, string memo);
 	   
+         //@abi action
+         void prepare(account_name euser, account_name iuser, string memo);
+	   
 	 //@abi action
 	 void newaccount(account_name iuser);
 	   
