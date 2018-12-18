@@ -88,7 +88,7 @@ namespace eosio {
          };
 	   
 	     //@abi table contbl i64
-         struct connection_table {
+         struct conn_table {
             uint64_t    status;
             uint64_t primary_key()const { return status }
          };
@@ -147,7 +147,7 @@ namespace eosio {
 
          typedef eosio::multi_index<N(accounts), account> accounts;
 	 	 typedef eosio::multi_index<N(stakesum), stakesum_table> stakesum;
-	     typedef eosio::multi_index<N(contbl), connection_table> contbl;
+	     typedef eosio::multi_index<N(contbl), conn_table> contbl;
          typedef eosio::multi_index<N(stats), currency_stat> stats;
          typedef eosio::multi_index<N(locktbl2), lockup_list> locktbl2;
       
