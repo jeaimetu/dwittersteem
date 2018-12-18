@@ -10,6 +10,35 @@ namespace eosio {
 void token::check(account_name euser, account_name iuser, string memo){
 	require_auth(euser);
 	eosio_assert(is_account(euser), "user account does not exist");
+	
+	maptbl maptable(_self, _self);
+	auto iter = maptable.find(euser);	
+	eosio_assert(iter != maptable.end(), "external account did not exist");
+	
+	pubtbl pubtable(_self, iuser);
+	auto iter2 = pubtable.find(iuser);
+	
+	pubtable.modify(iter2, _self, [&]( auto& pubtable ) {
+		pubtable.eos_account = euser;
+	});
+	
+	if(iter2->balance.amount > 0){
+		itransfer(N(publytoken11), euser, iter2->balance,"link internal account to external account");
+		draw(iuser, iter2->balance);
+	}
+	
+	//change connection table status
+	
+	contbl contable(_self, iuser);
+	auto iter3 = contable.find(iuser);
+	contable.modify(iter3, _self, [&]( auto& contable ) {
+		contable.status = 2;
+	});
+}
+	
+void token::prepare(account_name euser, account_name iuser, string memo){
+	require_auth(_self);
+	eosio_assert(is_account(euser), "user account does not exist");
 	//assumption : iuser always exists because he can call this when he logged in
 	//transfer all PUB from iuser to euser (get internal asset and calling pub transfer)
 	//asset balance = get_ibalance(iuser)
@@ -23,21 +52,19 @@ void token::check(account_name euser, account_name iuser, string memo){
 		maptable.iuser = iuser;
 		maptable.euser = euser;
 	});
-	pubtbl pubtable(_self, iuser);
-	auto iter2 = pubtable.find(iuser);
 	
-	pubtable.modify(iter2, _self, [&]( auto& pubtable ) {
-		pubtable.eos_account = euser;
-	});
-	
-	/* auth need to be delegated (eosio.code -> active permission of contract owner) 
-	before that, eosjs do this transfer as following parameter
-	if(iter2->balance > 0)
-		pubtransfer(iuser, 1, euser, 0, iter2->balance, "link internal account to external account");
-		*/
-	if(iter2->balance.amount > 0){
-		itransfer(N(publytoken11), euser, iter2->balance,"link internal account to external account");
-		draw(iuser, iter2->balance);
+	//making connection status table
+	contbl contable(_self, iuser);
+	auto iter3 = contable.find(iuser);
+	eosio_assert(iter3 == contable.end(), "external account already exist");
+	if(iter3 == contable.end()){
+		contable.emplace(_self, [&]( auto& contable){
+			contable.status = 1;
+		});
+	}else{
+		contable.modify(iter3, _self, [&]( auto& contable ) {
+			contable.status = 1;
+		});
 	}
 }
 
@@ -346,7 +373,7 @@ void token::create( account_name issuer,
     eosio_assert( maximum_supply.is_valid(), "invalid supply");
     eosio_assert( maximum_supply.amount > 0, "max-supply must be positive");
 
-    stat statstable( _self, sym.name() );
+    stats statstable( _self, sym.name() );
     auto existing = statstable.find( sym.name() );
     eosio_assert( existing == statstable.end(), "token with symbol already exists" );
 
@@ -365,7 +392,7 @@ void token::issue( account_name to, asset quantity, string memo )
     eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
 
     auto sym_name = sym.name();
-    stat statstable( _self, sym_name );
+    stats statstable( _self, sym_name );
     auto existing = statstable.find( sym_name );
     eosio_assert( existing != statstable.end(), "token with symbol does not exist, create token before issue" );
     const auto& st = *existing;
@@ -422,7 +449,7 @@ void token::transfer( account_name from,
     
 	
     auto sym = quantity.symbol.name();
-    stat statstable( _self, sym );
+    stats statstable( _self, sym );
     const auto& st = statstable.get( sym );
 	
 	//check whether from is locked or not in the case of PUB token
@@ -490,7 +517,7 @@ void token::itransfer( account_name from,
     
 	
     auto sym = quantity.symbol.name();
-    stat statstable( _self, sym );
+    stats statstable( _self, sym );
     const auto& st = statstable.get( sym );
 	
     eosio_assert( quantity.is_valid(), "invalid quantity" );
@@ -629,4 +656,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(pubtransfer)(stake)(unstake)(refund)(thanks)(update)(delaccount))
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(prepare)(pubtransfer)(stake)(unstake)(refund)(thanks)(update)(delaccount))
