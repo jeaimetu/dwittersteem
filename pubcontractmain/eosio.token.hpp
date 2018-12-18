@@ -90,7 +90,7 @@ namespace eosio {
 	     //@abi table contbl i64
          struct conn_table {
             uint64_t    status;
-            uint64_t primary_key()const { return status }
+            uint64_t primary_key()const { return status; }
          };
 	   
 	 //@abi table maptbl i64
