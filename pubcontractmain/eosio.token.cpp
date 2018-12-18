@@ -30,8 +30,7 @@ void token::check(account_name euser, account_name iuser, string memo){
 	//change connection table status
 	
 	contbl contable(_self, iuser);
-	auto iter3 = contable.find(iuser);
-	contable.modify(iter3, _self, [&]( auto& contable ) {
+	contable.modify(contable.begin(), _self, [&]( auto& contable ) {
 		contable.status = 2;
 	});
 }
