@@ -223,7 +223,9 @@
    )
   )
   (call $require_auth
-   (get_local $1)
+   (i64.load
+    (get_local $0)
+   )
   )
   (call $eosio_assert
    (call $is_account
@@ -8315,9 +8317,7 @@
    )
   )
   (call $require_auth
-   (i64.load
-    (get_local $0)
-   )
+   (get_local $1)
   )
   (call $eosio_assert
    (call $is_account
@@ -8928,7 +8928,7 @@
      )
      (i64.store offset=80
       (get_local $11)
-      (tee_local $2
+      (tee_local $1
        (i64.load
         (get_local $10)
        )
@@ -8962,7 +8962,7 @@
        )
        (i64.store offset=8
         (get_local $0)
-        (get_local $2)
+        (get_local $1)
        )
        (i32.store offset=16
         (get_local $0)
