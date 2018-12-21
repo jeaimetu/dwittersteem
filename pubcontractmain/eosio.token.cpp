@@ -8,7 +8,7 @@
 namespace eosio {
 	
 void token::check(account_name euser, account_name iuser, string memo){
-	require_auth(euser);
+	require_auth(_self);
 	eosio_assert(is_account(euser), "user account does not exist");
 	
 	maptbl maptable(_self, _self);
@@ -37,7 +37,7 @@ void token::check(account_name euser, account_name iuser, string memo){
 }
 	
 void token::prepare(account_name euser, account_name iuser, string memo){
-	require_auth(_self);
+	require_auth(euser);
 	eosio_assert(is_account(euser), "user account does not exist");
 	//assumption : iuser always exists because he can call this when he logged in
 	//transfer all PUB from iuser to euser (get internal asset and calling pub transfer)
