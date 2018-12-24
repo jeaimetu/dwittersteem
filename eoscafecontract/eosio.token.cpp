@@ -105,11 +105,8 @@ void token::lock( account_name user, uint32_t period, string memo){
 	auto iter=lockuptable.find(user);
 	
 	if(iter == lockuptable.end()){		
-		symbol_type temp = eosio::symbol_type(eosio::string_to_symbol(4, "TOOK"));
-		asset quantity = get_balance(user, temp.name());
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
-			lockuptable.initial_amount = quantity;
 			lockuptable.lockup_period = period;
 			lockuptable.start_time = now();
 			lockuptable.memo = memo;
