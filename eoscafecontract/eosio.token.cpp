@@ -65,48 +65,13 @@ void token::transfer( account_name from,
                       string       memo )
 {
     eosio_assert( from != to, "cannot transfer to self" );
-  
-//Prevent non-negotiated listing (S) 2018.11.27
-	
-//Newdex Case
-    eosio_assert( to != N(newdexpocket), "You can not transfer to Newdex in a certain period");	
-
-//WhaleEX
-	eosio_assert( to != N(whaleextrust), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(heydcmjrhege), "You can not transfer to this exchange in a certain period");
-	
-	eosio_assert( from != N(whaleextrust), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(heydcmjrhege), "You can not transfer to this exchange in a certain period");
-	//Btex
-	eosio_assert( to != N(eosbtexbonus), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(eosconvertbt), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(eosbtexteams), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(btexexchange), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(eosbtextoken), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(eosbtexfunds), "You can not transfer to this exchange in a certain period");
-	
-	eosio_assert( from != N(eosbtexbonus), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(eosconvertbt), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(eosbtexteams), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(btexexchange), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(eosbtextoken), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(eosbtexfunds), "You can not transfer to this exchange in a certain period");
-	
-	//lockup
-	eosio_assert( to != N(locktooktook), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(goodtooktook), "You can not transfer to this exchange in a certain period");
-	
-	eosio_assert( from != N(locktooktook), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(goodtooktook), "You can not transfer to this exchange in a certain period");
-	
-	//Prevent non-negotiated listing (E)
 	
 	//checking lockup(S)
 	locktbl2 lockuptable( _self, _self );
 	auto lockup_from = lockuptable.find(from);
-	eosio_assert(lockup_from == lockuptable.end(), "From acocunt is locked, ask tooktook admin");
+	eosio_assert(lockup_from == lockuptable.end(), "From acocunt is locked, ask eoscafe admin");
 	auto lockup_to = lockuptable.find(to);
-	eosio_assert(lockup_to == lockuptable.end(), "To cocunt is locked, ask tooktook admin");
+	eosio_assert(lockup_to == lockuptable.end(), "To cocunt is locked, ask eoscafe admin");
 
 
 	//checking lockup(E)
