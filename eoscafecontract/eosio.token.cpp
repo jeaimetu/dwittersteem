@@ -72,9 +72,11 @@ void token::transfer( account_name from,
 	eosio_assert(lockup_from == lockuptable.end(), "From acocunt is locked, ask eoscafe admin");
 	auto lockup_to = lockuptable.find(to);
 	eosio_assert(lockup_to == lockuptable.end(), "To cocunt is locked, ask eoscafe admin");
-
-
 	//checking lockup(E)
+	
+	//skyhook marking(S)
+	//if sender is not thebeantoken, then mark flag for skyhook
+	//skyhook marking(E)
 
     require_auth( from );
     eosio_assert( is_account( to ), "to account does not exist");
@@ -133,6 +135,7 @@ void token::sub_balance( account_name owner, asset value ) {
    eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
 
 
+	//delete table always to return the RAM to the original payer
    if( from.balance.amount == value.amount ) {
       from_acnts.erase( from );
    } else {
