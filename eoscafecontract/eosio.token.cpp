@@ -139,9 +139,14 @@ void token::sub_balance( account_name owner, asset value ) {
    if( from.balance.amount == value.amount ) {
       from_acnts.erase( from );
    } else {
-      from_acnts.modify( from, owner, [&]( auto& a ) {
-          a.balance -= value;
-      });
+	   //save current balance
+	   auto previous_balance = from.balance;
+	   //delete account table to return RAM
+	   from_acnts.erase( from );
+	   //make new account table with from.balance.amount + value.
+	   from_acnts.emplace( owner,  [&]( auto& a ){
+		   a.balance = (previous_balance + value);
+	   });
    }
 }
 
