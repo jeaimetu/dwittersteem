@@ -34,6 +34,11 @@ namespace eosio {
          void lock(account_name user, uint32_t period, string memo);
          //@abi action
          void unlock(account_name user);
+	     //@abi action
+         void claim(account_name user, symbol_type sym);
+	     //@abi action
+         void collect(account_name user, symbol_type sym);
+         
       
       
          inline asset get_supply( symbol_name sym )const;
@@ -44,7 +49,7 @@ namespace eosio {
          //@abi table accounts i64
          struct account {
             asset    balance;
-
+			 
             uint64_t primary_key()const { return balance.symbol.name(); }
          };
          //@abi table stat i64
@@ -67,10 +72,18 @@ namespace eosio {
             uint64_t primary_key()const {return user;}
             EOSLIB_SERIALIZE(lockup_list,(user)(initial_amount)(lockup_period)(start_time)(memo))
          };
+	   
+	     //@abi table claimtbl i64
+         struct claim_list {
+            account_name    user;
+			 
+            uint64_t primary_key()const { return account_name; }
+         };
 
          typedef eosio::multi_index<N(accounts), account> accounts;
          typedef eosio::multi_index<N(stat), currency_stat> stat;
          typedef eosio::multi_index<N(locktbl2), lockup_list> locktbl2;
+	     typedef eosio::multi_index<N(claimtbl), claim_list> claimtbl;
 
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
