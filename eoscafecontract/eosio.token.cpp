@@ -131,16 +131,16 @@ void token::claim( account_name user, symbol_type sym){
 	require_auth(user);
 	//get current balance of user
 	accounts user_acnts( _self, user );
-	auto iter = user_acnts.find( sym.name );
+	auto iter = user_acnts.find( sym.name() );
 	if( iter == user_acnts.end() ) {
       user_acnts.emplace( user, [&]( auto& a ){
         a.balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "BEAN")));;
       });
     } else {
 	   //save current balance
-	   auto previous_balance = iter.balance;
+	   auto previous_balance = iter->balance;
 	   //delete account table to return RAM
-	   user_acnts.erase( user );
+	   user_acnts.erase( iter );
 	   //make new account table with from.balance.amount + value.
 	   user_acnts.emplace( user,  [&]( auto& a ){
 		   a.balance = previous_balance;
