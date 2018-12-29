@@ -131,7 +131,7 @@ void token::claim( account_name user){
 	require_auth(user);
 	//get current balance of user
 	accounts user_acnts( _self, user );
-	auto iter = user_acnts.find( "BEAN" );
+	auto iter = user_acnts.find( eosio::string_to_symbol(4, "BEAN")) );
 	if( iter == user_acnts.end() ) {
       user_acnts.emplace( user, [&]( auto& a ){
         a.balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "BEAN")));;
