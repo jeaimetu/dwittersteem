@@ -35,9 +35,9 @@ namespace eosio {
          //@abi action
          void unlock(account_name user);
 	     //@abi action
-         void claim(account_name user, symbol_type sym);
+         void claim(account_name user);
 	     //@abi action
-         void collect(account_name user, symbol_type sym);
+         void collect(account_name user);
          
       
       
