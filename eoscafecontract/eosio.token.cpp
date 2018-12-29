@@ -127,11 +127,11 @@ void token::unlock( account_name user){
 	lockuptable.erase(itr);	
 }
 	
-void token::claim( account_name user, symbol_type sym){
+void token::claim( account_name user){
 	require_auth(user);
 	//get current balance of user
 	accounts user_acnts( _self, user );
-	auto iter = user_acnts.find( sym.name() );
+	auto iter = user_acnts.find( "BEAN" );
 	if( iter == user_acnts.end() ) {
       user_acnts.emplace( user, [&]( auto& a ){
         a.balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "BEAN")));;
@@ -157,7 +157,7 @@ void token::claim( account_name user, symbol_type sym){
 	
 }
 	
-void token::collect( account_name user, symbol_type sym){
+void token::collect( account_name user){
 	require_auth( _self );
 	//todo 
 	//decrease user balance, if it is empty, then delete the table
