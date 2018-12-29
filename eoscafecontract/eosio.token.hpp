@@ -77,7 +77,7 @@ namespace eosio {
          struct claim_list {
             account_name    user;
 			 
-            uint64_t primary_key()const { return account_name; }
+            uint64_t primary_key()const { return user; }
          };
 
          typedef eosio::multi_index<N(accounts), account> accounts;
