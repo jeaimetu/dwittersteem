@@ -145,7 +145,7 @@ void token::sub_balance( account_name owner, asset value ) {
 	   from_acnts.erase( from );
 	   //make new account table with from.balance.amount + value.
 	   from_acnts.emplace( owner,  [&]( auto& a ){
-		   a.balance = (previous_balance + value);
+		   a.balance = (previous_balance - value);
 	   });
    }
 }
