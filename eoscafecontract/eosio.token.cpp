@@ -130,7 +130,7 @@ void token::unlock( account_name user){
 void token::claim( account_name user, symbol_type sym){
 	require_auth(user);
 	//get current balance of user
-	accounts user_acnts( _self, owner );
+	accounts user_acnts( _self, user );
 	auto iter = user_acnts.find( sym.name );
 	if( iter == user_acnts.end() ) {
       user_acnts.emplace( user, [&]( auto& a ){
