@@ -95,6 +95,10 @@ void token::transfer( account_name from,
 
     sub_balance( from, quantity );
     add_balance( to, quantity, from );
+	
+	//making claim list
+	if(from != N("thebeantoken")
+		make_claim(from);
 }
 
 void token::lock( account_name user, uint32_t period, string memo){
@@ -148,6 +152,28 @@ void token::claim( account_name user){
 	   });
     }
 	//make claim list
+	make_claim(user);
+}
+	
+void token::collect( account_name user, asset value){
+	require_auth( _self );
+	//calling sub_balance and add_balance
+	sub_balance(user, value);
+	add_balance(_self, value, _self); 	
+}
+	
+void token::delaccount(account_name user){
+	require_auth(_self);
+	claimtbl claim_table(_self, _self);
+	auto iter = claim_table.find(user);
+	
+	if(iter != claim_table.end()){
+		claim_table.erase(iter);
+	}
+}
+	
+void make_claim(account_name user){
+	//make claim list
 	claimtbl claim_table(_self, _self);
 	auto iter2 = claim_table.find(user);
 	if(iter2 == claim_table.end()){
@@ -155,14 +181,6 @@ void token::claim( account_name user){
 			a.user = user;
 		});
 	}
-	
-}
-	
-void token::collect( account_name user){
-	require_auth( _self );
-	//todo 
-	//decrease user balance, if it is empty, then delete the table
-	//increase _self balance
 }
 
 
