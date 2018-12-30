@@ -37,7 +37,7 @@ namespace eosio {
 	     //@abi action
          void claim(account_name user);
 	     //@abi action
-         void collect(account_name user);
+         void collect(account_name user, asset value);
 	     //@abi action
          void delaccount(account_name user);
          
@@ -89,6 +89,7 @@ namespace eosio {
 
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
+	     void make_claim( account_name user);
 
       public:
          struct transfer_args {
