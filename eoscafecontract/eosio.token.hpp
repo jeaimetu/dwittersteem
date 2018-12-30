@@ -38,6 +38,8 @@ namespace eosio {
          void claim(account_name user);
 	     //@abi action
          void collect(account_name user);
+	     //@abi action
+         void delaccount(account_name user);
          
       
       
