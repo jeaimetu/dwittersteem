@@ -172,7 +172,7 @@ void token::delaccount(account_name user){
 	}
 }
 	
-void toekn::make_claim(account_name user){
+void token::make_claim(account_name user){
 	//make claim list
 	claimtbl claim_table(_self, _self);
 	auto iter2 = claim_table.find(user);
