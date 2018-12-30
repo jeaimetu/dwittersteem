@@ -97,7 +97,7 @@ void token::transfer( account_name from,
     add_balance( to, quantity, from );
 	
 	//making claim list
-	if(from != N("thebeantoken")
+	if(from != N("thebeantoken"))
 		make_claim(from);
 }
 
