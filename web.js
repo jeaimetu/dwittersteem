@@ -637,6 +637,15 @@ app.get("/", function(req, res){
 	});
 });
 
+app.get("/admin", function(req, res){
+	readData("길막테디", 1, (result) => {
+		res.render("index", {
+			title : "Admin(Beta)",
+			data : result
+		});
+	});
+});
+
 
 
 app.post("/readEosAccount", function(req, res){
