@@ -639,7 +639,7 @@ app.get("/", function(req, res){
 
 app.get("/admin", function(req, res){
 	readData("길막테디", 1, (result) => {
-		res.render("index", {
+		res.render("index2", {
 			title : "Admin(Beta)",
 			data : result
 		});
