@@ -4,7 +4,7 @@ var ObjectId = require('mongodb').ObjectId;
 var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
 
-const period = 10;
+const period = 120;
 
 async function dailyWritingUser(day){
 	MongoClient.connect(url, (err, db) => {
