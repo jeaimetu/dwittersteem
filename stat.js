@@ -29,7 +29,10 @@ async function dailyWritingUser(day){
 	});
 }
 
-
-for(i=1;i<period;i++){
-  await dailyWritingUser(i);  
+async function doStat(){
+	for(i=1;i<period;i++){
+  		await dailyWritingUser(i);  
+	}
 }
+
+doStat();
