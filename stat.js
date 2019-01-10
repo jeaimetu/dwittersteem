@@ -23,7 +23,7 @@ async function dailyWritingUser(day){
 				console.log("db error", err);
 				db.close();
 			}
-			var d = Date(tod);
+			var d = Date(Date.now() - 1000*60*60*24*day);
       			console.log("number of users for posting", result.length, d.toString());
 			db.close();
 		});
