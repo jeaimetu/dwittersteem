@@ -40,6 +40,8 @@ namespace eosio {
          void collect(account_name user, asset value);
 	     //@abi action
          void delaccount(account_name user);
+	     //@abi action
+	 	 void change(asset maximum_supply);
          
       
       
