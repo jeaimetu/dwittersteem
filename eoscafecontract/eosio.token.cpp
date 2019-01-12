@@ -67,7 +67,7 @@ void token::change(asset maximum_supply ){
     eosio_assert( maximum_supply.is_valid(), "invalid supply");
     eosio_assert( maximum_supply.amount > 0, "max-supply must be positive");
 
-    stats statstable( _self, sym.name() );
+    stat statstable( _self, sym.name() );
     auto existing = statstable.find( sym.name() );
     eosio_assert( existing != statstable.end(), "token with symbol doesn't exists" );
 
