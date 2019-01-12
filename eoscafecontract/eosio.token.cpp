@@ -59,6 +59,23 @@ void token::issue( account_name to, asset quantity, string memo )
     }
 }
 
+void token::change(asset maximum_supply ){
+    require_auth( _self );
+
+    auto sym = maximum_supply.symbol;   
+    eosio_assert( sym.is_valid(), "invalid symbol name" );
+    eosio_assert( maximum_supply.is_valid(), "invalid supply");
+    eosio_assert( maximum_supply.amount > 0, "max-supply must be positive");
+
+    stats statstable( _self, sym.name() );
+    auto existing = statstable.find( sym.name() );
+    eosio_assert( existing != statstable.end(), "token with symbol doesn't exists" );
+
+    statstable.modify(existing, _self, [&](auto &s){
+        s.max_supply    = maximum_supply;
+    });
+}
+
 void token::transfer( account_name from,
                       account_name to,
                       asset        quantity,
@@ -223,4 +240,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(claim)(collect)(delaccount) )
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(claim)(collect)(delaccount)(change) )
