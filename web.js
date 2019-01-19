@@ -629,6 +629,15 @@ function readData(account, page, cb){
 
   });
 
+app.get("/test", function(req, req){
+	let lang = req.acceptsLanguages( "kr", "en");
+	console.log("your browser language is", lang);
+	res.render("index2", {
+		title : "Admin(Beta)",
+		data : lang
+	});
+});
+
 app.get("/", function(req, res){
 	readData("길막테디", 1, (result) => {
 		res.render("index", {
