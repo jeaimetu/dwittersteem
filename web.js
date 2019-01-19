@@ -630,7 +630,7 @@ function readData(account, page, cb){
   });
 
 app.get("/test", function(req, res){
-	let lang = req.acceptsLanguages( "kr", "en");
+	let lang = req.acceptsLanguages( "ko", "ko-kr", "en");
 	console.log("your browser language is", lang);
 	res.render("index2", {
 		title : "Admin(Beta)",
