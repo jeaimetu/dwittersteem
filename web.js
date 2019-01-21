@@ -6,7 +6,7 @@
 //require("./publish.js");
 require("./pay.js");
 require("./contract");
-require("./stat.js");
+//require("./stat.js");
 
 //require("./scatter");
 
