@@ -9,8 +9,8 @@ const period = 10;
 async function dailyWritingUser(day){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");    
-		var tod = Date.now() - 1000*60*60*24*(day-1); //24hours from now
-		var tod1 = Date.now() - 1000*60*60*24*day;
+		var tod = Date.now() - 1000*60*60*24*(day); //24hours from now
+		var tod1 = Date.now() - 1000*60*60*24*(day-1);
 
 		const agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
@@ -24,7 +24,7 @@ async function dailyWritingUser(day){
 				db.close();
 			}
 			
-      			console.log("number of users for posting", result.length, tod.toString());
+      			console.log("number of users for posting", result.length, tod.toString(), tod1.toString());
 			db.close();
 		});
 	});
