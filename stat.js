@@ -28,6 +28,7 @@ async function dailyWritingUser(day){
 			let a = new Date(tod);
 			let b = new Date(tod1);
       			console.log("number of users for posting", day, result.length, a.toISOString(), b.toISOString());
+			console.log(result);
 			tick++;
 			if(tick == 170)
 				clearInterval(timerId);
