@@ -5,6 +5,7 @@ var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
 
 const period = 10;
+let tick = 1;
 
 async function dailyWritingUser(day){
 	MongoClient.connect(url, (err, db) => {
@@ -36,4 +37,4 @@ async function doStat(){
 	}
 }
 
-doStat();
+setInterval(()=> dailyWritingUser(tick), 1000);
