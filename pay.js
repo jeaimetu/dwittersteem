@@ -248,11 +248,16 @@ function airdropByStaking(){
 	});
 }
 
+function compareNumbers(a, b){
+	return a - b;
+}
+
 function displayStakingInfo(){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
 		dbo.collection("user").find({}).toArray(function(err, result){
 			var totalStaking = 0;
+			result.sort(compareNumbers);
 			for(i = 0; i < result.length ; i++)
 				totalStaking += parseFloat(result[i].wallet);
 			
