@@ -248,6 +248,26 @@ function airdropByStaking(){
 	});
 }
 
+function displayStakingInfo(){
+	MongoClient.connect(url, (err, db) => {
+		const dbo = db.db("heroku_dg3d93pq");
+		dbo.collection("user").find({}).toArray(function(err, result){
+			var totalStaking = 0;
+			for(i = 0; i < result.length ; i++)
+				totalStaking += parseFloat(result[i].wallet);
+			
+			for(i = 0; i < result.length; i++){
+				var tokenSize = parseFloat(result[i].wallet) * parseFloat(stakingDistributionForDay) / parseFloat(totalStaking);
+				tokenSize = parseFloat(tokenSize);
+				tokenSize = tokenSize.toFixed(4);
+				const account = result[i].account;				
+				console.log("airdropByStaking", account, tokenSize, totalStaking);
+			}
+			db.close();
+		});
+	});
+}
+
 	
 		
 function communityAirDrop(amount){
@@ -272,5 +292,6 @@ setInterval(checkTime, 1000*60*10);
 //setTimeout(airdropByWriting, 1000*60*2);
 //communityAirDrop(1000);
 //airdropByStaking();
+displayStakingInfo();
 			    
 							       
