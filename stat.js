@@ -12,7 +12,6 @@ async function dailyWritingUser(day){
 		const dbo = db.db("heroku_dg3d93pq");    
 		var tod = Date.now() - 1000*60*60*24*(day); //24hours from now
 		var tod1 = Date.now() - 1000*60*60*24*(day-1);
-		console.log("[debug]", tod, tod1);
 
 		const agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
@@ -25,8 +24,9 @@ async function dailyWritingUser(day){
 				console.log("db error", err);
 				db.close();
 			}
-			
-      			console.log("number of users for posting", day, result.length, Date.now(), tod, tod1, Date(tod).toLocaleDateString("en-US"), Date(tod1).toLocaleDateString("en-US"));
+			let a = new Date(tod);
+			let b = new Date(tod1);
+      			console.log("number of users for posting", day, result.length, a.toISOString(), b.toISOString());
 			tick++;
 			db.close();
 		});
