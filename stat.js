@@ -12,6 +12,7 @@ async function dailyWritingUser(day){
 		const dbo = db.db("heroku_dg3d93pq");    
 		var tod = Date.now() - 1000*60*60*24*(day); //24hours from now
 		var tod1 = Date.now() - 1000*60*60*24*(day-1);
+		console.log("[debug]", tod, tod1);
 
 		const agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
