@@ -26,7 +26,7 @@ async function dailyWritingUser(day){
 				db.close();
 			}
 			
-      			console.log("number of users for posting", day, result.length, Date.now(), tod, tod1, Date(tod).toString(), Date(tod1).toString());
+      			console.log("number of users for posting", day, result.length, Date.now(), tod, tod1, Date(tod).toLocaleDateString("en-US"), Date(tod1).toLocaleDateString("en-US"));
 			tick++;
 			db.close();
 		});
