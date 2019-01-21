@@ -25,7 +25,8 @@ async function dailyWritingUser(day){
 				db.close();
 			}
 			
-      			console.log("number of users for posting", result.length, tod.toString(), tod1.toString());
+      			console.log("number of users for posting", day, result.length, tod.toString(), tod1.toString());
+			tick++;
 			db.close();
 		});
 	});
@@ -37,4 +38,4 @@ async function doStat(){
 	}
 }
 
-setInterval(()=> dailyWritingUser(tick), 1000);
+setInterval(function(){dailyWritingUser(tick)}, 1000);
