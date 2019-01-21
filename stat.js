@@ -4,13 +4,13 @@ var ObjectId = require('mongodb').ObjectId;
 var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
 
-const period = 150;
+const period = 10;
 
 async function dailyWritingUser(day){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");    
-		var tod = Date.now() - 1000*60*60*24*day; //24hours from now
-		var tod1 = Date.now();
+		var tod = Date.now() - 1000*60*60*24*(day-1); //24hours from now
+		var tod1 = Date.now() - 1000*60*60*24*day;
 
 		const agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
