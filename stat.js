@@ -6,6 +6,7 @@ var url = process.env.MONGODB_URI;
 
 const period = 10;
 let tick = 1;
+let timerId;
 
 async function dailyWritingUser(day){
 	MongoClient.connect(url, (err, db) => {
@@ -28,6 +29,8 @@ async function dailyWritingUser(day){
 			let b = new Date(tod1);
       			console.log("number of users for posting", day, result.length, a.toISOString(), b.toISOString());
 			tick++;
+			if(tick == 170)
+				clearInterval(timerId);
 			db.close();
 		});
 	});
@@ -39,4 +42,4 @@ async function doStat(){
 	}
 }
 
-setInterval(function(){dailyWritingUser(tick)}, 1000);
+timerId = setInterval(function(){dailyWritingUser(tick)}, 1000);
