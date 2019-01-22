@@ -249,7 +249,7 @@ function airdropByStaking(){
 }
 
 function compareNumbers(a, b){
-	return a - b;
+	return a.wallet - b.wallet;
 }
 
 function displayStakingInfo(){
