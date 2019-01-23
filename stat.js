@@ -4,13 +4,13 @@ var ObjectId = require('mongodb').ObjectId;
 var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
 
-const period = 10;
+const period = 1;
 let tick = 1;
 let timerId;
 
 
 function compareNumbers(a, b){
-	return a.count - b.count;
+	return b.count - a.count;
 }
 
 async function dailyWritingUser(day){
