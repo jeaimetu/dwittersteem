@@ -297,6 +297,6 @@ setInterval(checkTime, 1000*60*10);
 //setTimeout(airdropByWriting, 1000*60*2);
 //communityAirDrop(1000);
 //airdropByStaking();
-displayStakingInfo();
+//displayStakingInfo();
 			    
 							       
