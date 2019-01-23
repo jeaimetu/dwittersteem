@@ -10,7 +10,7 @@ var url = process.env.MONGODB_URI;
 var totalUser = 0;
 var totalSumOfVoting = 0;
 const votingFactor = 3;
-const distributionForDay = 15000;
+const distributionForDay = 7500;
 const postingDistributionForDay = 22500;
 const votingDistributionForDay = 7500;
 const stakingDistributionForDay = 30000;
@@ -212,8 +212,12 @@ function airdropByWriting(){
 			//console.log("db result", result);
 			var totalPosting = 0;
 			console.log("number of users for posting", result.length);
-			for(i = 0;i<result.length;i++)
-				totalPosting += result[i].count;	
+			
+			for(i = 0;i<result.length;i++){
+				totalPosting += result[i].count;
+				if(result[i].count >= process.env.MEDIAN)
+					result[i].count = process.env.MEDIAN;
+			}
 			console.log("airdropByWriting totalPosting", totalPosting);
 			for(i=0;i<result.length;i++){
 				var tokenSize = result[i].count * parseFloat(postingDistributionForDay) / parseFloat(totalPosting);
