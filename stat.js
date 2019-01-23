@@ -36,7 +36,7 @@ async function dailyWritingUser(day){
       			console.log("number of users for posting", day, result.length, a.toISOString(), b.toISOString());
 			console.log(result);
 			tick++;
-			if(tick == timerId)
+			if(tick == period)
 				clearInterval(timerId);
 			db.close();
 		});
