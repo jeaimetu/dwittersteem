@@ -6,8 +6,8 @@
 //require("./publish.js");
 require("./pay.js");
 require("./contract");
-require("./random.js");
-//require("./stat.js");
+//require("./random.js");
+require("./stat.js");
 
 //require("./scatter");
 
