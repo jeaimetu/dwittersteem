@@ -8,6 +8,11 @@ const period = 10;
 let tick = 1;
 let timerId;
 
+
+function compareNumbers(a, b){
+	return a.count - b.count;
+}
+
 async function dailyWritingUser(day){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");    
@@ -25,6 +30,7 @@ async function dailyWritingUser(day){
 				console.log("db error", err);
 				db.close();
 			}
+			result.sort(compareNumbers);
 			let a = new Date(tod);
 			let b = new Date(tod1);
       			console.log("number of users for posting", day, result.length, a.toISOString(), b.toISOString());
