@@ -166,12 +166,20 @@ void token::unlock( account_name user){
 void token::newaccount(account_name iuser){
 }
 
-void token::stake(account_name from, account_name to, asset quantity);
-void token::unstake(account_name from, account_name to, asset quantity);
-void token::refund(account_name from, account_name to);
+void token::stake(account_name from, account_name to, asset quantity){
+}
+	
+void token::unstake(account_name from, account_name to, asset quantity){
+}
+	
+void token::refund(account_name from, account_name to){
+}
 
-void token::updatetp(account_name user, asset quantity);
-void token::give(account_name from, account_name to, asset quantity, string event_case, string ttconid);
+void token::updatetp(account_name user, asset quantity){
+}
+	
+void token::give(account_name from, account_name to, asset quantity, string event_case, string ttconid){
+}
 
 
 void token::sub_balance( account_name owner, asset value ) {
