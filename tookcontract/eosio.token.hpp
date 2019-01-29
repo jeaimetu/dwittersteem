@@ -34,7 +34,23 @@ namespace eosio {
          void lock(account_name user, uint32_t period, string memo);
          //@abi action
          void unlock(account_name user);
-      
+	 
+	 //@abi action
+	 void newaccount(account_name iuser);
+
+	 //@abi action
+	 void stake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity);	   
+	 //@abi action
+	 void unstake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity);
+	 //@abi action
+	 void refund(account_name from, account_name user);
+	   
+	 //@abi action
+         void update_tookp(account_name user, asset quantity);
+	   
+	 //@abi action
+	 void give(account_name from, account_name to, asset quantity, string case, string ttconid);
+	 
       
          inline asset get_supply( symbol_name sym )const;
          
@@ -67,13 +83,59 @@ namespace eosio {
             uint64_t primary_key()const {return user;}
             EOSLIB_SERIALIZE(lockup_list,(user)(initial_amount)(lockup_period)(start_time)(memo))
          };
+	   
+	 //@abi table maptbl i64
+	 struct map_table {
+		 account_name euser;
+		 account_name iuser;
+		 
+		 uint64_t primary_key()const {return euser;}
+		 EOSLIB_SERIALIZE(map_table,(euser)(iuser))
+	 };
+	   
+	 //@abi table pubtbl i64
+         struct took_table {
+            account_name user;
+            account_name eos_account;
+            uint64_t tookp_balance;
+	    uint64_t stake_sum;
+	    uint64_t air;	         
+            uint64_t status;
+            uint64_t primary_key()const {return user;}
+            EOSLIB_SERIALIZE(pub_table,(user)(eos_account)(balance)(ink))
+         };
+	 //@abi table staketbl i64  
+	 struct stake_table {
+	    account_name user;
+	    asset balance;
+	    uint32_t staked_at;
+		   
+	    uint64_t primary_key()const {return user;}
+	    EOSLIB_SERIALIZE(stake_table,(user)(balance)(staked_at))
+	  }; 
+	   
+	  //@abi table unstaketbl i64
+	  struct unstake_table {
+	    account_name user;
+	    asset balance;
+	    uint32_t unstaked_at;
+		   
+	    uint64_t primary_key()const {return user;}
+	    EOSLIB_SERIALIZE(unstake_table,(user)(balance)(unstaked_at))
+	  }; 
+	 
 
          typedef eosio::multi_index<N(accounts), account> accounts;
          typedef eosio::multi_index<N(stat), currency_stat> stat;
          typedef eosio::multi_index<N(locktbl2), lockup_list> locktbl2;
+	 typedef eosio::multi_index<N(pubtbl), took_table> pubtbl;
+	 typedef eosio::multi_index<N(staketbl3), stake_table> staketbl;
+	 typedef eosio::multi_index<N(unstaketbl), unstake_table> unstaketbl;
+	 typedef eosio::multi_index<N(maptbl), map_table> maptbl;
 
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
+	 
 
       public:
          struct transfer_args {
