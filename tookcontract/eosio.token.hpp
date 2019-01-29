@@ -49,7 +49,7 @@ namespace eosio {
          void update_tookp(account_name user, asset quantity);
 	   
 	 //@abi action
-	 void give(account_name from, account_name to, asset quantity, string case, string ttconid);
+	 void give(account_name from, account_name to, asset quantity, string event_case, string ttconid);
 	 
       
          inline asset get_supply( symbol_name sym )const;
