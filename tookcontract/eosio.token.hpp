@@ -41,7 +41,7 @@ namespace eosio {
 	 //@abi action
 	 void stake(account_name from, account_name to,asset quantity);	   
 	 //@abi action
-	 void unstake(account_name from, ccount_name to, asset quantity);
+	 void unstake(account_name from, account_name to, asset quantity);
 	 //@abi action
 	 void refund(account_name from, account_name user);
 	   
