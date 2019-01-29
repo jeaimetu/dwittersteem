@@ -163,6 +163,16 @@ void token::unlock( account_name user){
 	lockuptable.erase(itr);	
 }
 
+void token::newaccount(account_name iuser){
+}
+
+void token::stake(account_name from, account_name to, asset quantity);
+void token::unstake(account_name from, account_name to, asset quantity);
+void token::refund(account_name from, account_name to);
+
+void token::updatetp(account_name user, asset quantity);
+void token::give(account_name from, account_name to, asset quantity, string event_case, string ttconid);
+
 
 void token::sub_balance( account_name owner, asset value ) {
    accounts from_acnts( _self, owner );
@@ -197,4 +207,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock) )
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(stake)(unstake)(refund)((updatep)(give) )
