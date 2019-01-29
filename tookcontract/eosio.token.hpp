@@ -46,7 +46,7 @@ namespace eosio {
 	 void refund(account_name from, account_name user);
 	   
 	 //@abi action
-         void update_tookp(account_name user, asset quantity);
+         void updatetp(account_name user, asset quantity);
 	   
 	 //@abi action
 	 void give(account_name from, account_name to, asset quantity, string event_case, string ttconid);
