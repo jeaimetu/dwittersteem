@@ -39,9 +39,9 @@ namespace eosio {
 	 void newaccount(account_name iuser);
 
 	 //@abi action
-	 void stake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity);	   
+	 void stake(account_name from, account_name to,asset quantity);	   
 	 //@abi action
-	 void unstake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity);
+	 void unstake(account_name from, ccount_name to, asset quantity);
 	 //@abi action
 	 void refund(account_name from, account_name user);
 	   
