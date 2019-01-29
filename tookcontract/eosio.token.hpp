@@ -102,7 +102,7 @@ namespace eosio {
 	    uint64_t air;	         
             uint64_t status;
             uint64_t primary_key()const {return user;}
-            EOSLIB_SERIALIZE(took_table,(user)(eos_account)(balance)(ink))
+            EOSLIB_SERIALIZE(took_table,(user)(eos_account)(tookp_balance)(stake_sum)(air)(status))
          };
 	 //@abi table staketbl i64  
 	 struct stake_table {
