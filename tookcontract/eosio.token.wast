@@ -13952,16 +13952,46 @@
   )
  )
  (func $_ZN5eosio5token10newaccountEy (type $FUNCSIG$vij) (param $0 i32) (param $1 i64)
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
  )
  (func $_ZN5eosio5token5stakeEyyNS_5assetE (type $FUNCSIG$vijji) (param $0 i32) (param $1 i64) (param $2 i64) (param $3 i32)
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
  )
  (func $_ZN5eosio5token7unstakeEyyNS_5assetE (type $FUNCSIG$vijji) (param $0 i32) (param $1 i64) (param $2 i64) (param $3 i32)
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
  )
  (func $_ZN5eosio5token6refundEyy (type $FUNCSIG$vijj) (param $0 i32) (param $1 i64) (param $2 i64)
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
  )
  (func $_ZN5eosio5token8updatetpEyNS_5assetE (type $FUNCSIG$viji) (param $0 i32) (param $1 i64) (param $2 i32)
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
  )
  (func $_ZN5eosio5token4giveEyyNS_5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEES8_ (type $FUNCSIG$vijjiii) (param $0 i32) (param $1 i64) (param $2 i64) (param $3 i32) (param $4 i32) (param $5 i32)
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
  )
  (func $apply (param $0 i64) (param $1 i64) (param $2 i64)
   (local $3 i32)
