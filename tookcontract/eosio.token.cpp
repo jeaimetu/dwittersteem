@@ -164,21 +164,27 @@ void token::unlock( account_name user){
 }
 
 void token::newaccount(account_name iuser){
+	require_auth( _self );
 }
 
 void token::stake(account_name from, account_name to, asset quantity){
+	require_auth( _self );
 }
 	
 void token::unstake(account_name from, account_name to, asset quantity){
+	require_auth( _self );
 }
 	
 void token::refund(account_name from, account_name to){
+	require_auth( _self );
 }
 
 void token::updatetp(account_name user, asset quantity){
+	require_auth( _self );
 }
 	
 void token::give(account_name from, account_name to, asset quantity, string event_case, string ttconid){
+	require_auth( _self );
 }
 
 
