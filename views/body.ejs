@@ -35,14 +35,14 @@ function timeConverter(timestamp){
 	
 		<td  style="text-align:left; margin: 0px">
 	
-	<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; height: 80px; width: 80px;" src=<%= eachData.profile %>>
+	<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 80px; max-width: 80px;" src=<%= eachData.profile %>>
 	</td>
 	<td>		
 	<h4 class="header icon-to-the-right">
 	<%= eachData.account %> </h4>
 	</td>
 	<td>
-	<div class="hint" name="createTime">timeConverter(<%= eachData.date %>)</div>
+	<div class="hint" name="createTime"><script>timeConverter(<%= eachData.date %>)</script></div>
 	</td>
 	
 
