@@ -26,12 +26,13 @@
     <% data.forEach(function( eachData){ %>
     
 <div class="card">
-  <img src=<%= eachData.profile %> alt="Avatar" style="width:100%">
+  <img src=<%= eachData.profile %> alt="Avatar" style="width:30%">
   <div class="container">
     <h4><b><%= eachData.account %></b></h4> 
     <p><%= eachData.data %></p> 
   </div>
 </div>
+<br>
 
     <% }) %>
 
