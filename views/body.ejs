@@ -2,21 +2,47 @@
 	<link href="./style/common.import.css" rel="stylesheet" type="text/css" media="screen" />
 	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     
+    
+    <scr
 <h1>Loop it!</h1>
+
+<script>
+function timeConverter = function(timestamp){
+	//UTC+9  한국시간 적용
+	  // 9시간  / 540분
+	  var a = new Date( timestamp+ (540*60*1000) );
+	  //var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+	  var year = a.getFullYear();
+	  var month	= fnZeroAdd(a.getMonth()+1 );
+	  var date	= fnZeroAdd(a.getDate()    );
+	  var hour	= fnZeroAdd(a.getHours()   );
+	  var min	= fnZeroAdd(a.getMinutes() );
+	  var sec	= fnZeroAdd(a.getSeconds() );
+	  //var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+	  
+	  var time = year + '-' + month + '-' + date + ' ' 
+			  + hour + ':' + min + ':' + sec ;
+	  return time;
+}
+
+</script>
 <ul>
 
     <% data.forEach(function( eachData){ %>
         
         <li> <div class="element tile-1 home calc bg-change"> 
 	<table style="width: 100%;">
-	<tr>
+	
 		<td  style="text-align:left; margin: 0px">
 	
 	<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 80px; max-width: 80px;" src=<%= eachData.profile %>>
 	</td>
-	<td>
+	<td>		
 	<h4 class="header icon-to-the-right">
 	<%= eachData.account %> </h4>
+	</td>
+	<td>
+	<div class="hint" name="createTime">timeConverter(<%= eachData.date %></div>
 	</td>
 	
 
