@@ -7,7 +7,7 @@
 <h1>Loop it!</h1>
 
 <script>
-function timeConverter = function(timestamp){
+function timeConverter(timestamp){
 	//UTC+9  한국시간 적용
 	  // 9시간  / 540분
 	  var a = new Date( timestamp+ (540*60*1000) );
@@ -35,7 +35,7 @@ function timeConverter = function(timestamp){
 	
 		<td  style="text-align:left; margin: 0px">
 	
-	<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 80px; max-width: 80px;" src=<%= eachData.profile %>>
+	<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; height: 80px; width: 80px;" src=<%= eachData.profile %>>
 	</td>
 	<td>		
 	<h4 class="header icon-to-the-right">
