@@ -1,58 +1,42 @@
 
-	<link href="./style/common.import.css" rel="stylesheet" type="text/css" media="screen" />
-	<link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
-    
-    
-    <scr
-<h1>Loop it!</h1>
-
-<script>
-function timeConverter(timestamp){
-	//UTC+9  한국시간 적용
-	  // 9시간  / 540분
-	  var a = new Date( timestamp+ (540*60*1000) );
-	  //var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-	  var year = a.getFullYear();
-	  var month	= fnZeroAdd(a.getMonth()+1 );
-	  var date	= fnZeroAdd(a.getDate()    );
-	  var hour	= fnZeroAdd(a.getHours()   );
-	  var min	= fnZeroAdd(a.getMinutes() );
-	  var sec	= fnZeroAdd(a.getSeconds() );
-	  //var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-	  
-	  var time = year + '-' + month + '-' + date + ' ' 
-			  + hour + ':' + min + ':' + sec ;
-	  return time;
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  width: 40%;
 }
 
-</script>
-<ul>
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+
+.container {
+  padding: 2px 16px;
+}
+</style>
+</head>
+<body>
+
+<h2>Card</h2>
 
     <% data.forEach(function( eachData){ %>
-        
-        <li> <div class="element tile-1 home calc bg-change"> 
-	<table style="width: 100%;">
-	
-	<td  style="text-align:left; margin: 0px">	
-	<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 80px; max-width: 80px;" src=<%= eachData.profile %>>
-	<td>
-		<table>		
-		<h4 class="header icon-to-the-right">
-		<%= eachData.account %> </h4>
-		</table>
-		<table>
-		<div class="hint" name="createTime">Jan 1, 2019</div>
-		</table>
-	</td>
-	</td>
-		
+    
+<div class="card">
+  <img src=<%= eachData.profile %> alt="Avatar" style="width:100%">
+  <div class="container">
+    <h4><b><%= eachData.account %></b></h4> 
+    <p><%= eachData.data %></p> 
+  </div>
+</div>
 
-	</table>
-	
-	<div name="viewDefault" class="preConDetail">   
-	<%= eachData.data %> </div> 
-	</div> </li>
-        
     <% }) %>
 
-</ul>
+</body>
+</html> 
+
+
+
