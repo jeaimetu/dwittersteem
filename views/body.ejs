@@ -42,7 +42,8 @@ function timeConverter(timestamp){
 	<%= eachData.account %> </h4>
 	</td>
 	<td>
-	<div class="hint" name="createTime"><script>timeConverter(<%= eachData.date %>)</script></div>
+	<div class="hint" name="createTime"><p id="demo"></p><script>document.getElementById("demo").innerHTML = 
+	window.timeConverter(<%= eachData.date %>)</script></div>
 	</td>
 	
 
