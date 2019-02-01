@@ -37,15 +37,15 @@ function timeConverter(timestamp){
 	
 	<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 80px; max-width: 80px;" src=<%= eachData.profile %>>
 	</td>
-	<td>		
-	<h4 class="header icon-to-the-right">
-	<%= eachData.account %> </h4>
-	</td>
-	<td>
-	<div class="hint" name="createTime"><p id="demo"></p><script>document.getElementById("demo").innerHTML = 
-	window.timeConverter(<%= eachData.date %>)</script></div>
-	</td>
-	
+		<table>
+		<td>		
+		<h4 class="header icon-to-the-right">
+		<%= eachData.account %> </h4>
+		</td>
+		<td>
+		<div class="hint" name="createTime">Jan 1, 2019</div>
+		</td>
+		</table>
 
 	</table>
 	
