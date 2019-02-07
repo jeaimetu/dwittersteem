@@ -16,11 +16,11 @@ var url = process.env.MONGODB_URI;
 
 
 config = {
-  chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-  //chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",// 32 byte (64 char) hex string
+  //chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+  chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",// 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
-  httpEndpoint: 'https://proxy.eosnode.tools',
-  //httpEndpoint:	"https://jungle2.cryptolions.io:443",
+  //httpEndpoint: 'https://proxy.eosnode.tools',
+  httpEndpoint:	"https://jungle2.cryptolions.io:443",
   expireInSeconds: 60,
   broadcast: true,
   verbose: false, // API activity
