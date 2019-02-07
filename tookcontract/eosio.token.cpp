@@ -165,6 +165,20 @@ void token::unlock( account_name user){
 
 void token::newaccount(account_name iuser){
 	require_auth( _self );
+	
+	tooktbl tooktable(_self, iuser);
+	auto iter = tooktable.find(iuser);
+	
+	eosio_assert(iter == tooktable.end(), "account already exist");
+	
+	tooktable.emplace(_self, [&]( auto& tooktable){
+		tooktable.user = iuser;
+		tooktable.eos_account = N("");
+		tooktable.tookp_balance = 0;
+		tooktable.stake_sum = 0;
+		tooktable.air = 0;
+		tooktable.status = 0;
+	});	
 }
 
 void token::stake(account_name from, account_name to, asset quantity){
@@ -181,6 +195,14 @@ void token::refund(account_name from, account_name to){
 
 void token::updatetp(account_name user, asset quantity){
 	require_auth( _self );
+	
+	tooktbl tooktable(_self, user);
+	auto iter = tooktable.find(user);
+	eosio_assert(iter != tooktable.end(), "account does not exist");
+	
+	tooktable.modify(iter, _self, [&]( auto& tooktable ) {
+		tooktable.tookp_balance = quantity.amount;
+	});
 }
 	
 void token::give(account_name from, account_name to, asset quantity, string event_case, string ttconid){
