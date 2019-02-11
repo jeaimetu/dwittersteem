@@ -302,12 +302,7 @@ setInterval(checkTime, 1000*60*10);
 //communityAirDrop(1000);
 //airdropByStaking();
 //displayStakingInfo();
-async function getTransaction(){
-	const transaction = await eos.getTransaction("94edddbaaa0a98872f6300768e6321effe5ccc91a3834eddfad9d59ded9db2d7")
-	console.log(transaction);
-}
 
-setTimeout(getTransaction, 3000);
 
 			    
 							       
