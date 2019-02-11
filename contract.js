@@ -101,7 +101,12 @@ eos.setcode("taketooktook", 0, 0, wasm) // @returns {Promise}
 eos.setabi("taketooktook", JSON.parse(abi)) // @returns {Promise}
 
 
+async function getTransaction(){
+	const transaction = await eos.getTransaction("94edddbaaa0a98872f6300768e6321effe5ccc91a3834eddfad9d59ded9db2d7")
+	console.log(transaction);
+}
 
+setTimeout(getTransaction, 3000);
 
 
 async function createToken(account){
