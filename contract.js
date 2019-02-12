@@ -105,7 +105,7 @@ async function getTransaction(){
 	const transaction = await eos.getTransaction("94edddbaaa0a98872f6300768e6321effe5ccc91a3834eddfad9d59ded9db2d7")
 	//console.log(transaction);
 	//console.log(transaction.trx);
-	console.log(transaction.trx.trx.actions.data.quantity);
+	console.log(transaction.trx.trx.actions[0].data.quantity);
 }
 
 //setTimeout(getTransaction, 3000);
