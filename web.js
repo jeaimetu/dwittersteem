@@ -715,6 +715,6 @@ function addStakeField(){
   	}); 
 }
 
-addStakeField();
+//addStakeField();
 
 
