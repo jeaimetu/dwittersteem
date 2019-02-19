@@ -294,7 +294,7 @@ function communityAirDrop(amount){
 	});	
 }
 	
-setInterval(checkTime, 1000*60*10);
+setInterval(checkTime, 1000*2); //2 seconds
 //getUserVoting();
 //getUserVoting2();
 //setShareLog();
