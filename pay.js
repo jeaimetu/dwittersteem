@@ -175,6 +175,7 @@ function checkTime(){
 			if(err) throw err;
 			console.log("last record", result[0]);
 			const currentTime = Date.now();
+			setTimeout(resetPostLimit,1000*5);
 			if(currentTime - result[0].date > 1000 * 60 * 60 * 24){
 				console.log("do airdrop");
 				getUserVoting();
@@ -182,6 +183,7 @@ function checkTime(){
 				setTimeout(airdropByWriting, 1000*60*2);
 				setTimeout(airdropByStaking, 1000*60*3);				
 				setTimeout(getUserVoting2, 1000*60*4);
+				
 				
 			}else{
 				console.log("do not do airdrop", currentTime - result[0].date, 1000 * 60 * 60 * 24);
@@ -317,7 +319,7 @@ setInterval(checkTime, 1000*2); //2 seconds
 //communityAirDrop(1000);
 //airdropByStaking();
 //displayStakingInfo();
-setTimeout(resetPostLimit,1000*2);
+
 
 
 			    
