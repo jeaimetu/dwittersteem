@@ -294,7 +294,7 @@ function communityAirDrop(amount){
 	});	
 }
 
-function resetPostLimit(){
+async function resetPostLimit(){
 	const client = await MongoClient.connect(url);
 	const db = client.db('heroku_dg3d93pq');
 	var findQuery = {};
