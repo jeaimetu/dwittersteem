@@ -705,7 +705,8 @@ function addStakeField(){
    		var dbo = db.db("heroku_dg3d93pq");
 		var tod = Date.now();
 		var findQuery = {};
-   		var myobj = { $set: {postLimit : 20, staked : 0, unstaked : 0, staked_time : 0, unstaked_time : 0}};
+   		//var myobj = { $set: {postLimit : 20, staked : 0, unstaked : 0, staked_time : 0, unstaked_time : 0}};
+		var myobj = { $set: {postLimit : 10, postLimitMax : 10}};
    		dbo.collection("user").updateMany(findQuery,myobj, function(err, res){
     			if (err) throw err;
     			console.log("new field added");
