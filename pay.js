@@ -297,11 +297,14 @@ function communityAirDrop(amount){
 async function resetPostLimit(){
 	const client = await MongoClient.connect(url);
 	const db = client.db('heroku_dg3d93pq');
-	var findQuery = {};
+	const test = "길막테디";
+	var findQuery = {test};
 	var res = await db.collection("user").find(findQuery).toArray();
 	console.log(res);
 	for(i=0;i<res.length;i++){
 		console.log("reset limit", res[i].account, res[i].postLimitMax);
+		//var myObj = {$set{postLimit : res[i].postLimitMax}};
+		//var temp = await db.collection("user).updateOne(findQuery,myObj);
 	}
 	client.close();	
 }
@@ -314,7 +317,7 @@ setInterval(checkTime, 1000*2); //2 seconds
 //communityAirDrop(1000);
 //airdropByStaking();
 //displayStakingInfo();
-resetPostLimit();
+setTimeout(resetPostLimit,1000*2);
 
 
 			    
