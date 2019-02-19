@@ -11,9 +11,9 @@ var totalUser = 0;
 var totalSumOfVoting = 0;
 const votingFactor = 3;
 const distributionForDay = 100;
-const postingDistributionForDay = 100;
-const votingDistributionForDay = 100;
-const stakingDistributionForDay = 50000;
+const postingDistributionForDay = 10000;
+const votingDistributionForDay = 10000;
+const stakingDistributionForDay = 10000;
 
 //distribution by voted article
 function getUserVoting(){
@@ -237,10 +237,10 @@ function airdropByStaking(){
 		dbo.collection("user").find({}).toArray(function(err, result){
 			var totalStaking = 0;
 			for(i = 0; i < result.length ; i++)
-				totalStaking += parseFloat(result[i].wallet);
+				totalStaking += parseFloat(result[i].staked);
 			
 			for(i = 0; i < result.length; i++){
-				var tokenSize = parseFloat(result[i].wallet) * parseFloat(stakingDistributionForDay) / parseFloat(totalStaking);
+				var tokenSize = parseFloat(result[i].staked) * parseFloat(stakingDistributionForDay) / parseFloat(totalStaking);
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);
 				const account = result[i].account;
@@ -293,6 +293,18 @@ function communityAirDrop(amount){
 		});
 	});	
 }
+
+function resetPostLimit(){
+	const client = await MongoClient.connect(url);
+	const db = client.db('heroku_dg3d93pq');
+	var findQuery = {};
+	var res = await db.collection("user").find(findQuery).toArray();
+	console.log(res);
+	client.close();
+	
+	
+	
+}
 	
 setInterval(checkTime, 1000*2); //2 seconds
 //getUserVoting();
@@ -302,6 +314,7 @@ setInterval(checkTime, 1000*2); //2 seconds
 //communityAirDrop(1000);
 //airdropByStaking();
 //displayStakingInfo();
+resetPostLimit();
 
 
 			    
