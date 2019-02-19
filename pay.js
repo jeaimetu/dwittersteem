@@ -11,9 +11,9 @@ var totalUser = 0;
 var totalSumOfVoting = 0;
 const votingFactor = 3;
 const distributionForDay = 100;
-const postingDistributionForDay = 10000;
+const postingDistributionForDay = 20000;
 const votingDistributionForDay = 10000;
-const stakingDistributionForDay = 10000;
+const stakingDistributionForDay = 40000;
 
 //distribution by voted article
 function getUserVoting(){
