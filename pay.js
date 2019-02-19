@@ -300,7 +300,7 @@ async function resetPostLimit(){
 	const client = await MongoClient.connect(url);
 	const db = client.db('heroku_dg3d93pq');
 	const test = "길막테디";
-	var findQuery = {test};
+	var findQuery = {account : test};
 	var res = await db.collection("user").find(findQuery).toArray();
 	console.log(res);
 	for(i=0;i<res.length;i++){
