@@ -299,14 +299,14 @@ function communityAirDrop(amount){
 async function resetPostLimit(){
 	const client = await MongoClient.connect(url);
 	const db = client.db('heroku_dg3d93pq');
-	const test = "길막테디";
-	var findQuery = {account : test};
+	var findQuery = {};
 	var res = await db.collection("user").find(findQuery).toArray();
 	console.log(res);
 	for(i=0;i<res.length;i++){
-		console.log("reset limit", res[i].account, res[i].postLimitMax);
-		//var myObj = {$set{postLimit : res[i].postLimitMax}};
-		//var temp = await db.collection("user).updateOne(findQuery,myObj);
+		var findQuery = {account : res[i].account};
+		//console.log("reset limit", res[i].account, res[i].postLimitMax);
+		var myObj = {$set{postLimit : res[i].postLimitMax}};
+		var temp = await db.collection("user).updateOne(findQuery,myObj);
 	}
 	client.close();	
 }
