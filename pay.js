@@ -174,8 +174,7 @@ function checkTime(){
 		dbo.collection('droplog').find().limit(1).sort({_id:-1}).toArray(function(err, result){
 			if(err) throw err;
 			console.log("last record", result[0]);
-			const currentTime = Date.now();
-			setTimeout(resetPostLimit,1000*5);
+			const currentTime = Date.now();			
 			if(currentTime - result[0].date > 1000 * 60 * 60 * 24){
 				console.log("do airdrop");
 				getUserVoting();
@@ -183,8 +182,7 @@ function checkTime(){
 				setTimeout(airdropByWriting, 1000*60*2);
 				setTimeout(airdropByStaking, 1000*60*3);				
 				setTimeout(getUserVoting2, 1000*60*4);
-				
-				
+				setTimeout(resetPostLimit,1000*5);				
 			}else{
 				console.log("do not do airdrop", currentTime - result[0].date, 1000 * 60 * 60 * 24);
 			}
@@ -301,11 +299,11 @@ async function resetPostLimit(){
 	const db = client.db('heroku_dg3d93pq');
 	var findQuery = {};
 	var res = await db.collection("user").find(findQuery).toArray();
-	console.log(res);
+	//console.log(res);
 	for(i=0;i<res.length;i++){
 		var findQuery = {account : res[i].account};
 		//console.log("reset limit", res[i].account, res[i].postLimitMax);
-		var myObj = {$set{postLimit : res[i].postLimitMax}};
+		var myObj = {$set : {postLimit : res[i].postLimitMax}};
 		var temp = await db.collection("user).updateOne(findQuery,myObj);
 	}
 	client.close();	
