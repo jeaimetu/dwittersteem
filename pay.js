@@ -301,7 +301,7 @@ async function resetPostLimit(){
 	var res = await db.collection("user").find(findQuery).toArray();
 	console.log(res);
 	for(i=0;i<res.length;i++){
-		console.log("reset limit", res.account, res.postLimitMax);
+		console.log("reset limit", res[i].account, res[i].postLimitMax);
 	}
 	client.close();	
 }
