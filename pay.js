@@ -184,7 +184,7 @@ function checkTime(){
 				setTimeout(getUserVoting2, 1000*60*4);
 				
 			}else{
-				console.log("do not do airdrop");
+				console.log("do not do airdrop", currentTime - result[0].date, 1000 * 60 * 60 * 24);
 			}
 			db.close();
 		});
