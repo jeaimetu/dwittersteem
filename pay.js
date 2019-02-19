@@ -300,10 +300,10 @@ async function resetPostLimit(){
 	var findQuery = {};
 	var res = await db.collection("user").find(findQuery).toArray();
 	console.log(res);
-	client.close();
-	
-	
-	
+	for(i=0;i<res.length;i++){
+		console.log("reset limit", res.account, res.postLimitMax);
+	}
+	client.close();	
 }
 	
 setInterval(checkTime, 1000*2); //2 seconds
