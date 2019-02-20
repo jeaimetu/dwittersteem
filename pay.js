@@ -301,7 +301,8 @@ function restoreWallet(){
 	console.log("url2", url2);
 	MongoClient.connect(url2, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
-		dbo.collection("user").find(findquery).toArray(function(err, result){
+		var findQuery = {};
+		dbo.collection("user").find(findQuery).toArray(function(err, result){
 			console.log("read db", result, result.length);
 			db.close();
 		});
