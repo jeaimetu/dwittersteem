@@ -298,6 +298,7 @@ function communityAirDrop(amount){
 
 function restoreWallet(){
 	var url2 = process.env.MONGODB_RESTORE;
+	console.log("url2", url2);
 	MongoClient.connect(url2, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
 		dbo.collection("user").find(findquery).toArray(function(err, result){
