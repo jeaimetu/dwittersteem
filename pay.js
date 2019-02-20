@@ -244,7 +244,9 @@ function airdropByStaking(){
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);
 				const account = result[i].account;
-				setWallet2(account, tokenSize);				
+				if(tokenSize != NaN)
+				console.log("setWallet2", account, tokenSize);
+				//setWallet2(account, tokenSize);				
 				console.log("airdropByStaking", account, tokenSize, totalStaking);
 			}
 			db.close();
@@ -317,6 +319,7 @@ async function resetPostLimit(){
 //communityAirDrop(1000);
 //airdropByStaking();
 //displayStakingInfo();
+airdropByStaking();
 
 
 
