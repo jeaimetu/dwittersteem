@@ -24,8 +24,8 @@ function getUserVoting(){
 		});
 	});
 	var sumVoting = (db, callback) => {
-		var tod = Date.now() - 1000*60*60*24;
-		var tod1 = Date.now();
+		var tod = Date.now() - 1000*60*60*24 - 1000*60*60*18;
+		var tod1 = Date.now() - 1000*60*60*18;
 		var agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
 			{$match : {date : {$gt:tod, $lt:tod1} }},
@@ -52,8 +52,8 @@ function getUserVoting2(){
 		});
 	});
 	var sumVoting = (db, callback) => {
-		var tod = Date.now() - 1000*60*60*24;
-		var tod1 = Date.now();
+		var tod = Date.now() - 1000*60*60*24 - 1000*60*60*18;
+		var tod1 = Date.now() - 1000*60*60*18;
 		var agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
 			{$match : {date : {$gt:tod, $lt:tod1} }},
@@ -182,7 +182,7 @@ function checkTime(){
 				setTimeout(airdropByWriting, 1000*60*2);
 				setTimeout(airdropByStaking, 1000*60*3);				
 				setTimeout(getUserVoting2, 1000*60*4);
-				setTimeout(resetPostLimit,1000*5);				
+				setTimeout(resetPostLimit,1000*60*5);				
 			}else{
 				console.log("do not do airdrop", currentTime - result[0].date, 1000 * 60 * 60 * 24);
 			}
@@ -195,8 +195,8 @@ function checkTime(){
 function airdropByWriting(){
 	MongoClient.connect(url, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
-		var tod = Date.now() - 1000*60*60*24;
-		var tod1 = Date.now();
+		var tod = Date.now() - 1000*60*60*24 - 1000*60*60*18;
+		var tod1 = Date.now() - 1000*60*60*18;
 
 		const agr = [
 			{$match: {account: {$exists:true, $ne: null}}},
@@ -341,6 +341,7 @@ async function resetPostLimit(){
 }
 	
 //setInterval(checkTime, 1000*2); //2 seconds
+
 //getUserVoting();
 //getUserVoting2();
 //setShareLog();
@@ -349,8 +350,13 @@ async function resetPostLimit(){
 //airdropByStaking();
 //displayStakingInfo();
 //airdropByStaking();
-restoreWallet();
-
+//restoreWallet();
+//temporal airdrop
+console.log("do airdrop");
+getUserVoting();
+setTimeout(airdropByWriting, 1000*60*2);
+setTimeout(airdropByStaking, 1000*60*3);				
+setTimeout(getUserVoting2, 1000*60*4);
 
 
 			    
