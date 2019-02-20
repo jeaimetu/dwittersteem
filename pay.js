@@ -296,8 +296,8 @@ function communityAirDrop(amount){
 	});	
 }
 
-restoreWallet(){
-	var url2 = process.env.MONGODB_URI;
+function restoreWallet(){
+	var url2 = process.env.MONGODB_URI2;
 	MongoClient.connect(url2, (err, db) => {
 		const dbo = db.db("heroku_dg3d93pq");
 		dbo.collection("user").find(findquery).toArray(function(err, result){
@@ -332,6 +332,7 @@ async function resetPostLimit(){
 //airdropByStaking();
 //displayStakingInfo();
 //airdropByStaking();
+restoreWallet();
 
 
 
