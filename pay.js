@@ -296,7 +296,7 @@ function communityAirDrop(amount){
 	});	
 }
 
-function restoreWallet(){
+async function restoreWallet(){
 	var url2 = process.env.MONGODB_RESTORE;
 	console.log("url2", url2);
 	MongoClient.connect(url2, (err, db) => {
