@@ -309,7 +309,7 @@ async function resetPostLimit(){
 	client.close();	
 }
 	
-setInterval(checkTime, 1000*2); //2 seconds
+//setInterval(checkTime, 1000*2); //2 seconds
 //getUserVoting();
 //getUserVoting2();
 //setShareLog();
