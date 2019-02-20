@@ -305,9 +305,9 @@ async function restoreWallet(){
 		dbo.collection("user").find(findQuery).toArray(function(err, result){
 			//console.log("read db", result, result.length);
 			for(i=0;i<result.length;i++){
-			var res = await restorePersonWallet(result[i].account, result[i].wallet);
+			restorePersonWallet(result[i].account, result[i].wallet);
 			}
-			db.close();
+
 		});
 	});
 		
