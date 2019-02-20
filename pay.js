@@ -303,11 +303,25 @@ function restoreWallet(){
 		const dbo = db.db("heroku_dg3d93pq");
 		var findQuery = {};
 		dbo.collection("user").find(findQuery).toArray(function(err, result){
-			console.log("read db", result, result.length);
+			//console.log("read db", result, result.length);
+			for(i=0;i<result.length;i++){
+			var res = await restorePersonWallet(result[i].account, result[i].wallet);
+			}
 			db.close();
 		});
 	});
 		
+}
+
+async function restorePersonWallet(account, wallet){
+	MongoClient.connect(url, (err, db) => {
+		const dbo = db.db("heroku_dg3d93pq");
+		var findQuery = {account : account};
+		var myObj = { $set:{wallet : wallet}};
+		dbo.collection("user").updateOne(findQuery, myObj, (err, result) => {
+			console.log("restore success", account, wallet);
+			db.close();
+		});
 }
 
 async function resetPostLimit(){
