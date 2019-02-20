@@ -296,6 +296,18 @@ function communityAirDrop(amount){
 	});	
 }
 
+restoreWallet(){
+	var url2 = process.env.MONGODB_URI;
+	MongoClient.connect(url2, (err, db) => {
+		const dbo = db.db("heroku_dg3d93pq");
+		dbo.collection("user").find(findquery).toArray(function(err, result){
+			console.log("read db", result, result.length);
+			db.close();
+		});
+	});
+		
+}
+
 async function resetPostLimit(){
 	const client = await MongoClient.connect(url);
 	const db = client.db('heroku_dg3d93pq');
@@ -319,7 +331,7 @@ async function resetPostLimit(){
 //communityAirDrop(1000);
 //airdropByStaking();
 //displayStakingInfo();
-airdropByStaking();
+//airdropByStaking();
 
 
 
