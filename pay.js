@@ -322,6 +322,7 @@ async function restorePersonWallet(account, wallet){
 			console.log("restore success", account, wallet);
 			db.close();
 		});
+	});
 }
 
 async function resetPostLimit(){
