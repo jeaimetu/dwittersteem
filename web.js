@@ -648,6 +648,32 @@ app.get("/", function(req, res){
 	});
 });
 */
+ function fnIsLogin(req){
+	  if(req.body.id != undefined && req.body.id != null ){
+		  var id = req.body.id;
+		  console.log("isLogin event", id);
+	  }else{
+		  id = "__undefined";
+	  }
+  	  
+	  var body = {
+			  "result": null,
+			  "id" : null,
+			  "imgUrl": null
+	  };
+	  //console.log("isLogin",req.session.account,id);
+	  if(req.session.isLogin == true){
+		  body.result = true;
+		  body.id = req.session.account;
+	  }else{
+		  body.result = false;
+		  body.id = null;
+	  }
+	  //initialize session value
+	  req.session.internalTransfer = false;
+	  return body;
+  }
+
 app.get("/", function(req, res){
 	var resultIsLogin = fnIsLogin(req);
  	readData(req.session.account, 1, (result) => {
