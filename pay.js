@@ -372,8 +372,8 @@ setTimeout(airdropByStaking, 1000*60*3);
 setTimeout(getUserVoting2, 1000*60*4);
 */
 
-setTimeout(airdropByWriting, 1000*60*3);
-setTimeout(airdropByWriting, 1000*60*4);
+setTimeout(airdropByStaking, 1000*60*3);
+setTimeout(airdropByStaking, 1000*60*4);
 
 			    
 							       
