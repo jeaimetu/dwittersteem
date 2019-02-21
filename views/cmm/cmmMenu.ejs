@@ -1,0 +1,28 @@
+		<header id="header" class="clearfix">
+			<h1 id="logo"><a href="index.html">Dabble</a></h1>
+			<!-- start main nav -->
+			<h4 id="headertitle"></h4>
+			<nav id="main-nav">
+				<ul class="clearfix" id="options">					
+					<li> <a href="/intro/index.html">데블소개</a></li>
+					<li> <a href="/Dabble_White_Paper.pdf" target="_blank">백서</a></li>
+					<li> <a href="/notice">공지사항</a></li>
+					<!--<li> <a href="/snapshot.html">에어드랍 확인</a></li>-->
+
+					<%if ( true == loginInfo.result ) { %>
+						<li id="linkUserInfo"> <a href="/myInfo">회원정보</a></li>
+						<li id="linkMyContents"> <a href="javascript:gfFrientContentsList('<%=loginInfo.id%>', 1)">나불데블</a></li>
+						<li id="linkFollow"> <a href="/friendList">친구정보</a></li>
+						<li id="linkWallet"> <a href="/myWallet">지갑</a></li>
+						<!-- coming soon <li> <a href="#faq">FAQ</a> </li> coming soon <li> <a href="#about">About</a> </li> -->
+						<li style="display: none;" id="linkLogout" >  <a href="javascript:gfLogoutAction();">로그아웃</a></li>
+					<%}else{%>
+						<li id="linkLogin" > <a href="/loginPage">로그인</a></li>
+						<li id="linkSingup"> <a href="/signup">회원가입</a></li>
+					<%}%>
+					   
+					
+				</ul>
+			</nav>
+			<!-- end main nav -->
+		</header>
