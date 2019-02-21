@@ -103,6 +103,11 @@ function setWallet(account, vote, distSize){
 			tokenSize = tokenSize.toFixed(4);
 			const myobj = { $set : {wallet : tokenSize}};
 			console.log("update wallet", account, tokenSize);
+			if(isNaN(tokenSize) == true){
+				db.close();
+				console.log("tokenSize is not number", account, tokenSize);
+				return;
+			}
 
 			dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{
 				if(err){ 
@@ -142,6 +147,11 @@ function setWallet2(account, vote){
 			tokenSize = tokenSize.toFixed(4);
 			const myobj = { $set : {wallet : tokenSize}};
 			console.log("update wallet2", account, tokenSize);
+			if(isNaN(tokenSize) == true){
+				db.close();
+				console.log("tokenSize is not number", account, tokenSize);
+				return;
+			}
 			
 			dbo.collection('user').updateOne(updatequery, myobj, (err,res) =>{
 				if(err){ 
@@ -244,9 +254,10 @@ function airdropByStaking(){
 				tokenSize = parseFloat(tokenSize);
 				tokenSize = tokenSize.toFixed(4);
 				const account = result[i].account;
-				if(tokenSize != NaN)
-				console.log("setWallet2", account, tokenSize);
-				//setWallet2(account, tokenSize);				
+				if(isNaN(tokenSize) == false){
+					//console.log("setWallet2", account, tokenSize);
+					setWallet2(account, tokenSize);				
+				}
 				console.log("airdropByStaking", account, tokenSize, totalStaking);
 			}
 			db.close();
@@ -352,13 +363,17 @@ async function resetPostLimit(){
 //airdropByStaking();
 //restoreWallet();
 //temporal airdrop
+/*
 console.log("do airdrop");
 getUserVoting();
 setShareLog();
 setTimeout(airdropByWriting, 1000*60*2);
 setTimeout(airdropByStaking, 1000*60*3);				
 setTimeout(getUserVoting2, 1000*60*4);
+*/
 
+setTimeout(airdropByWriting, 1000*60*3);
+setTimeout(airdropByWriting, 1000*60*4);
 
 			    
 							       
