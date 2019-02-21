@@ -638,7 +638,7 @@ app.get("/test", function(req, res){
 		data : lang
 	});
 });
-
+/*
 app.get("/", function(req, res){
 	readData("길막테디", 1, (result) => {
 		res.render("index", {
@@ -646,6 +646,18 @@ app.get("/", function(req, res){
 			data : result
 		});
 	});
+});
+*/
+app.get("/", function(req, res){
+	var resultIsLogin = fnIsLogin(req);
+ 	readData(req.session.account, 1, (result) => {
+ 		res.render("./main/main", {
+ 			title : "EJS test",
+ 			data : result,
+ 			loginInfo : resultIsLogin,
+ 			page : 1
+ 		});
+ 	});
 });
 
 app.get("/admin", function(req, res){
