@@ -351,7 +351,7 @@ async function resetPostLimit(){
 	client.close();	
 }
 	
-//setInterval(checkTime, 1000*2); //2 seconds
+setInterval(checkTime, 1000*2); //2 seconds
 
 //getUserVoting();
 //getUserVoting2();
@@ -372,8 +372,6 @@ setTimeout(airdropByStaking, 1000*60*3);
 setTimeout(getUserVoting2, 1000*60*4);
 */
 
-setTimeout(airdropByStaking, 1000*60*3);
-setTimeout(airdropByStaking, 1000*60*4);
 
 			    
 							       
