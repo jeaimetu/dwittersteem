@@ -187,8 +187,8 @@ function checkTime(){
 			const currentTime = Date.now();			
 			if(currentTime - result[0].date > 1000 * 60 * 60 * 24){
 				console.log("do airdrop");
-				getUserVoting();
 				setShareLog();
+				getUserVoting();
 				setTimeout(airdropByWriting, 1000*60*2);
 				setTimeout(airdropByStaking, 1000*60*3);				
 				setTimeout(getUserVoting2, 1000*60*4);
@@ -351,7 +351,7 @@ async function resetPostLimit(){
 	client.close();	
 }
 	
-setInterval(checkTime, 1000*2); //2 seconds
+setInterval(checkTime, 1000*5); //2 seconds
 
 //getUserVoting();
 //getUserVoting2();
