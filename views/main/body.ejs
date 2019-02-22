@@ -29,8 +29,8 @@ function linkify(inputText) {
                 <img style="float:left"  margin-right="30px" src=<%= eachData.profile %> class="rounded-circle" alt="Cinque Terre" width="80" height="80">
                 <h4 class="card-text"><pre><%= eachData.account %></pre></h4>
                 <br><br>
-                <p class="card-text">linkify(<%- eachData.data.replace(/(?:\r\n|\r|\n)/g, '<br>')
- %>)</p>
+                <p class="card-text">"javascript:linkify(<%- eachData.data.replace(/(?:\r\n|\r|\n)/g, '<br>')
+ %>)"</p>
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 <a href="#" class="btn btn-light btn-sm">좋아요</a>
                 <a href="#" class="btn btn-light btn-sm">펼쳐보기</a>
