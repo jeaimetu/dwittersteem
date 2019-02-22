@@ -11,6 +11,69 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
   
+  <style>
+  @fab-color: #03A9F4;
+@fab-size: 64px;
+@fab-margin: 1 / 4 * 3 * @fab-size;
+@fab-child-size: 1 / 3 * 2 * @fab-size;
+@fab-child-margin: (@fab-size - @fab-child-size) / 2 + @fab-margin;
+
+.fab{
+	background: @fab-color;
+	width: @fab-size;
+	height: @fab-size;
+	border-radius: 50%;
+	text-align:center;
+	color: #FFF;
+	box-shadow:0px 0px 3px rgba(0,0,0,0.5),3px 3px 3px rgba(0,0,0,0.25);
+	position: fixed;
+	bottom: @fab-margin;
+	right: @fab-margin;
+	font-size: 2.6667em;
+	display: inline-block;
+	cursor: default;
+}
+
+.fab span{
+	vertical-align:middle;
+}
+
+.fab.child{
+	right: @fab-child-margin;
+	width: @fab-child-size;
+	height: @fab-child-size;
+	display: none;
+	opacity: 0;
+	font-size: 2em;
+}
+
+.black() when (lightness(@fab-color) > 50%){
+	.fab{
+		color: #000;
+	}
+}
+
+.black();
+
+.backdrop{
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: #ECECEC;
+	opacity: 0.9;
+	display: none;
+}
+
+body{
+	background: #363F45;
+	font-family: 'Roboto', sans-serif;
+	text-align: center;
+	color: #FFF;
+}
+  </style>
+  
 </head>
 <script>
 
@@ -525,7 +588,14 @@
 				<h4 id="headertitle-inner"></h4>
 				<div id="container">
 					<div id="conBtnGorup1">
+					<!--
 						<button type="button" class="button" onClick="javascript:fnLoginChkContentInsert();">글쓰기</button>
+						-->
+						<div class="backdrop"></div>
+<div class="fab" id="masterfab"><span>+</span></div>
+<h1>Floating Action Button</h1>
+<p>(Hint: Button interacts with you)</p>
+						
 					</div>
 					
 					<div id="conBtnGorup2" style="display: none;"></div>
