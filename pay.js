@@ -362,11 +362,13 @@ async function refundDab(){
 		if(res[i].unstaked != 0 && (isNaN(res[i].unstaked) == false)){
 			if(res[i].unstaked_time + UNSTAKE_PERIOD <= Date.now()){
 				var newValue = parseFloat(res[i].wallet) + parseFloat(res[i].unstaked);
+				var quantity = res[i].unstaked;
 				var myObj = {$set:{unstaked : 0, wallet : newValue.toFixed(4)}};
 				var findQuery2 = {account : res[i].account};
-				//var temp = await db.collection("user").updateOne(findQuery2,myObj);
-				console.log("refund", newValue.toFixed(4), res[i].account);
+				console.log("refund", newValue.toFixed(4), res[i].account, res[i].wallet);
+				var temp = await db.collection("user").updateOne(findQuery2,myObj);				
 				//write refund history
+				var myObj = {account : res[i].account, amount : quantity, refund_time : Date.now()};
 			}
 		}
 	}
