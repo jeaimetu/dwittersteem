@@ -342,12 +342,14 @@ async function resetPostLimit(){
 	var findQuery = {};
 	var res = await db.collection("user").find(findQuery).toArray();
 	//console.log(res);
+	console.log("starting  resetPostLimit process", Date.now());
 	for(i=0;i<res.length;i++){
 		var findQuery = {account : res[i].account};
-		//console.log("reset limit", res[i].account, res[i].postLimitMax);
+		console.log("reset limit", res[i].account, res[i].postLimitMax);
 		var myObj = {$set : {postLimit : res[i].postLimitMax}};
 		var temp = await db.collection("user").updateOne(findQuery,myObj);
 	}
+	console.log("ending  resetPostLimit process", Date.now());
 	client.close();	
 }
 
