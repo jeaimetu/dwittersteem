@@ -351,7 +351,7 @@ async function resetPostLimit(){
 	client.close();	
 }
 
-const UNSTAKE_PERIOD = 1000*60*60*12;
+const UNSTAKE_PERIOD = 1000*60*60*72;
 async function refundDab(){
 	const client = await MongoClient.connect(url);
 	const db = client.db('heroku_dg3d93pq');
