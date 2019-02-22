@@ -350,8 +350,33 @@ async function resetPostLimit(){
 	}
 	client.close();	
 }
+
+const UNSTAKE_PERIOD = 1000*60*60*12;
+async function refundDab(){
+	const client = await MongoClient.connect(url);
+	const db = client.db('heroku_dg3d93pq');
+	var findQuery = {};
+	var res = await db.collection("user").find(findQuery).toArray();
+	console.log("starting refund process", Date.now());
+	for(i=0;i<res.length;i++){
+		if(res[i].unstaked != 0 && (isNaN(res[i].unstaked) == false)){
+			if(res[i].unstaked_time + UNSTAKE_PERIOD >= Date.now()){
+				var newValue = parseFloat(res[i].wallet) + parseFloat(res[i].unstaked));
+				var myObj = {$set:{unstaked : 0, wallet : newValue.toFixed(4)}};
+				var findQuery2 = {account : res[i].account};
+				//var temp = await db.collection("user").updateOne(findQuery2,myObj);
+				console.log("refund", newValue.toFixed(4), res[i].account);
+				//write refund history
+			}
+		}
+	}
+	console.log("ending refund process", Date.now());
+	setTimeout(refundDab, 1000*5);
+	client.close();
+}
 	
 setInterval(checkTime, 1000*5); //2 seconds
+setTimeout(refundDab, 1000*5);
 
 //getUserVoting();
 //getUserVoting2();
