@@ -369,7 +369,7 @@ async function refundDab(){
 				console.log("refund", newValue.toFixed(4), res[i].account, res[i].wallet);
 				var temp = await db.collection("user").updateOne(findQuery2,myObj);				
 				//write refund history
-				var myObj = {account : res[i].account, amount : quantity, refund_time : Date.now()};
+				var myObj = {account : res[i].account, walletBackup:res[i].wallet, amount : quantity, refund_time : Date.now()};
 				res = await db.collection("refundHistory").insertOne(myObj);
 			}
 		}
