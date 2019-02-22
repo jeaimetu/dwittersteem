@@ -363,7 +363,7 @@ async function refundDab(){
 			if(res[i].unstaked_time + UNSTAKE_PERIOD <= Date.now()){
 				var newValue = parseFloat(res[i].wallet) + parseFloat(res[i].unstaked);
 				var quantity = parseFloat(res[i].unstaked).toFixed(4);
-				console.log("refund_test", res[o].unstaked, quantity);
+				console.log("refund_test", res[i].unstaked, quantity);
 				var myObj = {$set:{unstaked : 0, wallet : newValue.toFixed(4)}};
 				var findQuery2 = {account : res[i].account};
 				console.log("refund", newValue.toFixed(4), res[i].account, res[i].wallet);
