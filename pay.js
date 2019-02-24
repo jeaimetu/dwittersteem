@@ -353,6 +353,25 @@ async function resetPostLimit(){
 	client.close();	
 }
 
+async function resetPostLimit2(){
+	const client = await MongoClient.connect(url);
+	const db = client.db('heroku_dg3d93pq');
+	var findQuery = {postLimit : 0 };
+	var res = await db.collection("user").find(findQuery).toArray();
+	//console.log(res);
+	console.log("starting  resetPostLimit process", Date.now(), res.length);
+	for(i=0;i<res.length;i++){
+		var findQuery = {account : res[i].account};
+		console.log("reset limit", res[i].account, res[i].postLimitMax, i);
+		var myObj = {$set : {postLimit : res[i].postLimitMax}};
+		var temp = await db.collection("user").updateOne(findQuery,myObj);
+		console.log("update result", temp, i);
+	}
+	console.log("ending  resetPostLimit process", Date.now());
+	client.close();	
+}
+
+
 const UNSTAKE_PERIOD = 1000*60*60*72;
 async function refundDab(){
 	const client = await MongoClient.connect(url);
@@ -402,6 +421,8 @@ setTimeout(airdropByWriting, 1000*60*2);
 setTimeout(airdropByStaking, 1000*60*3);				
 setTimeout(getUserVoting2, 1000*60*4);
 */
+
+resetPostLimit2();
 
 
 			    
