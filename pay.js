@@ -185,7 +185,7 @@ function checkTime(){
 			if(err) throw err;
 			console.log("last record", result[0]);
 			const currentTime = Date.now();			
-			if(currentTime - result[0].date > 1000 * 60 * 60 * 24){
+			if(currentTime - result[0].date > (1000 * 60 * 60 * 24 - 1000 * 60)){
 				console.log("do airdrop");
 				setShareLog();
 				getUserVoting();
@@ -400,7 +400,7 @@ async function refundDab(){
 	client.close();
 }
 	
-setInterval(checkTime, 1000*5); //2 seconds
+setInterval(checkTime, 1000*60); //15 seconds
 setTimeout(refundDab, 1000*5);
 
 //getUserVoting();
@@ -422,7 +422,6 @@ setTimeout(airdropByStaking, 1000*60*3);
 setTimeout(getUserVoting2, 1000*60*4);
 */
 
-resetPostLimit2();
 
 
 			    
