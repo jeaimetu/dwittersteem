@@ -343,14 +343,16 @@ async function resetPostLimit(){
 	var res = await db.collection("user").find(findQuery).toArray();
 	//console.log(res);
 	console.log("starting  resetPostLimit process", Date.now());
-	for(i=0;i<res.length;i++){
+	var loopCount = res.length;
+	for(i=0;i<loopCount;i++){
 		var findQuery = {account : res[i].account};
-		console.log("reset limit", res[i].account, res[i].postLimitMax);
+		console.log("reset limit", res[i].account, res[i].postLimitMax, Date.now());
 		var myObj = {$set : {postLimit : res[i].postLimitMax}};
 		var temp = await db.collection("user").updateOne(findQuery,myObj);
 	}
 	console.log("ending  resetPostLimit process", Date.now());
 	client.close();	
+	console.log("resetPostLimit Test", loopCount, res.length);
 }
 
 async function resetPostLimit2(){
@@ -400,8 +402,8 @@ async function refundDab(){
 	client.close();
 }
 	
-setInterval(checkTime, 1000*60); //15 seconds
-setTimeout(refundDab, 1000*5);
+setInterval(checkTime, 1000*60*2); //15 seconds
+setTimeout(refundDab, 1000*60);
 
 //getUserVoting();
 //getUserVoting2();
