@@ -347,7 +347,7 @@ async function resetPostLimit(){
 	var loopCount = res.length;
 	for(const item of res){
 		var findAccount = item.account;
-		var postLimitUpdate = item.postLimit;
+		var postLimitUpdate = item.postLimitMax;
 		var updateQuery = {account : findAccount};
 		console.log("reset limit", findAccount, postLimitUpdate, Date.now());
 		var myObj = {$set : {postLimit : postLimitUpdate}};
@@ -432,6 +432,5 @@ setTimeout(airdropByStaking, 1000*60*3);
 setTimeout(getUserVoting2, 1000*60*4);
 */
 
-			    
-resetPostLimit();
+			   
 							       
