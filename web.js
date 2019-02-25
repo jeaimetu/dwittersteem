@@ -5,7 +5,7 @@
 //const bcrypt = require('bcrypt');
 //require("./publish.js");
 require("./pay.js");
-require("./contract");
+//require("./contract");
 //require("./random.js");
 //require("./stat.js");
 
@@ -50,8 +50,7 @@ store.on('error', function(error) {
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-const expressVueMiddleware = expressVue.init();
-app.use(expressVueMiddleware);
+
 
 //mongo DB
 var mongo = require('mongodb');
@@ -59,10 +58,7 @@ var ObjectId = require('mongodb').ObjectId;
 var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
 
-// set the view engine to ejs
-app.set('view engine', 'ejs');
-app.set('views', __dirname + "/views");
-app.engine("html", require("ejs").renderFile);
+
 
 // Use the session middleware
 app.use(require('express-session')({
@@ -707,21 +703,7 @@ app.post("/getInternalDab", function(req, res){
 });
 
 
-app.get("/index.html", (req, res) => {
-	console.log("calling vue case");
-    const data = "something else";
-     req.vueOptions = {
-        head: {
-            title: 'Page Title',
-            metas: [
-                { property:'og:title', content: 'Page Title'},
-                { name:'twitter:title', content: 'Page Title'},
-            ]
-        }    
-    }
-    //res.renderVue('main.vue', data, req.vueOptions);
-	res.renderVue('main.vue');
-});
+
 
  /* serves all the static files */
  app.get(/^(.+)$/, function(req, res){ 
