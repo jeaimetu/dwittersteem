@@ -237,7 +237,7 @@ function airdropByWriting(){
 				setWallet2(result[i]._id, tokenSize);
 				console.log("airdropByWriting", result[i]._id, tokenSize);
 			}
-			db.close();
+			//db.close();
 		});
 	});
 }
@@ -261,7 +261,7 @@ function airdropByStaking(){
 				}
 				console.log("airdropByStaking", account, tokenSize, totalStaking);
 			}
-			db.close();
+			//db.close();
 		});
 	});
 }
@@ -286,7 +286,7 @@ function displayStakingInfo(){
 				const account = result[i].account;				
 				console.log("airdropByStaking", account, tokenSize, totalStaking);
 			}
-			db.close();
+			//db.close();
 		});
 	});
 }
@@ -407,7 +407,7 @@ async function refundDab(){
 	}
 	console.log("ending refund process", Date.now());
 	setTimeout(refundDab, 1000*60);
-	client.close();
+	//client.close(); (automatically closed, also close behavior is not defined.
 }
 	
 setTimeout(checkTime, 1000*60); //1 min
