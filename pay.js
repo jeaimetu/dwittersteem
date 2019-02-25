@@ -185,16 +185,17 @@ function checkTime(){
 			if(err) throw err;
 			console.log("last record", result[0]);
 			const currentTime = Date.now();			
-			if(currentTime - result[0].date > (1000 * 60 * 60 * 24 - 1000 * 60)){
+			if(currentTime - result[0].date >= (1000 * 60 * 60 * 24 - 1000 * 60)){
 				console.log("do airdrop");
 				setShareLog();
 				getUserVoting();
-				setTimeout(airdropByWriting, 1000*60*2);
-				setTimeout(airdropByStaking, 1000*60*3);				
-				setTimeout(getUserVoting2, 1000*60*4);
-				setTimeout(resetPostLimit,1000*60*5);				
+				setTimeout(airdropByWriting, 1000*10);
+				setTimeout(airdropByStaking, 100020);				
+				setTimeout(getUserVoting2, 1000*30);
+				setTimeout(resetPostLimit,1000*40);				
 			}else{
 				console.log("do not do airdrop", currentTime - result[0].date, 1000 * 60 * 60 * 24);
+				setTimeout(checkTime, 1000*60); //1 min
 			}
 			db.close();
 		});
@@ -358,6 +359,7 @@ async function resetPostLimit(){
 	}
 	console.log("ending  resetPostLimit process", Date.now());
 	client.close();	
+	setTimeout(checkTime, 1000*60); //1 min
 	console.log("resetPostLimit Test", loopCount, res.length);
 }
 
@@ -404,12 +406,12 @@ async function refundDab(){
 		}
 	}
 	console.log("ending refund process", Date.now());
-	setTimeout(refundDab, 1000*5);
+	setTimeout(refundDab, 1000*60);
 	client.close();
 }
 	
-setInterval(checkTime, 1000*60*2); //15 seconds
-setTimeout(refundDab, 1000*60);
+setTimeout(checkTime, 1000*60); //1 min
+setTimeout(refundDab, 1000*60);  //1 min
 
 //getUserVoting();
 //getUserVoting2();
@@ -430,7 +432,5 @@ setTimeout(airdropByStaking, 1000*60*3);
 setTimeout(getUserVoting2, 1000*60*4);
 */
 
-
-resetPostLimit();
 			    
 							       
