@@ -24,7 +24,7 @@ eos = EosApi(eosconfig)
 
 
 var express = require('express');
-const expressVue = require("express-vue");
+
 var bodyParser     =        require("body-parser");
 var app = express();
 var path = require('path');
