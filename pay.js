@@ -186,7 +186,7 @@ function checkTime(){
 			console.log("last record", result[0]);
 			const currentTime = Date.now();			
 			if(currentTime - result[0].date >= (1000 * 60 * 60 * 24 - 1000 * 60)){
-				console.log("do airdrop");
+				console.log("commit airdrop");
 				setShareLog();
 				getUserVoting();
 				setTimeout(airdropByWriting, 1000*10);
