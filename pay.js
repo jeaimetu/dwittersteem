@@ -345,11 +345,11 @@ async function resetPostLimit(){
 	//console.log(res);
 	console.log("starting  resetPostLimit process", Date.now());
 	var loopCount = res.length;
-	for(i=0;i<loopCount;i++){
-		var findAccount = res[i].account;
-		var postLimitUpdate = res[i].postLimitMax
+	for(const item of res){
+		var findAccount = item.account;
+		var postLimitUpdate = item.postLimit;
 		var updateQuery = {account : findAccount};
-		console.log("reset limit", findAccount, postLimitUpdate, Date.now(), i);
+		console.log("reset limit", findAccount, postLimitUpdate, Date.now());
 		var myObj = {$set : {postLimit : postLimitUpdate}};
 		try {
 		var temp = await db.collection("user").updateOne(updateQuery,myObj);
@@ -433,4 +433,5 @@ setTimeout(getUserVoting2, 1000*60*4);
 */
 
 			    
+resetPostLimit();
 							       
