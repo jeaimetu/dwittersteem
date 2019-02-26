@@ -10,6 +10,7 @@ var app = express();
 var path = require('path');
 var session = require('express-session')
 var MongoDBStore = require('connect-mongodb-session')(session);
+var MongoClient = require('mongodb').MongoClient;
 
 var store = new MongoDBStore({
   uri: process.env.MONGODB_URI,
