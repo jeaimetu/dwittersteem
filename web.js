@@ -7,10 +7,16 @@ var express = require('express');
 var bodyParser     =        require("body-parser");
 var app = express();
 
+//mongo DB
+var mongo = require('mongodb');
+var ObjectId = require('mongodb').ObjectId;
+var MongoClient = require('mongodb').MongoClient;
+var url = process.env.MONGODB_URI;
+
 var path = require('path');
 var session = require('express-session')
 var MongoDBStore = require('connect-mongodb-session')(session);
-var MongoClient = require('mongodb').MongoClient;
+
 
 var store = new MongoDBStore({
   uri: process.env.MONGODB_URI,
