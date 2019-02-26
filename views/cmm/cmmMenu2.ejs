@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-md bg-dark navbar-dark" style="margin:24px 0;">
+  <!-- Brand -->
+  <a class="navbar-brand" href="index.html">Dabble</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navb">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+<div class="collapse navbar-collapse" id="navb">
+
+  <!-- Links -->
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/intro/index.html">데블소개</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/notice">공지사항</a>
+    </li>
+
+
+    <!-- Dropdown -->
+
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        백서
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">한글</a>
+        <a class="dropdown-item" href="#">English</a>
+      </div>
+    </li>
+
+    <%if ( true == loginInfo.result ) { %>
+        <li class="nav-item">
+          <a class="nav-link" href="/myInfo">회원정보</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">지갑</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:gfFrientContentsList('<%=loginInfo.id%>', 1)">나불데블</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/friendList">친구정보</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript:gfLogoutAction();">로그아웃</a>
+        </li>
+    <%}else{%>
+        <li class="nav-item">
+          <a class="nav-link" href="/loginPage">로그인</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/signup">회원가입</a>
+        </li>
+        
+    <%}%>
+  </ul>
+  <!-- remove search 
+      <form class="form-inline my-2 my-lg-0" action="/action_page.php">
+    <input class="form-control mr-sm-2" type="text" placeholder="Search">
+    <button class="btn btn-success my-2 my-sm-0" type="submit">Search</button>
+  </form>
+  -->
+  </div>
+</nav>
