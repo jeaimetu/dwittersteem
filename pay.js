@@ -237,7 +237,7 @@ function airdropByWriting(){
 				setWallet2(result[i]._id, tokenSize);
 				console.log("airdropByWriting", result[i]._id, tokenSize);
 			}
-			//db.close();
+			db.close();
 		});
 	});
 }
@@ -261,7 +261,7 @@ function airdropByStaking(){
 				}
 				console.log("airdropByStaking", account, tokenSize, totalStaking);
 			}
-			//db.close();
+			db.close();
 		});
 	});
 }
@@ -286,7 +286,7 @@ function displayStakingInfo(){
 				const account = result[i].account;				
 				console.log("airdropByStaking", account, tokenSize, totalStaking);
 			}
-			//db.close();
+			db.close();
 		});
 	});
 }
@@ -350,6 +350,7 @@ async function resetPostLimit(){
 		var postLimitUpdate = item.postLimitMax;
 		var updateQuery = {account : findAccount};
 		console.log("reset limit", findAccount, postLimitUpdate, Date.now());
+		//use another DB or do not close
 		var myObj = {$set : {postLimit : postLimitUpdate}};
 		try {
 		var temp = await db.collection("user").updateOne(updateQuery,myObj);
@@ -358,7 +359,7 @@ async function resetPostLimit(){
 		}
 	}
 	console.log("ending  resetPostLimit process", Date.now());
-	client.close();	
+	//client.close();	
 	setTimeout(checkTime, 1000*60); //1 min
 	console.log("resetPostLimit Test", loopCount, res.length);
 }
@@ -407,7 +408,7 @@ async function refundDab(){
 	}
 	console.log("ending refund process", Date.now());
 	setTimeout(refundDab, 1000*60);
-	//client.close(); (automatically closed, also close behavior is not defined.
+	client.close(); (automatically closed, also close behavior is not defined.
 }
 	
 setTimeout(checkTime, 1000*60); //1 min
