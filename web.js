@@ -12,6 +12,9 @@ app.set('view engine', 'ejs');
 app.set('views', __dirname + "/views");
 app.engine("html", require("ejs").renderFile);
 
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
 function fnIsLogin(req){
 	  if(req.body.id != undefined && req.body.id != null ){
 		  var id = req.body.id;
