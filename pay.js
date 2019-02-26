@@ -32,7 +32,7 @@ function getUserVoting(){
 			{$group: {_id:"$account", vote : { $sum : "$voting"}}}];
 		var dbo = db.db("heroku_dg3d93pq");
 		var cursor = dbo.collection('board').aggregate(agr).toArray( (err, res) => {
-			console.log(res);
+			//console.log(res);
 			totalUser = res.length;
 			//update each users token in their wallet
 			getTotalVoting(res);
@@ -60,7 +60,7 @@ function getUserVoting2(){
 			{$group: {_id:"$account", vote : { $sum : 1}}}];
 		var dbo = db.db("heroku_dg3d93pq");
 		var cursor = dbo.collection('voting').aggregate(agr).toArray( (err, res) => {
-			console.log(res);
+			//console.log(res);
 			totalUser = res.length;
 			//update each users token in their wallet
 			getTotalVoting(res);
@@ -86,7 +86,7 @@ function setWallet(account, vote, distSize){
 		const dbo = db.db("heroku_dg3d93pq");
 		const findQuery = {account : account};
 		dbo.collection('user').findOne(findQuery, (err, result) => {
-			console.log(result);
+			//console.log(result);
 			if(err){ 
 				throw err;
 				console.log(err);
@@ -130,7 +130,7 @@ function setWallet2(account, vote){
 		const dbo = db.db("heroku_dg3d93pq");
 		const findQuery = {account : account};
 		dbo.collection('user').findOne(findQuery, (err, result) => {
-			console.log(result);
+			//console.log(result);
 			if(err){ 
 				throw err;
 				console.log(err);
