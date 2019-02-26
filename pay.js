@@ -408,7 +408,7 @@ async function refundDab(){
 	}
 	console.log("ending refund process", Date.now());
 	setTimeout(refundDab, 1000*60);
-	client.close(); (automatically closed, also close behavior is not defined.
+	client.close(); //(automatically closed, also close behavior is not defined.
 }
 	
 setTimeout(checkTime, 1000*60); //1 min
