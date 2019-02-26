@@ -7,10 +7,44 @@ var express = require('express');
 var bodyParser     =        require("body-parser");
 var app = express();
 
+var path = require('path');
+var session = require('express-session')
+var MongoDBStore = require('connect-mongodb-session')(session);
+
+var store = new MongoDBStore({
+  uri: process.env.MONGODB_URI,
+  collection: 'mySessions'
+});
+
+store.on('connected', function() {
+  store.client; // The underlying MongoClient object from the MongoDB driver
+});
+
+// Catch errors
+store.on('error', function(error) {
+  assert.ifError(error);
+  assert.ok(false);
+});
+
+
 // set the view engine to ejs
 app.set('view engine', 'ejs');
 app.set('views', __dirname + "/views");
 app.engine("html", require("ejs").renderFile);
+
+// Use the session middleware
+app.use(require('express-session')({
+  secret: 'This is a secret',
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7 // 1 week
+  },
+  store: store,
+  // Boilerplate options, see:
+  // * https://www.npmjs.com/package/express-session#resave
+  // * https://www.npmjs.com/package/express-session#saveuninitialized
+  resave: true,
+  saveUninitialized: true
+}));
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
