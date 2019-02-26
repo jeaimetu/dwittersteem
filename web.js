@@ -7,7 +7,23 @@ var express = require('express');
 var bodyParser     =        require("body-parser");
 var app = express();
 
+// set the view engine to ejs
+app.set('view engine', 'ejs');
+app.set('views', __dirname + "/views");
+app.engine("html", require("ejs").renderFile);
 
+
+app.get("/", function(req, res){
+	var resultIsLogin = fnIsLogin(req);
+ 	readData(req.session.account, 1, (result) => {
+ 		res.render("./main/main", {
+ 			title : "EJS test",
+ 			data : result,
+ 			loginInfo : resultIsLogin,
+ 			page : 1
+ 		});
+ 	});
+});
 
  /* serves all the static files */
  app.get(/^(.+)$/, function(req, res){ 
