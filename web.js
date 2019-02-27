@@ -56,6 +56,36 @@ app.use(require('express-session')({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+
+async function saveData(account, data, cb){
+	var body = {
+	  "result": "OK"
+	}
+	
+	//check abusers list
+	
+	//console.log("saveData", account, data);
+	const client = await MongoClient.connect(url);
+	const db = client.db('heroku_dg3d93pq');
+	
+	var findQuery = {account : account};
+	var res = await db.collection("user").findOne(findQuery);
+	if(res.postLimit <= 0){
+		cb("fail");
+	}else{	
+		//decrease count
+		var limitCount = +res.postLimit - 1;
+		var myObj = {$set: {postLimit : limitCount}};
+		var res = await db.collection("user").updateOne(findQuery, myObj);			     
+		var tod = Date.now();
+		myObj = { account : account, data : data, date : tod, voting : 0, payout : 0, steem : false };
+		res = await db.collection("board").insertOne(myObj);
+		cb("done");
+	}
+	client.close();
+	
+}
+
 function readData(account, page, cb){
 	console.log("in reaData", account, page);
 	const pageSize = 20;
@@ -187,6 +217,48 @@ function fnIsLogin(req){
 	  	  res.send(body)
 	  }
   });
+
+  app.post("/login", function(req, res) { 
+	  var id = req.body.id;
+	  var pass = req.body.pass;
+	  //save id information
+
+	  console.log("login event", id, pass);
+	  //make session and return number//
+	  compareAccount(id, pass, (result) => {
+		  if(result == true){
+			  //make session and return
+			  console.log("login with session id", req.session.id);
+			  req.session.account = id;
+			  req.session.isLogin = true;
+			  res.send(req.session.id);
+		  }else{
+			  //error case
+			  res.send("fail");
+		  }
+	  });
+		 
+
+  });
+
+  app.post("/write", function(req, res) { 
+	  
+	/* some server side logic */
+
+	  var user = req.body.user;
+	  var data = req.body.data;
+	  console.log("write event", user, data);
+	  //save this data to mongoDB//
+	  if(blackList.abuser.includes(req.session.account.toLowerCase()) == true){
+		  res.send("fail");
+	  }else{
+		  saveData(user, data, (result) => {
+			  res.send(result);
+			  contract.sendMessage(user, data);
+		  });
+	  }
+  });
+
 
 
 app.get("/", function(req, res){
