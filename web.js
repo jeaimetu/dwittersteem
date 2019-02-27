@@ -201,6 +201,32 @@ app.get("/", function(req, res){
  	});
 });
 
+app.get("/myInfo", function(req, res) {
+	var resultIsLogin = fnIsLogin(req);
+	res.render("./myInfo/myInfo", {loginInfo : resultIsLogin});
+});
+app.get("/friendList", function(req, res) {
+	var resultIsLogin = fnIsLogin(req);
+	res.render("./friendInfo/friendList", {loginInfo : resultIsLogin});
+});
+app.get("/myWallet", function(req, res) {
+	var resultIsLogin = fnIsLogin(req);
+	res.render("./wallet/myWallet2", {loginInfo : resultIsLogin});
+});
+app.get("/loginPage", function(req, res) {
+	var resultIsLogin = fnIsLogin(req);
+	res.render("./cmm/login", {loginInfo : resultIsLogin});
+});
+app.get("/signup", function(req, res) {
+	var resultIsLogin = fnIsLogin(req);
+	res.render("./cmm/signup", {loginInfo : resultIsLogin});
+});
+app.get("/notice", function(req, res) {
+	var resultIsLogin = fnIsLogin(req);
+	res.render("./board/notice", {loginInfo : resultIsLogin});
+});
+
+
  /* serves all the static files */
  app.get(/^(.+)$/, function(req, res){ 
      console.log('static file request : ' + req.params);
