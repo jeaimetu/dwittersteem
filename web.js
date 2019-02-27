@@ -318,6 +318,18 @@ app.get("/notice", function(req, res) {
 	res.render("./board/notice", {loginInfo : resultIsLogin});
 });
 
+app.get("/index.html", function(req, res){
+	var resultIsLogin = fnIsLogin(req);
+	
+ 	readData(req.session.account, 1, (result) => {
+ 		res.render("./main/main", {
+ 			title : "EJS test",
+ 			data : result,
+ 			loginInfo : resultIsLogin,
+ 			page : 1
+ 		});
+ 	});
+});
 
  /* serves all the static files */
  app.get(/^(.+)$/, function(req, res){ 
