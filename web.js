@@ -390,17 +390,51 @@ function fnIsLogin(req){
 
 
 
-app.get("/", function(req, res){
-	var resultIsLogin = fnIsLogin(req);
- 	readData(req.session.account, 1, (result) => {
- 		res.render("./main/main", {
- 			title : "EJS test",
- 			data : result,
- 			loginInfo : resultIsLogin,
- 			page : 1
- 		});
- 	});
-});
+app.post("/", function(req, res){
+  	var resultIsLogin = fnIsLogin(req);
+  	var page = req.body.page;
+  	
+  	if( !isNaN(page) ){
+  		req.session.page = Number(page);
+  	}else{
+  		req.session.page = 1;
+  	}
+  	
+  	
+  	/*
+  	if(page == 0){
+  		req.session.page = page + 1;
+  	}else if(page == -1){
+  		req.session.page++;
+  	}else if(page == -2){
+  		req.session.page--;
+  		if(req.session.page == 0)
+  			req.session.page = 1;
+  	}else{
+  		req.session.page = page;
+  	}
+  	*/
+  	  
+  	if(req.session.page <= 0){
+  		console.log("page number correction", req.session.page);
+  		req.session.page = 1;
+  	}
+  	  
+  	if(isNaN(req.session.page)){
+  		console.log("page number correction for NaN case", req.session.page);
+  		req.session.page = 1;
+  	}
+  		  
+  	//query Mongo DB
+  	readData(req.session.account, req.session.page, (result) => {
+  		res.render("./main/main", {
+  			title : "EJS test",
+  			data : result,
+  			loginInfo : resultIsLogin,
+  			page : req.session.page
+  		});
+  	});
+  });
 
 app.get("/myInfo", function(req, res) {
 	var resultIsLogin = fnIsLogin(req);
