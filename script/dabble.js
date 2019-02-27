@@ -1,17 +1,25 @@
 /**
  * @작성일   : 2018. 6. 30.
- * @작성자   : 김대형
- * @코멘트   : dabble common 
+ * @작성자   : 김핡핡
+ * @코멘트   : dabble common
+ * @변경일   : 2018. 10. 2. 
+ * @변경점   : 핡 각각 영향도가 있고 헨들링 헬이라 다 분리시켜놓고 확인 ㄱㄱ
+ *  
  */
 
+
+//
 	var gVoteIdx = null;
+	var pageCount = 20;
 	/**
 	 * 목록 조회
 	 * @returns
 	 */
-	function gfContentList(){
-		var rand = Number(Math.floor(Math.random() * 8));
-		$("#frmRead user").val(gUserArray[rand]);
+	function gfContentList(page){
+		if ( undefined == page ){
+			page = 0;
+		}
+		$("#frmRead #page").val(page);
 		var sAction = "/read";
 		var fnCallback = gfContentListCallback;
 		gfAjaxCallWithForm(sAction,$('#frmRead'),fnCallback,"POST");
@@ -20,6 +28,23 @@
 		$("div[id='contentList']").empty();
 		
 		for ( var x = 0 ; x < data.length ; x++ ){
+			
+			var btnVoteEnable = "";
+			if ( undefined != data[x].votingenable  && "false" == data[x].votingenable ){
+				btnVoteEnable = "disabled";
+			}
+			
+			var strProfile = (data[x].profile == null) ? "" : data[x].profile ;
+			var profilePath = (strProfile.length == 5) ? "./images/user/" + strProfile : strProfile;
+			
+			var parentId = data[x].parentid == null ? "" :data[x].parentid;
+			
+			var replyBtn = '';
+			if ( "" == parentId ){
+				replyBtn= '	<button type="button" name="btnDetail" style="width:25%;" class="btn btn-default" onClick="javascript:fnLoginChkContentDetailAction(0, ' + x + ');" ><i class="fa fa-commenting-o"></i></button>';
+			}
+			
+			
 			var strHtml	= '<div class="element tile-1 home calc bg-change">'
 						+ '	<table style="width: 100%;">'
 						+ '		<tr>'
@@ -27,34 +52,35 @@
 						+ '				<h4 class="header icon-to-the-right">' + data[x].account + '</h4>'
 //						+ '				<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip on bottom" aria-describedby="tooltip113771">Bottom</button>'
 						+ '			</td>'
-						+ '			<td  style="text-align:right; margin: 0px;">'
-						+ '				<img style="padding: 0px 0px 0px 0px; display: inline; max-height: 40px; max-width: 40px;" src="./images/user/' + data[x].profile + '">'
+						+ '			<td  style="text-align:right; margin: 0px;" onClick="javascript:gfFollowPopup(' + x + ');">'
+						+ '				<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 40px; max-width: 40px;" src="' + profilePath + '">'
 						+ '			</td>'
 						+ '		</tr>'
 						+ '	</table>'
-						+ '	<div name="viewDefault" class="preConSimple">' + data[x].data + '</div>'
-//						+ '	<div name="viewDetail" style="display: none;">' + data[x].data + '</div>'
+						+ '	<div onClick="javascript:fnContentDetailPopup(' + x + ')" name="viewDefault" class="preConSimple">' + data[x].data + '</div>'
 						+ '	<div style="margin: 5px;"></div>'
-						+ '	<div class="hint" name="viewVoteCount">'+ data[x].voting + '명이 Voting</div>'
+						+ '	<div class="hint" name="createTime">'+ timeConverter(data[x].date) + '</div>'
 						+ '	<div style="margin: 5px;"></div>'
-						+ '	<button type="button" name="btnVote" style="width:100%;" class="btn btn-primary" onClick="javascript:gfContentVoteAction(\''+ data[x].id + '\');" >보팅</button>'
-//						+ '	<abbr id="tooltiptDiv" title="' + data[x].data + '" rel="tooltip">상세보기1-툴팁</abbr>'
-						+ '	<div style="margin: 5px;"></div>'
-						+ '	<button type="button" name="btnDetail" style="width:100%; display: none;" class="btn btn-primary" onClick="javascript:fnContentDetail(' + x + ');" >상세보기</button>'
+						+ '	<button type="button" name="btnVote" ' + btnVoteEnable +  ' style="width:30%;" class="btn btn-default" onClick="javascript:gfContentVoteAction(\'' + data[x].id + '\');" ><i name="viewVoteCount" class="fa fa-thumbs-o-up"> ' + data[x].voting + '</i></button>'
+						+ '	<button type="button" name="btnUpdate" style="width:20%; display:none;" class="btn btn-default" onClick="javascript:gfContentUpdate(' + x + ');" ><i class="fa fa-edit"></i></button>'
+						+ '	<button type="button" name="btnDetail" style="width:20%;" class="btn btn-default" onClick="javascript:fnContentDetail(' + x + ');" ><i class="fa fa-folder-open"></i></button>'
+						+ replyBtn
 						+ '	<input type="hidden" name="hBoardId" value="' + data[x].id + '" >'
+						+ '	<input type="hidden" name="hBoardParentId" value="' + parentId + '" >'
 						+ '	<input type="hidden" name="hVoteCnt" value="' + data[x].voting + '" >'
-						+ '	<div name="divStyle" ></div>'
+						+ '	<input type="hidden" name="hAccount" value="' + data[x].account + '" >'
 						+ '</div>';
 			
 			$("div[id='contentList']").append(strHtml);
-			var obj = $("div[name='viewDefault']").eq(x);
-			if ( gfTextOverCheck(obj) ){
-				$("button[name='btnDetail']").eq(x).show();
+		}
+		
+		var len = $("input[name='hAccount']").length;
+		var strId = $("#frmUserInfo #id").val();
+		for ( var x = 0 ; x < len ; x++ ){
+			if ( strId == $("input[name='hAccount']").eq(x).val() ){
+				$("button[name='btnUpdate']").eq(x).show();
 			}
 		}
-		gfContentReadVoteAction();
-		//$("[data-toggle='tooltip']").tooltip();
-		//gfTooltip();
 	}
 	
 	/**
@@ -73,42 +99,36 @@
 	
 
 	/**
-	 * 리드 보팅
-	 * @returns
-	 */
-	function gfContentReadVoteAction(){
-		$("#frmReadVote #id").val($("#frmUserInfo #id").val());
-		var sAction = "/readvote";
-		var fnCallback = gfContentReadVoteActionCallback;
-		gfAjaxCallWithForm(sAction,$('#frmReadVote'),fnCallback,"POST");
-	}
-	function gfContentReadVoteActionCallback(data){
-		if (  0 < data.length ){
-			for ( var x = 0 ; x < data.length ; x++ ){
-				for ( var y = 0 ; y < $("input[name='hBoardId']").length ; y++ ){
-					if ( data[x].boardId == $("input[name='hBoardId']").eq(y).val() ){
-						$("button[name='btnVote'").eq(y).attr("disabled","");
-						break;
-						
-					}
-				}
-			}
-		}
-	}
-	
-	/**
 	 * 글 쓰기
 	 * @returns
 	 */
-	function gfContentWriteAction(){
-		var rand = Number(Math.floor(Math.random() * 8));
-		$("#frmWrite #user").val( $("#frmUserInfo #id").val() );
-		$("#frmWrite #data").val( $("#contentTextarea").val() );
+	//Teddy, get name call back test
+	function gfContentWrite(data){
+		gfContentWriteAction(data.id);	
+	}
+	//Teddy gfContentWriteAction with Author name
+	function gfContentWriteAction(userId){
+		$("#frmWrite #user").val(userId);
+		
+		var strText = $("#contentTextarea").val();
+		
+		if ( "" == strText.trim() ){
+			alert("내용이 없습니다.");
+			return;
+		}
+		
+		var strImg = "";
+		var len = $("input[name='imgUrl']").length;
+		
+		for ( var x = 0 ; x < len ; x++ ){
+			strImg += '<img src="' + $("input[name='imgUrl']").eq(x).val() + '" />';
+		}
+		$("#frmWrite #data").val( strText + strImg );
+		
 		var sAction = "/write";
 		var fnCallback = gfContentWriteActionCallback;
 		gfAjaxCallWithForm(sAction,$('#frmWrite'),fnCallback,"POST");
 	}
-
 	function gfContentWriteActionCallback(data){
 		if ( "done" == data ){
 			//alert("글쓰기 성공");
@@ -120,15 +140,7 @@
 			//gfMsgBox(data.resultMsg, "핡~!");
 		}
 	}
-
-	//Teddy gfContentWriteAction with Author name
-	function gfContentWriteActionName(userId){
-		$("#frmWrite #user").val(userId);
-		$("#frmWrite #data").val($("#contentTextarea").val());
-		var sAction = "/write";
-		var fnCallback = gfContentWriteActionCallback;
-		gfAjaxCallWithForm(sAction,$('#frmWrite'),fnCallback,"POST");
-	}
+	
 	
 	/**
 	 * 글쓰기 취소
@@ -139,6 +151,143 @@
 		gfContentList();
 	}
 	
+	
+	/**
+	 * 글수정 팝업
+	 * @param idx
+	 * @returns
+	 */
+	function gfContentUpdate(idx){
+		gfImageBoxEmpty();
+		$("#frmEdit #postid").val( $("input[name='hBoardId']").eq(idx).val() );
+		
+		var tagImg =  $("div[name='viewDefault']").eq(idx).find("img");
+		var len = tagImg.length;
+		
+		for ( var x = 0 ; x < len ; x++ ){
+			var strRep = tagImg.eq(x).attr("src").replace("/image/upload/","/image/upload/c_limit,h_60,w_90/");
+			var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + strRep + '"/>'
+						+ '<input type="hidden" name="imgUrl" value="' + tagImg.eq(x).attr("src") + '" />';
+			$("#imgListContentUpdate").append(strHtml);
+		}
+		
+		$("#contentEditTextarea").val($("div[name='viewDefault']").eq(idx).text());
+		
+		//취소버튼 액션
+		//0:목록에서수정, 1:상세댓글
+		$("#btnUpdateCancel").on("click", fnUpdateCancel);
+		$("#btnUpdateAction").on("click", gfContentEditAction);
+		$("#contentEdit").modal("show");
+		
+		
+	}
+	
+	/**
+	 * 글수정 팝업
+	 * @param idx
+	 * @returns
+	 */
+	function gfContentDetailUpdate(idx){
+		gfImageBoxEmpty();
+		$("#frmEdit #postid").val( $("input[name='hBoardId']").eq(idx).val() );
+		
+		var tagImg =  $("div[name='viewDefault']").eq(idx).find("img");
+		var len = tagImg.length;
+		
+		for ( var x = 0 ; x < len ; x++ ){
+			var strRep = tagImg.eq(x).attr("src").replace("/image/upload/","/image/upload/c_limit,h_60,w_90/");
+			var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + strRep + '"/>'
+						+ '<input type="hidden" name="imgUrl" value="' + tagImg.eq(x).attr("src") + '" />';
+			$("#imgListContentUpdate").append(strHtml);
+		}
+		
+		$("#contentEditTextarea").val($("div[name='viewDefault']").eq(idx).text());
+		
+		//취소버튼 액션
+		//0:목록에서수정, 1:상세댓글
+		if ( 0 == type ){
+			$("#btnUpdateCancel").on("click", fnUpdateCancel);
+			$("#btnUpdateAction").on("click", gfContentEditAction);
+			$("#contentEdit").modal("show");
+		}else if ( 1 == type ){
+			$("#contentEdit").modal("show");
+			$("#popupContentDetail").modal("hide");
+			$("#btnUpdateAction").on("click", gfContentDetailEditAction);
+			$("#btnUpdateCancel").on("click",fnDetailUpdateCancel);
+		}
+	}
+
+	/**
+	 * 글 수정
+	 * @returns
+	 */
+	function gfContentEditAction(){
+		var strText = $("#contentEditTextarea").val();
+		var strImg = "";
+		var len = $("input[name='imgUrl']").length;
+		
+		for ( var x = 0 ; x < len ; x++ ){
+			strImg += '<img src="' + $("input[name='imgUrl']").eq(x).val() + '" />';
+		}
+		$("#frmEdit #data").val( strText + strImg );
+		
+		var sAction = "/edit";
+		var fnCallback = gfContentEditActionCallback;
+		gfAjaxCallWithForm(sAction,$('#frmEdit'),fnCallback,"POST");
+	}
+	function gfContentEditActionCallback(data){
+		if ( "success" == data ){
+			$('#frmRead #page').val(1);
+			$("#frmRead").attr("action", "/");
+			$('#frmRead').submit();
+
+			//gfContentList();
+			//gfMsgBox(data.resultMsg, "핡~!", false, fnInsertAccountSuccessCallback);
+		}else{
+			alert("글수정 실패");
+			//gfMsgBox(data.resultMsg, "핡~!");
+		}
+	}
+	function gfContentDetailEditAction(){
+		var strText = $("#contentEditTextarea").val();
+		var strImg = "";
+		var len = $("input[name='imgUrl']").length;
+		
+		for ( var x = 0 ; x < len ; x++ ){
+			strImg += '<img src="' + $("input[name='imgUrl']").eq(x).val() + '" />';
+		}
+		$("#frmEdit #data").val( strText + strImg );
+		
+		var sAction = "/edit";
+		var fnCallback = gfContentDetailEditActionCallback;
+		gfAjaxCallWithForm(sAction,$('#frmEdit'),fnCallback,"POST");
+	}
+	function gfContentDetailEditActionCallback(data){
+		if ( "success" == data ){
+			//alert("글쓰기 성공");
+			$("#contentEditTextarea").val("");
+			var idx = $("input[name='hBoardId']").index($("input[name='hBoardId'][value='"+ $("input[name='hBoardId']").eq(pageCount).val() +"']"));
+			fnContentDetailPopup(idx);
+			//gfMsgBox(data.resultMsg, "핡~!", false, fnInsertAccountSuccessCallback);
+		}else{
+			alert("글수정 실패");
+			//gfMsgBox(data.resultMsg, "핡~!");
+		}
+	}
+	
+
+	/*
+	 * 글 수정 닫기
+	 */
+	function fnUpdateCancel(){
+		$("#popupReply").modal("hide");
+		$("#contentEdit").modal("hide");
+	}
+	function fnDetailUpdateCancel(){
+		$("#contentEdit").modal("hide");
+		$("#popupContentDetail").modal("show");
+	}
+	
 	/**
 	 * 보팅
 	 * @param id
@@ -147,31 +296,34 @@
 	function gfContentVoteAction(id){
 		$("#frmVote #id").val(id);
 		$("#frmVote #vote").val(1);
-
+		var idx = $("input[name='hBoardId']").index($("input[name='hBoardId'][value='"+ id+"']"));
+		
+		var valCnt = $("input[name='hBoardId'][value='"+ $("input[name='hBoardId']").eq(idx).val()+"']").length;
+		for ( var cnt = 0 ; cnt < valCnt ; cnt++ ){
+			var tmpIdx = $("input[name='hBoardId']").index( $("input[name='hBoardId'][value='"+ $("input[name='hBoardId']").eq(idx).val()+"']").eq(cnt) );
+			$("button[name='btnVote']").eq(tmpIdx).attr("disabled","");
+		}		
+		gVoteIdx = idx ;
 		gfIsLoginAction(gfContentVoteActionCallback1);
 	}
 	function gfContentVoteActionCallback1(data){
 		if ( "true" == data.result ){
-			
-			for ( var x = 0 ; x < $("input[name='hBoardId'").length ; x++ ){
-				if ( $("#frmVote #id").val() == $("input[name='hBoardId'").eq(x).val() ){
-					$("button[name='btnVote'").eq(x).attr("disabled","");
-					
-					var vCnt = Number($("input[name='hVoteCnt'").eq(x).val());
-					vCnt++;
-					$("input[name='hVoteCnt'").eq(x).val(vCnt);
-					$("div[name='viewVoteCount']").eq(x).text(vCnt + "명이 Voting");
-					
-					gVoteIdx = x;
-					break;
-				}
-			}			
+			var idx = gVoteIdx;
+			var valCnt = $("input[name='hBoardId'][value='"+ $("input[name='hBoardId']").eq(idx).val()+"']").length;
+			for ( var cnt = 0 ; cnt < valCnt ; cnt++ ){
+				var tmpIdx = $("input[name='hBoardId']").index( $("input[name='hBoardId'][value='"+ $("input[name='hBoardId']").eq(idx).val()+"']").eq(cnt) );
+				var vCnt = Number($("input[name='hVoteCnt']").eq(tmpIdx).val());
+				vCnt++;
+				$("input[name='hVoteCnt']").eq(tmpIdx).val(vCnt);
+				$("i[name='viewVoteCount']").eq(tmpIdx).text(" " + vCnt );
+			}
 			
 			var sAction = "/vote";
 			var fnCallback = gfContentVoteActionCallback2;
 			gfAjaxCallWithForm(sAction,$('#frmVote'),fnCallback,"POST");
 			
 		}else{
+			$("button[name='btnVote']").eq(gVoteIdx).attr("disabled",false);
 			alert("로그인 후 사용하세요.");
 			/*
 			for ( var x = 0 ; x < $("input[name='hBoardId'").length ; x++ ){
@@ -182,20 +334,134 @@
 			}
 			*/		
 		}
-		
 	}
 	function gfContentVoteActionCallback2(data){
-		if ( "done" == data ){
+		if ( "success" == data ){
 			//alert("보팅성공");
 			//gfContentList();
 			//gfMsgBox(data.resultMsg, "핡~!", false, fnInsertAccountSuccessCallback);
+		}else if ( "duplicated" == data ){
+			alert("중복투표입니다.");
 		}else{
 			alert("보팅실패");
-			$("button[name='btnVote'").eq(gVoteIdx).attr("disabled",false);
+			$("button[name='btnVote']").eq(gVoteIdx).attr("disabled",false);
 			//gfMsgBox(data.resultMsg, "핡~!");
 		}
 	}
 	
 	
+	
+	/**
+	 * 팔로우 팝업
+	 * @param idx
+	 * @returns
+	 */
+	function gfFollowPopup(idx){
+		$("#frmFollow #account").val($("input[name='hAccount']").eq(idx).val());
+		$("span[id='myModalLabelFollowId']").text($("input[name='hAccount']").eq(idx).val());
+		$("#userImage").attr("src", $("img[name='userImage']").eq(idx).attr("src") );
+		//$("#userImage").attr("src", "/images/user/0.png");
+		
+		if ( $("#frmFollow #account").val() == $("#frmUserInfo #id").val() ){
+			$("#myModalLabelFollowBtn").hide();
+			$("#myModalLabelFollowComment").hide();
+			$("#popupBtnUnFollow").hide();
+			$("#popupBtnFollow").hide();
+			$("#followPopup").modal("show");
+			return ;
+		}
+		
+		var sAction = "/isFriend";
+		var fnCallback = gfFollowPopupCallback;
+		gfAjaxCallWithForm(sAction,$('#frmFollow'),fnCallback,"POST");
+	}
+	function gfFollowPopupCallback(data){
+		if ( data.account == $("#frmFollow #account").val() ){
+			if ( false == data.isFollow ){
+				$("#popupBtnUnFollow").hide();
+				$("#popupBtnFollow").show();
+				$("#myModalLabelFollowComment").show();
+			}else{
+				$("#popupBtnUnFollow").show();
+				$("#popupBtnFollow").hide();
+				$("#myModalLabelFollowComment").hide();
+			}
+			$("#myModalLabelFollowBtn").show();
+		}else{
+			$("#popupBtnUnFollow").hide();
+			$("#popupBtnFollow").hide();
+		}
+		
+		$("#followPopup").modal("show");
+	}
+	/**
+	 * 팔로우 하기
+	 * @returns
+	 */
+	function gfFollowAction(){
+		var sAction = "/createfriend";
+		var fnCallback = gfFollowActionCallback;
+		gfAjaxCallWithForm(sAction,$('#frmFollow'),fnCallback,"POST");
+	}
+	function gfFollowActionCallback(data){
+		if ( "success" == data ){
+			alert("Follow 하였습니다");
+			$("#userImage").attr("src","");
+		}else{
+			alert("Follow 실패");
+		}
+	}
+	/**
+	 * 언팔로우 하기
+	 * @returns
+	 */
+	function gfUnFollowAction(){
+		var sAction = "/deletefriend";
+		var fnCallback = ggfUnFollowActionCallback;
+		gfAjaxCallWithForm(sAction,$('#frmFollow'),fnCallback,"POST");
+	}
+	function ggfUnFollowActionCallback(data){
+		if ( "success" == data ){
+			alert("UnFollow 하였습니다");
+			$("#userImage").attr("src","");
+		}else{
+			alert("Follow 실패");
+		}
+	}
+	
+	/**
+	 * 친구글 보기
+	 * @returns
+	 */
+	function gfFrientContentsList(account, page){
+		if ( undefined == account || "" == account ){
+			account = $("#frmFollow #account").val();
+		}
+		
+		if ( undefined == page || "" == page ){
+			page = 1;
+		}
+		
+		if (1 == page){
+			$('#frmFriendContents #page').val( 1 );
+		}else if (-2 == page){
+			$('#frmFriendContents #page').val( Number($('#frmFriendContents #page').val()) - 1);
+			
+		}else if (-1 == page){
+			$('#frmFriendContents #page').val( Number($('#frmFriendContents #page').val()) + 1);
+		}
 
+		$('#frmFriendContents #account').val(account);
+		$("#frmFriendContents").attr("action", "/friendContents");
+		$('#frmFriendContents').submit();
+	}
+	
+	//이미지 리셋 
+	function gfImageBoxEmpty(){
+		$("#imgListContentInsert").empty();
+		$("#imgListContentUpdate").empty();
+		$("#imgListContentReplyInsert").empty();
+		$("#imgListContentDetailInsert").empty();
+		$("#imgListContentDetailUpdate").empty();
+	}
 
