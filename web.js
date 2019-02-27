@@ -2,6 +2,7 @@
 require("./pay.js");
 
 const bcrypt = require('bcrypt');
+const blackList = require("./blacklist.js");
 
 var express = require('express');
 var bodyParser     =        require("body-parser");
