@@ -56,6 +56,26 @@ app.use(require('express-session')({
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+function compareAccount(id, pass, cb){
+	MongoClient.connect(url, function(err, db) {
+   		var dbo = db.db("heroku_dg3d93pq");
+   		var findquery = { account : id };
+   		dbo.collection("user").findOne(findquery, function(err, res){
+    			if (err) throw err;
+    			if (res != null){
+				bcrypt.compare(pass, res.pass, function(err, result){
+					if(result)
+			    			cb(true);
+					else
+						cb(false);
+				});
+			}
+			else
+				cb(false)				
+    			db.close();   
+   		});
+  	}); 	
+}
 
 async function saveData(account, data, cb){
 	var body = {
