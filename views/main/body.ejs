@@ -9,12 +9,12 @@
             <img class="card-img-top img-fluid"  src="https://sg.fiverrcdn.com/photos/98236905/original/e6dacf67c5374ef6cc84941c08d01bae27090310.jpg" alt="Card image cap">
     -->            
             <div class="card-body">
-                <img style="float:left"  margin-right="30px" src=<%= eachData.profile %> class="rounded-circle" alt="Cinque Terre" width="80" height="80">
+                <img style="float:left"  margin-right="30px" src=<%= eachData.profile %> class="rounded-circle" alt="Cinque Terre" width="60" height="60">
                 <h4 class="card-text"><pre><%= eachData.account %><i id="loading" class="fas fa-star" style="color:green"></i></pre></h4>
-                <br><br>
-                <div class="w-100 p-3">
+                <br>
+
                 <p class="card-text"><%- (eachData.data.replace(/(?:\r\n|\r|\n)/g, '<br>')).replace("<img", '<img class="img-fluid"') %></p>
-                </div>
+
                 
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 <a href="#" class="btn btn-light btn-sm">좋아요</a>
