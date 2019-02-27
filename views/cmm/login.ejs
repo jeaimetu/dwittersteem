@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+<% include ../cmm/cmmHeader.ejs %>
+</head>
+<script>
+	$(function(){
+		
+	});
+	
+	function adCheck(){
+		$("#adboxBtn").removeClass("btn-primary");
+		$("#adboxBtn").addClass("btn-success");
+		$("#adboxBtn").text("완료");
+		//$("#adboxText").prop("disabled","");
+		$("#adboxText").attr("disabled","");
+		
+	}
+	
+</script>
+<body>
+	<div id="wrap">
+		<div id="menu-button">
+			<table style="width: 100%;">
+			<colgroup>
+			<col width="25%;">
+			<col width="50%;">
+			<col width="25%;">
+			</colgroup>
+				<tr>
+					<td> 
+						<div class="left">
+							<div class="cursor">
+								<div id="nav-button">
+									<span class="nav-bar"></span>
+									<span class="nav-bar"></span>
+									<span class="nav-bar"></span>
+								</div>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="center">
+							<div class="cursor">
+								<a href="index.html" style="align-self: center;" >
+									<img  src="./images/logo-dabble.png" style="width: 130px; height: 50px; vertical-align: super; display: inline;" />
+								</a>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="right">
+							<div class="cursor">
+								<div id="nav-button">
+									<span class="nav-bar"> </span>
+									<span class="nav-bar"></span>
+									<span class="nav-bar"></span>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- start header -->
+		<% include ../cmm/cmmMenu.ejs %>
+		<!-- end header -->
+
+		<!-- start content -->
+		<div id="content">
+			<div class="container clearfix">
+				<!-- GLOBAL ALERT BANNER -->
+				<!-- END GLOBAL ALERT BANNER -->
+				<!-- ITEMS PERSISTED ON ALL PAGES -->
+				<h4 id="headertitle-inner"></h4>
+				<div id="container">
+						<div class="element tile-2 home bg-change"><h4>로그인</h><br><br>
+							<div class="form-group">
+								<label for="userId">ID</label>
+								<input class="form-control" id="userId" type="text" placeholder="">
+							</div>
+							<div class="form-group">
+								<label for="pass">Password</label>
+								<input type="password" class="form-control" id="userPassword" placeholder="Password">
+							</div>
+							<div class="form-group">
+								<img src="./images/addbox_2.png" style="width: 200px; height: 60px; display: inline-block;">
+								<input type="text" class="form-control" id="adboxText" style="width: 40%; display: inline-block;" placeholder="AdBox" >
+								<button type="button" id="adboxBtn" style="width: 18%;" class="btn btn-primary" onClick="javascript:adCheck();">확인</button>
+							</div>
+							<div class="form-group">
+								<button type="button" class="btn btn-primary btn-block" onClick="javascript:gfLoginAction();">Login</button>
+							</div>
+						</div>
+				</div>
+			</div>
+		</div>
+		<!-- end content -->
+
+		<!-- start footer -->
+		<footer id="footer">
+			<div class="container clearfix">
+				<div class="col">
+					<div class="col" id="sourcecode">
+						<p>copyright, 2018, EOSIX<br />
+							<a href="javascript:;" target="_blank" title="">링크</a>
+						</p>
+					</div>
+					<div class="col">
+						<ul class="social-list clearfix col">
+							<li> <a href="https://t.me/eoscafe_korea"><i class="fa fa-telegram"></i></a> </li>
+							<li> <a href="mailto:"><i class="fa fa-envelope"></i></a> </li>
+							<li> <a href="https:"><i class="fa fa-meetup"></i></a> </li>
+							<li> <a href="https:"><i class="fa fa-medium"></i></a> </li>
+							<li> <a href="https:"><i class="fa fa-youtube"></i></a> </li>
+							<li> <a href="https"><i class="fa fa-twitter"></i></a> </li>
+						</ul>
+						<a class="col" id="dabblelogo" href="https://dabbledabble.herokuapp.com/"></a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- end footer -->
+	</div>
+    <!-- end wrap -->
+    
+	<!-- start form -->
+	<form id="frmLogin">
+		<input type="hidden" id="id"   name="id" />
+		<input type="hidden" id="pass" name="pass" />
+	</form>
+	<!-- end form -->
+	<form id="frmUserInfo">
+		<input type="hidden" id="id"   name="id" />
+	</form>
+	<form id="frmFriendContents" method="post">
+		<input type="hidden" id="account"	name="account" />
+		<input type="hidden" id="page"		name="page"    />
+	</form>
+	
+
+</body>
+<% include ../cmm/cmmFooter.ejs %>
+</html>
