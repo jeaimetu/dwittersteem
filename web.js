@@ -318,6 +318,24 @@ app.get("/notice", function(req, res) {
 	res.render("./board/notice", {loginInfo : resultIsLogin});
 });
 
+  app.post("/write", function(req, res) { 
+	  
+	/* some server side logic */
+
+	  var user = req.body.user;
+	  var data = req.body.data;
+	  console.log("write event", user, data);
+	  //save this data to mongoDB//
+	  if(blackList.abuser.includes(req.session.account.toLowerCase()) == true){
+		  res.send("fail");
+	  }else{
+		  saveData(user, data, (result) => {
+			  res.send(result);
+			  contract.sendMessage(user, data);
+		  });
+	  }
+  });
+
 app.get("/index.html", function(req, res){
 	var resultIsLogin = fnIsLogin(req);
 	
