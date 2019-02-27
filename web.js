@@ -461,6 +461,18 @@ app.get("/notice", function(req, res) {
 	res.render("./board/notice", {loginInfo : resultIsLogin});
 });
 
+app.get("/", function(req, res){
+	var resultIsLogin = fnIsLogin(req);
+ 	readData(req.session.account, 1, (result) => {
+ 		res.render("./main/main", {
+ 			title : "EJS test",
+ 			data : result,
+ 			loginInfo : resultIsLogin,
+ 			page : 1
+ 		});
+ 	});
+});
+
   app.post("/write", function(req, res) { 
 	  
 	/* some server side logic */
