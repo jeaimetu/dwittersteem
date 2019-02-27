@@ -78,6 +78,114 @@ function compareAccount(id, pass, cb){
   	}); 	
 }
 
+  app.post("/read", function(req, res) { 
+	/* some server side logic */
+	  
+	  var user = req.body.user;
+	  var page = req.body.page;
+	  console.log("read event", user, page);
+	  //query Mongo DB
+	  if(page == 0)
+	  	req.session.page = page + 1;
+	  else if(page == -1)
+		  req.session.page++;
+	  else if(page == -2){
+		  req.session.page--;
+		  if(req.session.page == 0)
+			  req.session.page = 1;
+	  }
+	  else
+		  req.session.page = page;
+	  
+	  if(req.session.page <= 0){
+		  console.log("page number correction", req.session.page);
+		  req.session.page = 1;
+	  }
+	  
+	  if(isNaN(req.session.page)){
+		  console.log("page number correction for NaN case", req.session.page);
+		  req.session.page = 1;
+	  }
+		  
+	  console.log("calling readData", req.session.account);
+	  readData(req.session.account, req.session.page,(result) => {res.send(result)});
+  });
+
+  app.post("/readnabul", function(req, res) { 
+	/* some server side logic */
+	  
+	  var user = req.body.user;
+	  var page = req.body.page;
+	  console.log("readnabul event", user, page);
+	  //query Mongo DB
+	  if(page == 0)
+	  	req.session.page = page + 1;
+	  else if(page == -1)
+		  req.session.page++;
+	  else if(page == -2){
+		  req.session.page--;
+		  if(req.session.page == 0)
+			  req.session.page = 1;
+	  }
+	  else
+		  req.session.page = page;
+	  
+	  if(req.session.page <= 0){
+		  console.log("page number correction", req.session.page);
+		  req.session.page = 1;
+	  }
+	  if(isNaN(req.session.page)){
+		  console.log("page number correction for NaN case", req.session.page);
+		  req.session.page = 1;
+	  }
+	  
+	  console.log("calling readNabul", req.session.account, req.session.page);
+	  nabul.readNabul(req.session.account, req.session.page,(result) => {res.send(result)});
+  });
+
+  app.post("/readdetailpage", function(req, res) { 
+	/* some server side logic */
+	  
+	  console.log("readdetailpage postid type", typeof req.body.postid);
+	  if((typeof req.body.postid) !== "string"){
+		  console.log("readdetailpage postid is not string error");
+		  res.send("fail");
+		  return -1;
+	  }
+	  
+	  if(req.body.postid == null){
+		  console.log("readdetailpage postid is null");
+		  res.send("fail");
+		  return -1;
+	  }
+	  
+
+	  var user = req.body.user;
+	  var page = req.body.page;
+	  var postid = req.body.postid;
+	  console.log("readdetailpage  event", postid, user, page);
+	  //query Mongo DB
+	  if(page == 0)
+	  	req.session.replypage = page + 1;
+	  else if(page == -1)
+		  req.session.replypage++;
+	  else if(page == -2){
+		  req.session.replypage--;
+		  if(req.session.replypage == 0)
+			  req.session.replypage = 1;
+	  }
+	  else
+		  req.session.replypage = page;
+	  
+	  if(req.session.replypage < 0){
+		  console.log("page number correction", req.session.replypage);
+		  req.session.replypage = 1;
+	  }
+	  
+	  console.log("calling readdetailpage ", postid, req.session.account, req.session.replypage);
+	  reply.readDetailPage (postid, req.session.account, req.session.replypage,(result) => {res.send(result)});
+  });
+
 async function saveData(account, data, cb){
 	var body = {
 	  "result": "OK"
