@@ -156,6 +156,39 @@ function fnIsLogin(req){
 	  return body;
   }
 
+
+  app.post("/isLogin", function(req, res) { 
+	  
+	/* some server side logic */
+	  if(req.body.id != undefined && req.body.id != null ){
+	  	var id = req.body.id;
+	  	console.log("isLogin event", id);
+	  }else{
+		  id = "__undefined";
+	  }
+	  
+	  var body = {
+			  "result": null,
+			  "id" : null
+	  };
+	  
+	  console.log("isLogin",req.session.account,id);
+	 
+	  if(req.session.isLogin == true){
+		  var body;
+		  body.result = "true";
+		  body.id = req.session.account;
+	  	  res.send(body)
+	  }
+	  else{
+		  var body;
+		  body.result = "fail";
+		  body.id = "null";
+	  	  res.send(body)
+	  }
+  });
+
+
 app.get("/", function(req, res){
 	var resultIsLogin = fnIsLogin(req);
  	readData(req.session.account, 1, (result) => {
