@@ -27,15 +27,16 @@
 
      <div class="card mx-auto mb-4">
      <!--
-            <img class="card-img-top img-fluid"  src="https://sg.fiverrcdn.com/photos/98236905/original/e6dacf67c5374ef6cc84941c08d01bae27090310.jpg" alt="Card image cap">
+            <img hspace="20" class="card-img-top img-fluid"  src="https://sg.fiverrcdn.com/photos/98236905/original/e6dacf67c5374ef6cc84941c08d01bae27090310.jpg" alt="Card image cap">
     -->            
             <div class="card-body">
-                <img style="float:left"  margin-right="30px" src=<%= eachData.profile %> class="rounded-circle" alt="Cinque Terre" width="60" height="60">
+                <img hspace="20" style="float:left"  margin-right="30px" src=<%= eachData.profile %> class="rounded-circle" alt="Cinque Terre" width="60" height="60">
                 <h4 class="card-text">
 		<%= eachData.account %><i id="loading" class="fas fa-star" style="color:green"></i>
-		<p class="card-text"><small class="text-muted"><%=fnTimeConverter(eachData.date)%></small></p>
+		
 		</h4>
-                
+                <p class="card-text"><small class="text-muted"><%=fnTimeConverter(eachData.date)%></small></p>
+		
                 <br>
 
                 <p class="card-text"><%- (eachData.data.replace(/(?:\r\n|\r|\n)/g, '<br>')).replace("<img", '<img class="img-fluid"') %></p>
