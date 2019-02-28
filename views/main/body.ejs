@@ -1,4 +1,25 @@
-
+<%
+	function fnZeroAdd(str){
+		return String(str).length==1?"0"+str:str;
+	}
+	function fnTimeConverter(timestamp){
+		  //UTC+9  한국시간 적용
+		  // 9시간  / 540분
+		  var a = new Date( timestamp+ (540*60*1000) );
+		  //var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		  var year = a.getFullYear();
+		  var month	= fnZeroAdd(a.getMonth()+1 );
+		  var date	= fnZeroAdd(a.getDate()    );
+		  var hour	= fnZeroAdd(a.getHours()   );
+		  var min	= fnZeroAdd(a.getMinutes() );
+		  var sec	= fnZeroAdd(a.getSeconds() );
+		  //var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+		  
+		  var time = year + '-' + month + '-' + date + ' ' 
+				  + hour + ':' + min;
+		  return time;
+	}
+%>
 
     <% data.forEach(function( eachData){ %>
 <div class="bootstrap">
@@ -11,12 +32,14 @@
             <div class="card-body">
                 <img style="float:left"  margin-right="30px" src=<%= eachData.profile %> class="rounded-circle" alt="Cinque Terre" width="60" height="60">
                 <h4 class="card-text"><pre><%= eachData.account %><i id="loading" class="fas fa-star" style="color:green"></i></pre></h4>
+                <p class="card-text"><small class="text-muted"><%=fnTimeConverter(data[x].date)%></small></p>
                 <br>
 
                 <p class="card-text"><%- (eachData.data.replace(/(?:\r\n|\r|\n)/g, '<br>')).replace("<img", '<img class="img-fluid"') %></p>
+                <br>
 
                 
-                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                
                 <a href="#" class="btn btn-light btn-sm">좋아요</a>
                 <a href="#" class="btn btn-light btn-sm">펼쳐보기</a>
                 <a href="#" class="btn btn-light btn-sm">수정</a>
