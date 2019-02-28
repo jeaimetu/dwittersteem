@@ -14,6 +14,8 @@ var ObjectId = require('mongodb').ObjectId;
 var MongoClient = require('mongodb').MongoClient;
 var url = process.env.MONGODB_URI;
 
+const cmmUtil = require("./nodejsScript/commonUtil");
+
 var path = require('path');
 var session = require('express-session')
 var MongoDBStore = require('connect-mongodb-session')(session);
