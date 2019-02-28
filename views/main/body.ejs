@@ -32,7 +32,7 @@
             <div class="card-body">
                 <img style="float:left"  margin-right="30px" src=<%= eachData.profile %> class="rounded-circle" alt="Cinque Terre" width="60" height="60">
                 <h4 class="card-text"><pre><%= eachData.account %><i id="loading" class="fas fa-star" style="color:green"></i></pre></h4>
-                <p class="card-text"><small class="text-muted"><%=fnTimeConverter(data[x].date)%></small></p>
+                <p class="card-text"><small class="text-muted"><%=fnTimeConverter(eachData.date)%></small></p>
                 <br>
 
                 <p class="card-text"><%- (eachData.data.replace(/(?:\r\n|\r|\n)/g, '<br>')).replace("<img", '<img class="img-fluid"') %></p>
