@@ -20,67 +20,13 @@
 			page = 0;
 		}
 		$("#frmRead #page").val(page);
-		var sAction = "/read";
+		var sAction = "/";
 		var fnCallback = gfContentListCallback;
-		gfAjaxCallWithForm(sAction,$('#frmRead'),fnCallback,"POST");
+		gfAjaxCallWithForm(sAction,$('#frmRead'),fnCallback,"GET");
 	}
 	function gfContentListCallback(data){
-		$("div[id='contentList']").empty();
-		
-		for ( var x = 0 ; x < data.length ; x++ ){
-			
-			var btnVoteEnable = "";
-			if ( undefined != data[x].votingenable  && "false" == data[x].votingenable ){
-				btnVoteEnable = "disabled";
-			}
-			
-			var strProfile = (data[x].profile == null) ? "" : data[x].profile ;
-			var profilePath = (strProfile.length == 5) ? "./images/user/" + strProfile : strProfile;
-			
-			var parentId = data[x].parentid == null ? "" :data[x].parentid;
-			
-			var replyBtn = '';
-			if ( "" == parentId ){
-				replyBtn= '	<button type="button" name="btnDetail" style="width:25%;" class="btn btn-default" onClick="javascript:fnLoginChkContentDetailAction(0, ' + x + ');" ><i class="fa fa-commenting-o"></i></button>';
-			}
-			
-			
-			var strHtml	= '<div class="element tile-1 home calc bg-change">'
-						+ '	<table style="width: 100%;">'
-						+ '		<tr>'
-						+ '			<td>'
-						+ '				<h4 class="header icon-to-the-right">' + data[x].account + '</h4>'
-//						+ '				<button type="button" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Tooltip on bottom" aria-describedby="tooltip113771">Bottom</button>'
-						+ '			</td>'
-						+ '			<td  style="text-align:right; margin: 0px;" onClick="javascript:gfFollowPopup(' + x + ');">'
-						+ '				<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 40px; max-width: 40px;" src="' + profilePath + '">'
-						+ '			</td>'
-						+ '		</tr>'
-						+ '	</table>'
-						+ '	<div onClick="javascript:fnContentDetailPopup(' + x + ')" name="viewDefault" class="preConSimple">' + data[x].data + '</div>'
-						+ '	<div style="margin: 5px;"></div>'
-						+ '	<div class="hint" name="createTime">'+ timeConverter(data[x].date) + '</div>'
-						+ '	<div style="margin: 5px;"></div>'
-						+ '	<button type="button" name="btnVote" ' + btnVoteEnable +  ' style="width:30%;" class="btn btn-default" onClick="javascript:gfContentVoteAction(\'' + data[x].id + '\');" ><i name="viewVoteCount" class="fa fa-thumbs-o-up"> ' + data[x].voting + '</i></button>'
-						+ '	<button type="button" name="btnUpdate" style="width:20%; display:none;" class="btn btn-default" onClick="javascript:gfContentUpdate(' + x + ');" ><i class="fa fa-edit"></i></button>'
-						+ '	<button type="button" name="btnDetail" style="width:20%;" class="btn btn-default" onClick="javascript:fnContentDetail(' + x + ');" ><i class="fa fa-folder-open"></i></button>'
-						+ replyBtn
-						+ '	<input type="hidden" name="hBoardId" value="' + data[x].id + '" >'
-						+ '	<input type="hidden" name="hBoardParentId" value="' + parentId + '" >'
-						+ '	<input type="hidden" name="hVoteCnt" value="' + data[x].voting + '" >'
-						+ '	<input type="hidden" name="hAccount" value="' + data[x].account + '" >'
-						+ '</div>';
-			
-			$("div[id='contentList']").append(strHtml);
-		}
-		
-		var len = $("input[name='hAccount']").length;
-		var strId = $("#frmUserInfo #id").val();
-		for ( var x = 0 ; x < len ; x++ ){
-			if ( strId == $("input[name='hAccount']").eq(x).val() ){
-				$("button[name='btnUpdate']").eq(x).show();
-			}
-		}
+		//do nothing
+		;
 	}
 	
 	/**
