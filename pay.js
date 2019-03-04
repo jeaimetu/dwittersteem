@@ -291,6 +291,29 @@ function displayStakingInfo(){
 	});
 }
 
+function getStakingInfo(){
+	MongoClient.connect(url, (err, db) => {
+		const dbo = db.db("heroku_dg3d93pq");
+		dbo.collection("user").find({}).toArray(function(err, result){
+			var totalStaking = 0;
+			result.sort(compareNumbers);
+			for(i = 0; i < result.length ; i++)
+				totalStaking += parseFloat(result[i].wallet);
+			var updateQuery = {item : "stakeSum"}
+			var myObj = { $set:{ item : "stakeSum", stakeSum : totalStaking.toFixed(4)}};
+			dbo.collection("stakingInfo").updateOne(updateQuery, myObj, {upsert : true}, function(err, updateResult){				
+				if(err){
+					console.log("getStakingInfo error", err);
+					db.close();
+				}
+				console.log("getStakingInfo update completed", totalStaking.toFixed(4));
+				db.close();				
+			});			
+		});
+	});
+}
+
+
 	
 		
 function communityAirDrop(amount){
@@ -413,6 +436,9 @@ async function refundDab(){
 	
 setTimeout(checkTime, 1000*60); //1 min
 setTimeout(refundDab, 1000*60);  //1 min
+getStakingInfo();
+setInterval(getStakingInfo, 1000*60*10);
+
 
 //getUserVoting();
 //getUserVoting2();
