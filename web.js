@@ -3,6 +3,8 @@ require("./pay.js");
 
 const bcrypt = require('bcrypt');
 const blackList = require("./blacklist.js");
+const contractUpload = require("./contract.js");
+
 const contract = require("./contract2.js");
 
 var express = require('express');
