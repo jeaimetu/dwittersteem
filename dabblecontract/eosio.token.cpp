@@ -58,6 +58,15 @@ void token::issue( account_name to, asset quantity, string memo )
        SEND_INLINE_ACTION( *this, transfer, {st.issuer,N(active)}, {st.issuer, to, quantity, memo} );
     }
 }
+  
+void token::postlimit( account_name from,
+                       string time,
+                       string memo)
+{
+  require_auth( from );
+  eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
+  eosio_assert( time.size() <= 256, "time has more than 256 bytes" );  
+}
 
 void token::transfer( account_name from,
                       account_name to,
@@ -125,4 +134,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(updatelock) )
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(postlimit) )
