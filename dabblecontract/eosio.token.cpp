@@ -78,11 +78,6 @@ void token::transfer( account_name from,
     //require_auth( _self );
     eosio_assert( is_account( to ), "to account does not exist");
   
-  
-    lockup lockuptable( _self, from );
-    auto existing = lockuptable.find( from );
-    eosio_assert( existing == lockuptable.end(), "send lockup is enabled" );
-  
     auto sym = quantity.symbol.name();
     stat statstable( _self, sym );
     const auto& st = statstable.get( sym );
