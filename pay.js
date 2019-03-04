@@ -298,7 +298,7 @@ function getStakingInfo(){
 			var totalStaking = 0;
 			result.sort(compareNumbers);
 			for(i = 0; i < result.length ; i++)
-				totalStaking += parseFloat(result[i].wallet);
+				totalStaking += parseFloat(result[i].staked);
 			var updateQuery = {item : "stakeSum"}
 			var myObj = { $set:{ item : "stakeSum", stakeSum : totalStaking.toFixed(4)}};
 			dbo.collection("stakingInfo").updateOne(updateQuery, myObj, {upsert : true}, function(err, updateResult){				
