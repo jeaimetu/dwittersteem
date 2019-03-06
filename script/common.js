@@ -1,14 +1,14 @@
 /**
  * @작성일   : 2018. 6. 27.
- * @작성자   : 김대형
+ * @작성자   : 김핡핡
  * @코멘트   : Hark~
  */
 
 	//////////////////////////////////////////////////////
-	var gIndex = 0;
-	var gContentArray = new Array();
+	//var gIndex = 0;
+	//var gContentArray = new Array();
 	
-	var gUserArray = [ '김핡핡', '현피박군', '길막테디', '대대자손', '산타페후', 'Sting', '완전용용', 'thomas yoon', '이현'];
+	//var gUserArray = [ '김핡핡', '현피박군', '길막테디', '대대자손', '산타페후', 'Sting', '완전용용', 'thomas yoon', '이현'];
 	//////////////////////////////////////////////////////
 	$(document).ready(function(){
 		gfGetUserInfo();
@@ -138,28 +138,38 @@
 			
 			$("#linkWallet").show();
 			$("#linkUserInfo").show();
+			$("#linkMyContents").show();
+			$("#linkFollow").show();
 			$("#linkLogin").hide();
 			$("#linkLogout").show();
 			$("#linkSingup").hide();
 			
 		}else{
+			$("#linkWallet").hide();
 			$("#linkUserInfo").hide();
+			$("#linkMyContents").hide();
+			$("#linkFollow").hide();
 			$("#linkLogin").show();
 			$("#linkSingup").show();
 			$("#linkLogout").hide();
-			$("#linkWallet").hide();
 			
 		}
 
 	}
-	
 
-//Teddy, get name call back test
-	function gfContentWrite(data){
-		gfContentWriteActionName(data.id);	
+	function timeConverter(timestamp){
+		  var a = new Date(timestamp);
+		  //var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		  var year = a.getFullYear();
+		  var month = a.getMonth()+1;
+		  var date = a.getDate();
+		  var hour = a.getHours();
+		  var min = a.getMinutes();
+		  var sec = a.getSeconds();
+		  //var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+		  var time = year + '-' + month + '-' + date + ' ' + hour + ':' + min + ':' + sec ;
+		  return time;
 	}
-
-
 
 	
 	//http://osvaldas.info/elegant-css-and-jquery-tooltip-responsive-mobile-friendly
