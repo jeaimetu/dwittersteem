@@ -19,10 +19,15 @@
 		if ( undefined == page ){
 			page = 0;
 		}
+		/*
 		$("#frmRead #page").val(page);
 		var sAction = "/read";
 		var fnCallback = gfContentListCallback;
 		gfAjaxCallWithForm(sAction,$('#frmRead'),fnCallback,"POST");
+		*/
+		$('#frmRead #page').val(1);	
+		$("#frmRead").attr("action", "/");	
+		$('#frmRead').submit();
 	}
 	function gfContentListCallback(data){
 		$("div[id='contentList']").empty();
