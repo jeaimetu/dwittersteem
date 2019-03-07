@@ -25,19 +25,15 @@
 			gfIsLoginAction(fnCallback);
 		}
 		
-
 		
 		//일반 댓글쓰기 팝업
 		function fnLoginChkContentReplyInsertCallback(data){
 			var idx = $("#frmTemp #postid").val();
-			console.log("fnLoginChkContentReplyInsertCallback idx", idx);
 			if ( "true" == data.result ){
 				$("#contentReplyTextarea").val("");
 				gfImageBoxEmpty();
 				$("#frmReply #parentid").val($("input[name='hBoardId']").eq(idx).val());
 				$("#frmReply #account").val($("input[name='hAccount']").eq(idx).val());
-				console.log("parentid account", $("#frmReply #parentid").val(), $("#frmReply #account").val());
-				console.log("show replyInsert Model");
 				$("#popupContentReplyInsert").modal("show");
 				
 			}else{
@@ -154,7 +150,6 @@
 				
 				var idx = $("input[name='hBoardId']").index( $("input[name='hBoardId'][value='"+$("#frmEdit #postid").val()+"']") );
 				$("div[name='viewDefault']").eq(idx).html($("#frmEdit #data").val());
-
 				//gfContentList();
 				//gfMsgBox(data.resultMsg, "핡~!", false, fnInsertAccountSuccessCallback);
 			}else{
@@ -253,7 +248,6 @@
 			imgArray.eq(idx).remove();
 			hideArray.eq(idx).remove();
 		}
-
 		
 		
 </script>
@@ -644,4 +638,3 @@ function linkify(inputText) {
 </body>
 <% include ../cmm/cmmFooter.ejs %>
 </html>
-
