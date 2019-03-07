@@ -21,7 +21,7 @@
 	}
 %>
 
-    <% data.forEach(function( eachData){ %>
+    <% data.forEach(function(eachData,x){ %>
 <div class="bootstrap">
 <div class="container">
 
@@ -44,10 +44,11 @@
 
                 
                 
-                <a href="#" class="btn btn-light btn-sm">좋아요</a>
-                <a href="#" class="btn btn-light btn-sm">펼쳐보기</a>
-                <a href="#" class="btn btn-light btn-sm">수정</a>
-                <a href="#" class="btn btn-light btn-sm">댓글</a>
+                <a href="#" class="btn btn-light btn-sm" onClick="javascript:gfContentVoteAction('<%=eachData.id%>');">좋아요</a>
+		<p id="voteCount">2</p>
+                //<a href="#" class="btn btn-light btn-sm">펼쳐보기</a>
+                <a href="#" class="btn btn-light btn-sm" onClick="javascript:gfContentUpdate('<%=x%>');">수정</a>
+                <a href="#" class="btn btn-light btn-sm" onClick="javascript:fnLoginChkContentDetailAction(0, '<%=x%>');">댓글</a>
             </div>
         </div>
 </div>
