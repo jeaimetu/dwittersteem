@@ -30,11 +30,14 @@
 		//일반 댓글쓰기 팝업
 		function fnLoginChkContentReplyInsertCallback(data){
 			var idx = $("#frmTemp #postid").val();
+			console.log("fnLoginChkContentReplyInsertCallback idx", idx);
 			if ( "true" == data.result ){
 				$("#contentReplyTextarea").val("");
 				gfImageBoxEmpty();
 				$("#frmReply #parentid").val($("input[name='hBoardId']").eq(idx).val());
 				$("#frmReply #account").val($("input[name='hAccount']").eq(idx).val());
+				console.log("parentid account", $("#frmReply #parentid").val(), $("#frmReply #account").val());
+				console.log("show replyInsert Model");
 				$("#popupContentReplyInsert").modal("show");
 				
 			}else{
