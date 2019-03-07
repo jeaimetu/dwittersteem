@@ -2,6 +2,12 @@
 <html class="no-js">
 <head>
 	<% include ../cmm/cmmHeader.ejs %>
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
 </head>
 <script>
 		$(function(){
@@ -480,7 +486,7 @@ function linkify(inputText) {
 		<div id="popupContentData" ></div>
 	</div>	
 	
-	<div class="modal fade" id="popupContentReplyInsert">
+	<div class="modal fade" id="popupContentReplyInsert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" style="margin-top: 100px;">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -636,5 +642,5 @@ function linkify(inputText) {
 	
 	
 </body>
-<% include ../cmm/cmmFooter2.ejs %>
+<% include ../cmm/cmmFooter.ejs %>
 </html>
