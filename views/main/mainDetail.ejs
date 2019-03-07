@@ -26,7 +26,6 @@
 		}
 		
 
-
 		
 		//일반 댓글쓰기 팝업
 		function fnLoginChkContentReplyInsertCallback(data){
@@ -100,32 +99,161 @@
 			
 		}
 		
-
 		
+		/**
+		 * 글수정 팝업
+		 * @param idx
+		 * @returns
+		 */
+		function fnContentUpdate(idx){
+			gfImageBoxEmpty();
+			$("#frmEdit #postid").val( $("input[name='hBoardId']").eq(idx).val() );
+			
+			var tagImg =  $("div[name='viewDefault']").eq(idx).find("img");
+			var len = tagImg.length;
+			
+			for ( var x = 0 ; x < len ; x++ ){
+				var strRep = tagImg.eq(x).attr("src").replace("/image/upload/","/image/upload/c_limit,h_60,w_90/");
+				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + strRep + '"/>'
+							+ '<input type="hidden" name="imgUrl" value="' + tagImg.eq(x).attr("src") + '" />';
+				$("#imgListContentUpdate").append(strHtml);
+			}
+			
+			$("#contentEditTextarea").val($("div[name='viewDefault']").eq(idx).text());
+			
+			//취소버튼 액션
+			//0:목록에서수정, 1:상세댓글
+			$("#btnUpdateCancel").on("click", fnUpdateCancel);
+			$("#btnUpdateAction").on("click", fnContentEditAction);
+			$("#contentEdit").modal("show");
+		}
+		
+		/**
+		 * 글 수정
+		 * @returns
+		 */
+		function fnContentEditAction(){
+			var strText = $("#contentEditTextarea").val();
+			var strImg = "";
+			var len = $("input[name='imgUrl']").length;
+			
+			for ( var x = 0 ; x < len ; x++ ){
+				strImg += '<img src="' + $("input[name='imgUrl']").eq(x).val() + '" />';
+			}
+			$("#frmEdit #data").val( strText + strImg );
+			
+			var sAction = "/edit";
+			var fnCallback = fnContentEditActionCallback;
+			gfAjaxCallWithForm(sAction,$('#frmEdit'),fnCallback,"POST");
+		}
+		function fnContentEditActionCallback(data){
+			if ( "success" == data ){
+				
+				var idx = $("input[name='hBoardId']").index( $("input[name='hBoardId'][value='"+$("#frmEdit #postid").val()+"']") );
+				$("div[name='viewDefault']").eq(idx).html($("#frmEdit #data").val());
+
+				//gfContentList();
+				//gfMsgBox(data.resultMsg, "핡~!", false, fnInsertAccountSuccessCallback);
+			}else{
+				alert("글수정 실패");
+				//gfMsgBox(data.resultMsg, "핡~!");
+			}
+		}		
+		
+		
+		
+		
+		function fnContentImagePopup(idx){
+			var param = {	cloud_name: 'hgnmrexj6'
+							, upload_preset: 'lnv4zcoi'
+							, sources : [ "local", "url"]
+				};
+			var fnCallback;
+			if ( 1 == idx ){
+				fnCallback = fnContentWriteImagePopupCallback;
+			}else if ( 2 == idx ){
+				fnCallback = fnContentEditImagePopupCallback;
+			}else if ( 3 == idx ){
+				fnCallback = fnContentReplyImagePopupCallback;
+			}else if ( 4 == idx ){
+				fnCallback = fnContentDetailReplyInsertImagePopupCallback;
+			}else if ( 5 == idx ){
+				fnCallback = fnContentDetailReplyUpdateImagePopupCallback;
+			}		
+			cloudinary.openUploadWidget( param, fnCallback );
+			
+		}
+		function fnContentWriteImagePopupCallback( error, result ){
+			if ( null != error ){
+				return ;
+			}
+			for ( var x = 0 ; x < result.length ; x++ ){
+				var splitArray = result[x].url.split("/image/upload/");
+				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
+				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
+							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
+				$("#imgListContentInsert").append(strHtml);
+			}
+		}
+		function fnContentEditImagePopupCallback( error, result ){
+			if ( null != error ){
+				return ;
+			}
+			for ( var x = 0 ; x < result.length ; x++ ){
+				var splitArray = result[x].url.split("/image/upload/");
+				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
+				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
+							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
+				$("#imgListContentUpdate").append(strHtml);
+			}
+		}
+		function fnContentReplyImagePopupCallback( error, result ){
+			if ( null != error ){
+				return ;
+			}
+			for ( var x = 0 ; x < result.length ; x++ ){
+				var splitArray = result[x].url.split("/image/upload/");
+				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
+				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
+							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
+				$("#imgListContentReplyInsert").append(strHtml);
+			}
+		}
+		function fnContentDetailReplyInsertImagePopupCallback( error, result ){
+			if ( null != error ){
+				return ;
+			}
+			for ( var x = 0 ; x < result.length ; x++ ){
+				var splitArray = result[x].url.split("/image/upload/");
+				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
+				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
+							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
+				$("#imgListContentDetailInsert").append(strHtml);
+			}
+		}
+		function fnContentDetailReplyUpdateImagePopupCallback( error, result ){
+			if ( null != error ){
+				return ;
+			}
+			for ( var x = 0 ; x < result.length ; x++ ){
+				var splitArray = result[x].url.split("/image/upload/");
+				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
+				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
+							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
+				$("#imgListContentDetailUpdate").append(strHtml);
+			}
+		}
+		function fnImageDelete(obj){
+			var imgArray = $("img[name='imgThumbNail']");
+			var hideArray = $("input[name='imgUrl']");
+			var idx = imgArray.index(obj);
+			imgArray.eq(idx).remove();
+			hideArray.eq(idx).remove();
+		}
+
 		
 		
 </script>
-
-<%
-			function linkify(inputText) {
-    		var replacedText, replacePattern1, replacePattern2, replacePattern3;
-		
-    		//URLs starting with http://, https://, or ftp://
-    		replacePattern1 = /(((?<!src=")https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    		replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
-		
-    		//URLs starting with "www." (without // before it, or it'd re-link the ones done above).
-    		replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-    		replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
-		
-    		//Change email addresses to mailto:: links.
-    		replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
-    		replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
-		
-    		return replacedText;
-	}
-	
-	%>
 
 <body>
 	<!-- start preloader -->
@@ -195,6 +323,22 @@
 				<h4 id="headertitle-inner"></h4>
 				<div id="contentList">
 
+	<%
+function linkify(inputText) {
+    var replacedText, replacePattern1, replacePattern2, replacePattern3;
+    //URLs starting with http://, https://, or ftp://
+    replacePattern1 = /(((?<!src=")https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
+    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+    replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
+    //Change email addresses to mailto:: links.
+    replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+    replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+    return replacedText;
+}
+%>
+	%>
 	
 	<%	for ( var x = 0 ; x < data.length ; x++ ){ %>
 	<%
@@ -228,13 +372,13 @@
 								</td>
 							</tr>
 						</table>
-						<div class="preConDetail"><%- linkify(data[x].data) %></div>
+						<div class="preConDetail" name="viewDefault"><%- linkify(data[x].data) %></div>
 						<div style="margin: 5px;"></div>
 						<div class="hint" name="createTime"><%- cmmUtil.timeConverter(data[x].date); %></div>
 						<div style="margin: 5px;"></div>
 				
 						<button type="button" name="btnVote" <%=btnVoteEnable%> style="width:30%;" class="btn btn-default" onClick="javascript:gfContentVoteAction('<%=data[x].id%>');" ><i name="viewVoteCount" class="fa fa-thumbs-o-up"><%=data[x].voting%></i></button>
-						<button type="button" name="btnUpdate" style=" <%=btnUpdateVisible%> width:20%;" class="btn btn-default" onClick="javascript:gfContentUpdate('<%=x%>');" ><i class="fa fa-edit"></i></button>
+						<button type="button" name="btnUpdate" style=" <%=btnUpdateVisible%> width:20%;" class="btn btn-default" onClick="javascript:fnContentUpdate('<%=x%>');" ><i class="fa fa-edit"></i></button>
 						<%	if ( 0 == x && null != loginInfo.id ){	%>
 							<button type="button" name="btnReply" style="width:25%;" class="btn btn-default" onClick="javascript:fnLoginChkContentDetailAction(0, '<%=x%>');" ><i class="fa fa-commenting-o"></i></button>
 						<%	}	%>
@@ -497,3 +641,4 @@
 </body>
 <% include ../cmm/cmmFooter.ejs %>
 </html>
+
