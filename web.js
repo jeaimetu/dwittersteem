@@ -4,6 +4,7 @@ require("./pay.js");
 const bcrypt = require('bcrypt');
 const blackList = require("./blacklist.js");
 const contractUpload = require("./contract.js");
+const reply = require("./reply");
 
 const contract = require("./contract2.js");
 
@@ -508,6 +509,21 @@ app.get("/index.html", function(req, res){
  		});
  	});
 });
+
+  app.post("/addreply", function(req, res) { 
+	  
+	/* some server side logic */
+
+	  var user = req.session.account;
+	  var data = req.body.data;
+	  var parentid = req.body.parentid
+	  console.log("addreply event", user, data, parentid);
+	  //save this data to mongoDB//
+	  reply.addReply (user, parentid, data, (result) => {
+		  res.send(result);
+		  contract.sendMessage(user, data);
+	  });
+  });
 
  /* serves all the static files */
  app.get(/^(.+)$/, function(req, res){ 
