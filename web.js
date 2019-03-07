@@ -525,6 +525,41 @@ app.get("/index.html", function(req, res){
 	  });
   });
 
+app.get("/contentDetail", function(req, res) {
+	
+	var resultIsLogin = fnIsLogin(req);
+	var postid = req.param("postid");
+	//5be305e0dc6e940004399161
+	if( cmmUtil.isEmpty(postid) ){
+		/*
+		res.render("./cmm/cmmError", {
+			loginInfo : resultIsLogin,
+			errorMessage : "글정보가 없습니다."
+		});
+		*/
+	 	readData(req.session.account, 1, (result) => {
+	 		res.render("./main/main", {
+	 			title : "Dabble",
+	 			data : result,
+	 			loginInfo : resultIsLogin,
+	 			page : 1
+	 		});
+	 	});
+		return -1;
+	}
+	
+	reply.readDetailPage (postid, req.session.account, 1, (result) => {
+ 		res.render("./main/mainDetail", {
+ 			title : "Dabble",
+ 			cmmUtil : cmmUtil,
+ 			data : result,
+ 			postid : postid,
+ 			loginInfo : resultIsLogin
+ 		});
+	});	
+
+});
+
  /* serves all the static files */
  app.get(/^(.+)$/, function(req, res){ 
      console.log('static file request : ' + req.params);
