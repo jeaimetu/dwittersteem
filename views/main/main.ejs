@@ -1,8 +1,62 @@
-<!DOCTYPE html>
-<html class="no-js">
+
+<html lang="en">
 <head>
-	<% include ../cmm/cmmHeader.ejs %>
-</head>
+
+  <title>Dabble</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1", shrink-to-fit=no">
+  
+      <!-- Compiled and minified CSS -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  
+<style>
+.fixed-action-btn{position:fixed;right:23px;bottom:23px;padding-top:15px;margin-bottom:0;z-index:997}.fixed-action-btn.active ul{visibility:visible}.fixed-action-btn.direction-left,.fixed-action-btn.direction-right{padding:0 0 0 15px}.fixed-action-btn.direction-left ul,.fixed-action-btn.direction-right ul{text-align:right;right:64px;top:50%;-webkit-transform:translateY(-50%);transform:translateY(-50%);height:100%;left:auto;width:500px}.fixed-action-btn.direction-left ul li,.fixed-action-btn.direction-right ul li{display:inline-block;margin:7.5px 15px 0 0}.fixed-action-btn.direction-right{padding:0 15px 0 0}.fixed-action-btn.direction-right ul{text-align:left;direction:rtl;left:64px;right:auto}.fixed-action-btn.direction-right ul li{margin:7.5px 0 0 15px}.fixed-action-btn.direction-bottom{padding:0 0 15px 0}.fixed-action-btn.direction-bottom ul{top:64px;bottom:auto;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-orient:vertical;-webkit-box-direction:reverse;-webkit-flex-direction:column-reverse;-ms-flex-direction:column-reverse;flex-direction:column-reverse}.fixed-action-btn.direction-bottom ul li{margin:15px 0 0 0}.fixed-action-btn.toolbar{padding:0;height:56px}.fixed-action-btn.toolbar.active>a i{opacity:0}.fixed-action-btn.toolbar ul{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;top:0;bottom:0;z-index:1}.fixed-action-btn.toolbar ul li{-webkit-box-flex:1;-webkit-flex:1;-ms-flex:1;flex:1;display:inline-block;margin:0;height:100%;-webkit-transition:none;transition:none}.fixed-action-btn.toolbar ul li a{display:block;overflow:hidden;position:relative;width:100%;height:100%;background-color:transparent;-webkit-box-shadow:none;box-shadow:none;color:#fff;line-height:56px;z-index:1}.fixed-action-btn.toolbar ul li a i{line-height:inherit}.fixed-action-btn ul{left:0;right:0;text-align:center;position:absolute;bottom:64px;margin:0;visibility:hidden}.fixed-action-btn ul li{margin-bottom:15px}.fixed-action-btn ul a.btn-floating{opacity:0}.fixed-action-btn
+.btn-floating,.dropdown-content,.collapsible,.sidenav{-webkit-box-shadow:0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2);box-shadow:0 2px 2px 0 rgba(0,0,0,0.14),0 3px 1px -2px rgba(0,0,0,0.12),0 1px 5px 0 rgba(0,0,0,0.2)}.z-depth-1-half,.btn:hover,.btn-large:hover,.btn-small:hover,.btn-floating:hover{-webkit-box-shadow:0 3px 3px 0 rgba(0,0,0,0.14),0 1px 7px 0 rgba(0,0,0,0.12),0 3px 1px -1px rgba(0,0,0,0.2);box-shadow:0 3px 3px 0 rgba(0,0,0,0.14),0 1px 7px 0 rgba(0,0,0,0.12),0 3px 1px -1px rgba(0,0,0,0.2)}.z-depth-2{-webkit-box-shadow:0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3);box-shadow:0 4px 5px 0 rgba(0,0,0,0.14),0 1px 10px 0 rgba(0,0,0,0.12),0 2px 4px -1px rgba(0,0,0,0.3)}.z-depth-3{-webkit-box-shadow:0 8px 17px 2px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.2);box-shadow:0 8px 17px 2px rgba(0,0,0,0.14),0 3px 14px 2px rgba(0,0,0,0.12),0 5px 5px -3px rgba(0,0,0,0.2)}.z-depth-4{-webkit-box-shadow:0 16px 24px 2px rgba(0,0,0,0.14),0 6px 30px 5px rgba(0,0,0,0.12),0 8px 10px -7px rgba(0,0,0,0.2);box-shadow:0 16px 24px 2px rgba(0,0,0,0.14),0 6px 30px 5px rgba(0,0,0,0.12),0 8px 10px -7px rgba(0,0,0,0.2)}.z-depth-5,.modal{-webkit-box-shadow:0 24px 38px 3px rgba(0,0,0,0.14),0 9px 46px 8px rgba(0,0,0,0.12),0 11px 15px -7px rgba(0,0,0,0.2);box-shadow:0 24px 38px 3px rgba(0,0,0,0.14),0 9px 46px 8px rgba(0,0,0,0.12),0 11px 15px -7px rgba(0,0,0,0.2)}.hoverable{-webkit-transition:-webkit-box-shadow .25s;transition:-webkit-box-shadow .25s;transition:box-shadow .25s;transition:box-shadow .25s, -webkit-box-shadow .25s}.hoverable:hover{-webkit-box-shadow:0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);box-shadow:0 8px 17px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19)}.divider{height:1px;overflow:hidden;background-color:#e0e0e0}blockquote{margin:20px 0;padding-left:1.5rem;border-left:5px solid #ee6e73}i{line-height:inherit}i.left{float:left;margin-right:15px}i.right{float:right;margin-left:15px}i.tiny{font-size:1rem}i.small{font-size:2rem}i.medium{font-size:4rem}i.large{font-size:6rem}img.responsive-img,video.responsive-video{max-width:100%;height:auto}
+#loading {
+		-webkit-animation: rotation 2s infinite linear;
+}
+@-webkit-keyframes rotation {
+		from {
+				-webkit-transform: rotate(0deg);
+		}
+		to {
+				-webkit-transform: rotate(359deg);
+		}
+}
+@media only screen and (min-width: 768px){
+.card{
+	width : 55% !important;
+}
+}
+.container{
+	padding: 0px;
+}
+.float{
+	position:fixed;
+	width:60px;
+	height:60px;
+	bottom:40px;
+	right:40px;
+	background-color:#0080FF;
+	color:#FFFFFF;
+	border-radius:50px;
+	text-align:center;
+	box-shadow: 2px 2px 3px #999;
+}
+.my-float{
+	margin-top:22px;
+}
+</style>
+            
+  
 <script>
 		$(function(){
 			//gfGetUserInfo();
@@ -10,7 +64,6 @@
 			//시스템 기본 색상 
 			//00548e
 		});
-
 		function fnContentList(page){
 			if (-2 == page){
 				$('#frmRead #page').val( Number($('#frmRead #page').val()) - 1);
@@ -391,7 +444,6 @@
 			$("#popupContentDetailReplyUpdate").modal("hide");
 			setTimeout("fnContentDetailPopupOpen()", 500); 
 		}
-
 		
 		
 		/*
@@ -407,8 +459,10 @@
 			setTimeout("fnContentDetailPopupOpen()", 500);			
 		}
 </script>
-
+  
+</head>
 <body>
+					
 	<!-- start preloader -->
 	<!-- 
 	<div id="preloader">
@@ -465,10 +519,10 @@
 		</div>
 		
 		<!-- start header -->
-			<% include ../cmm/cmmMenu.ejs %>
+			<% include ../cmm/cmmMenu2.ejs %>
 		<!-- end header -->
-
 		<!-- start content -->
+					
 		<div id="content">
 			<div class="container clearfix">
 				<!-- GLOBAL ALERT BANNER -->
@@ -476,8 +530,9 @@
 				<h4 id="headertitle-inner"></h4>
 				<div id="container">
 					<div id="conBtnGorup1">
+					<!--
 						<button type="button" class="button" onClick="javascript:fnLoginChkContentInsert();">글쓰기</button>
-					</div>
+						-->
 					
 					<div id="conBtnGorup2" style="display: none;"></div>
 					
@@ -509,6 +564,12 @@
 			
 		</div>
 		<!-- end content -->
+		
+		
+		
+		<a href="javascript:;" onClick="fnLoginChkContentInsert();" class="float">
+<i class="fa fa-plus my-float" ></i>
+</a>
 		<!-- start adspace -->
 		<div>
 			<div class="container">		
@@ -582,7 +643,6 @@
 			</div>
 		</div>
 	</div>
-
 	<div class="modal fade" id="popupContentDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog" style="margin-top: 100px;"></div>
 		<div id="popupContentData" ></div>
@@ -694,8 +754,32 @@
 			</div>
 		</div>
 	</div>
+	<div class="modal fade" id="popupNewDesign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 80px;">
+		<div class="jumbotron" style="height: calc( 100% - 20px ); background-color: #e9ecef; margin-left: 7px; margin-right: 7px; margin-bottom: 7px; padding-top: 5px;">
+			<h1 style="margin-left: 15px; color: #2FA4E7;">Dabble</h1>
+			<h1 style="margin-left: 15px; color: #2FA4E7;">짧은 글에도 큰 가치를..</h1>
+			<h1 style="margin-left: 15px; color: #2FA4E7;">새로운 디자인으로 찾아옵니다.</h1>
+			<h1 style="margin-left: 15px; color: #2FA4E7;">계속 사용하시려면 "닫기" 또는</h1>
+			<h1 style="margin-left: 15px; color: #2FA4E7;">"다시 보지 않기"를 눌러주세요</h1>
+			<!-- <p class="lead">Ok Im Hark 2018-12-05</p> -->
+			<div id="divLoginBtn" style="text-align: left; margin-left: 15px;">
+				<a href="http://dabble.cafe/Dabble_White_Paper.pdf" target="_blank">
+					<button type="button" id="btnCreate" class="btn btn-primary" style="color: #fff; background-color: #1992d7; border-color: #178acc;" >백서</button>
+				</a>
+				
+				<a href="http://dabble.cafe/pdf/WhitePaper_EN.pdf" target="_blank">
+					<button type="button" id="btnCreate" class="btn btn-primary" style="color: #fff; background-color: #1992d7; border-color: #178acc;" >White Paper</button>
+				</a>
+			</div>
+			<hr class="my-4">
+			<div id="divLoginBtn" style="text-align: right; margin-right: 35px;">
+				<button type="button" id="btnCreate" class="btn btn-primary" style="color: #fff; background-color: #1992d7; border-color: #178acc;" onClick="javascript:fnNewDesignPopupClose2();">다시 보지 않기</button>
+				<button type="button" id="btnCreate" class="btn btn-primary" style="color: #fff; background-color: #1992d7; border-color: #178acc;" onClick="javascript:fnNewDesignPopupClose1();">닫기</button>
+			</div>
+		</div>
+	</div>
+	
 	<!-- Modal End-->
-
 	<form id="frmWrite">
 		<input type="hidden" id="user" name="user" />
 		<input type="hidden" id="data" name="data" />
@@ -746,4 +830,3 @@
 </body>
 <% include ../cmm/cmmFooter.ejs %>
 </html>
-
