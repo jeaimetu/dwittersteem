@@ -322,7 +322,7 @@
 				var vCnt = Number($("input[name='hVoteCnt']").eq(tmpIdx).val());
 				vCnt++;
 				$("input[name='hVoteCnt']").eq(tmpIdx).val(vCnt);
-				$("i[name='viewVoteCount']").eq(tmpIdx).text(" " + vCnt );
+				$("span[name='viewVoteCount']").eq(tmpIdx).text(" " + vCnt );
 			}
 			
 			var sAction = "/vote";
