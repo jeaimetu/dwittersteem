@@ -179,10 +179,12 @@
 			}else if ( 5 == idx ){
 				fnCallback = fnContentDetailReplyUpdateImagePopupCallback;
 			}		
+			alert(fnCallback);
 			cloudinary.openUploadWidget( param, fnCallback );
 			
 		}
 		function fnContentWriteImagePopupCallback( error, result ){
+			alert("fnContentWriteImagePopupCallback called");
 			if ( null != error ){
 				return ;
 			}
@@ -191,6 +193,7 @@
 				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
 				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
 							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
+							alert("adding", strHtml);
 				$("#imgListContentInsert").append(strHtml);
 			}
 		}
