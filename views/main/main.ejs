@@ -189,6 +189,7 @@
 		function fnContentWriteImagePopupCallback( error, result ){
 			console.log("fnContentWriteImagePopupCallback called");
 			if ( null != error ){
+				console.log("cloudinary error", error);
 				return ;
 			}
 			for ( var x = 0 ; x < result.length ; x++ ){
