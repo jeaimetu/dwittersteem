@@ -180,11 +180,7 @@
 				fnCallback = fnContentDetailReplyUpdateImagePopupCallback;
 			}		
 			console.log(fnCallback);
-			//cloudinary.openUploadWidget( param, fnCallback );
-			cloudinary.openUploadWidget(param, (error, result) => {
-				fnContentWriteImagePopupCallback(error, result);
-			});
-			
+			cloudinary.openUploadWidget( param, fnCallback );
 		}
 		function fnContentWriteImagePopupCallback( error, result ){
 			console.log("fnContentWriteImagePopupCallback called");
@@ -839,7 +835,5 @@
 	
 </body>
 <% include ../cmm/cmmFooter.ejs %>
-
-</script>
 <script src="//widget.cloudinary.com/global/all.js" type="text/javascript"></script> 
 </html>
