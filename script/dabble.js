@@ -164,7 +164,9 @@
 	 */
 	function gfContentUpdate(idx){
 		gfImageBoxEmpty();
+		console.log("in gfContentUpdate");
 		$("#frmEdit #postid").val( $("input[name='hBoardId']").eq(idx).val() );
+		console.log("editing content", $("input[name='hBoardId']").eq(idx).val());
 		
 		var tagImg =  $("div[name='viewDefault']").eq(idx).find("img");
 		var len = tagImg.length;
