@@ -93,12 +93,12 @@
 	 * @returns
 	 */
 	function fnContentDetail(idx){
-		if ( $("div[name='viewDefault']").eq(idx).hasClass("preConSimple") ){
-			$("div[name='viewDefault']").eq(idx).removeClass("preConSimple");
-			$("div[name='viewDefault']").eq(idx).addClass("preConDetail");
+		if ( $("p[name='viewDefault']").eq(idx).hasClass("preConSimple") ){
+			$("p[name='viewDefault']").eq(idx).removeClass("preConSimple");
+			$("p[name='viewDefault']").eq(idx).addClass("preConDetail");
 		}else{
-			$("div[name='viewDefault']").eq(idx).removeClass("preConDetail");
-			$("div[name='viewDefault']").eq(idx).addClass("preConSimple");
+			$("p[name='viewDefault']").eq(idx).removeClass("preConDetail");
+			$("p[name='viewDefault']").eq(idx).addClass("preConSimple");
 		}
 	}
 	
@@ -168,7 +168,7 @@
 		$("#frmEdit #postid").val( $("input[name='hBoardId']").eq(idx).val() );
 		console.log("editing content", $("input[name='hBoardId']").eq(idx).val());
 		
-		var tagImg =  $("div[name='viewDefault']").eq(idx).find("img");
+		var tagImg =  $("p[name='viewDefault']").eq(idx).find("img");
 		var len = tagImg.length;
 		
 		for ( var x = 0 ; x < len ; x++ ){
@@ -198,7 +198,7 @@
 		gfImageBoxEmpty();
 		$("#frmEdit #postid").val( $("input[name='hBoardId']").eq(idx).val() );
 		
-		var tagImg =  $("div[name='viewDefault']").eq(idx).find("img");
+		var tagImg =  $("p[name='viewDefault']").eq(idx).find("img");
 		var len = tagImg.length;
 		
 		for ( var x = 0 ; x < len ; x++ ){
@@ -208,7 +208,7 @@
 			$("#imgListContentUpdate").append(strHtml);
 		}
 		
-		$("#contentEditTextarea").val($("div[name='viewDefault']").eq(idx).text());
+		$("#contentEditTextarea").val($("p[name='viewDefault']").eq(idx).text());
 		
 		//취소버튼 액션
 		//0:목록에서수정, 1:상세댓글
