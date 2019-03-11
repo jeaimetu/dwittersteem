@@ -43,8 +43,12 @@
     <%
     let parentId = eachData.parentid == null ? "" :eachData.parentid;
     let btnUpdateVisible = "";
+    let btnVoteEnable = "";
     if(loginInfo.id != data[x].account ){
     	btnUpdateVisible = "display: none;";
+    }
+    if ( "false" == eachData.votingenable ){
+    	btnVoteEnable = "disabled";
     }
 
     %>
@@ -71,10 +75,10 @@
 
                 
                 
-                <button class="btn btn-light btn-sm" onClick="javascript:gfContentVoteAction('<%=eachData.id%>');"><i class="far fa-smile-wink"></i> <span name="viewVoteCount"> <%=eachData.voting%> <span></button>
+                <button class="btn btn-light btn-sm" <%=btnVoteEnable%> onClick="javascript:gfContentVoteAction('<%=eachData.id%>');">좋아요 <span name="viewVoteCount"> <%=eachData.voting%> <span></button>
                 <!--<a href="#" class="btn btn-light btn-sm">펼쳐보기</a>-->
-                <button class="btn btn-light btn-sm" style=" <%=btnUpdateVisible%>" onClick="javascript:gfContentUpdate('<%=x%>');"><i class="fas fa-pencil-alt"></i></button>
-                <button class="btn btn-light btn-sm" onClick="javascript:fnLoginChkContentDetailAction(0, '<%=x%>');"><i class="fas fa-reply"></i></button>
+                <button class="btn btn-light btn-sm" style=" <%=btnUpdateVisible%>" onClick="javascript:gfContentUpdate('<%=x%>');">수정</button>
+                <button class="btn btn-light btn-sm" onClick="javascript:fnLoginChkContentDetailAction(0, '<%=x%>');">답글</i></button>
             </div>
         </div>
 </div>
