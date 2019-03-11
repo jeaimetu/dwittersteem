@@ -180,7 +180,10 @@
 				fnCallback = fnContentDetailReplyUpdateImagePopupCallback;
 			}		
 			console.log(fnCallback);
-			cloudinary.openUploadWidget( param, fnCallback );
+			//cloudinary.openUploadWidget( param, fnCallback );
+			cloudinary.openUploadWidget(param, (error, result) => {
+				fnContentWriteImagePopupCallback(error, result);
+			});
 			
 		}
 		function fnContentWriteImagePopupCallback( error, result ){
