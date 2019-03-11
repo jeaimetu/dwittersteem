@@ -178,7 +178,7 @@
 			$("#imgListContentUpdate").append(strHtml);
 		}
 		
-		$("#contentEditTextarea").val($("div[name='viewDefault']").eq(idx).text());
+		$("#contentEditTextarea").val($("p[name='viewDefault']").eq(idx).text());
 		
 		//취소버튼 액션
 		//0:목록에서수정, 1:상세댓글
