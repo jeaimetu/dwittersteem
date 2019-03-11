@@ -266,6 +266,21 @@ async function saveData(account, data, cb){
 	
 }
 
+function editData(postid, data, cb){
+	//ToDo : payout data condition check
+	MongoClient.connect(url, function(err, db) {
+		var dbo = db.db("heroku_dg3d93pq");
+		var myobj = { $set : {data : data}};
+		var findquery = {_id : ObjectId(postid)};
+		dbo.collection("board").updateOne(findquery, myobj, function(err, res){
+			if (err) throw err;
+			console.log("1 document modified");
+			cb("success");
+			db.close()
+		});
+	});
+}
+
 function readData(account, page, cb){
 	console.log("in reaData", account, page);
 	const pageSize = 20;
@@ -397,6 +412,17 @@ function fnIsLogin(req){
 	  	  res.send(body)
 	  }
   });
+
+  app.post("/edit", function(req, res) { 
+	/* some server side logic */
+	  
+	  var postid = req.body.postid;
+	  var data = req.body.data;
+	  console.log("edit event", postid, data);
+	  //query Mongo DB
+	  editData(postid, data,(result) => {res.send(result)});
+  });
+
 
   app.post("/login", function(req, res) { 
 	  var id = req.body.id;
