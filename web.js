@@ -508,7 +508,8 @@ app.post("/", function(req, res){
   			title : "EJS test",
   			data : result,
   			loginInfo : resultIsLogin,
-  			page : req.session.page
+  			page : req.session.page,
+			detailPage : "false"
   		});
   	});
   });
@@ -545,7 +546,8 @@ app.get("/", function(req, res){
  			title : "EJS test",
  			data : result,
  			loginInfo : resultIsLogin,
- 			page : 1
+ 			page : 1,
+			detailPage : "false"
  		});
  	});
 });
@@ -576,7 +578,8 @@ app.get("/index.html", function(req, res){
  			title : "EJS test",
  			data : result,
  			loginInfo : resultIsLogin,
- 			page : 1
+ 			page : 1,
+			detailPage : "false"
  		});
  	});
 });
@@ -631,7 +634,8 @@ app.get("/contentDetail", function(req, res) {
 	 			title : "Dabble",
 	 			data : result,
 	 			loginInfo : resultIsLogin,
-	 			page : 1
+	 			page : 1,
+				detailPage : "false"
 	 		});
 	 	});
 		return -1;
@@ -644,7 +648,8 @@ app.get("/contentDetail", function(req, res) {
  			data : result,
  			postid : postid,
  			loginInfo : resultIsLogin,
-			page : 1
+			page : 1,
+			detailPage : "true"
  		});
 	});	
 
