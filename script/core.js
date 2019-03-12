@@ -1,4 +1,4 @@
-<script>
+
 		$(function(){
 			//gfGetUserInfo();
 			//gfContentList();
@@ -408,4 +408,4 @@
 			$("#popupReply").modal("hide");
 			setTimeout("fnContentDetailPopupOpen()", 500);			
 		}
-</script>
+
