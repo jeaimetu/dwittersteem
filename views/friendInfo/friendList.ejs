@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en">
+<head>
+	<% include ../cmm/cmmHeader.ejs %>
+</head>
+<script>
+	$(function(){
+		fnLoginChk();
+		//gfContentList();
+		
+		//gfTooltip();
+		//시스템 기본 색상 
+		//00548e
+	});
+	
+	
+	
+	function fnLoginChk(){
+		gfIsLoginAction(fnLoginChkCallback);
+	}
+	function fnLoginChkCallback(data){
+		if ( "true" == data.result ){
+			fnGetFriendList();
+		}else{
+			alert("로그인 후 사용하세요.");
+			$(location).attr("href", "index.html");
+		}
+	}
+	
+	function fnGetFriendList(){
+		var sAction = "/readfriends";
+		var fnCallback = fnGetFriendsCallback;
+		var param = "";
+		var sMethod = "POST";	// GET/POST
+		gfAjaxCallWithParam(sAction, param, fnCallback, sMethod);
+	}		
+	
+	function fnGetFriendsCallback(data){
+		$("tbody[id='followList']").empty();
+		for ( var x = 0 ; x < data.length ; x++ ){
+			var strHtml	= '	<tr>'
+						+ '		<th scope="row" style="width: 140px; padding: 5px;"onclick="javascript:gfFrientContentsList(\'' + data[x].data + '\')">' + data[x].data + '</th>'
+						+ '		<td style="width: 50px; padding: 5px;">'
+						+ '			<button type="button" class="btn btn-primary" onclick="javascript:fnDeleteFriend(\'' + data[x].data + '\');">삭제</button>'
+						+ '		</td>'
+						+ '	</tr>';
+			$("tbody[id='followList']").append(strHtml);
+		}
+	}
+	
+	function fnDeleteFriend(account){
+		var sAction = "/deletefriend";
+		$('#frmFollow #account').val(account);
+		var fnCallback = fnDeleteFriendCallback;
+		gfAjaxCallWithForm(sAction,$('#frmFollow'),fnCallback,"POST");
+	}
+	function fnDeleteFriendCallback(data){
+		if ( "success" == data ){
+			alert("삭제 하였습니다");
+			fnGetFriendList();
+		}else{
+			alert("삭제 실패.");
+		}
+	}
+	
+	
+	
+	
+</script>
+<body>
+	<div id="wrap">
+		<div id="menu-button">
+			<table style="width: 100%;">
+			<colgroup>
+			<col width="25%;">
+			<col width="50%;">
+			<col width="25%;">
+			</colgroup>
+				<tr>
+					<td> 
+						<div class="left">
+							<div class="cursor">
+								<div id="nav-button">
+									<span class="nav-bar"></span>
+									<span class="nav-bar"></span>
+									<span class="nav-bar"></span>
+								</div>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="center">
+							<div class="cursor">
+								<a href="index.html" style="align-self: center;" >
+									<img  src="./images/logo-dabble.png" style="width: 130px; height: 50px; vertical-align: super; display: inline;" />
+								</a>
+							</div>
+						</div>
+					</td>
+					<td>
+						<div class="right">
+							<div class="cursor">
+								<div id="nav-button">
+									<span class="nav-bar"> </span>
+									<span class="nav-bar"></span>
+									<span class="nav-bar"></span>
+								</div>
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</div>
+		
+		<!-- start header -->
+		<% include ../cmm/cmmMenu2.ejs %>
+		<!-- end header -->
+
+		<!-- start content -->
+		<div id="content">
+			<div class="container clearfix">
+				<!-- GLOBAL ALERT BANNER -->
+				<!-- END GLOBAL ALERT BANNER -->
+			<!-- 
+			</div>
+			<div class="containerBody clearfix">
+			 -->
+				<!-- ITEMS PERSISTED ON ALL PAGES -->
+				<h4 id="headertitle-inner"></h4>
+				<div id="container">
+				</div>
+				<div>
+					<div class="element tile-2 home bg-change">
+						<h4 class="header icon-to-the-right">친구관리</h4>
+						<table class="table table-hover">
+							<colgroup>
+								<col style="width: 140px;">
+								<col style="width: 50px;">
+							</colgroup>
+							<thead>
+								<tr class="table-active">
+									<th scope="row" style="width: 140px; padding: 5px;">친구ID</th>
+									<td scope="col" style="width: 50px; padding: 5px;">-</td>
+								</tr>
+							</thead>
+							<tbody id="followList"></tbody>
+						</table>
+		            </div>
+				</div>
+			</div>
+		</div>
+		<!-- end content -->
+		<!-- start adspace -->
+		<div>
+			<div class="container">		
+				<!-- Google ad. start -->
+				<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+				<ins class="adsbygoogle"
+				     style="display:block"
+				     data-ad-client="ca-pub-6548341742538402"
+				     data-ad-slot="1467320415"
+				     data-ad-format="auto"
+				     data-full-width-responsive="true"></ins>
+				<script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+				<!-- Google ad. end -->
+			</div>
+		</div>
+		<!-- end adspace -->
+
+		<!-- start footer -->
+		<footer id="footer">
+			<div class="container clearfix">
+				<div class="col">
+					<div class="col" id="sourcecode">
+						<p>copyright, 2018, EOSIX<br />
+							<a href="javascript:;" target="_blank" title="">링크</a>
+						</p>
+					</div>
+					<div class="col">
+						<ul class="social-list clearfix col">
+							<li> <a href="https://t.me/eoscafe_korea"><i class="fa fa-telegram"></i></a> </li>
+							<li> <a href="mailto:"><i class="fa fa-envelope"></i></a> </li>
+							<li> <a href="https:"><i class="fa fa-meetup"></i></a> </li>
+							<li> <a href="https:"><i class="fa fa-medium"></i></a> </li>
+							<li> <a href="https:"><i class="fa fa-youtube"></i></a> </li>
+							<li> <a href="https"><i class="fa fa-twitter"></i></a> </li>
+						</ul>
+						<a class="col" id="dabblelogo" href="https://dabbledabble.herokuapp.com/"></a>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- end footer -->
+	</div>
+    <!-- end wrap -->
+    
+    
+    
+	<!-- Modal Start-->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						<!-- <button type="button" data-dismiss="modal">&times;</button> -->
+		        	</button>
+		        	<h4 class="modal-title" id="myModalLabel">무슨 생각을 하고 계세요?</h4>
+				</div>
+				<div class="modal-body">
+					<textarea id="contentTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" onClick="javascript:gfIsLoginAction(gfContentWrite);" data-dismiss="modal">완료</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="modal fade" id="contentEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+						<!-- <button type="button" data-dismiss="modal">&times;</button> -->
+		        	</button>
+		        	<h4 class="modal-title" id="myModalLabel">다른 생각을 하고 계세요?</h4>
+				</div>
+				<div class="modal-body">
+					<textarea id="contentEditTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					<button type="button" class="btn btn-primary" onClick="javascript:gfContentEditAction();" data-dismiss="modal">완료</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Modal End-->
+
+	<form id="frmUserInfo">
+		<input type="hidden" id="id"   name="id" />
+	</form>
+	<form id="frmFollow">
+		<input type="hidden" id="account"   name="account" />
+	</form>
+	<form id="frmFriendContents" method="post">
+		<input type="hidden" id="account"   name="account" />
+		<input type="hidden" id="page"   name="page" />
+	</form>
+	
+</body>
+<% include ../cmm/cmmFooter.ejs %>
+</html>
