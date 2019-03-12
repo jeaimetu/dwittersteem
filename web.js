@@ -414,6 +414,36 @@ function fnIsLogin(req){
 	  }
   });
 
+  app.post("/createfriend", function(req, res) { 
+	  const friend = req.body.account;
+	  console.log("createfriend event", friend);
+	  follower.createFriend(req.session.account, friend, (result)=>{
+		  res.send(result);
+	  });
+  });
+
+  app.post("/deletefriend", function(req, res) { 
+	  const friend = req.body.account;
+	  console.log("deletefriend event", friend);
+	  follower.deleteFriend(req.session.account, friend, (result)=>{
+		  res.send(result);
+	  });
+  });
+
+  app.post("/readfriends", function(req, res) { 
+	  console.log("readfriends event");
+	  follower.readFriends(req.session.account,(result)=>{
+		  res.send(result);
+	  });
+  });
+
+  app.post("/isFriend", function(req, res) {
+	  var friend = req.body.account;
+	  follower.viewFriend(req.session.account, friend, (result)=>{
+		  res.send(result);
+	  });
+  });
+
   app.post("/edit", function(req, res) { 
 	/* some server side logic */
 	  
