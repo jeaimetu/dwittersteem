@@ -277,8 +277,6 @@
 			
 			var sAction = "/addreply";
 			var fnCallback = fnContentReplyInsertActionCallback;
-			//setting parentid for reply of reply
-			if(
 			gfAjaxCallWithForm(sAction,$('#frmReply'),fnCallback,"POST");
 		}
 		function fnContentReplyInsertActionCallback(data){
