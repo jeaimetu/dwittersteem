@@ -1,401 +1,61 @@
-<!DOCTYPE html>
-<html class="no-js">
+
+<html lang="en">
 <head>
-	<% include ../cmm/cmmHeader.ejs %>
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+  <title>Dabble</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1", shrink-to-fit=no">
+  
+  <!-- Compiled and minified CSS -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
-</head>
-<script>
-		$(function(){
-			//gfGetUserInfo();
-			//gfContentList();
-			//시스템 기본 색상 
-			//00548e
-		});
-		
-		function fnLoginChkContentDetailAction(type, idx){
-			$("#frmTemp #postid").val(idx);
-			var fnCallback;
-			if ( 0 == type ){
-				fnCallback = fnLoginChkContentReplyInsertCallback;
-			}else if ( 1 == type ){
-				fnCallback = fnLoginChkContentDetailInsertCallback;
-			}else if ( 2 == type ){
-				fnCallback = fnLoginChkContentDetailUpdateCallback;
-			}
-			
-			gfIsLoginAction(fnCallback);
-		}
-		
-		
-		//일반 댓글쓰기 팝업
-		function fnLoginChkContentReplyInsertCallback(data){
-			var idx = $("#frmTemp #postid").val();
-			if ( "true" == data.result ){
-				$("#contentReplyTextarea").val("");
-				gfImageBoxEmpty();
-				$("#frmReply #parentid").val($("input[name='hBoardId']").eq(idx).val());
-				$("#frmReply #account").val($("input[name='hAccount']").eq(idx).val());
-				$("#popupContentReplyInsert").modal("show");
-				
-			}else{
-				alert("로그인 후 사용하세요.");
-			}
-		}
-		
-		//목록댓글
-		function fnContentReplyInsertAction(){
-			
-			if ( '' == $("#contentReplyTextarea").val().trim() ){
-				alert("댓글이 공백입니다.");
-				return;
-			}
-			var strText = '@' + $("#frmReply #account").val() + ' ' + $("#contentReplyTextarea").val();
-			var strImg = "";
-			var len = $("input[name='imgUrl']").length;
-			
-			for ( var x = 0 ; x < len ; x++ ){
-				strImg += '<img src="' + $("input[name='imgUrl']").eq(x).val() + '" />';
-			}
-			$("#frmReply #data").val( strText + strImg );
-			
-			var sAction = "/addreply";
-			var fnCallback = fnContentReplyInsertActionCallback;
-			gfAjaxCallWithForm(sAction,$('#frmReply'),fnCallback,"POST");
-		}
-		function fnContentReplyInsertActionCallback(data){
-			if ( "success" == data ){
-				//alert("댓글작성을 하였습니다");
-				fnContentDetailPopup($("#frmTemp #postid").val());
-				//gfContentList();
-			}else{
-				alert("댓글작성 실패");
-			}
-		}	
-		
-		function fnContentDetailPopup(idx){
-			var postId = $("input[name='hBoardParentId']").eq(idx).val()
-			if ( "" == postId ){
-				postId = $("input[name='hBoardId']").eq(idx).val();
-			}
-			$("#frmDetail").attr("action", "/contentDetail");
-			$("#frmDetail #postid").val(postId);
-			$('#frmDetail').submit();
-			
-			/*
-			$("#popupContentData").empty();
-			
-			var postId = $("input[name='hBoardParentId']").eq(idx).val()
-			if ( "" == postId ){
-				postId = $("input[name='hBoardId']").eq(idx).val();
-			}
-			
-			//$("#contentDetail").empty();
-			$("#frmDetail #postid").val(postId);
-			var sAction = "/readdetailpage";
-			var fnCallback = fnContentDetailPopupCallback;
-			gfAjaxCallWithForm(sAction,$('#frmDetail'),fnCallback,"POST");
-			fnContentDetailPopupOpen();
-			*/
-			
-		}
-		
-		
-		/**
-		 * 글수정 팝업
-		 * @param idx
-		 * @returns
-		 */
-		function fnContentUpdate(idx){
-			gfImageBoxEmpty();
-			$("#frmEdit #postid").val( $("input[name='hBoardId']").eq(idx).val() );
-			
-			var tagImg =  $("div[name='viewDefault']").eq(idx).find("img");
-			var len = tagImg.length;
-			
-			for ( var x = 0 ; x < len ; x++ ){
-				var strRep = tagImg.eq(x).attr("src").replace("/image/upload/","/image/upload/c_limit,h_60,w_90/");
-				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + strRep + '"/>'
-							+ '<input type="hidden" name="imgUrl" value="' + tagImg.eq(x).attr("src") + '" />';
-				$("#imgListContentUpdate").append(strHtml);
-			}
-			
-			$("#contentEditTextarea").val($("div[name='viewDefault']").eq(idx).text());
-			
-			//취소버튼 액션
-			//0:목록에서수정, 1:상세댓글
-			$("#btnUpdateCancel").on("click", fnUpdateCancel);
-			$("#btnUpdateAction").on("click", fnContentEditAction);
-			$("#contentEdit").modal("show");
-		}
-		
-		/**
-		 * 글 수정
-		 * @returns
-		 */
-		function fnContentEditAction(){
-			var strText = $("#contentEditTextarea").val();
-			var strImg = "";
-			var len = $("input[name='imgUrl']").length;
-			
-			for ( var x = 0 ; x < len ; x++ ){
-				strImg += '<img src="' + $("input[name='imgUrl']").eq(x).val() + '" />';
-			}
-			$("#frmEdit #data").val( strText + strImg );
-			
-			var sAction = "/edit";
-			var fnCallback = fnContentEditActionCallback;
-			gfAjaxCallWithForm(sAction,$('#frmEdit'),fnCallback,"POST");
-		}
-		function fnContentEditActionCallback(data){
-			if ( "success" == data ){
-				
-				var idx = $("input[name='hBoardId']").index( $("input[name='hBoardId'][value='"+$("#frmEdit #postid").val()+"']") );
-				$("div[name='viewDefault']").eq(idx).html($("#frmEdit #data").val());
-				//gfContentList();
-				//gfMsgBox(data.resultMsg, "핡~!", false, fnInsertAccountSuccessCallback);
-			}else{
-				alert("글수정 실패");
-				//gfMsgBox(data.resultMsg, "핡~!");
-			}
-		}		
-		
-		
-		
-		
-		function fnContentImagePopup(idx){
-			var param = {	cloud_name: 'hgnmrexj6'
-							, upload_preset: 'lnv4zcoi'
-							, sources : [ "local", "url"]
-				};
-			var fnCallback;
-			if ( 1 == idx ){
-				fnCallback = fnContentWriteImagePopupCallback;
-			}else if ( 2 == idx ){
-				fnCallback = fnContentEditImagePopupCallback;
-			}else if ( 3 == idx ){
-				fnCallback = fnContentReplyImagePopupCallback;
-			}else if ( 4 == idx ){
-				fnCallback = fnContentDetailReplyInsertImagePopupCallback;
-			}else if ( 5 == idx ){
-				fnCallback = fnContentDetailReplyUpdateImagePopupCallback;
-			}		
-			cloudinary.openUploadWidget( param, fnCallback );
-			
-		}
-		function fnContentWriteImagePopupCallback( error, result ){
-			if ( null != error ){
-				return ;
-			}
-			for ( var x = 0 ; x < result.length ; x++ ){
-				var splitArray = result[x].url.split("/image/upload/");
-				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
-				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
-							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
-				$("#imgListContentInsert").append(strHtml);
-			}
-		}
-		function fnContentEditImagePopupCallback( error, result ){
-			if ( null != error ){
-				return ;
-			}
-			for ( var x = 0 ; x < result.length ; x++ ){
-				var splitArray = result[x].url.split("/image/upload/");
-				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
-				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
-							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
-				$("#imgListContentUpdate").append(strHtml);
-			}
-		}
-		function fnContentReplyImagePopupCallback( error, result ){
-			if ( null != error ){
-				return ;
-			}
-			for ( var x = 0 ; x < result.length ; x++ ){
-				var splitArray = result[x].url.split("/image/upload/");
-				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
-				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
-							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
-				$("#imgListContentReplyInsert").append(strHtml);
-			}
-		}
-		function fnContentDetailReplyInsertImagePopupCallback( error, result ){
-			if ( null != error ){
-				return ;
-			}
-			for ( var x = 0 ; x < result.length ; x++ ){
-				var splitArray = result[x].url.split("/image/upload/");
-				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
-				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
-							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
-				$("#imgListContentDetailInsert").append(strHtml);
-			}
-		}
-		function fnContentDetailReplyUpdateImagePopupCallback( error, result ){
-			if ( null != error ){
-				return ;
-			}
-			for ( var x = 0 ; x < result.length ; x++ ){
-				var splitArray = result[x].url.split("/image/upload/");
-				var url = splitArray[0] + "/image/upload/c_limit,h_"+ result[x].height +",w_"+ result[x].width +"/" + splitArray[1];
-				var strHtml = '<img name="imgThumbNail" onClick="javascript:fnImageDelete(this);" style="width: auto; display: inline-block; padding: 2px;" src="' + result[x].thumbnail_url + '"/>'
-							+ '<input type="hidden" name="imgUrl" value="' + url + '" />';
-				$("#imgListContentDetailUpdate").append(strHtml);
-			}
-		}
-		function fnImageDelete(obj){
-			var imgArray = $("img[name='imgThumbNail']");
-			var hideArray = $("input[name='imgUrl']");
-			var idx = imgArray.index(obj);
-			imgArray.eq(idx).remove();
-			hideArray.eq(idx).remove();
-		}
-		
-		
-</script>
+  
+<link rel="stylesheet" href="./style/main.css">            
+<script src="./script/core.js" type="text/javascript"></script>
 
+  
+</head>
 <body>
+					
 	<!-- start preloader -->
-	<!-- 
-	<div id="preloader">
-		<div id="status">
-			<div class="parent">
-				<div class="child"><p>loading</p></div>
-			</div>
-		</div>
-	</div>
-	 -->
 	<!-- end preloader -->
-	<div id="wrap">
-		<div id="menu-button">
-			<table style="width: 100%;">
-			<colgroup>
-			<col width="25%;">
-			<col width="50%;">
-			<col width="25%;">
-			</colgroup>
-				<tr>
-					<td> 
-						<div class="left">
-							<div class="cursor">
-								<div id="nav-button">
-									<span class="nav-bar"></span>
-									<span class="nav-bar"></span>
-									<span class="nav-bar"></span>
-								</div>
-							</div>
-						</div>
-					</td>
-					<td>
-						<div class="center">
-							<div class="cursor">
-								<a href="index.html" style="align-self: center;" >
-									<img  src="./images/logo-dabble.png" style="width: 130px; height: 50px; vertical-align: super; display: inline;" />
-								</a>
-							</div>
-						</div>
-					</td>
-					<td>
-						<div class="right">
-							<div class="cursor">
-								<div id="nav-button">
-									<span class="nav-bar"> </span>
-									<span class="nav-bar"></span>
-									<span class="nav-bar"></span>
-								</div>
-							</div>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
+	
 		
 		<!-- start header -->
-			<% include ../cmm/cmmMenu.ejs %>
+			<% include ../cmm/cmmMenu2.ejs %>
 		<!-- end header -->
-
 		<!-- start content -->
+					
 		<div id="content">
 			<div class="container clearfix">
 				<!-- GLOBAL ALERT BANNER -->
 				<!-- ITEMS PERSISTED ON ALL PAGES -->
 				<h4 id="headertitle-inner"></h4>
-				<div id="contentList">
-
-	<%
-function linkify(inputText) {
-    var replacedText, replacePattern1, replacePattern2, replacePattern3;
-    //URLs starting with http://, https://, or ftp://
-    replacePattern1 = /(((?<!src=")https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-    replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">$1</a>');
-    //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
-    replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-    replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">$2</a>');
-    //Change email addresses to mailto:: links.
-    replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
-    replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
-    return replacedText;
-}
-%>
-	%>
-	
-	<%	for ( var x = 0 ; x < data.length ; x++ ){ %>
-	<%
-			var btnVoteEnable = "";
-			var btnUpdateVisible = "";
-			var btnReplyVisible = "";
-	
-			if ( "false" == data[x].votingenable ){
-				btnVoteEnable = "disabled";
-			}
-			if ( loginInfo.id != data[x].account ){
-				btnUpdateVisible = "display: none;";
-			}
-			if ( loginInfo.id != data[x].account ){
-				btnUpdateVisible = "display: none;";
-			}
-			
-			var strProfile = (data[x].profile == null) ? "" : data[x].profile ;
-			var profilePath = (strProfile.length == 5) ? "./images/user/" + strProfile : strProfile;
+				<div id="container">
+					<div id="conBtnGorup1">
+					<!--
+						<button type="button" class="button" onClick="javascript:fnLoginChkContentInsert();">글쓰기</button>
+						-->
+						</div>
 					
-			var parentId = postid;
-	%>
-					<div class="element tile-2 home bg-change" style="padding: 10px 20px 1px 20px;">
-						<table style="width: 100%;">
-							<tr>
-								<td onClick="javascript:gfFollowPopup('<%=x%>');">
-									<h4 class="header icon-to-the-right"><%=data[x].account%></h4>
-								</td>
-								<td  style="text-align:right; margin: 0px;" onClick="javascript:gfFollowPopup('<%=x%>');">
-									<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 40px; max-width: 40px;" src="<%=profilePath%>">
-								</td>
-							</tr>
-						</table>
-						<div class="preConDetail" name="viewDefault"><%- linkify(data[x].data) %></div>
-						<div style="margin: 5px;"></div>
-						<div class="hint" name="createTime"><%- cmmUtil.timeConverter(data[x].date); %></div>
-						<div style="margin: 5px;"></div>
-				
-						<button type="button" name="btnVote" <%=btnVoteEnable%> style="width:30%;" class="btn btn-default" onClick="javascript:gfContentVoteAction('<%=data[x].id%>');" ><i name="viewVoteCount" class="fa fa-thumbs-o-up"><%=data[x].voting%></i></button>
-						<button type="button" name="btnUpdate" style=" <%=btnUpdateVisible%> width:20%;" class="btn btn-default" onClick="javascript:fnContentUpdate('<%=x%>');" ><i class="fa fa-edit"></i></button>
-						<%	if ( 0 == x && null != loginInfo.id ){	%>
-							<button type="button" name="btnReply" style="width:25%;" class="btn btn-default" onClick="javascript:fnLoginChkContentDetailAction(0, '<%=x%>');" ><i class="fa fa-commenting-o"></i></button>
-						<%	}	%>
-						<input type="hidden" name="hBoardId" value="<%=data[x].id%>" >
-						<input type="hidden" name="hBoardParentId" value="<%=parentId%>" >
-						<input type="hidden" name="hVoteCnt" value="<%=data[x].voting%>" >
-						<input type="hidden" name="hAccount" value="<%=data[x].account%>" >
-						<div style="margin: 10px;"></div>
-					</div>					
+					<div id="conBtnGorup2" style="display: none;"></div>
 					
-	<%	}%>
-					
-				</div>	
-
+					<div style="display: none;">
+						<!-- <button type="button" class="button" id="btnContentWrite" data-toggle="modal" data-target="#myModal"></button> -->
+						<button type="button" class="button" id="btnContentEidt" data-toggle="modal" data-target="#contentEdit"></button>
+						<button type="button" class="button" id="btnFollowPopup" data-toggle="modal" data-target="#followPopup"></button>
+						<!-- <button type="button" class="button" id="btnContentDetailPopup" data-toggle="modal" data-target="#popupContentDetail"></button> -->
+					</div>
+				</div>
+				<% let contentDetail = true %>
+				<% include ./body.ejs %>
 				<table>
 				<tr>
 				<td>
@@ -404,9 +64,20 @@ function linkify(inputText) {
 				</tr>
 				</table>
 			</div>
+			<div class="container clearfix">
+				<div style="text-align: left; display: inline-block; width: calc(50% - 3px); margin-left: 0px; margin-right: 0px;">
+					<button type="button" class="button" style="width: 100%; margin-left: 0px; margin-right: 0px;" onClick="javascript:fnContentList(-2);">Prev</button>
+				</div>
+				<div style="text-align: right; display: inline-block; width: calc(50% - 2px); margin-left: 0px; margin-right: 0px;">
+					<button type="button" class="button" style="width: 100%; margin-left: 0px; margin-right: 0px;" onClick="javascript:fnContentList(-1);">Next</button>
+				</div>
+			</div>
 			
 		</div>
 		<!-- end content -->
+		
+		
+
 		<!-- start adspace -->
 		<div>
 			<div class="container">		
@@ -430,217 +101,10 @@ function linkify(inputText) {
     <!-- end wrap -->
     
 	<!-- Modal Start-->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="margin-top: 100px;">
-			<div class="modal-content">
-				<div class="modal-header">
-		        	<!-- 
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-		        	</button>-->
-		        	<h4 class="modal-title" id="myModalLabel">무슨 생각을 하고 계세요?</h4>
-				</div>
-				<div class="modal-body">
-					<textarea id="contentTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
-				</div>
-				<div class="modal-body" style="padding-top: 0px; padding-bottom: 5px;">
-					<button type="button" class="btn btn-default" onClick="javascript:fnContentImagePopup(1)">이미지 업로드</button> 썸네일을 누르면 이미지가 삭제됩니다.
-					<div id="imgListContentInsert" style="padding-top: 10px;"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" onClick="javascript:gfIsLoginAction(gfContentWrite);" data-dismiss="modal">완료</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="modal fade" id="contentEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="margin-top: 100px;">
-			<div class="modal-content">
-				<div class="modal-header">
-					<!--
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-		        	</button>
-		        	-->
-		        	<h4 class="modal-title" id="myModalLabel">다른 생각을 하고 계세요?</h4>
-				</div>
-				<div class="modal-body">
-					<textarea id="contentEditTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
-				</div>
-				<div class="modal-body" style="padding-top: 0px; padding-bottom: 5px;">
-					<button type="button" class="btn btn-default" onClick="javascript:fnContentImagePopup(2)">이미지 업로드</button> 썸네일을 누르면 이미지가 삭제됩니다.
-					<div id="imgListContentUpdate" style="padding-top: 10px;"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" id="btnUpdateCancel" onClick="javascript:fnUpdateCancel();" class="btn btn-default">취소</button>
-					<button type="button" id="btnUpdateAction" class="btn btn-primary" data-dismiss="modal">완료</button>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div class="modal fade" id="popupContentDetail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="margin-top: 100px;"></div>
-		<div id="popupContentData" ></div>
-	</div>	
-	
-	<div class="modal fade" id="popupContentReplyInsert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="margin-top: 100px;">
-			<div class="modal-content">
-				<div class="modal-header">
-					<!--
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-		        	</button>
-		        	-->
-		        	<h4 class="modal-title" id="myModalLabel">당신의 의견을 알려주세요.</h4>
-				</div>
-				<div class="modal-body">
-					<textarea id="contentReplyTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
-				</div>
-				<div class="modal-body" style="padding-top: 0px; padding-bottom: 5px;">
-					<button type="button" class="btn btn-default" onClick="javascript:fnContentImagePopup(3)">이미지 업로드</button> 썸네일을 누르면 이미지가 삭제됩니다.
-					<div id="imgListContentReplyInsert" style="padding-top: 10px;"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" onClick="javascript:fnContentReplyInsertAction();" data-dismiss="modal">완료</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="modal fade" id="popupContentDetailReplyInsert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="margin-top: 100px;">
-			<div class="modal-content">
-				<div class="modal-header">
-					<!--
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-		        	</button>
-		        	-->
-		        	<h4 class="modal-title" id="myModalLabel">당신의 의견을 알려주세요.</h4>
-				</div>
-				<div class="modal-body">
-					<textarea id="contentDetailReplyTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
-				</div>
-				<div class="modal-body" style="padding-top: 0px; padding-bottom: 5px;">
-					<button type="button" class="btn btn-default" onClick="javascript:fnContentImagePopup(4)">이미지 업로드</button> 썸네일을 누르면 이미지가 삭제됩니다.
-					<div id="imgListContentDetailInsert" style="padding-top: 10px;"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" onClick="javascript:fnContentDetailReplyInsertPopupClose();">취소</button>
-					<button type="button" class="btn btn-primary" onClick="javascript:fnContentDetailReplyInsertAction();" data-dismiss="modal">완료</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	
-	<div class="modal fade" id="popupContentDetailReplyUpdate" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog" style="margin-top: 100px;">
-			<div class="modal-content">
-				<div class="modal-header">
-					<!--
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-		        	</button>
-		        	-->
-		        	<h4 class="modal-title" id="myModalLabel">당신의 의견을 알려주세요.</h4>
-				</div>
-				<div class="modal-body">
-					<textarea id="contentDetailReplyUpdateTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
-				</div>
-				<div class="modal-body" style="padding-top: 0px; padding-bottom: 5px;">
-					<button type="button" class="btn btn-default" onClick="javascript:fnContentImagePopup(5)">이미지 업로드</button> 썸네일을 누르면 이미지가 삭제됩니다.
-					<div id="imgListContentDetailUpdate" style="padding-top: 10px;"></div>
-				</div>
-				
-				
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" onClick="javascript:fnContentDetailReplyUpdatePopupClose();" >취소</button>
-					<button type="button" class="btn btn-primary" onClick="javascript:fnContentDetailReplyUpdateAction();" data-dismiss="modal">완료</button>
-				</div>
-			</div>
-		</div>
-	</div>	
-	
-	<div class="modal fade" id="followPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabelFollow" aria-hidden="true">
-		<div class="modal-dialog" style="margin-top: 100px;">
-			<div class="modal-content">
-				<div class="modal-header">
-					<!--
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-		        	</button>
-		        	-->
-		        	<h4 class="modal-title" id="myModalLabelFollow"><span id="myModalLabelFollowId"></span> <span id="myModalLabelFollowComment">님과 친하게 지내시겠어요?</span></h4>
-		        	<img id="userImage" src="/images/user/0.png" style="width:20%; height: 20%; ">
-				</div>
-				<!--
-				<div class="modal-body">
-					<textarea id="contentEditTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
-				</div>
-				 -->
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
-					<button type="button" class="btn btn-primary" onClick="javascript:gfFrientContentsList();" data-dismiss="modal"><span id="myModalLabelFollowBtn">친구</span> 글목록</button>
-					<button type="button" id="popupBtnUnFollow" class="btn btn-primary" onClick="javascript:gfUnFollowAction();" data-dismiss="modal">UnFollow</button>
-					<button type="button" id="popupBtnFollow"   class="btn btn-primary" onClick="javascript:gfFollowAction();"   data-dismiss="modal">Follow</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- Modal End-->
-
-	<form id="frmWrite">
-		<input type="hidden" id="user" name="user" />
-		<input type="hidden" id="data" name="data" />
-	</form>
-	<form id="frmEdit">
-		<input type="hidden" id="postid" name="postid" />
-		<input type="hidden" id="data" name="data" />
-	</form>
-	<form id="frmRead" method="post">
-		<input type="hidden" id="user" name="user" value="<%=(loginInfo.id!=null?loginInfo.id:"")%>" />
-		<input type="hidden" id="page" name="page" value="" />
-	</form>
-	<form id="frmReadVote">
-		<input type="hidden" id="id" name="id" />
-	</form>
-	<form id="frmVote">
-		<input type="hidden" id="id"   name="id" />
-		<input type="hidden" id="vote" name="vote" />
-	</form>
-	<form id="frmUserInfo">
-		<input type="hidden" id="id"   name="id" value="<%=(null==loginInfo.id)?"":loginInfo.id%>" />
-	</form>
-	<form id="frmFollow">
-		<input type="hidden" id="account"   name="account" />
-	</form>
-	<form id="frmReply">
-		<input type="hidden" id="parentid" name="parentid" />
-		<input type="hidden" id="account" name="account" />
-		<input type="hidden" id="data" name="data" />
-	</form>
-	<form id="frmReplyUpdate">
-		<input type="hidden" id="postid" name="postid" />
-		<input type="hidden" id="data" name="data" />
-	</form>
-	<form id="frmDetail">
-		<input type="hidden" id="postid" name="postid" />
-	</form>
-	<form id="frmTemp">
-		<input type="hidden" id="postid" name="postid" />
-	</form>
-	<form id="frmFriendContents" method="post">
-		<input type="hidden" id="account"   name="account" />
-		<input type="hidden" id="page"   name="page" />
-	</form>
-	
+	<% include ./modal.ejs %>
 	
 	
 </body>
 <% include ../cmm/cmmFooter.ejs %>
+<script src="//widget.cloudinary.com/global/all.js" type="text/javascript"></script> 
 </html>
