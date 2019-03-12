@@ -49,7 +49,7 @@
 			if ( "true" == data.result ){
 				$("#contentReplyTextarea").val("");
 				gfImageBoxEmpty();
-				$("#frmReply #parentid").val($("input[name='hBoardId']").eq(idx).val());
+				$("#frmReply #parentid").val($("input[name='hBoardParentId']").eq(idx).val());
 				$("#frmReply #account").val($("input[name='hAccount']").eq(idx).val());
 				$("#popupContentReplyInsert").modal("show");
 				
