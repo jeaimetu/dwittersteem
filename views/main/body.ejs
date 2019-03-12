@@ -41,7 +41,14 @@
 
     <% data.forEach(function(eachData,x){ %>
     <%
-    let parentId = eachData.parentid == null ? "" :eachData.parentid;
+    let parentId;
+    
+    if(detailPage == "false"){
+    	parentId = eachData.parentid == null ? "" :eachData.parentid;
+    }else{
+    	parentId = postid
+    }
+    
     let btnUpdateVisible = "";
     let btnVoteEnable = "";
     if(loginInfo.id != data[x].account ){
