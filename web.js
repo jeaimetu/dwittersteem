@@ -514,6 +514,17 @@ app.post("/", function(req, res){
   	});
   });
 
+  app.post("/logout", function(req, res) { 
+	  
+	/* some server side logic */
+
+	  var id = req.body.id;
+	  req.session.isLogin = false;
+	  console.log("logout event");
+
+	  res.send("done");
+  });
+
 app.get("/myInfo", function(req, res) {
 	var resultIsLogin = fnIsLogin(req);
 	res.render("./myInfo/myInfo", {loginInfo : resultIsLogin});
