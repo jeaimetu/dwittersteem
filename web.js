@@ -643,7 +643,8 @@ app.get("/contentDetail", function(req, res) {
  			cmmUtil : cmmUtil,
  			data : result,
  			postid : postid,
- 			loginInfo : resultIsLogin
+ 			loginInfo : resultIsLogin,
+			page : 1
  		});
 	});	
 
