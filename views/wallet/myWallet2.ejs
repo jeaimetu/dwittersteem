@@ -1,0 +1,547 @@
+<html lang="en">
+<head>
+  <title>Dabble</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1", shrink-to-fit=no">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+	
+<style>	
+@media only screen and (min-width: 768px){
+.table {
+   margin: auto;
+   font-size:14px;
+   width: 50% !important; 
+}
+.nav-tabs{
+    width:50% !important;
+    margin:0px auto;
+    left:0;
+    right:0;
+    padding:0;
+}
+	
+}
+</style>
+	
+</head>
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-135758894-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-135758894-1');
+</script>
+	<script>
+		$(function(){
+			gfIsLoginAction(userInfoCallback);
+		});
+		
+		function userInfoCallback(data){
+			if ( "true" == data.result ){
+				$("#frmUserInfo #id").val(data.id)
+				getWalletAction();
+			}else{
+				alert("로그인 후 사용하세요.");
+				$(location).attr("href", "index.html");
+			}
+		}
+		
+		function delayCall(trx_id){
+			setTimeout(function(){moveInternalAction(trx_id);}, 3000);
+		}
+		
+		function getExternalWalletAction(){
+			var sAction = "/getbalance";
+			$("#frmWallet #user").val($("#frmUserInfo #id").val());
+			var fnCallback = getExternalWalletActionCallback;
+			gfAjaxCallWithForm(sAction,$('#frmWallet'),fnCallback,"POST");
+		}
+		function getExternalWalletActionCallback(data){
+			if ( "OK" == data.result ){
+				$("#externalTokenBalance").text(data.balance);
+				var a = data.balance.split(" ");
+				var b = $("#tokenBalance").text().split(" ");
+				var e = $("#staking").text().split(" ");
+				var f = $("#unstaking").text().split(" ");
+				var c = +a[0] + +b[0] + +e[0] + +f[0];
+				var d = c.toLocaleString("kr-KR") + " DAB";
+				$("#totalBalance").text(d);
+			}else{
+				alert("지갑조회실패");
+			}
+		}
+		function postLimitIncreaseAction(){
+			var sAction = "/postIncreaseLimit";
+			$("#frmWallet #user").val($("#frmUserInfo #id").val());
+			var fnCallback = postLimitIncreaseActionCallback;
+			gfAjaxCallWithForm(sAction,$('#frmWallet'),fnCallback,"POST");
+		}
+		function postLimitIncreaseActionCallback(data){
+			if ( "OK" == data.result ){
+				getWalletAction();
+				alert("5개의 글쓰기가 늘어났습니다.");
+			}else{
+				alert("글쓰기 충전은 24시간에 한번입니다.");
+			}
+		}
+		function stakeDabAction(){
+			var sAction = "/stakeDab";
+			$("#frmWallet #quantity").val($("#stakeAmount").val());
+			var fnCallback = stakeDabActionActionCallback;
+			gfAjaxCallWithForm(sAction,$('#frmWallet'),fnCallback,"POST");
+		}
+		function stakeDabActionActionCallback(data){
+			if(data.result == "OK"){
+				getWalletAction()
+				alert("스테이크 성공");
+			}else{
+				alert("스테이크 실패");
+			}
+		}
+		function unStakeDabAction(){
+			var sAction = "/UnStakeDab";
+			$("#frmWallet #quantity").val($("#unstakeAmount").val());
+			var fnCallback = unStakeDabActionActionCallback;
+			gfAjaxCallWithForm(sAction,$('#frmWallet'),fnCallback,"POST");
+		}
+		function unStakeDabActionActionCallback(data){
+			if(data.result == "OK"){
+				getWalletAction()
+				alert("언스테이크 성공");
+			}else{
+				alert("언스테이크 실패");
+			}
+		}
+		
+		function moveInternalAction(trx_id){
+			console.log("transaction id", trx_id);
+			var sAction = "/getAmountByTransaction";
+			$("#frmWallet #trx").val(trx_id);
+			var fnCallback = moveInternalActionCallback;
+			gfAjaxCallWithForm(sAction,$('#frmWallet'),fnCallback,"POST");
+		}
+		function moveInternalActionCallback(data){
+			if ( "OK" == data.result ){
+				getWalletAction();
+				getExternalWalletAction();
+			}else{
+				alert("내부지갑이동실패");
+			}
+		}
+		
+		function getWalletAction(){
+			var sAction = "/getWallet";
+			$("#frmWallet #user").val($("#frmUserInfo #id").val());
+			var fnCallback = getWalletActionCallback;
+			gfAjaxCallWithForm(sAction,$('#frmWallet'),fnCallback,"POST");
+		}
+		
+		function getWalletActionCallback(data){
+			if ( "OK" == data.result ){
+				$("#tokenBalance").text(data.balance +" DAB");
+				if ( "" == data.account ){
+					alert("등록된 eos account 가 없습니다.");
+					$("#btnChangeAccount").hide();
+					$("#btnAccountSave").show();
+					$("#btnAccountSaveCancel").show();
+					$("#eosaccount").attr("readonly", false);
+				}else{
+					//$("#btnChangeAccount").show();
+					//$("#btnAccountSave").hide();
+					//$("#eosaccount").val(data.account);
+					//$("#eosaccount").attr("placeholder", data.account);
+					$("#eosaccount").val(data.account);
+					console.log("data.account",data.account);
+					$("#unstaking").text(data.unstaked + " DAB");
+					$("#staking").text(data.staked + " DAB");
+					$("#postLimit").text(data.postLimit);
+					$("#postLimitMax").text(data.postLimitMax);
+					$("#eosAccountSaveButton").hide();
+					
+					var stakingPercent = (+data.staked / +data.totalStaking) * 100;
+					stakingPercent = stakingPercent.toFixed(3) + "%";
+					var totalStaking = stakingPercent + " of " + data.totalStaking;
+					$("#stakingTotal").text(totalStaking);
+				}
+				getExternalWalletAction();
+			}else{
+				alert("지갑조회실패");
+			}
+		}
+		
+		function fnEosAccountChange(){
+			//$("#btnChangeAccount").hide();
+			//$("#btnAccountSave").show();
+			//$("#btnAccountSaveCancel").show();
+			//$("#eosaccount").attr("readonly", false);
+//			//$("#btnChangeAccount").show();
+			//$("#btnAccountSave").hide();
+			$("#eosAccountChangeButton").hide();
+			//$("#eosAccountSavButton").show();
+			$("#eosaccount").attr("readonly", false);
+			$("#eosAccountSaveButton").show();
+ 		}
+		
+		function fnEosAccountChangeCancel(){
+			$("#btnChangeAccount").show();
+			$("#btnAccountSave").hide();
+			$("#btnAccountSaveCancel").hide();
+			$("#eosaccount").attr("readonly", true);
+//			$("#btnChangeAccount").show();
+			//$("#btnAccountSave").hide();
+ 		}
+		
+		function fnEosAccountSave(){
+			var regex = /^[a-z1-5]{12}$/;
+			if ( !regex.test($("#eosaccount").val()) ){
+				//alert("eos account는 소문자 a부터 z까지, 숫자 1부터 5까지 구성된 12자리입니다.\neos account가 맞는지 확인바랍니다.\nex)\nabcdefg12345 (O), abcdefg67890 숫자 0, 6이상(X), aaaaaaaaaaaaa 계정13자리(X)");
+				alert("eos account는 소문자 a부터 z까지, 숫자 1부터 5까지 구성된 12자리입니다. \nex)abcdefg12345 (O), abcdefg67890 (X)");
+				return;
+			}
+			
+			var sAction = "/setwallet";
+			$("#frmWallet #account").val($("#eosaccount").val());
+			var fnCallback = fnEosAccountSaveCallback;
+			gfAjaxCallWithForm(sAction,$('#frmWallet'),fnCallback,"POST");
+		}
+		
+		function fnEosAccountSaveCallback(data){
+			if ( "OK" == data ){
+				$("#btnChangeAccount").show();
+				$("#eosAccountSaveButton").hide();
+				$("#eosAccountChangeButton").show();
+				$("#eosaccount").attr("readonly", true);
+				alert("수정 되었습니다.");
+				getWalletAction();
+				
+			}else{
+				$("#btnChangeAccount").hide();
+				$("#btnAccountSave").show();
+				$("#btnAccountSaveCancel").show();
+				$("#eosaccount").attr("readonly", false);
+			}
+		}
+		
+		function fnTrasnferMyWallet(){
+			if ( "" == $("#eosaccount").val().trim() ){
+				alert("지갑을 먼저 등록하세요.");
+				return ;
+			}
+			if ( !$("#eosaccount").prop("readonly") ){
+				alert("지갑이 변경중이면 내 지갑으로 전송을 할 수 없습니다. OK 버튼을 누른 후 다시 시도해주세요.");
+				return ;
+			}
+			$("#btnTransfer").attr("disabled", true);			
+			var sAction = "/transferbalance";
+			console.log("amount", $("#fromDabAmount").val());
+			$("#frmWallet #amount").val($("#fromDabAmount").val());
+			var fnCallback = fnTrasnferMyWalletCallback;
+			gfAjaxCallWithForm(sAction,$('#frmWallet'),fnCallback,"POST");
+		
+		}
+		
+		function fnTrasnferMyWalletCallback(data){
+			if ( "success" == data ){
+				alert("내 지갑으로 전송하였습니다.");
+				getWalletAction();
+			}else{
+				alert("내 지갑으로 전송을 실패 하였습니다.");
+			}
+			$("#btnTransfer").attr("disabled", false);
+		}
+		
+//scatter test on ejs
+function test0(){
+	console.log("calling scatter");
+	ScatterJS.plugins( new ScatterEOS() );
+	const network = ScatterJS.Network.fromJson({
+    		blockchain:'eos',
+    		chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    		host:'proxy.eosnode.tools',
+    		port:443,
+    		protocol:'https'
+	});
+	ScatterJS.scatter.connect("Dabble").then(connected => {
+    		// User does not have Scatter Desktop, Mobile or Classic installed.
+    		if(!connected){ 
+    			console.log("connection error");
+    			return false;
+		}
+		console.log("scatter connection success");
+		const scatter = ScatterJS.scatter;
+		
+		const requiredFields = { accounts:[network] };
+		scatter.getIdentity(requiredFields).then(() => {
+			const account = scatter.identity.accounts.find(x => x.blockchain === 'eos');
+			console.log("get identidy", account);
+			
+			const eosOptions = { expireInSeconds:60 };
+			const eos = scatter.eos(network, Eos, eosOptions);
+			
+			const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
+			let transferAmount = parseFloat($("#toDabAmount").val()).toFixed(4) + " DAB";
+			console.log("transferAmount", transferAmount);
+			eos.transaction("eoscafekorea", myaccount => {
+                    		myaccount.transfer(account.name, "eoscafekorea", transferAmount, 'memo', transactionOptions);
+			}).then(trx => {
+				console.log(`Transaction ID: `, trx);
+				console.log("block number", trx.processed.block_num);
+				delayCall(trx.transaction_id);
+				//window.ScatterJS = null; //move to exit page
+			}).catch(error => {
+            			console.error(error);
+				scatter.forgetIdentity();
+				//window.ScatterJS = null;
+			});	
+		}).catch(error => {
+			console.log(error);
+		});
+	});
+}
+function postLimit(){
+	console.log("calling scatter");
+	ScatterJS.plugins( new ScatterEOS() );
+	const network = ScatterJS.Network.fromJson({
+    		blockchain:'eos',
+    		chainId:'aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906',
+    		host:'proxy.eosnode.tools',
+    		port:443,
+    		protocol:'https'
+	});
+	ScatterJS.scatter.connect("Dabble").then(connected => {
+    		// User does not have Scatter Desktop, Mobile or Classic installed.
+    		if(!connected){ 
+    			console.log("connection error");
+    			return false;
+		}
+		console.log("scatter connection success");
+		const scatter = ScatterJS.scatter;
+		
+		const requiredFields = { accounts:[network] };
+		scatter.getIdentity(requiredFields).then(() => {
+			const account = scatter.identity.accounts.find(x => x.blockchain === 'eos');
+			console.log("get identidy", account);
+			
+			const eosOptions = { expireInSeconds:60 };
+			const eos = scatter.eos(network, Eos, eosOptions);
+			
+			const transactionOptions = { authorization:[`${account.name}@${account.authority}`] };
+			eos.transaction("eoscafekorea", myaccount => {
+                    		myaccount.postlimit(account.name, Date.now(), "emergency charge of post limit", transactionOptions);
+			}).then(trx => {
+				console.log(`Transaction ID: `, trx);
+				console.log("block number", trx.processed.block_num);
+				postLimitIncreaseAction();
+				//window.ScatterJS = null; //move to exit page
+			}).catch(error => {
+            			console.error(error);
+				scatter.forgetIdentity();
+				//window.ScatterJS = null;
+			});	
+		}).catch(error => {
+			console.log(error);
+		});
+	});
+}
+	</script>
+	
+	
+<body>
+	
+	
+		<!-- start header -->
+		<% include ../cmm/cmmMenu2.ejs %>
+		<!-- end header -->
+<br>
+<!-- Main post -->
+	<br>
+	<h4 align=center>현재 자산</h4>
+	<h1 align=center id="totalBalance">-</h1>
+	<br>	
+<!-- Bootstrap CSS -->
+<!-- jQuery first, then Bootstrap JS. -->
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" href="#wallet" role="tab" data-toggle="tab">지갑정보</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#tokenmove" role="tab" data-toggle="tab">토큰이동</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#stakingPanel" role="tab" data-toggle="tab">스테이킹</a>
+  </li>
+</ul>
+<!-- Tab panes -->
+	<br><br>
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane in active" id="wallet">
+   <div class="container">  
+  <table class="table">
+    <thead>
+      <tr>
+        <th>항목</th>
+        <th>수량</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>데블 지갑</td>
+        <td id="tokenBalance">-</td>
+      </tr>      
+      <tr>
+        <td>메인넷 계정</td>
+        <td id="externalTokenBalance">-</td>
+      </tr>
+      <tr>
+        <td>스테이크 한 수량</td>
+        <td id="staking">-</td>
+      </tr>
+      <tr>
+        <td>전체 스테이크</td>
+        <td id="stakingTotal">-</td>
+      </tr>
+      <tr>
+        <td>언스테이크중인  수량</td>
+        <td id="unstaking">-</td>
+      </tr>
+      <tr>
+        <td>남은 글 작성 개수</td>
+        <td id="postLimit">-</td>
+      </tr>
+        <td>하루 작성 가능한 글의 총 개수</td>
+        <td id="postLimitMax">-</td>
+      </tr>
+    </tbody>
+  </table>
+	</div>
+    
+    
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="tokenmove">
+	  <!--form start-->
+	  <div class="form-row justify-content-center">
+	  <div class='col-sm-3'>
+	  <div class="container mt-3">
+<form>
+    <label for="eosaccount">메인넷 EOS 계정</label>
+ <div class="input-group mb-3">
+    <input type="text" class="form-control" readonly="readonly" placeholder="EOS Account"  name="email" id="eosaccount">
+    <div class="input-group-append">
+    <button class="btn btn-primary" type="button" id="eosAccountChangeButton" onClick="javascript:fnEosAccountChange();">Change</button> 
+    <button class="btn btn-primary" type="button" id="eosAccountSaveButton" onClick="javascript:fnEosAccountSave();">OK</button> 
+    </div>
+ </div>
+ </form>
+ 
+<form>
+    <label for="demo">Dabble -> 메인넷</label>
+ <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="0.0000" id="fromDabAmount" name="email">
+    <div class="input-group-append">
+    <button class="btn btn-primary" type="button" onClick="javascript:fnTrasnferMyWallet();">OK</button> 
+    </div>
+ </div>
+ </form>
+<form>
+    <label for="toDabAmount">메인넷 -> Dabble</label>
+	  
+ <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="0.0000" id="toDabAmount" name="email">
+    <div class="input-group-append">
+    <button class="btn btn-primary" type="button"  onClick="javascript:test0();">OK</button> 
+    </div>
+ </div>
+ </form>
+</div>
+	  </div>
+	  </div>
+<!--form end-->
+	
+  </div>
+  <div role="tabpanel" class="tab-pane fade" id="stakingPanel">
+	  <!--form start-->
+	  <div class="form-row justify-content-center">
+	  <div class='col-sm-3'>
+	  <div class="container mt-3">
+		  
+<form>
+    <label for="stakeAmount">스테이킹 하고 보너스를 받아가세요!</label>
+	  
+ <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="0.0000" id="stakeAmount" name="email">
+    <div class="input-group-append">
+    <button class="btn btn-primary" type="button" onClick="javascript:stakeDabAction();">OK</button> 
+    </div>
+ </div>
+ </form>
+<form>
+    <label for="unstakeAmount">언스테이킹 하시겠어요?</label>
+	  
+ <div class="input-group mb-3">
+    <input type="text" class="form-control" placeholder="0.0000" id="unstakeAmount" name="email" >
+    <div class="input-group-append">
+    <button class="btn btn-primary" type="button" onClick="javascript:unStakeDabAction();">OK</button> 
+    </div>
+ </div>
+ </form>
+ 
+  <form>
+    <label for="postLimit">하루 포스팅양을 늘리시겠어요?</label>
+	  
+ <div class="input-group mb-3">
+    <button class="btn btn-primary" type="button" onClick="javascript:postLimit();">늘리기</button> 
+    </div>
+ </div>
+ </form>
+ 
+</div>
+	  </div>
+	  </div>
+<!--form end-->
+	</div>
+	
+		
+</div>
+		<!-- start footer -->
+		<% include ../cmm/cmmFooter2.ejs %>
+		<!-- end footer -->
+	
+	<form id="frmWallet">
+		<input type="hidden" id="user"   name="user" />
+		<input type="hidden" id="account"   name="account" />
+		<input type="hidden" id="trx"   name="trx" />
+		<input type="hidden" id="quantity"   name="quantity" />
+		<input type="hidden" id="amount"   name="amount" />
+	</form>
+	
+	<form id="frmUserInfo">
+		<input type="hidden" id="id"   name="id" />
+	</form>
+	
+	<form id="frmFriendContents" method="post">
+		<input type="hidden" id="account"	name="account"/>
+		<input type="hidden" id="page"		name="page"   />
+	</form>
+	
+	<!-- end form -->
+</body>
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+	<!-- Placed at the end of the document so the pages load faster -->
+  	
+  	
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+  
+	<script src="./script/common.js" type="text/javascript"></script>
+	<script src="./script/dabble.js" type="text/javascript"></script>
+	<script src="https://cdn.jsdelivr.net/npm/eosjs@16.0.9/lib/eos.min.js"></script>     
+	<script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-core.min.js"></script>
+	<script src="https://cdn.scattercdn.com/file/scatter-cdn/js/latest/scatterjs-plugin-eosjs.min.js"></script>
+</html>
