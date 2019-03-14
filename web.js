@@ -730,7 +730,7 @@ function addStakeField(){
 function stakeRank(){
 	MongoClient.connect(url, function(err, db) {
    		var dbo = db.db("heroku_dg3d93pq");
-		dbo.collection.find().sort({staked : 1}).collation({locale: "en-US", numericOrdering: true}).limit(10).toArray(
+		dbo.collection("user").find().sort({staked : 1}).collation({locale: "en-US", numericOrdering: true}).limit(10).toArray(
 			function(err, res){
 				console.log(res);
 				db.close();
