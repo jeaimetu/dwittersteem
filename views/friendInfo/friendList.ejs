@@ -109,14 +109,10 @@
 				<h4 id="headertitle-inner"></h4>
 
 
-						<table class="table table-striped">
-							<colgroup>
-								<col style="width: 140px;">
-								<col style="width: 50px;">
-							</colgroup>
-							<thead>
+						<table class="table">
+							<thead class="thead-light">
 								<tr class="table-active">
-									<th>친구ID</th>
+									<th style="width:70%>친구ID</th>
 									<th> </th>
 								</tr>
 							</thead>
@@ -150,50 +146,7 @@
 	</div>
     <!-- end wrap -->
     
-    
-    
-	<!-- Modal Start-->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						<!-- <button type="button" data-dismiss="modal">&times;</button> -->
-		        	</button>
-		        	<h4 class="modal-title" id="myModalLabel">무슨 생각을 하고 계세요?</h4>
-				</div>
-				<div class="modal-body">
-					<textarea id="contentTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" onClick="javascript:gfIsLoginAction(gfContentWrite);" data-dismiss="modal">완료</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="modal fade" id="contentEdit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-						<!-- <button type="button" data-dismiss="modal">&times;</button> -->
-		        	</button>
-		        	<h4 class="modal-title" id="myModalLabel">다른 생각을 하고 계세요?</h4>
-				</div>
-				<div class="modal-body">
-					<textarea id="contentEditTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-					<button type="button" class="btn btn-primary" onClick="javascript:gfContentEditAction();" data-dismiss="modal">완료</button>
-				</div>
-			</div>
-		</div>
-	</div>
+ 
 	<!-- Modal End-->
 
 	<form id="frmUserInfo">
