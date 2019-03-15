@@ -6,6 +6,7 @@ const blackList = require("./blacklist.js");
 const contractUpload = require("./contract.js");
 const follower = require("./follower");
 const reply = require("./reply");
+const nabul = require("./nabul");
 
 const contract = require("./contract2.js");
 
@@ -413,6 +414,76 @@ function fnIsLogin(req){
 	  	  res.send(body)
 	  }
   });
+
+  app.post("/readnabul", function(req, res) { 
+	/* some server side logic */
+	  
+	  var user = req.body.user;
+	  var page = req.body.page;
+	  console.log("readnabul event", user, page);
+	  //query Mongo DB
+	  if(page == 0)
+	  	req.session.page = page + 1;
+	  else if(page == -1)
+		  req.session.page++;
+	  else if(page == -2){
+		  req.session.page--;
+		  if(req.session.page == 0)
+			  req.session.page = 1;
+	  }
+	  else
+		  req.session.page = page;
+	  
+	  if(req.session.page <= 0){
+		  console.log("page number correction", req.session.page);
+		  req.session.page = 1;
+	  }
+	  if(isNaN(req.session.page)){
+		  console.log("page number correction for NaN case", req.session.page);
+		  req.session.page = 1;
+	  }
+	  
+	  console.log("calling readNabul", req.session.account, req.session.page);
+	  nabul.readNabul(req.session.account, req.session.page,(result) => {res.send(result)});
+  });
+
+
+app.get("/friendContents", function(req, res){
+	var resultIsLogin = fnIsLogin(req);
+	var user = req.param("account");
+	var page = req.param("page");
+	var errMsg = "";
+	if ( cmmUtil.isEmpty(user) ){
+		errMsg = "선택된 친구정보가 없습니다. KimHark의 글 목록이 조회됩니다.";
+		user = "KimHark";
+	}
+		
+	if( !isNaN(page) ){
+		req.session.page = Number(page);
+	}else{
+		req.session.page = 1;
+	}
+	
+	if(req.session.page <= 0){
+		req.session.page = 1;
+	}
+	
+	if(isNaN(req.session.page)){
+		req.session.page = 1;
+	}
+	
+	nabul.readNabul(
+			user, req.session.page,(result) => {
+				res.render("./friendInfo/friendContents", {
+					loginInfo : resultIsLogin,
+					friendAccount :user,
+					data : result,
+					page : req.session.page,
+					errMsg : errMsg
+				});
+			}
+	);
+});
 
   app.post("/createfriend", function(req, res) { 
 	  const friend = req.body.account;
