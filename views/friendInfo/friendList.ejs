@@ -62,7 +62,7 @@
 			var strHtml	= '	<tr>'
 						+ '		<td onclick="javascript:gfFrientContentsList(\'' + data[x].data + '\')">' + data[x].data + '</th>'
 						+ '		<td >'
-						+ '			<button type="button" class="btn btn-primary btn-sm" onclick="javascript:fnDeleteFriend(\'' + data[x].data + '\');">삭제</button>'
+						+ '			<button type="button" class="btn btn-primary btn-sm float-right" onclick="javascript:fnDeleteFriend(\'' + data[x].data + '\');">삭제</button>'
 						+ '		</td>'
 						+ '	</tr>';
 			$("tbody[id='followList']").append(strHtml);
