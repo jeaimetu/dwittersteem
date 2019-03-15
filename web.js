@@ -732,14 +732,46 @@ function stakeRank(){
    		var dbo = db.db("heroku_dg3d93pq");
 		dbo.collection("user").find().sort({staked : 1}).collation({locale: "en-US", numericOrdering: true}).limit(10).toArray(
 			function(err, res){
-				console.log(res);
+				console.log("res", res);
+				console.log("err", err);
 				db.close();
 			});
 	});
 	
 }
 
+
+function stakeRank2(){
+	MongoClient.connect(url, function(err, db) {
+   		var dbo = db.db("heroku_dg3d93pq");
+		dbo.collection("user").find().sort({staked : 1}).limit(10).toArray(
+			function(err, res){
+				console.log("res", res);
+				console.log("err", err);
+				db.close();
+			});
+	});
+	
+}
+
+function stakeRank3(){
+	MongoClient.connect(url, function(err, db) {
+   		var dbo = db.db("heroku_dg3d93pq");
+		dbo.collection("user").find().sort({staked : 1}).collation({locale: "en-US", numericOrdering: true}).toArray(
+			function(err, res){
+				console.log("res", res);
+				console.log("err", err);
+				db.close();
+			});
+	});
+	
+}
+
+
+
 //addStakeField();
 stakeRank();
+stakeRank2();
+stakeRank3();
 
 
