@@ -60,9 +60,9 @@
 		$("tbody[id='followList']").empty();
 		for ( var x = 0 ; x < data.length ; x++ ){
 			var strHtml	= '	<tr>'
-						+ '		<th scope="row" style="width: 140px; padding: 5px;"onclick="javascript:gfFrientContentsList(\'' + data[x].data + '\')">' + data[x].data + '</th>'
-						+ '		<td style="width: 50px; padding: 5px;">'
-						+ '			<button type="button" class="btn btn-primary" onclick="javascript:fnDeleteFriend(\'' + data[x].data + '\');">삭제</button>'
+						+ '		<td onclick="javascript:gfFrientContentsList(\'' + data[x].data + '\')">' + data[x].data + '</th>'
+						+ '		<td >'
+						+ '			<button type="button" class="btn btn-primary btn-sm" onclick="javascript:fnDeleteFriend(\'' + data[x].data + '\');">삭제</button>'
 						+ '		</td>'
 						+ '	</tr>';
 			$("tbody[id='followList']").append(strHtml);
@@ -109,8 +109,6 @@
 				<h4 id="headertitle-inner"></h4>
 
 
-
-						<h4 class="header icon-to-the-right">친구관리</h4>
 						<table class="table table-striped">
 							<colgroup>
 								<col style="width: 140px;">
@@ -118,8 +116,8 @@
 							</colgroup>
 							<thead>
 								<tr class="table-active">
-									<th scope="row" style="width: 140px; padding: 5px;">친구ID</th>
-									<td scope="col" style="width: 50px; padding: 5px;"></td>
+									<th>친구ID</th>
+									<th> </th>
 								</tr>
 							</thead>
 							<tbody id="followList"></tbody>
