@@ -759,8 +759,11 @@ function stakeRank3(){
    		var dbo = db.db("heroku_dg3d93pq");
 		dbo.collection("user").find().sort({staked : 1}).collation({locale: "en-US", numericOrdering: true}).toArray(
 			function(err, res){
-				console.log("res", res);
-				console.log("err", err);
+				//console.log("res", res);
+				//console.log("err", err);
+				res.forEach(function(result){
+					console.log(result.account, result.walletAccount, result.staked);
+				});
 				db.close();
 			});
 	});
