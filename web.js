@@ -448,10 +448,10 @@ function fnIsLogin(req){
   });
 
 
-app.get("/friendContents", function(req, res){
+app.post("/friendContents", function(req, res){
 	var resultIsLogin = fnIsLogin(req);
-	var user = req.param("account");
-	var page = req.param("page");
+	var user = req.body.account;
+	var page = req.body.page;
 	var errMsg = "";
 	if ( cmmUtil.isEmpty(user) ){
 		errMsg = "선택된 친구정보가 없습니다. KimHark의 글 목록이 조회됩니다.";
