@@ -136,20 +136,8 @@
 	<div class="modal fade" id="followPopup" tabindex="-1" role="dialog" aria-labelledby="myModalLabelFollow" aria-hidden="true">
 		<div class="modal-dialog" style="margin-top: 100px;">
 			<div class="modal-content">
-				<div class="modal-header">
-					<!--
-		        	<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-		        	</button>
-		        	-->
-		        	<h4 class="modal-title" id="myModalLabelFollow"><span id="myModalLabelFollowId"></span> <span id="myModalLabelFollowComment">님과 친하게 지내시겠어요?</span></h4>
-		        	<img id="userImage" src="/images/user/0.png" style="width:20%; height: 20%; ">
-				</div>
-				<!--
-				<div class="modal-body">
-					<textarea id="contentEditTextarea" style="width:100%; height: 180px; padding: 7px 7px 7px 7px; border: 1px solid #dedede;"></textarea>
-				</div>
-				 -->
+		        	<h4 class="modal-body" id="myModalLabelFollow"><span id="myModalLabelFollowId"></span> <span id="myModalLabelFollowComment">님과 친하게 지내시겠어요?</span></h4>
+		        	<img id="userImage" class="image-fluid" src="/images/user/0.png" style="width:20%; height: 20%; ">			
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">닫기</button>
 					<button type="button" class="btn btn-primary" onClick="javascript:gfFrientContentsList();" data-dismiss="modal"><span id="myModalLabelFollowBtn">친구</span> 글목록</button>
@@ -159,30 +147,7 @@
 			</div>
 		</div>
 	</div>
-	<div class="modal fade" id="popupNewDesign" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="margin-top: 80px;">
-		<div class="jumbotron" style="height: calc( 100% - 20px ); background-color: #e9ecef; margin-left: 7px; margin-right: 7px; margin-bottom: 7px; padding-top: 5px;">
-			<h1 style="margin-left: 15px; color: #2FA4E7;">Dabble</h1>
-			<h1 style="margin-left: 15px; color: #2FA4E7;">짧은 글에도 큰 가치를..</h1>
-			<h1 style="margin-left: 15px; color: #2FA4E7;">새로운 디자인으로 찾아옵니다.</h1>
-			<h1 style="margin-left: 15px; color: #2FA4E7;">계속 사용하시려면 "닫기" 또는</h1>
-			<h1 style="margin-left: 15px; color: #2FA4E7;">"다시 보지 않기"를 눌러주세요</h1>
-			<!-- <p class="lead">Ok Im Hark 2018-12-05</p> -->
-			<div id="divLoginBtn" style="text-align: left; margin-left: 15px;">
-				<a href="http://dabble.cafe/Dabble_White_Paper.pdf" target="_blank">
-					<button type="button" id="btnCreate" class="btn btn-primary" style="color: #fff; background-color: #1992d7; border-color: #178acc;" >백서</button>
-				</a>
-				
-				<a href="http://dabble.cafe/pdf/WhitePaper_EN.pdf" target="_blank">
-					<button type="button" id="btnCreate" class="btn btn-primary" style="color: #fff; background-color: #1992d7; border-color: #178acc;" >White Paper</button>
-				</a>
-			</div>
-			<hr class="my-4">
-			<div id="divLoginBtn" style="text-align: right; margin-right: 35px;">
-				<button type="button" id="btnCreate" class="btn btn-primary" style="color: #fff; background-color: #1992d7; border-color: #178acc;" onClick="javascript:fnNewDesignPopupClose2();">다시 보지 않기</button>
-				<button type="button" id="btnCreate" class="btn btn-primary" style="color: #fff; background-color: #1992d7; border-color: #178acc;" onClick="javascript:fnNewDesignPopupClose1();">닫기</button>
-			</div>
-		</div>
-	</div>
+
 	
 	<!-- Modal End-->
 	<form id="frmWrite">
