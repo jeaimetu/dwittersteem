@@ -67,14 +67,15 @@
             <img hspace="20" class="card-img-top img-fluid"  src="https://sg.fiverrcdn.com/photos/98236905/original/e6dacf67c5374ef6cc84941c08d01bae27090310.jpg" alt="Card image cap">
     -->            
             <div class="card-body" >
+	    <div onClick="javascript:gfFollowPopup('<%=x%>');">
                 <img name="userImage" hspace="5" style="float:left"  margin-right="40px" src=<%= eachData.profile %> class="rounded-circle" alt="Cinque Terre" width="60" height="60">
 		
-                <h4 class="card-text" onClick="javascript:gfFollowPopup('<%=x%>');">
+                <h4 class="card-text" >
 		<%= eachData.account %><i id="loading" class="fas fa-star" style="color:green"></i>
 		
 		</h4>
                 <p class="card-text"><small class="text-muted"><%=fnTimeConverter(eachData.date)%></small></p>
-		
+	   </div>
                 <br>
 
                 <p class="card-text" name="viewDefault" onClick="javascript:fnContentDetailPopup('<%=x%>')"><%- linkify((eachData.data.replace(/(?:\r\n|\r|\n)/g, '<br>')).replace(/<img/g, '<br><img class="img-fluid rounded"')) %></p>
