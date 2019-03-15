@@ -1,0 +1,70 @@
+<div id="contentList">
+<%
+	function fnZeroAdd(str){
+		return String(str).length==1?"0"+str:str;
+	}
+	function fnTimeConverter(timestamp){
+		  //UTC+9  한국시간 적용
+		  // 9시간  / 540분
+		  var a = new Date( timestamp+ (540*60*1000) );
+		  //var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+		  var year = a.getFullYear();
+		  var month	= fnZeroAdd(a.getMonth()+1 );
+		  var date	= fnZeroAdd(a.getDate()    );
+		  var hour	= fnZeroAdd(a.getHours()   );
+		  var min	= fnZeroAdd(a.getMinutes() );
+		  var sec	= fnZeroAdd(a.getSeconds() );
+		  //var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+		  
+		  var time = year + '-' + month + '-' + date + ' ' 
+				  + hour + ':' + min + ':' + sec ;
+		  return time;
+	}
+%>
+
+<%	for ( let x = 0 ; x < data.length ; x++ ){ %>
+<%
+		let btnVoteEnable = "";
+		let btnUpdateVisible = "";
+		if ( "false" == data[x].votingenable ){
+			btnVoteEnable = "disabled";
+		}
+		
+		if ( loginInfo.id != data[x].account ){
+			btnUpdateVisible = "display: none;";
+		}
+		
+		var strProfile = (data[x].profile == null) ? "" : data[x].profile ;
+		var profilePath = (strProfile.length == 5) ? "./images/user/" + strProfile : strProfile;
+				
+		let parentId = data[x].parentid == null ? "" :data[x].parentid;
+%>
+	<div class="element tile-1 home calc bg-change">
+		<table style="width: 100%;">
+			<tr>
+				<td onClick="javascript:gfFollowPopup('<%=x%>');">
+					<h4 class="header icon-to-the-right"><%=data[x].account%></h4>
+				</td>
+				<td  style="text-align:right; margin: 0px;" onClick="javascript:gfFollowPopup('<%=x%>');">
+					<img name="userImage" style="padding: 0px 0px 0px 0px; display: inline; max-height: 40px; max-width: 40px;" src="<%=profilePath%>">
+				</td>
+			</tr>
+		</table>
+		<div onClick="javascript:fnContentDetailPopup('<%=x%>')" name="viewDefault" class="preConSimple"><%-data[x].data%></div>
+		<div style="margin: 5px;"></div>
+		<div class="hint" name="createTime"><%=fnTimeConverter(data[x].date)%></div>
+		<div style="margin: 5px;"></div>
+		<button type="button" name="btnVote" <%=btnVoteEnable%> style="width:30%;" class="btn btn-default" onClick="javascript:gfContentVoteAction('<%=data[x].id%>');" ><i name="viewVoteCount" class="fa fa-thumbs-o-up"><%=data[x].voting%></i></button>
+		<button type="button" name="btnUpdate" style=" <%=btnUpdateVisible%> width:20%;" class="btn btn-default" onClick="javascript:gfContentUpdate('<%=x%>');" ><i class="fa fa-edit"></i></button>
+		<button type="button" name="btnDetail" style="width:20%;" class="btn btn-default" onClick="javascript:fnContentDetail('<%=x%>');" ><i class="fa fa-folder-open"></i></button>
+		<%	if ( "" == parentId ){	%>
+			<button type="button" name="btnDetail" style="width:25%;" class="btn btn-default" onClick="javascript:fnLoginChkContentDetailAction(0, '<%=x%>');" ><i class="fa fa-commenting-o"></i></button>
+		<%	}	%>
+		<input type="hidden" name="hBoardId" value="<%=data[x].id%>" >
+		<input type="hidden" name="hBoardParentId" value="<%=parentId%>" >
+		<input type="hidden" name="hVoteCnt" value="<%=data[x].voting%>" >
+		<input type="hidden" name="hAccount" value="<%=data[x].account%>" >
+	</div>
+<%}%>
+
+</div>
