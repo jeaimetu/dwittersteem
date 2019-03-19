@@ -13,6 +13,8 @@ exports.readNabul = function(account, page, cb){
    		//dbo.collection("board").find({}).sort({date: -1}).toArray(function(err, result){
 		
 		var agr = [	
+			{$sort: {"date" : -1}},
+			{$limit : 1000},
       			{ $match : { account : account}},
 			{ $lookup:
 			    { from: 'user',
@@ -22,7 +24,7 @@ exports.readNabul = function(account, page, cb){
 			    }
 			   },
 
-			  {$sort: {"date" : -1}},
+
 			{$skip : (20 * page) - 20},
 			   {$limit : 20}
 			];
