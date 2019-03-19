@@ -9,6 +9,7 @@ const reply = require("./reply");
 const nabul = require("./nabul");
 
 const contract = require("./contract2.js");
+const contractUpload = require("./contract.js");
 
 var express = require('express');
 var bodyParser     =        require("body-parser");
