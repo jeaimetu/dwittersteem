@@ -64,7 +64,9 @@ void token::prepare(account_name euser, account_name iuser, string memo){
 			contable.status = 1;
 		});
 	}else{
-		contable.modify(iter3, _self, [&]( auto& contable ) {
+		//change modify to delete and create, modify may not work for key value.
+		contable.erase(iter3);
+		contable.emplace(_self, [&]( auto& contable ) {
 			contable.user = euser;
 			contable.status = 1;
 		});
