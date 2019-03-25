@@ -166,7 +166,7 @@ void token::unlock( account_name user){
 void token::newaccount(account_name iuser){
 	require_auth( _self );
 	
-	tooktbl2 tooktable(_self, iuser);
+	tooktbl3 tooktable(_self, iuser);
 	auto iter = tooktable.find(iuser);
 	
 	eosio_assert(iter == tooktable.end(), "account already exist");
@@ -196,7 +196,7 @@ void token::refund(account_name from, account_name to){
 void token::updatetp(account_name user, asset quantity){
 	require_auth( _self );
 	
-	tooktbl2 tooktable(_self, user);
+	tooktbl3 tooktable(_self, user);
 	auto iter = tooktable.find(user);
 	eosio_assert(iter != tooktable.end(), "account does not exist");
 	
