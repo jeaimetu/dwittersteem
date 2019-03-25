@@ -174,9 +174,9 @@ void token::newaccount(account_name iuser){
 	tooktable.emplace(_self, [&]( auto& tooktable){
 		tooktable.user = iuser;
 		tooktable.eos_account = N("");
-		tooktable.tookp_balance = 0;
-		tooktable.stake_sum = 0;
-		tooktable.air = 0;
+		tooktable.tookp_balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOKP")));;
+		tooktable.stake_sum = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOK")));;
+		tooktable.air = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "AIR")));;
 		tooktable.status = 0;
 	});	
 }
