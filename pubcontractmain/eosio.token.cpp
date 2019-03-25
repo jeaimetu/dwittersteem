@@ -87,7 +87,7 @@ void token::newaccount(account_name iuser){
 		
 		eosio_assert(iter != maptable.end(), "nothing to delete");
 		
-		iuser = iter-> iuser;
+		account_name iuser = iter-> iuser;
 		contbl2 contable(_self, iuser);
 		auto iter2 = contable.find(euser);
 		if(iter2 != contable.end()){
