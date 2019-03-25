@@ -8668,7 +8668,7 @@
               (get_local $7)
               (get_local $2)
               (i64.const 4983113983805358080)
-              (get_local $2)
+              (get_local $1)
              )
             )
             (i32.const 0)
