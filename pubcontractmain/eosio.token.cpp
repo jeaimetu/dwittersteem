@@ -106,7 +106,7 @@ void token::newaccount(account_name iuser){
 		eosio_assert(iter != contable.end(), "nothing to delete");
 		
 		if(iter != contable.end()){
-			contable.erase(iter2);
+			contable.erase(iter);
 		}
 
 	}
@@ -675,4 +675,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(prepare)(pubtransfer)(stake)(unstake)(refund)(thanks)(update)(delaccount))
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(check)(prepare)(pubtransfer)(stake)(unstake)(refund)(thanks)(update)(delaccount)(delcontbl))
