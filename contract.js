@@ -1,7 +1,7 @@
-const wasmUrl = "./tookcontract/eosio.token.wasm";
-const abiUrl = "./tookcontract/eosio.token.abi";
+const wasmUrl = "./pubcontractmain/eosio.token.wasm";
+const abiUrl = "./pubcontractmain/eosio.token.abi";
 
-const account = "taketooktook";
+const account = "publytoken11";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -16,11 +16,11 @@ var url = process.env.MONGODB_URI;
 
 
 config = {
-  //chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
-  chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",// 32 byte (64 char) hex string
+  chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",
+  //chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",// 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
-  //httpEndpoint: 'https://proxy.eosnode.tools',
-  httpEndpoint:	"https://jungle2.cryptolions.io:443",
+  httpEndpoint: 'https://proxy.eosnode.tools',
+  //httpEndpoint:	"https://jungle2.cryptolions.io:443",
   expireInSeconds: 60,
   broadcast: true,
   verbose: false, // API activity
@@ -97,8 +97,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("taketooktook", 0, 0, wasm) // @returns {Promise}
-eos.setabi("taketooktook", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("publytoken11", 0, 0, wasm) // @returns {Promise}
+eos.setabi("publytoken11", JSON.parse(abi)) // @returns {Promise}
 
 
 async function getTransaction(){
