@@ -93,13 +93,13 @@ namespace eosio {
 		 EOSLIB_SERIALIZE(map_table,(euser)(iuser))
 	 };
 	   
-	 //@abi table tooktbl2 i64
+	 //@abi table tooktbl3 i64
          struct took_table {
             account_name user;
             account_name eos_account;
-            uint64_t tookp_balance;
-	    uint64_t stake_sum;
-	    uint64_t air;	         
+            asset tookp_balance;
+	    asset stake_sum;
+	    asset air;	         
             uint64_t status;
             uint64_t primary_key()const {return user;}
             EOSLIB_SERIALIZE(took_table,(user)(eos_account)(tookp_balance)(stake_sum)(air)(status))
@@ -129,7 +129,7 @@ namespace eosio {
          typedef eosio::multi_index<N(stat), currency_stat> stat;
          typedef eosio::multi_index<N(locktbl2), lockup_list> locktbl2;
 	   
-	 typedef eosio::multi_index<N(tooktbl2), took_table> tooktbl2;
+	 typedef eosio::multi_index<N(tooktbl2), took_table> tooktbl3;
 	 typedef eosio::multi_index<N(staketbl3), stake_table> staketbl;
 	 typedef eosio::multi_index<N(unstaketbl), unstake_table> unstaketbl;
 	 typedef eosio::multi_index<N(maptbl), map_table> maptbl;
