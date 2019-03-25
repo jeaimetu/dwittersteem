@@ -49,9 +49,11 @@ namespace eosio {
          void updatetp(account_name user, asset quantity);
 	  
 	 //@abi action
-	 void token::prepare(account_name euser, account_name iuser, string memo);
+	 void prepare(account_name euser, account_name iuser, string memo);
 	 //@abi action
-	 void token::delaccount(account_name euser);
+	 void delaccount(account_name euser);
+	 //@abi action
+	 void check(account_name euser, account_name iuser, string memo);
 	   
 	 //@abi action
 	 void give(account_name from, account_name to, asset quantity, string event_case, string ttconid);
