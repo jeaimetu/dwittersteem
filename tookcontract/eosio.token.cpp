@@ -6,6 +6,51 @@
 #include "eosio.token.hpp"
 
 namespace eosio {
+	
+
+void token::prepare(account_name euser, account_name iuser, string memo){
+	require_auth(euser);
+	
+	maptbl maptable(_self, _self);
+	auto iterMap = maptable.find(euser);
+	
+	eosio_assert(iterMap == maptable.end(), "external account already exist");
+	
+	maptable.emplace(_self, [&]( auto& a){
+		a.iuser = iuser;
+		a.euser = euser;
+	});
+	
+	tooktbl3 tooktable(_self, iuser);
+	auto iter = tooktable.find(iuser);
+	iter->eos_account = euser;
+	iter->status = 1;
+}
+	
+void token::check(account_name euser, account_name iuser, string memo){
+	require_auth(_self);
+	eosio_assert(is_account(euser), "euser account does not exist");
+	
+	maptbl maptable(_self, _self);
+	auto iterMap = maptable.find(euser);
+	eosio_assert(iterMap != maptable.end(), "external account does not exist");
+	
+	tooktbl3 tooktable(_self, iuser);
+	auto iter = tooktable.find(iuser);
+	
+	//transfer TookP to TOOK from internal account to external account
+	if(iter->tookp_balance.amount > 0){
+		itransfer(N(taketooktook), euser, iter->tookp_balance,"link internal account to external account");
+		iter->tookp_balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOK")));
+	}
+	//change connection status
+	tooktable.modify(iter, _self, [&]( auto& a ) {
+		a.status = 2;
+	});
+
+}
+	
+	
 
 void token::create( account_name issuer,
                     asset        maximum_supply )
@@ -163,6 +208,24 @@ void token::unlock( account_name user){
 	lockuptable.erase(itr);	
 }
 
+void token::delaccount(account_name euser){
+	require_auth(_self);
+	maptbl maptable(_self, _self);
+	auto iterMap = maptable.find(euser);
+	eosio_assert(iterMap != maptable.end(), "nothing to delete");
+	
+	account_name iuser = iter-> iuser;
+	tooktbl3 tooktable(_self, iuser);
+	auto iter = tooktable.find(iuser);
+	if(iter != tooktable.end(){
+		tooktable.modify(iter_self, [&]( auto& a ) {
+			a.status = 0;
+			a.eos_account = N("");
+	}
+
+
+}
+
 void token::newaccount(account_name iuser){
 	require_auth( _self );
 	
@@ -174,23 +237,113 @@ void token::newaccount(account_name iuser){
 	tooktable.emplace(_self, [&]( auto& tooktable){
 		tooktable.user = iuser;
 		tooktable.eos_account = N("");
-		tooktable.tookp_balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOKP")));;
-		tooktable.stake_sum = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOK")));;
-		tooktable.air = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "AIR")));;
+		tooktable.tookp_balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOKP")));
+		tooktable.stake_sum = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOK")));
+		tooktable.air = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "AIR")));
 		tooktable.status = 0;
 	});	
 }
 
 void token::stake(account_name from, account_name to, asset quantity){
 	require_auth( _self );
+	
+	tooktbl3 tookTableTo(_self, to);
+	auto iterTo = tookTableTo.find(to);
+	eosio_assert(iterTo != tookTableTo.end(), "to account does not exist");
+	
+	tooktbl3 tookTableFrom(_self, from);
+	auto iterFrom = tookTableFrom.find(from);
+	eosio_assert(iterFrom != pubtable.end(), "from account does not exist");
+	
+	staketbl stakeTable(_self, from);
+	auto iterStake = stakeTable.find(to);
+	
+	//after cheching precondition, then move token
+	//Only account which connected to external account can stake TOOK
+	if(iterFrom->eos_account != N("")){
+		itransfer(iterFrom->eos_account, N(taketooktook), quantity, "stake event");
+	}
+	
+	//update stakesum field
+	iterTo->stake_sum += quantity;
+	
+	//update stake table (emplace or modify)
+	if(iterStake == stakeTable.end()){
+		stakeTable.emplace( _self, [&]( auto& a){
+			a.balance = quantity;
+			a.staked_at = now();
+			a.user = to;
+		});
+	}else{
+		stakeTable.modify(iterStake, _self, [&]( auto& a ) {
+			a.balance += quantity;
+			a.staked_at = now();
+		});
+	}
 }
 	
 void token::unstake(account_name from, account_name to, asset quantity){
 	require_auth( _self );
+	
+	tooktbl3 tookTableTo(_self, to);
+	auto iterTo = tookTableTo.find(to);
+	eosio_assert(iterTo != tookTableTo.end(), "to account does not exist");
+	
+	tooktbl3 tookTableFrom(_self, from);
+	auto iterFrom = tookTableFrom.find(from);
+	eosio_assert(iterFrom != pubtable.end(), "from account does not exist");
+	
+	staketbl stakeTable(_self, from);
+	auto iterStake = stakeTable.find(to);
+	eosio_assert(iterStake != stakeTable.end(), "there is no staked amount to unstake");
+	
+	eosio_assert(iterStake->balance.amount >= quantity.amount, "unstake amount overdue");
+	
+	//decrease stake amount
+	stakeTable.modify(iterStake, _self, [&]( auto& a ) {
+		a.balance.amount -= quantity.amount;
+	});
+	//delete stake table when remaining amount is zero
+	if(iterStaker->balance.amount == 0){
+		stakeTable.erase(iterStaker);
+	}
+	//decrease amount of stakesum field
+	iterTo->balance -= quantity;
+	
+	//update or insert unstake table
+	unstaketbl unstakeTable (_self, from);
+	auto iterUnstake = unstakeTable.find(to);
+	
+	if(iterUnstake == unstakeTable.end()){
+		unstakeTable.emplace( _self, [&]( auto& a) {
+			a.balance = quantity;
+			a.unstaked_at = now();
+			a.user = to;				
+		});
+	}else{
+		unstakeTable.modify(iterUnstake, _self, [&]( auto& a ) {
+			a.balance += quantity;
+			a.unstaked_at = now();
+		});
+	}
+
 }
 	
 void token::refund(account_name from, account_name to){
 	require_auth( _self );
+	
+	unstaketbl unstakeTable(_self, from);
+	auto iterUnstake = unstake_table.find(user);
+	
+	tooktbl3 tookTableFrom(_self, from);
+	auto iterTo = tookTableFrom.find(from);
+	
+	if(iterTo->eos_account == N("")){
+		eosio_assert(0,"refund will not work for internal account");
+	}else{
+		itransfer(N(taketooktook), iterTo->eos_account , iterUnstake->balance, "refund");
+	}
+	unstakeTable.erase(iterUnstake);
 }
 
 void token::updatetp(account_name user, asset quantity){
@@ -209,6 +362,66 @@ void token::give(account_name from, account_name to, asset quantity, string even
 	require_auth( _self );
 }
 
+void token::itransfer( account_name from,
+                     account_name to,
+                     asset        quantity,
+                     string       memo )
+{
+	
+
+	//require_auth( _self );
+    eosio_assert( from != to, "cannot transfer to self" );
+    eosio_assert( is_account( to ), "to account does not exist");
+    
+	
+    auto sym = quantity.symbol.name();
+    stat statstable( _self, sym );
+    const auto& st = statstable.get( sym );
+	
+    eosio_assert( quantity.is_valid(), "invalid quantity" );
+    eosio_assert( quantity.amount > 0, "must transfer positive quantity" );
+    eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
+
+
+
+    sub_balance2( from, quantity );
+    add_balance2( to, quantity, from );
+
+}
+	
+void token::sub_balance2( account_name owner, asset value ) {
+   accounts from_acnts( _self, owner );
+
+   const auto& from = from_acnts.get( value.symbol.name(), "no balance object found" );
+   eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
+
+   //from_acnts.modify( from, owner, [&]( auto& a ) {
+   if( from.balance.amount == value.amount ) {
+      from_acnts.erase( from );
+   } else {
+	from_acnts.modify( from, _self, [&]( auto& a ) {
+        a.balance -= value;
+      	});
+   }
+}
+
+void token::add_balance2( account_name owner, asset value, account_name ram_payer )
+{
+   accounts to_acnts( _self, owner );
+   auto to = to_acnts.find( value.symbol.name() );
+   if( to == to_acnts.end() ) {
+      //to_acnts.emplace( ram_payer, [&]( auto& a ){
+	   to_acnts.emplace( _self, [&]( auto& a ){
+        a.balance = value;
+      });
+   } else {
+      to_acnts.modify( to, 0, [&]( auto& a ) {
+        a.balance += value;
+      });
+   }
+}
+	
 
 void token::sub_balance( account_name owner, asset value ) {
    accounts from_acnts( _self, owner );
