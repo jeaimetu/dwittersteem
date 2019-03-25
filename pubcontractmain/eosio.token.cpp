@@ -56,17 +56,10 @@ void token::prepare(account_name euser, account_name iuser, string memo){
 	//making connection status table
 	contbl2 contable(_self, iuser);
 	auto iter3 = contable.find(euser);
-	//eosio_assert(iter3 == contable.end(), "internal account already exist");
+	eosio_assert(iter3 == contable.end(), "external account already exist");
 	//internal account can be overwrited when a internal user account is hacked.
 	if(iter3 == contable.end()){
 		contable.emplace(_self, [&]( auto& contable){
-			contable.user = euser;
-			contable.status = 1;
-		});
-	}else{
-		//change modify to delete and create, modify may not work for key value.
-		contable.erase(iter3);
-		contable.emplace(_self, [&]( auto& contable ) {
 			contable.user = euser;
 			contable.status = 1;
 		});
@@ -93,6 +86,13 @@ void token::newaccount(account_name iuser){
 		auto iter = maptable.find(euser);
 		
 		eosio_assert(iter != maptable.end(), "nothing to delete");
+		
+		iuser = iter-> iuser;
+		contbl2 contable(_self, iuser);
+		auto iter2 = contable.find(euser);
+		if(iter2 != contable.end()){
+			contable.erase(iter2);
+		}
 		
 		maptable.erase(iter);
 	}
