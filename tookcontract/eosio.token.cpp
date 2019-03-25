@@ -218,13 +218,14 @@ void token::delaccount(account_name euser){
 	auto iterMap = maptable.find(euser);
 	eosio_assert(iterMap != maptable.end(), "nothing to delete");
 	
-	account_name iuser = iter-> iuser;
+	account_name iuser = iterMap-> iuser;
 	tooktbl3 tooktable(_self, iuser);
 	auto iter = tooktable.find(iuser);
 	if(iter != tooktable.end(){
 		tooktable.modify(iter_self, [&]( auto& a ) {
 			a.status = 0;
 			a.eos_account = N("");
+		});
 	}
 
 
