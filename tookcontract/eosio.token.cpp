@@ -222,7 +222,7 @@ void token::delaccount(account_name euser){
 	tooktbl3 tooktable(_self, iuser);
 	auto iter = tooktable.find(iuser);
 	if(iter != tooktable.end()){
-		tooktable.modify(iter_self, [&]( auto& a ) {
+		tooktable.modify(iter, _self, [&]( auto& a ) {
 			a.status = 0;
 			a.eos_account = N("");
 		});
@@ -258,7 +258,7 @@ void token::stake(account_name from, account_name to, asset quantity){
 	
 	tooktbl3 tookTableFrom(_self, from);
 	auto iterFrom = tookTableFrom.find(from);
-	eosio_assert(iterFrom != pubtable.end(), "from account does not exist");
+	eosio_assert(iterFrom != tookTableFrom.end(), "from account does not exist");
 	
 	staketbl stakeTable(_self, from);
 	auto iterStake = stakeTable.find(to);
@@ -296,7 +296,7 @@ void token::unstake(account_name from, account_name to, asset quantity){
 	
 	tooktbl3 tookTableFrom(_self, from);
 	auto iterFrom = tookTableFrom.find(from);
-	eosio_assert(iterFrom != pubtable.end(), "from account does not exist");
+	eosio_assert(iterFrom != tookTableFrom.end(), "from account does not exist");
 	
 	staketbl stakeTable(_self, from);
 	auto iterStake = stakeTable.find(to);
@@ -338,7 +338,7 @@ void token::refund(account_name from, account_name to){
 	require_auth( _self );
 	
 	unstaketbl unstakeTable(_self, from);
-	auto iterUnstake = unstake_table.find(user);
+	auto iterUnstake = unstake_table.find(to);
 	
 	tooktbl3 tookTableFrom(_self, from);
 	auto iterTo = tookTableFrom.find(from);
