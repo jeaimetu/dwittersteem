@@ -270,7 +270,9 @@ void token::stake(account_name from, account_name to, asset quantity){
 	}
 	
 	//update stakesum field
-	iterTo->stake_sum += quantity;
+	tookTableTo.modify(iterTo, _self, [&]( auto& a ) {
+		a.stake_sum += quantity;
+	});
 	
 	//update stake table (emplace or modify)
 	if(iterStake == stakeTable.end()){
@@ -309,8 +311,8 @@ void token::unstake(account_name from, account_name to, asset quantity){
 		a.balance.amount -= quantity.amount;
 	});
 	//delete stake table when remaining amount is zero
-	if(iterStaker->balance.amount == 0){
-		stakeTable.erase(iterStaker);
+	if(iterStake->balance.amount == 0){
+		stakeTable.erase(iterStake);
 	}
 	//decrease amount of stakesum field
 	iterTo->balance -= quantity;
@@ -338,7 +340,7 @@ void token::refund(account_name from, account_name to){
 	require_auth( _self );
 	
 	unstaketbl unstakeTable(_self, from);
-	auto iterUnstake = unstake_table.find(to);
+	auto iterUnstake = unstakeTable.find(to);
 	
 	tooktbl3 tookTableFrom(_self, from);
 	auto iterTo = tookTableFrom.find(from);
