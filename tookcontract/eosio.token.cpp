@@ -23,8 +23,10 @@ void token::prepare(account_name euser, account_name iuser, string memo){
 	
 	tooktbl3 tooktable(_self, iuser);
 	auto iter = tooktable.find(iuser);
-	iter->eos_account = euser;
-	iter->status = 1;
+	tooktable.modify(iter, _self, [&]( auto& a ) {
+		a.eos_account = euser;
+		a.status = 1;
+	});
 }
 	
 void token::check(account_name euser, account_name iuser, string memo){
