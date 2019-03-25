@@ -98,11 +98,11 @@ void token::newaccount(account_name iuser){
 			maptable.erase(iter);
 		}
 	}
-	void token::delcontbl(account_name iuser){
+	void token::delcontbl(account_name euser, account_name iuser){
 		require_auth(_self);
 		
 		contbl2 contable(_self, iuser);
-		auto iter = contable.find(iuser);
+		auto iter = contable.find(euser);
 		eosio_assert(iter != contable.end(), "nothing to delete");
 		
 		if(iter != contable.end()){
