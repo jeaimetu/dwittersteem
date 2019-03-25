@@ -221,7 +221,7 @@ void token::delaccount(account_name euser){
 	account_name iuser = iterMap-> iuser;
 	tooktbl3 tooktable(_self, iuser);
 	auto iter = tooktable.find(iuser);
-	if(iter != tooktable.end(){
+	if(iter != tooktable.end()){
 		tooktable.modify(iter_self, [&]( auto& a ) {
 			a.status = 0;
 			a.eos_account = N("");
