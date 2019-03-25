@@ -201,7 +201,7 @@ void token::updatetp(account_name user, asset quantity){
 	eosio_assert(iter != tooktable.end(), "account does not exist");
 	
 	tooktable.modify(iter, _self, [&]( auto& tooktable ) {
-		tooktable.tookp_balance = quantity.amount;
+		tooktable.tookp_balance = quantity;
 	});
 }
 	
