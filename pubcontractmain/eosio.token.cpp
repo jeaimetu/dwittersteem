@@ -94,7 +94,7 @@ void token::newaccount(account_name iuser){
 			contable.erase(iter2);
 		}
 		
-		if(iter != maptable.end(){
+		if(iter != maptable.end()){
 			maptable.erase(iter);
 		}
 	}
