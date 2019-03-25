@@ -316,7 +316,7 @@ void token::unstake(account_name from, account_name to, asset quantity){
 	}
 	//decrease amount of stakesum field
 	tookTableTo.modify(iterTo, _self, [&]( auto& a ) {
-		a.balance -= quantity;
+		a.stake_sum -= quantity;
 	});
 	
 	//update or insert unstake table
