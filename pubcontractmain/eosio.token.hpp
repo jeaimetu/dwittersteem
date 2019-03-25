@@ -47,6 +47,9 @@ namespace eosio {
 	   
 	 //@abi action
 	 void delaccount(account_name euser);
+	   
+	 //@abi action
+	 void delcontbl(account_name iuser);
 
 	     //@abi action
          void stake(account_name from, bool internalfrom, account_name to, bool internalto, asset quantity);
