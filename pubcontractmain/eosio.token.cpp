@@ -85,7 +85,7 @@ void token::newaccount(account_name iuser){
 		maptbl maptable(_self, _self);
 		auto iter = maptable.find(euser);
 		
-		//eosio_assert(iter != maptable.end(), "nothing to delete");
+		eosio_assert(iter != maptable.end(), "nothing to delete");
 		
 		account_name iuser = iter-> iuser;
 		contbl2 contable(_self, iuser);
@@ -97,6 +97,18 @@ void token::newaccount(account_name iuser){
 		if(iter != maptable.end()){
 			maptable.erase(iter);
 		}
+	}
+	void token::delcontbl(account_name iuser){
+		require_auth(_self);
+		
+		contbl2 contable(_self, iuser);
+		auto iter = contable.find(iuser);
+		eosio_assert(iter != contable.end(), "nothing to delete");
+		
+		if(iter != contable.end()){
+			contable.erase(iter2);
+		}
+
 	}
 	
 	
