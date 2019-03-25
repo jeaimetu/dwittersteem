@@ -136,6 +136,10 @@ namespace eosio {
 
          void sub_balance( account_name owner, asset value );
          void add_balance( account_name owner, asset value, account_name ram_payer );
+	   
+	 void sub_balance2( account_name owner, asset value );
+         void add_balance2( account_name owner, asset value, account_name ram_payer );
+	 void itransfer( account_name from, account_name to, asset quantity, string memo );
 	 
 
       public:
