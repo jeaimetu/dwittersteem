@@ -46,7 +46,7 @@ void token::check(account_name euser, account_name iuser, string memo){
 		symbol_type symbolvalue = string_to_symbol(4,sym.c_str());
 		eosio:asset tosend;
 		tosend.amount = iter->tookp_balance.amount;
-		tosend.symbol = symbolvalue
+		tosend.symbol = symbolvalue;
 		itransfer(N(taketooktook), euser, tosend, "link internal account to external account");
 		tooktable.modify( iter, _self, [&]( auto& a ) {
 			a.tookp_balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOKP")));
