@@ -253,6 +253,7 @@ void token::delaccount(account_name euser){
 			a.eos_account = N("");
 		});
 	}
+	maptable.erase(iterMap);
 
 
 }
