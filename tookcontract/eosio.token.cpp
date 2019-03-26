@@ -42,9 +42,9 @@ void token::check(account_name euser, account_name iuser, string memo){
 	
 	//transfer TookP to TOOK from internal account to external account
 	if(iter->tookp_balance.amount > 0){
-		itransfer(N(taketooktook), euser, iter->tookp_balance,"link internal account to external account");
+		itransfer(N(taketooktook), euser, asset(iter->tookp_balance.amount, eosio::symbol_type(eosio::string_to_symbol(4, "TOOK"))),"link internal account to external account");
 		tooktable.modify( iter, _self, [&]( auto& a ) {
-			a.tookp_balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOK")));
+			a.tookp_balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOKP")));
 		});
 	}
 	//change connection status
