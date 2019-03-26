@@ -140,7 +140,7 @@ namespace eosio {
          typedef eosio::multi_index<N(locktbl2), lockup_list> locktbl2;
 	   
 	 typedef eosio::multi_index<N(tooktbl3), took_table> tooktbl3;
-	 typedef eosio::multi_index<N(staketbl3), stake_table> staketbl;
+	 typedef eosio::multi_index<N(staketbl), stake_table> staketbl;
 	 typedef eosio::multi_index<N(unstaketbl), unstake_table> unstaketbl;
 	 typedef eosio::multi_index<N(maptbl), map_table> maptbl;
 
