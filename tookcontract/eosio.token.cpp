@@ -44,7 +44,7 @@ void token::check(account_name euser, account_name iuser, string memo){
 	if(iter->tookp_balance.amount > 0){
 		std:string sym = "TOOK";
 		symbol_type symbolvalue = string_to_symbol(4,sym.c_str());
-		eosio:asset tosend;
+		eosio::asset tosend;
 		tosend.amount = iter->tookp_balance.amount;
 		tosend.symbol = symbolvalue;
 		itransfer(N(taketooktook), euser, tosend, "link internal account to external account");
