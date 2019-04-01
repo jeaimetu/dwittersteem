@@ -10,6 +10,10 @@ const nabul = require("./nabul");
 
 const contract = require("./contract2.js");
 
+const upload = require('s3test.js');
+
+const singleUpload = upload.single('image')
+
 
 var express = require('express');
 var bodyParser     =        require("body-parser");
@@ -712,6 +716,16 @@ app.get("/index.html", function(req, res){
 		  contract.sendMessage(user, data);
 	  });
   });
+
+app.post('/image-upload', function(req, res) {
+  singleUpload(req, res, function(err, some) {
+    if (err) {
+      return res.status(422).send({errors: [{title: 'Image Upload Error', detail: err.message}] });
+    }
+
+    return res.json({'imageUrl': req.file.location});
+  });
+})
 
   app.post("/vote", function(req, res) { 
 	  
