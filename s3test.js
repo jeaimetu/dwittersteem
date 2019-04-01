@@ -25,6 +25,7 @@ const upload = multer({
       cb(null, {fieldName: file.fieldname});
     },
     key: function (req, file, cb) {
+        console.log("calling back from s3");
       cb(null, Date.now().toString())
     }
   })
