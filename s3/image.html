@@ -90,7 +90,7 @@ $(document).ready(function () {
             timeout: 600000,
             success: function (data) {
 
-                $("#result").text(data);
+                $("#result").text(data.imageUrl);
                 console.log("SUCCESS : ", data);
                 $("#btnSubmit").prop("disabled", false);
 
