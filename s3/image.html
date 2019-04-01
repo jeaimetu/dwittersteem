@@ -40,10 +40,10 @@ $.ajax(settings).done(function (response) {
 </script>
 </head>
 <body>
-
-  Select a file: <input type="file" id="myFile"><br><br>
-  <button type="button" onclick="javascrip:imageUpload()" >Click Me!</button>
-
+<form method="post" enctype="multipart/form-data" action="/image-upload">
+    <input type="file" name="images" />
+    <input type="submit" value="Upload" />
+ </form>
 
 </body>
 </html>
