@@ -14,8 +14,8 @@
   }
 function imageUpload(){
 var form = new FormData();
-console.log("input file", $("#myFile").text());
-form.append("image", $("#myFile").text());
+console.log("input file", $("#myFile").val());
+form.append("image", $("#myFile").val());
 
 var settings = {
   "async": true,
@@ -40,7 +40,7 @@ $.ajax(settings).done(function (response) {
 </script>
 </head>
 <body>
-<form action = "#" onsubmit="javascript:imageUploadTest()" enctype="multipart/form-data">
+<form action = "#" onsubmit="javascript:imageUpload()" enctype="multipart/form-data">
   Select a file: <input type="file" id="myFile"><br><br>
   <input type="submit">
 </form>
