@@ -7,6 +7,11 @@
   crossorigin="anonymous"></script>
   
 <script>
+  
+  function imageUploadTest(){
+    console.log("input file1", $("#myFile").text());
+    console.log("input file2", $("#myFile").val());
+  }
 function imageUpload(){
 var form = new FormData();
 console.log("input file", $("#myFile").text());
@@ -35,7 +40,7 @@ $.ajax(settings).done(function (response) {
 </script>
 </head>
 <body>
-<form onsubmit="javascript:imageUpload()" enctype="multipart/form-data">
+<form onsubmit="javascript:imageUploadTest()" enctype="multipart/form-data">
   Select a file: <input type="file" id="myFile"><br><br>
   <input type="submit">
 </form>
