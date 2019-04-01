@@ -1,0 +1,43 @@
+<html>
+<head>
+
+  <script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+  
+<script>
+imageUpload(){
+var form = new FormData();
+console.log("input file", $("#myFile").text());
+form.append("image", $("#tokenBalance").text());
+
+var settings = {
+  "async": true,
+  "crossDomain": true,
+  "url": "https://dabblestat.herokuapp.com/image-upload",
+  "method": "POST",
+  "headers": {
+    "cache-control": "no-cache",
+    "postman-token": "74b5fa67-846e-0363-5a68-18bef5950833"
+  },
+  "processData": false,
+  "contentType": false,
+  "mimeType": "multipart/form-data",
+  "data": form
+}
+
+$.ajax(settings).done(function (response) {
+  console.log(response);
+});
+}
+</script>
+</head>
+<body>
+<form action="javascript:imageUpload()">
+  Select a file: <input type="file" id="myFile"><br><br>
+  <input type="submit">
+</form>
+
+</body>
+</html>
