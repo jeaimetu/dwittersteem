@@ -59,18 +59,74 @@ $.ajax(settings).done(function (response) {
   alert("upload complete");
 });
 }
+	
+$(document).ready(function () {
+
+    $("#btnSubmit").click(function (event) {
+
+        //stop submit the form, we will post it manually.
+        event.preventDefault();
+
+        // Get form
+        var form = $('#fileUploadForm')[0];
+
+		// Create an FormData object 
+        var data = new FormData(form);
+
+		// If you want to add an extra field for the FormData
+        data.append("CustomField", "This is some extra data, testing");
+
+		// disabled the submit button
+        $("#btnSubmit").prop("disabled", true);
+
+        $.ajax({
+            type: "POST",
+            enctype: 'multipart/form-data',
+            url: "https://dabblestat.herokuapp.com/image-upload",
+            data: data,
+            processData: false,
+            contentType: false,
+            cache: false,
+            timeout: 600000,
+            success: function (data) {
+
+                $("#result").text(data);
+                console.log("SUCCESS : ", data);
+                $("#btnSubmit").prop("disabled", false);
+
+            },
+            error: function (e) {
+
+                $("#result").text(e.responseText);
+                console.log("ERROR : ", e);
+                $("#btnSubmit").prop("disabled", false);
+
+            }
+        });
+
+    });
+
+});
 </script>
 </head>
 <body>
-<!--<form name=myForm" method="post" enctype="multipart/form-data" action="/image-upload">-->
+<!--<form name=myForm" method="post" enctype="multipart/form-data" action="/image-upload">
     <input type="file" name="imagepath" />
-    <!--<input type="submit" value="Upload" />-->
+    <input type="submit" value="Upload" />
   <button type="button" onclick="javascript:fnProfileImageChangeAction()" >Click Me!</button>
- <!--</form>-->
+ </form>-->
+	
+	<h1>jQuery Ajax submit Multipart form</h1>
 
-	<form id="frmUserInfoChange">
-		<input type="hidden" id="image" name="image" />
-	</form>
+<form method="POST" enctype="multipart/form-data" id="fileUploadForm">
+    <input type="file" name="image"/><br/><br/>
+    <input type="submit" value="Submit" id="btnSubmit"/>
+</form>
+
+<h1>Ajax Post Result</h1>
+<span id="result"></span>
+
+
                                             
 </body>
 </html>
