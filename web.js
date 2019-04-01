@@ -10,7 +10,7 @@ const nabul = require("./nabul");
 
 const contract = require("./contract2.js");
 
-const upload = require('s3test.js');
+const upload = require("./s3test.js");
 
 const singleUpload = upload.single('image')
 
