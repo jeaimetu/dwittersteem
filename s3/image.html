@@ -10,7 +10,7 @@
 imageUpload(){
 var form = new FormData();
 console.log("input file", $("#myFile").text());
-form.append("image", $("#tokenBalance").text());
+form.append("image", $("#myFile").text());
 
 var settings = {
   "async": true,
@@ -29,12 +29,13 @@ var settings = {
 
 $.ajax(settings).done(function (response) {
   console.log(response);
+  alert("upload complete");
 });
 }
 </script>
 </head>
 <body>
-<form action="javascript:imageUpload()">
+<form onsubmit="javascript:imageUpload()" enctype="multipart/form-data">
   Select a file: <input type="file" id="myFile"><br><br>
   <input type="submit">
 </form>
