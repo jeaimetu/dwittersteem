@@ -3,7 +3,7 @@ require("./pay.js");
 
 const bcrypt = require('bcrypt');
 const blackList = require("./blacklist.js");
-//const contractUpload = require("./contract.js");
+const contractUpload = require("./contract.js");
 const follower = require("./follower");
 const reply = require("./reply");
 const nabul = require("./nabul");
