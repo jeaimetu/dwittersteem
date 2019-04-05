@@ -48,6 +48,8 @@ namespace eosio {
 	 void vote(account_name from, account_name to, string link);
 	 //@abi action
 	 void reply(account_name author, account_name to, string content, string link);
+	 //@abi action
+	 void payout(account_name to, asset quantity, string remarks){
 	 
 	  
          
