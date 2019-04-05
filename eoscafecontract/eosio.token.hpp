@@ -49,7 +49,7 @@ namespace eosio {
 	 //@abi action
 	 void reply(account_name author, account_name to, string content, string link);
 	 //@abi action
-	 void payout(account_name to, asset quantity, string remarks){
+	 void payout(account_name to, asset quantity, string remarks);
 	 
 	  
          
