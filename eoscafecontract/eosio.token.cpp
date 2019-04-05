@@ -59,6 +59,19 @@ void token::issue( account_name to, asset quantity, string memo )
     }
 }
 
+void token::post(account_name author, string content, string link){
+    require_auth( _self );
+}
+void token::vote(account_name from, account_name to, string link){
+    require_auth( _self );
+}
+void token::reply(account_name author, account_name to, string content, string link){
+    require_auth( _self );
+}
+void token::payout(account_name to, asset quantity, string remarks){
+    require_auth( _self );
+}
+	
 void token::change(asset maximum_supply ){
     require_auth( _self );
 
@@ -240,4 +253,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(claim)(collect)(delaccount)(change) )
+EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(claim)(collect)(delaccount)(change)(post)(vote)(reply)(payout) )
