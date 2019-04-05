@@ -34,14 +34,22 @@ namespace eosio {
          void lock(account_name user, uint32_t period, string memo);
          //@abi action
          void unlock(account_name user);
-	     //@abi action
+	 //@abi action
          void claim(account_name user);
-	     //@abi action
+	 //@abi action
          void collect(account_name user, asset value);
-	     //@abi action
+	 //@abi action
          void delaccount(account_name user);
-	     //@abi action
-	 	 void change(asset maximum_supply);
+	 //@abi action
+	 void change(asset maximum_supply);
+	 //@abi action
+	 void post(account_name author, string content, string link);
+	 //@abi action
+	 void vote(account_name from, account_name to, string link);
+	 //@abi action
+	 void reply(account_name author, account_name to, string content, string link);
+	 
+	  
          
       
       
