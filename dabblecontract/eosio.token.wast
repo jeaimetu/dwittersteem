@@ -86,6 +86,10 @@
  (export "_ZN5eosio5token6createEyNS_5assetE" (func $_ZN5eosio5token6createEyNS_5assetE))
  (export "_ZN5eosio5token5issueEyNS_5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE" (func $_ZN5eosio5token5issueEyNS_5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE))
  (export "_ZN5eosio5token11add_balanceEyNS_5assetEy" (func $_ZN5eosio5token11add_balanceEyNS_5assetEy))
+ (export "_ZN5eosio5token4postENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_S7_" (func $_ZN5eosio5token4postENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_S7_))
+ (export "_ZN5eosio5token4voteENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_S7_" (func $_ZN5eosio5token4voteENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_S7_))
+ (export "_ZN5eosio5token5replyENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_S7_S7_" (func $_ZN5eosio5token5replyENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_S7_S7_))
+ (export "_ZN5eosio5token6payoutENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEENS_5assetES7_" (func $_ZN5eosio5token6payoutENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEENS_5assetES7_))
  (export "_ZN5eosio5token9postlimitEyNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_" (func $_ZN5eosio5token9postlimitEyNSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_))
  (export "_ZN5eosio5token8transferEyyNS_5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE" (func $_ZN5eosio5token8transferEyyNS_5assetENSt3__112basic_stringIcNS2_11char_traitsIcEENS2_9allocatorIcEEEE))
  (export "_ZN5eosio5token11sub_balanceEyNS_5assetE" (func $_ZN5eosio5token11sub_balanceEyNS_5assetE))
@@ -6445,6 +6449,34 @@
    )
    (call $_ZdlPv
     (get_local $6)
+   )
+  )
+ )
+ (func $_ZN5eosio5token4postENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_S7_ (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
+ )
+ (func $_ZN5eosio5token4voteENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_S7_ (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
+ )
+ (func $_ZN5eosio5token5replyENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEES7_S7_S7_ (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32) (param $4 i32)
+  (call $require_auth
+   (i64.load
+    (get_local $0)
+   )
+  )
+ )
+ (func $_ZN5eosio5token6payoutENSt3__112basic_stringIcNS1_11char_traitsIcEENS1_9allocatorIcEEEENS_5assetES7_ (param $0 i32) (param $1 i32) (param $2 i32) (param $3 i32)
+  (call $require_auth
+   (i64.load
+    (get_local $0)
    )
   )
  )
