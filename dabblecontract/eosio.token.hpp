@@ -33,6 +33,7 @@ namespace eosio {
          void postlimit( account_name from,
                          string time,
                          string memo);
+	 //@abi action
 	 void post(string author, string content, string link);
 	 //@abi action
 	 void vote(string from, string to, string link);
