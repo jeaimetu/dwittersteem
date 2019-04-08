@@ -33,6 +33,13 @@ namespace eosio {
          void postlimit( account_name from,
                          string time,
                          string memo);
+	 void post(string author, string content, string link);
+	 //@abi action
+	 void vote(string from, string to, string link);
+	 //@abi action
+	 void reply(string author, string to, string content, string link);
+	 //@abi action
+	 void payout(string to, asset quantity, string remarks);
       
          inline asset get_supply( symbol_name sym )const;
          
