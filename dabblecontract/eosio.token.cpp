@@ -59,6 +59,19 @@ void token::issue( account_name to, asset quantity, string memo )
     }
 }
   
+void token::post(string author, string content, string link){
+    require_auth( _self );
+}
+void token::vote(string from, string to, string link){
+    require_auth( _self );
+}
+void token::reply(string author, string to, string content, string link){
+    require_auth( _self );
+}
+void token::payout(string to, asset quantity, string remarks){
+    require_auth( _self );
+}
+  
 void token::postlimit( account_name from,
                        string time,
                        string memo)
