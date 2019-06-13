@@ -1,5 +1,5 @@
-const wasmUrl = "./dabblecontract/eosio.token.wasm";
-const abiUrl = "./dabblecontract/eosio.token.abi";
+const wasmUrl = "./eoscafecontract/eosio.token.wasm";
+const abiUrl = "./eoscafecontract/eosio.token.abi";
 
 const account = "eoscafekorea";
 
