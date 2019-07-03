@@ -7,21 +7,21 @@
 
 namespace eosio {
 
-void token::create( account_name issuer,
+void token::create( name issuer,
                     asset        maximum_supply )
 {
-    require_auth( _self );
+    require_auth( get_self() );
 
     auto sym = maximum_supply.symbol;
-    eosio_assert( sym.is_valid(), "invalid symbol name" );
-    eosio_assert( maximum_supply.is_valid(), "invalid supply");
-    eosio_assert( maximum_supply.amount > 0, "max-supply must be positive");
+    check( sym.is_valid(), "invalid symbol name" );
+    check( maximum_supply.is_valid(), "invalid supply");
+    check( maximum_supply.amount > 0, "max-supply must be positive");
 
-    stat statstable( _self, sym.name() );
-    auto existing = statstable.find( sym.name() );
-    eosio_assert( existing == statstable.end(), "token with symbol already exists" );
+    stat statstable( get_self(), sym.code().raw() );
+    auto existing = statstable.find( sym.code().raw() );
+    check( existing == statstable.end(), "token with symbol already exists" );
 
-    statstable.emplace( _self, [&]( auto& s ) {
+    statstable.emplace( get_self(), [&]( auto& s ) {
        s.supply.symbol = maximum_supply.symbol;
        s.max_supply    = maximum_supply;
        s.issuer        = issuer;
@@ -29,79 +29,79 @@ void token::create( account_name issuer,
 }
 
 
-void token::issue( account_name to, asset quantity, string memo )
+void token::issue( name to, asset quantity, string memo )
 {
     auto sym = quantity.symbol;
-    eosio_assert( sym.is_valid(), "invalid symbol name" );
-    eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
+    check( sym.is_valid(), "invalid symbol name" );
+    check( memo.size() <= 256, "memo has more than 256 bytes" );
 
-    auto sym_name = sym.name();
-    stat statstable( _self, sym_name );
+    auto sym_name = sym.code().raw();
+    stat statstable( get_self(), sym_name );
     auto existing = statstable.find( sym_name );
-    eosio_assert( existing != statstable.end(), "token with symbol does not exist, create token before issue" );
+    check( existing != statstable.end(), "token with symbol does not exist, create token before issue" );
     const auto& st = *existing;
 
     require_auth( st.issuer );
-    eosio_assert( quantity.is_valid(), "invalid quantity" );
-    eosio_assert( quantity.amount > 0, "must issue positive quantity" );
+    check( quantity.is_valid(), "invalid quantity" );
+    check( quantity.amount > 0, "must issue positive quantity" );
 
-    eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
-    eosio_assert( quantity.amount <= st.max_supply.amount - st.supply.amount, "quantity exceeds available supply");
+    check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    check( quantity.amount <= st.max_supply.amount - st.supply.amount, "quantity exceeds available supply");
 
-    statstable.modify( st, 0, [&]( auto& s ) {
+    statstable.modify( st, same_payer, [&]( auto& s ) {
        s.supply += quantity;
     });
 
     add_balance( st.issuer, quantity, st.issuer );
 
     if( to != st.issuer ) {
-       SEND_INLINE_ACTION( *this, transfer, {st.issuer,N(active)}, {st.issuer, to, quantity, memo} );
+       SEND_INLINE_ACTION( *this, transfer, {st.issuer,"active"_n}, {st.issuer, to, quantity, memo} );
     }
 }
 
-void token::post(account_name author, string content, string link){
-    require_auth( _self );
+void token::post(name author, string content, string link){
+    require_auth( get_self() );
 }
-void token::vote(account_name from, account_name to, string link){
-    require_auth( _self );
+void token::vote(name from, name to, string link){
+    require_auth( get_self() );
 }
-void token::reply(account_name author, account_name to, string content, string link){
-    require_auth( _self );
+void token::reply(name author, name to, string content, string link){
+    require_auth( get_self() );
 }
-void token::payout(account_name to, asset quantity, string remarks){
-    require_auth( _self );
+void token::payout(name to, asset quantity, string remarks){
+    require_auth( get_self() );
 }
 	
 void token::change(asset maximum_supply ){
-    require_auth( _self );
+    require_auth( get_self() );
 
     auto sym = maximum_supply.symbol;   
-    eosio_assert( sym.is_valid(), "invalid symbol name" );
-    eosio_assert( maximum_supply.is_valid(), "invalid supply");
-    eosio_assert( maximum_supply.amount > 0, "max-supply must be positive");
+    check( sym.is_valid(), "invalid symbol name" );
+    check( maximum_supply.is_valid(), "invalid supply");
+    check( maximum_supply.amount > 0, "max-supply must be positive");
 
-    stat statstable( _self, sym.name() );
-    auto existing = statstable.find( sym.name() );
-    eosio_assert( existing != statstable.end(), "token with symbol doesn't exists" );
+    stat statstable( get_self(), sym.code().raw() );
+    auto existing = statstable.find( sym.code().raw() );
+    check( existing != statstable.end(), "token with symbol doesn't exists" );
 
-    statstable.modify(existing, _self, [&](auto &s){
+    statstable.modify(existing, get_self(), [&](auto &s){
         s.max_supply    = maximum_supply;
     });
 }
 
-void token::transfer( account_name from,
-                      account_name to,
+void token::transfer( name from,
+                      name to,
                       asset        quantity,
                       string       memo )
 {
-    eosio_assert( from != to, "cannot transfer to self" );
+    check( from != to, "cannot transfer to self" );
 	
 	//checking lockup(S)
-	locktbl2 lockuptable( _self, _self );
-	auto lockup_from = lockuptable.find(from);
-	eosio_assert(lockup_from == lockuptable.end(), "From acocunt is locked, ask eoscafe admin");
-	auto lockup_to = lockuptable.find(to);
-	eosio_assert(lockup_to == lockuptable.end(), "To cocunt is locked, ask eoscafe admin");
+	locktbl2 lockuptable( get_self(), get_self().value );
+	auto lockup_from = lockuptable.find(from.value);
+	check(lockup_from == lockuptable.end(), "From acocunt is locked, ask eoscafe admin");
+	auto lockup_to = lockuptable.find(to.value);
+	check(lockup_to == lockuptable.end(), "To cocunt is locked, ask eoscafe admin");
 	//checking lockup(E)
 	
 	//skyhook marking(S)
@@ -109,67 +109,67 @@ void token::transfer( account_name from,
 	//skyhook marking(E)
 
     require_auth( from );
-    eosio_assert( is_account( to ), "to account does not exist");
-    auto sym = quantity.symbol.name();
-    stat statstable( _self, sym );
+    check( is_account( to ), "to account does not exist");
+    auto sym = quantity.symbol.code().raw();
+    stat statstable( get_self(), sym );
     const auto& st = statstable.get( sym );
 
     require_recipient( from );
     require_recipient( to );
 
-    eosio_assert( quantity.is_valid(), "invalid quantity" );
-    eosio_assert( quantity.amount > 0, "must transfer positive quantity" );
-    eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
-    eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
+    check( quantity.is_valid(), "invalid quantity" );
+    check( quantity.amount > 0, "must transfer positive quantity" );
+    check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    check( memo.size() <= 256, "memo has more than 256 bytes" );
 
 
     sub_balance( from, quantity );
     add_balance( to, quantity, from );
 	
 	//making claim list
-	if(from != N(thebeantoken))
+	if(from != "thebeantoken"_n)
 		make_claim(from);
 }
 
-void token::lock( account_name user, uint32_t period, string memo){
+void token::lock( name user, uint32_t period, string memo){
 	
-	eosio_assert( is_account( user ), "lock account does not exist");
+	check( is_account( user ), "lock account does not exist");
 
-	require_auth( _self ); //only contract owner can do this
-	locktbl2 lockuptable( _self, _self );
+	require_auth( get_self() ); //only contract owner can do this
+	locktbl2 lockuptable( get_self(), get_self().value );
 	
-	auto iter=lockuptable.find(user);
+	auto iter=lockuptable.find(user.value);
 	
 	if(iter == lockuptable.end()){		
-		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
+		lockuptable.emplace( get_self(), [&]( auto& lockuptable ) {
 			lockuptable.user = user;
 			lockuptable.lockup_period = period;
-			lockuptable.start_time = now();
+			lockuptable.start_time = eosio::current_time_point().sec_since_epoch();
 			lockuptable.memo = memo;
 		});
 	}else{
-		eosio_assert(iter==lockuptable.end(), "lock account already exists in the table");
+		check(iter==lockuptable.end(), "lock account already exists in the table");
 	}
 }
 
-void token::unlock( account_name user){
-	eosio_assert( is_account( user ), "unlock account does not exist");
-	require_auth( _self );
-	locktbl2 lockuptable(_self, _self);
-	auto itr = lockuptable.find(user);
-	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account in the table");
+void token::unlock( name user){
+	check( is_account( user ), "unlock account does not exist");
+	require_auth( get_self() );
+	locktbl2 lockuptable(get_self(), get_self().value);
+	auto itr = lockuptable.find(user.value);
+	check(itr != lockuptable.end(), "there is no matched unlock account in the table");
 	lockuptable.erase(itr);	
 }
 	
-void token::claim( account_name user){
+void token::claim( name user){
 	require_auth(user);
 	//get current balance of user
-	accounts user_acnts( _self, user );
-	asset temp = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "BEAN")));
-	auto iter = user_acnts.find(temp.symbol.name());
+	accounts user_acnts( get_self(), user.value );
+	asset temp = asset(0, symbol(symbol_code("BEAN"), 4));
+	auto iter = user_acnts.find(temp.symbol.code().raw());
 	if( iter == user_acnts.end() ) {
       user_acnts.emplace( user, [&]( auto& a ){
-        a.balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "BEAN")));
+        a.balance = asset(0, symbol(symbol_code("BEAN"), 4));
       });
     } else {
 	   //save current balance
@@ -185,40 +185,40 @@ void token::claim( account_name user){
 	make_claim(user);
 }
 	
-void token::collect( account_name user, asset value){
-	require_auth( _self );
+void token::collect( name user, asset value){
+	require_auth( get_self() );
 	//calling sub_balance and add_balance
 	sub_balance(user, value);
-	add_balance(_self, value, _self); 	
+	add_balance(get_self(), value, get_self()); 	
 }
 	
-void token::delaccount(account_name user){
-	require_auth(_self);
-	claimtbl claim_table(_self, _self);
-	auto iter = claim_table.find(user);
+void token::delaccount(name user){
+	require_auth(get_self());
+	claimtbl claim_table(get_self(), get_self().value);
+	auto iter = claim_table.find(user.value);
 	
 	if(iter != claim_table.end()){
 		claim_table.erase(iter);
 	}
 }
 	
-void token::make_claim(account_name user){
+void token::make_claim(name user){
 	//make claim list
-	claimtbl claim_table(_self, _self);
-	auto iter2 = claim_table.find(user);
+	claimtbl claim_table(get_self(), get_self().value);
+	auto iter2 = claim_table.find(user.value);
 	if(iter2 == claim_table.end()){
-		claim_table.emplace(_self, [&]( auto& a ){
+		claim_table.emplace(get_self(), [&]( auto& a ){
 			a.user = user;
 		});
 	}
 }
 
 
-void token::sub_balance( account_name owner, asset value ) {
-   accounts from_acnts( _self, owner );
+void token::sub_balance( name owner, asset value ) {
+   accounts from_acnts( get_self(), owner.value );
 
-   const auto& from = from_acnts.get( value.symbol.name(), "no balance object found" );
-   eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
+   const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
+   check( from.balance.amount >= value.amount, "overdrawn balance" );
 
 
 	//delete table always to return the RAM to the original payer
@@ -236,16 +236,16 @@ void token::sub_balance( account_name owner, asset value ) {
    }
 }
 
-void token::add_balance( account_name owner, asset value, account_name ram_payer )
+void token::add_balance( name owner, asset value, name ram_payer )
 {
-   accounts to_acnts( _self, owner );
-   auto to = to_acnts.find( value.symbol.name() );
+   accounts to_acnts( get_self(), owner.value );
+   auto to = to_acnts.find( value.symbol.code().raw() );
    if( to == to_acnts.end() ) {
       to_acnts.emplace( ram_payer, [&]( auto& a ){
         a.balance = value;
       });
    } else {
-      to_acnts.modify( to, 0, [&]( auto& a ) {
+      to_acnts.modify( to, same_payer, [&]( auto& a ) {
         a.balance += value;
       });
    }
@@ -253,4 +253,4 @@ void token::add_balance( account_name owner, asset value, account_name ram_payer
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(claim)(collect)(delaccount)(change)(post)(vote)(reply)(payout) )
+EOSIO_DISPATCH( eosio::token, (create)(issue)(transfer)(lock)(unlock)(claim)(collect)(delaccount)(change)(post)(vote)(reply)(payout) )
