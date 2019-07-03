@@ -1,7 +1,7 @@
-const wasmUrl = "./dabblecontract/eosio.token.wasm";
-const abiUrl = "./dabblecontract/eosio.token.abi";
+const wasmUrl = "./eoscafecontractnew/eosio.token.wasm";
+const abiUrl = "./eoscafecontractnew/eosio.token.abi";
 
-const account = "eoscafekorea";
+const account = "thebeantoken";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -97,8 +97,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
-eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("thebeantoken", 0, 0, wasm) // @returns {Promise}
+eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
 
 
 async function getTransaction(){
