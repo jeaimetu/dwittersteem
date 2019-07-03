@@ -89,6 +89,61 @@ void token::change(asset maximum_supply ){
     });
 }
 
+void token::retire( const asset& quantity, const string& memo )
+{
+    auto sym = quantity.symbol;
+    check( sym.is_valid(), "invalid symbol name" );
+    check( memo.size() <= 256, "memo has more than 256 bytes" );
+
+    stat statstable( get_self(), sym.code().raw() );
+    auto existing = statstable.find( sym.code().raw() );
+    check( existing != statstable.end(), "token with symbol does not exist" );
+    const auto& st = *existing;
+
+    require_auth( st.issuer );
+    check( quantity.is_valid(), "invalid quantity" );
+    check( quantity.amount > 0, "must retire positive quantity" );
+
+    check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+
+    statstable.modify( st, same_payer, [&]( auto& s ) {
+       s.supply -= quantity;
+    });
+
+    sub_balance( st.issuer, quantity );
+}
+
+void token::open( const name& owner, const symbol& symbol, const name& ram_payer )
+{
+   require_auth( ram_payer );
+
+   check( is_account( owner ), "owner account does not exist" );
+
+   auto sym_code_raw = symbol.code().raw();
+   stat statstable( get_self(), sym_code_raw );
+   const auto& st = statstable.get( sym_code_raw, "symbol does not exist" );
+   check( st.supply.symbol == symbol, "symbol precision mismatch" );
+
+   accounts acnts( get_self(), owner.value );
+   auto it = acnts.find( sym_code_raw );
+   if( it == acnts.end() ) {
+      acnts.emplace( ram_payer, [&]( auto& a ){
+        a.balance = asset{0, symbol};
+      });
+   }
+}
+
+void token::close( const name& owner, const symbol& symbol )
+{
+   require_auth( owner );
+   accounts acnts( get_self(), owner.value );
+   auto it = acnts.find( symbol.code().raw() );
+   check( it != acnts.end(), "Balance row already deleted or never existed. Action won't have any effect." );
+   check( it->balance.amount == 0, "Cannot close because the balance is not zero." );
+   acnts.erase( it );
+}
+
+
 void token::transfer( name from,
                       name to,
                       asset        quantity,
@@ -253,4 +308,4 @@ void token::add_balance( name owner, asset value, name ram_payer )
 
 } /// namespace eosio
 
-EOSIO_DISPATCH( eosio::token, (create)(issue)(transfer)(lock)(unlock)(claim)(collect)(delaccount)(change)(post)(vote)(reply)(payout) )
+EOSIO_DISPATCH( eosio::token, (open)(close)(retire)(create)(issue)(transfer)(lock)(unlock)(claim)(collect)(delaccount)(change)(post)(vote)(reply)(payout) )

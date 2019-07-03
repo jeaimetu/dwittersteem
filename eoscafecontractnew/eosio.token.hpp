@@ -54,6 +54,13 @@ namespace eosio {
 	 void reply(name author, name to, string content, string link);
 	 [[eosio::action]]
 	 void payout(name to, asset quantity, string remarks);
+	 [[eosio::action]]
+         void retire( const asset& quantity, const string& memo );
+	 [[eosio::action]]
+         void open( const name& owner, const symbol& symbol, const name& ram_payer );
+	 [[eosio::action]]
+         void close( const name& owner, const symbol& symbol );
+
 	 
 	  
          
