@@ -868,7 +868,7 @@ function deleteOld(){
 		dbo.collection("voting").deleteMany(deleteQuery, function(err, obj){
 			if (err) throw err;
 			console.log(obj.result.n + " documents deleted");
-			db.close();
+			//db.close();
 		});
 	});
 }
