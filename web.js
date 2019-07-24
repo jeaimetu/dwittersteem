@@ -857,10 +857,25 @@ function stakeRank3(){
 	
 }
 
-
+function deleteOld(){
+	console.log("Starting delete old ones");
+	MongoClient.connect(url, function(err, db) {
+		var dbo = db.db("heroku_dg3d93pq");
+		var dateStart = Date.now() - 1000 * 60 * 60 * 24 * 7;
+		var dataEnd = dateStart - 1000 * 60 * 60 * 24 * 7;
+		console.log("estimated time", dateStart);
+		var deleteQuery = { date : { $lt : dateStart}};
+		dbo.collection("board").deleteMany(deleteQuery, function(err, obj){
+			if (err) throw err;
+			console.log(obj.result.n + " documents deleted");
+			//db.close();
+		});
+	});
+}
 
 //addStakeField();
 stakeRank();
+deleteOld();
 //stakeRank2();
 //stakeRank3();
 
