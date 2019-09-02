@@ -431,7 +431,7 @@ void token::itransfer( account_name from,
 void token::sub_balance2( account_name owner, asset value ) {
    accounts from_acnts( _self, owner );
 
-	   const auto& from = from_acnts.get( value.symbol.code(.raw(), "no balance object found" );
+	   const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
    eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
 
    //from_acnts.modify( from, owner, [&]( auto& a ) {
