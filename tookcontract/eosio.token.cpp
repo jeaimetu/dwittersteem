@@ -218,7 +218,7 @@ void token::lock( name user, uint32_t period, string memo){
 	
 	if(iter == lockuptable.end()){		
 		symbol temp = symbol(symbol_code("TOOK"),4);
-		asset quantity = get_balance(user, temp.symbol());
+		asset quantity = get_balance(user, temp.symbol.code().raw());
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
 			lockuptable.initial_amount = quantity;
@@ -321,16 +321,16 @@ void token::stake(name from, name to, asset quantity){
 void token::unstake(name from, name to, asset quantity){
 	require_auth( _self );
 	
-	tooktbl3 tookTableTo(_self, to);
-	auto iterTo = tookTableTo.find(to);
+	tooktbl3 tookTableTo(_self, to.value);
+	auto iterTo = tookTableTo.find(to.value);
 	check(iterTo != tookTableTo.end(), "to account does not exist");
 	
-	tooktbl3 tookTableFrom(_self, from);
-	auto iterFrom = tookTableFrom.find(from);
+	tooktbl3 tookTableFrom(_self, from.value);
+	auto iterFrom = tookTableFrom.find(from.value);
 	check(iterFrom != tookTableFrom.end(), "from account does not exist");
 	
-	staketbl stakeTable(_self, from);
-	auto iterStake = stakeTable.find(to);
+	staketbl stakeTable(_self, from.value);
+	auto iterStake = stakeTable.find(to.value);
 	check(iterStake != stakeTable.end(), "there is no staked amount to unstake");
 	
 	check(iterStake->balance.amount >= quantity.amount, "unstake amount overdue");
@@ -349,8 +349,8 @@ void token::unstake(name from, name to, asset quantity){
 	});
 	
 	//update or insert unstake table
-	unstaketbl unstakeTable (_self, from);
-	auto iterUnstake = unstakeTable.find(to);
+	unstaketbl unstakeTable (_self, from.value);
+	auto iterUnstake = unstakeTable.find(to.value);
 	
 	if(iterUnstake == unstakeTable.end()){
 		unstakeTable.emplace( _self, [&]( auto& a) {
@@ -370,11 +370,11 @@ void token::unstake(name from, name to, asset quantity){
 void token::refund(name from, name to){
 	require_auth( _self );
 	
-	unstaketbl unstakeTable(_self, from);
-	auto iterUnstake = unstakeTable.find(to);
+	unstaketbl unstakeTable(_self, from.value);
+	auto iterUnstake = unstakeTable.find(to.value);
 	
-	tooktbl3 tookTableFrom(_self, from);
-	auto iterTo = tookTableFrom.find(from);
+	tooktbl3 tookTableFrom(_self, from.value);
+	auto iterTo = tookTableFrom.find(from.value);
 	
 	if(iterTo->eos_account == ""_n){
 		check(0,"refund will not work for internal account");
@@ -387,8 +387,8 @@ void token::refund(name from, name to){
 void token::updatetp(name user, asset quantity){
 	require_auth( _self );
 	
-	tooktbl3 tooktable(_self, user);
-	auto iter = tooktable.find(user);
+	tooktbl3 tooktable(_self, user.value);
+	auto iter = tooktable.find(user.value);
 	check(iter != tooktable.end(), "account does not exist");
 	
 	tooktable.modify(iter, _self, [&]( auto& tooktable ) {
