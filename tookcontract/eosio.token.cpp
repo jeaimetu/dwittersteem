@@ -376,7 +376,7 @@ void token::refund(name from, name to){
 	tooktbl3 tookTableFrom(_self, from);
 	auto iterTo = tookTableFrom.find(from);
 	
-	if(iterTo->eos_account == N("")){
+	if(iterTo->eos_account == ""_n){
 		check(0,"refund will not work for internal account");
 	}else{
 		itransfer("taketooktook"_n, iterTo->eos_account , iterUnstake->balance, "refund");
