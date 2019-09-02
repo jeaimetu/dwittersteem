@@ -29,7 +29,7 @@ void token::prepare(name euser, name iuser, string memo){
 	});
 }
 	
-void token::check(name euser, name iuser, string memo){
+void token::check2(name euser, name iuser, string memo){
 	require_auth(_self);
 	check(is_account(euser), "euser account does not exist");
 	
