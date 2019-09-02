@@ -11,7 +11,7 @@ namespace eosio {
 void token::prepare(name euser, name iuser, string memo){
 	require_auth(euser);
 	
-	maptbl maptable(_self, _self);
+	maptbl maptable(_self, _self.value);
 	auto iterMap = maptable.find(euser.value);
 	
 	check(iterMap == maptable.end(), "external account already exist");
@@ -429,7 +429,7 @@ void token::itransfer( name from,
 }
 	
 void token::sub_balance2( name owner, asset value ) {
-   accounts from_acnts( _self, owner );
+   accounts from_acnts( _self, owner.value );
 
 	   const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
    check( from.balance.amount >= value.amount, "overdrawn balance" );
