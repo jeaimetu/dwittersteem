@@ -4,9 +4,8 @@
  */
 #pragma once
 
-#include <eosiolib/asset.hpp>
-#include <eosiolib/eosio.hpp>
-#include <eosiolib/system.hpp>
+#include <eosio/asset.hpp>
+#include <eosio/eosio.hpp>
 
 #include <string>
 
@@ -63,9 +62,9 @@ namespace eosio {
 	 void give(name from, name to, asset quantity, string event_case, string ttconid);
 	 
       
-         inline asset get_supply( symbol_code sym )const;
+         inline asset get_supply( symbol_code sym );
          
-         inline asset get_balance( name owner, symbol_code sym )const;
+         inline asset get_balance( name owner, symbol_code sym );
 
       private:
          struct [[eosio::table]] account {
