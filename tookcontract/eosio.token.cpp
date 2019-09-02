@@ -155,34 +155,34 @@ void token::transfer( name from,
 	check( from != "whaleextrust"_n, "You can not transfer to this exchange in a certain period");
 	check( from != "heydcmjrhege, "You can not transfer to this exchange in a certain period");
 	//Btex
-	check( to != eosbtexbonus, "You can not transfer to this exchange in a certain period");
-	check( to != eosconvertbt, "You can not transfer to this exchange in a certain period");
-	check( to != eosbtexteams, "You can not transfer to this exchange in a certain period");
-	check( to != btexexchange, "You can not transfer to this exchange in a certain period");
-	check( to != eosbtextoken, "You can not transfer to this exchange in a certain period");
-	check( to != eosbtexfunds, "You can not transfer to this exchange in a certain period");
+	check( to != "eosbtexbonus"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "eosconvertbt"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "eosbtexteams"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "btexexchange"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "eosbtextoken"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "eosbtexfunds"_n, "You can not transfer to this exchange in a certain period");
 	
-	check( from != eosbtexbonus, "You can not transfer to this exchange in a certain period");
-	check( from != eosconvertbt, "You can not transfer to this exchange in a certain period");
-	check( from != eosbtexteams, "You can not transfer to this exchange in a certain period");
-	check( from != btexexchange, "You can not transfer to this exchange in a certain period");
-	check( from != eosbtextoken, "You can not transfer to this exchange in a certain period");
-	check( from != eosbtexfunds, "You can not transfer to this exchange in a certain period");
+	check( from != "eosbtexbonus"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "eosconvertbt"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "eosbtexteams"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "btexexchange"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "eosbtextoken"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "eosbtexfunds"_n, "You can not transfer to this exchange in a certain period");
 	
 	//lockup
-	check( to != locktooktook), "You can not transfer to this exchange in a certain period");
-	check( to != goodtooktook), "You can not transfer to this exchange in a certain period");
+	check( to != "locktooktook"_n), "You can not transfer to this exchange in a certain period");
+	check( to != "goodtooktook"_n), "You can not transfer to this exchange in a certain period");
 	
-	check( from != locktooktook), "You can not transfer to this exchange in a certain period");
-	check( from != goodtooktook), "You can not transfer to this exchange in a certain period");
+	check( from != "locktooktook"_n), "You can not transfer to this exchange in a certain period");
+	check( from != "goodtooktook"_n), "You can not transfer to this exchange in a certain period");
 	
 	//Prevent non-negotiated listing (E)
 	
 	//checking lockup(S)
-	locktbl2 lockuptable( _self, _self );
-	auto lockup_from = lockuptable.find(from);
+	locktbl2 lockuptable( _self, _self.value );
+	auto lockup_from = lockuptable.find(from.value);
 	check(lockup_from == lockuptable.end(), "From acocunt is locked, ask tooktook admin");
-	auto lockup_to = lockuptable.find(to);
+	auto lockup_to = lockuptable.find(to.value);
 	check(lockup_to == lockuptable.end(), "To cocunt is locked, ask tooktook admin");
 
 
@@ -212,12 +212,12 @@ void token::lock( name user, uint32_t period, string memo){
 	check( is_account( user ), "lock account does not exist");
 
 	require_auth( _self ); //only contract owner can do this
-	locktbl2 lockuptable( _self, _self );
+	locktbl2 lockuptable( _self, _self.value );
 	
 	auto iter=lockuptable.find(user);
 	
 	if(iter == lockuptable.end()){		
-		symbol_type temp = eosio::symbol_type(eosio::string_to_symbol(4, "TOOK"));
+		symbol_type temp = symbol(symbol_code("TOOK")a,4);
 		asset quantity = get_balance(user, temp.name());
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
@@ -234,21 +234,21 @@ void token::lock( name user, uint32_t period, string memo){
 void token::unlock( name user){
 	check( is_account( user ), "unlock account does not exist");
 	require_auth( _self );
-	locktbl2 lockuptable(_self, _self);
-	auto itr = lockuptable.find(user);
+	locktbl2 lockuptable(_self, _self.value);
+	auto itr = lockuptable.find(user.value);
 	check(itr != lockuptable.end(), "there is no matched unlock account in the table");
 	lockuptable.erase(itr);	
 }
 
 void token::delaccount(name euser){
 	require_auth(_self);
-	maptbl maptable(_self, _self);
-	auto iterMap = maptable.find(euser);
+	maptbl maptable(_self, _self.value);
+	auto iterMap = maptable.find(euser.value);
 	check(iterMap != maptable.end(), "nothing to delete");
 	
 	name iuser = iterMap-> iuser;
-	tooktbl3 tooktable(_self, iuser);
-	auto iter = tooktable.find(iuser);
+	tooktbl3 tooktable(_self, iuser.value);
+	auto iter = tooktable.find(iuser.value);
 	if(iter != tooktable.end()){
 		tooktable.modify(iter, _self, [&]( auto& a ) {
 			a.status = 0;
@@ -263,8 +263,8 @@ void token::delaccount(name euser){
 void token::newaccount(name iuser){
 	require_auth( _self );
 	
-	tooktbl3 tooktable(_self, iuser);
-	auto iter = tooktable.find(iuser);
+	tooktbl3 tooktable(_self, iuser.value);
+	auto iter = tooktable.find(iuser.value);
 	
 	check(iter == tooktable.end(), "account already exist");
 	
@@ -281,21 +281,21 @@ void token::newaccount(name iuser){
 void token::stake(name from, name to, asset quantity){
 	require_auth( _self );
 	
-	tooktbl3 tookTableTo(_self, to);
-	auto iterTo = tookTableTo.find(to);
+	tooktbl3 tookTableTo(_self, to.vallue);
+	auto iterTo = tookTableTo.find(to.value);
 	check(iterTo != tookTableTo.end(), "to account does not exist");
 	
-	tooktbl3 tookTableFrom(_self, from);
-	auto iterFrom = tookTableFrom.find(from);
+	tooktbl3 tookTableFrom(_self, from.value);
+	auto iterFrom = tookTableFrom.find(from.value);
 	check(iterFrom != tookTableFrom.end(), "from account does not exist");
 	
-	staketbl stakeTable(_self, from);
-	auto iterStake = stakeTable.find(to);
+	staketbl stakeTable(_self, from.value);
+	auto iterStake = stakeTable.find(to.value);
 	
 	//after cheching precondition, then move token
 	//Only account which connected to external account can stake TOOK
-	if(iterFrom->eos_account != N("")){
-		itransfer(iterFrom->eos_account, N(taketooktook), quantity, "stake event");
+	if(iterFrom->eos_account != ""_n){
+		itransfer(iterFrom->eos_account, "taketooktook"_n, quantity, "stake event");
 	}
 	
 	//update stakesum field
@@ -307,7 +307,7 @@ void token::stake(name from, name to, asset quantity){
 	if(iterStake == stakeTable.end()){
 		stakeTable.emplace( _self, [&]( auto& a){
 			a.balance = quantity;
-			a.staked_at = now();
+			a.staked_at = eosio::current_time_point().sec_since_epoch();
 			a.user = to;
 		});
 	}else{
@@ -494,4 +494,4 @@ void token::add_balance( name owner, asset value, name ram_payer )
 
 } /// namespace eosio
 
-EOSIO_ABI( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(stake)(unstake)(refund)(updatetp)(give)(prepare)(check)(delaccount)(change))
+EOSIO_DISPATCH( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(stake)(unstake)(refund)(updatetp)(give)(prepare)(check)(delaccount)(change))
