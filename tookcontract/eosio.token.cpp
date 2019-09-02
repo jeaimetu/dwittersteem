@@ -112,7 +112,7 @@ void token::issue( name to, asset quantity, string memo )
     check( sym.is_valid(), "invalid symbol name" );
     check( memo.size() <= 256, "memo has more than 256 bytes" );
 
-    auto sym_name = sym.name();
+    auto sym_name = sym.code().raw();
     stat statstable( _self, sym_name );
     auto existing = statstable.find( sym_name );
     check( existing != statstable.end(), "token with symbol does not exist, create token before issue" );
@@ -153,7 +153,7 @@ void token::transfer( name from,
 	check( to != "heydcmjrhege"_n, "You can not transfer to this exchange in a certain period");
 	
 	check( from != "whaleextrust"_n, "You can not transfer to this exchange in a certain period");
-	check( from != "heydcmjrhege, "You can not transfer to this exchange in a certain period");
+	check( from != "heydcmjrhege"_n, "You can not transfer to this exchange in a certain period");
 	//Btex
 	check( to != "eosbtexbonus"_n, "You can not transfer to this exchange in a certain period");
 	check( to != "eosconvertbt"_n, "You can not transfer to this exchange in a certain period");
