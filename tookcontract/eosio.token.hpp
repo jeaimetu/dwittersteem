@@ -164,7 +164,7 @@ namespace eosio {
    asset token::get_balance( name owner, symbol_code sym )
    {
       accounts accountstable( get_self(), owner.value );
-      const auto& ac = accountstable.get( sym.code().raw() );
+      const auto& ac = accountstable.get( sym.raw() );
       return ac.balance;
    }
 
