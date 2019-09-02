@@ -6,6 +6,7 @@
 
 #include <eosiolib/asset.hpp>
 #include <eosiolib/eosio.hpp>
+#include <eosiolib/system.hpp>
 
 #include <string>
 
@@ -19,160 +20,153 @@ namespace eosio {
 
    class token : public contract {
       public:
-         token( account_name self ):contract(self){}
+         token( name self ):contract(self){}
 
-         void create( account_name issuer,
+         void create( name issuer,
                       asset        maximum_supply);
-	 //@abi action  
-	 void change( account_name issuer,
+	 [[eosio::action]]  
+	 void change( name issuer,
                       asset        maximum_supply);
 
-         void issue( account_name to, asset quantity, string memo );
+         void issue( name to, asset quantity, string memo );
 
-         void transfer( account_name from,
-                        account_name to,
+         void transfer( name from,
+                        name to,
                         asset        quantity,
                         string       memo );
-         //@abi action
-         void lock(account_name user, uint32_t period, string memo);
-         //@abi action
-         void unlock(account_name user);
+         [[eosio::action]]
+         void lock(name user, uint32_t period, string memo);
+         [[eosio::action]]
+         void unlock(name user);
 	 
-	 //@abi action
-	 void newaccount(account_name iuser);
+	 [[eosio::action]]
+	 void newaccount(name iuser);
 
-	 //@abi action
-	 void stake(account_name from, account_name to,asset quantity);	   
-	 //@abi action
-	 void unstake(account_name from, account_name to, asset quantity);
-	 //@abi action
-	 void refund(account_name from, account_name user);
+	 [[eosio::action]]
+	 void stake(name from, name to,asset quantity);	   
+	 [[eosio::action]]
+	 void unstake(name from, name to, asset quantity);
+	 [[eosio::action]]
+	 void refund(name from, name user);
 	   
-	 //@abi action
-         void updatetp(account_name user, asset quantity);
+	 [[eosio::action]]
+         void updatetp(name user, asset quantity);
 	  
-	 //@abi action
-	 void prepare(account_name euser, account_name iuser, string memo);
-	 //@abi action
-	 void delaccount(account_name euser);
-	 //@abi action
-	 void check(account_name euser, account_name iuser, string memo);
+	 [[eosio::action]]
+	 void prepare(name euser, name iuser, string memo);
+	 [[eosio::action]]
+	 void delaccount(name euser);
+	 [[eosio::action]]
+	 void check(name euser, name iuser, string memo);
 	   
-	 //@abi action
-	 void give(account_name from, account_name to, asset quantity, string event_case, string ttconid);
+	 [[eosio::action]]
+	 void give(name from, name to, asset quantity, string event_case, string ttconid);
 	 
       
-         inline asset get_supply( symbol_name sym )const;
+         inline asset get_supply( symbol_code sym )const;
          
-         inline asset get_balance( account_name owner, symbol_name sym )const;
+         inline asset get_balance( name owner, symbol_code sym )const;
 
       private:
-         //@abi table accounts i64
-         struct account {
+         struct [[eosio::table]] account {
             asset    balance;
 
-            uint64_t primary_key()const { return balance.symbol.name(); }
+            uint64_t primary_key()const { return balance.symbol.code().raw(); }
          };
-         //@abi table stat i64
-         struct currency_stat {
+         struct [[eosio::table]] currency_stat {
             asset          supply;
             asset          max_supply;
-            account_name   issuer;
+            name   issuer;
 
-            uint64_t primary_key()const { return supply.symbol.name(); }
+            uint64_t primary_key()const { return supply.symbol.code().raw(); }
          };
       
-         //@abi table locktbl2 i64
-         struct lockup_list {
-            account_name user;
+         struct [[eosio::table]] lockup_list {
+            name user;
             asset initial_amount;
             uint32_t lockup_period;
             uint32_t start_time;
             string memo;
             
-            uint64_t primary_key()const {return user;}
+            uint64_t primary_key()const {return user.value;}
             EOSLIB_SERIALIZE(lockup_list,(user)(initial_amount)(lockup_period)(start_time)(memo))
          };
 	   
-	 //@abi table maptbl i64
-	 struct map_table {
-		 account_name euser;
-		 account_name iuser;
+	 struct [[eosio::table]] map_table {
+		 name euser;
+		 name iuser;
 		 
-		 uint64_t primary_key()const {return euser;}
+		 uint64_t primary_key()const {return euser.value;}
 		 EOSLIB_SERIALIZE(map_table,(euser)(iuser))
 	 };
 	   
-	 //@abi table tooktbl3 i64
-         struct took_table {
-            account_name user;
-            account_name eos_account;
+	 struct [[eosio::table]] took_table {
+            name user;
+            name eos_account;
             asset tookp_balance;
 	    asset stake_sum;
 	    asset air;	         
             uint64_t status;
-            uint64_t primary_key()const {return user;}
+            uint64_t primary_key()const {return user.value;}
             EOSLIB_SERIALIZE(took_table,(user)(eos_account)(tookp_balance)(stake_sum)(air)(status))
          };
-	 //@abi table staketbl i64  
-	 struct stake_table {
-	    account_name user;
+	 struct [[eosio::table]] stake_table {
+	    name user;
 	    asset balance;
 	    uint32_t staked_at;
 		   
-	    uint64_t primary_key()const {return user;}
+	    uint64_t primary_key()const {return user.value;}
 	    EOSLIB_SERIALIZE(stake_table,(user)(balance)(staked_at))
 	  }; 
 	   
-	  //@abi table unstaketbl i64
-	  struct unstake_table {
-	    account_name user;
+	  struct [[eosio::table]] unstake_table {
+	    name user;
 	    asset balance;
 	    uint32_t unstaked_at;
 		   
-	    uint64_t primary_key()const {return user;}
+	    uint64_t primary_key()const {return user.value;}
 	    EOSLIB_SERIALIZE(unstake_table,(user)(balance)(unstaked_at))
 	  }; 
 	 
 
-         typedef eosio::multi_index<N(accounts), account> accounts;
-         typedef eosio::multi_index<N(stat), currency_stat> stat;
-         typedef eosio::multi_index<N(locktbl2), lockup_list> locktbl2;
+         typedef eosio::multi_index< "accounts"_n, account> accounts;
+         typedef eosio::multi_index< "stat"_n, currency_stat> stat;
+         typedef eosio::multi_index< "locktbl2"_n, lockup_list> locktbl2;
 	   
-	 typedef eosio::multi_index<N(tooktbl3), took_table> tooktbl3;
-	 typedef eosio::multi_index<N(staketbl), stake_table> staketbl;
-	 typedef eosio::multi_index<N(unstaketbl), unstake_table> unstaketbl;
-	 typedef eosio::multi_index<N(maptbl), map_table> maptbl;
+	 typedef eosio::multi_index< "tooktbl3"_n, took_table> tooktbl3;
+	 typedef eosio::multi_index< "staketbl"_n, stake_table> staketbl;
+	 typedef eosio::multi_index< "unstaketbl"_n, unstake_table> unstaketbl;
+	 typedef eosio::multi_index< "maptbl"_n, map_table> maptbl;
 
-         void sub_balance( account_name owner, asset value );
-         void add_balance( account_name owner, asset value, account_name ram_payer );
+         void sub_balance( name owner, asset value );
+         void add_balance( name owner, asset value, name ram_payer );
 	   
-	 void sub_balance2( account_name owner, asset value );
-         void add_balance2( account_name owner, asset value, account_name ram_payer );
-	 void itransfer( account_name from, account_name to, asset quantity, string memo );
+	 void sub_balance2( name owner, asset value );
+         void add_balance2( name owner, asset value, name ram_payer );
+	 void itransfer( name from, name to, asset quantity, string memo );
 	 
 
       public:
          struct transfer_args {
-            account_name  from;
-            account_name  to;
+            name  from;
+            name  to;
             asset         quantity;
             string        memo;
          };
    };
 
-   asset token::get_supply( symbol_name sym )const
+   asset token::get_supply( symbol_code sym )const
    {
-      stat statstable( _self, sym );
-      const auto& st = statstable.get( sym );
+      stat statstable( get_self(), sym.code().raw() );
+      const auto& st = statstable.get( sym.code().raw() );
       return st.supply;
    }
 
-   asset token::get_balance( account_name owner, symbol_name sym )const
+   asset token::get_balance( name owner, symbol_code sym )const
    {
-      accounts accountstable( _self, owner );
-      const auto& ac = accountstable.get( sym );
+      accounts accountstable( get_self(), owner );
+      const auto& ac = accountstable.get( sym.code().raw() );
       return ac.balance;
    }
 
-} /// namespace eosio
+} ///namespace eosio

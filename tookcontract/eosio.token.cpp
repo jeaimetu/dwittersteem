@@ -8,34 +8,34 @@
 namespace eosio {
 	
 
-void token::prepare(account_name euser, account_name iuser, string memo){
+void token::prepare(name euser, name iuser, string memo){
 	require_auth(euser);
 	
 	maptbl maptable(_self, _self);
-	auto iterMap = maptable.find(euser);
+	auto iterMap = maptable.find(euser.value);
 	
-	eosio_assert(iterMap == maptable.end(), "external account already exist");
+	check(iterMap == maptable.end(), "external account already exist");
 	
 	maptable.emplace(_self, [&]( auto& a){
 		a.iuser = iuser;
 		a.euser = euser;
 	});
 	
-	tooktbl3 tooktable(_self, iuser);
-	auto iter = tooktable.find(iuser);
+	tooktbl3 tooktable(_self, iuser.value);
+	auto iter = tooktable.find(iuser.value);
 	tooktable.modify(iter, _self, [&]( auto& a ) {
 		a.eos_account = euser;
 		a.status = 1;
 	});
 }
 	
-void token::check(account_name euser, account_name iuser, string memo){
+void token::check(name euser, name iuser, string memo){
 	require_auth(_self);
-	eosio_assert(is_account(euser), "euser account does not exist");
+	check(is_account(euser), "euser account does not exist");
 	
 	maptbl maptable(_self, _self);
 	auto iterMap = maptable.find(euser);
-	eosio_assert(iterMap != maptable.end(), "external account does not exist");
+	check(iterMap != maptable.end(), "external account does not exist");
 	
 	tooktbl3 tooktable(_self, iuser);
 	auto iter = tooktable.find(iuser);
@@ -49,9 +49,9 @@ void token::check(account_name euser, account_name iuser, string memo){
 		tosend.amount = iter->tookp_balance.amount * 10000;
 		tosend.symbol = symbolvalue;
 		*/
-		itransfer(N(taketooktook), euser, asset(iter->tookp_balance.amount, eosio::symbol_type(eosio::string_to_symbol(4, "TOOK"))), "link internal account to external account");
+		itransfer("taketooktook"_n, euser, asset(iter->tookp_balance.amount, symbol(symbol_code("TOOK"), 4)), "link internal account to external account");
 		tooktable.modify( iter, _self, [&]( auto& a ) {
-			a.tookp_balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOKP")));
+			a.tookp_balance = asset(0, symbol(symbol_code("TOOKP"),4));
 		});
 	}
 	//change connection status
@@ -63,19 +63,19 @@ void token::check(account_name euser, account_name iuser, string memo){
 	
 	
 
-void token::create( account_name issuer,
+void token::create( name issuer,
                     asset        maximum_supply )
 {
     require_auth( _self );
 
     auto sym = maximum_supply.symbol;
-    eosio_assert( sym.is_valid(), "invalid symbol name" );
-    eosio_assert( maximum_supply.is_valid(), "invalid supply");
-    eosio_assert( maximum_supply.amount > 0, "max-supply must be positive");
+    check( sym.is_valid(), "invalid symbol name" );
+    check( maximum_supply.is_valid(), "invalid supply");
+    check( maximum_supply.amount > 0, "max-supply must be positive");
 
     stat statstable( _self, sym.name() );
     auto existing = statstable.find( sym.name() );
-    eosio_assert( existing == statstable.end(), "token with symbol already exists" );
+    check( existing == statstable.end(), "token with symbol already exists" );
 
     statstable.emplace( _self, [&]( auto& s ) {
        s.supply.symbol = maximum_supply.symbol;
@@ -84,15 +84,15 @@ void token::create( account_name issuer,
     });
 }
 	
-void token::change( account_name issuer,
+void token::change( name issuer,
                     asset        maximum_supply )
 {
     require_auth( _self );
 
     auto sym = maximum_supply.symbol;
-    eosio_assert( sym.is_valid(), "invalid symbol name" );
-    eosio_assert( maximum_supply.is_valid(), "invalid supply");
-    eosio_assert( maximum_supply.amount > 0, "max-supply must be positive");
+    check( sym.is_valid(), "invalid symbol name" );
+    check( maximum_supply.is_valid(), "invalid supply");
+    check( maximum_supply.amount > 0, "max-supply must be positive");
 
     stat statstable( _self, sym.name() );
     auto existing = statstable.find( sym.name() );
@@ -106,24 +106,24 @@ void token::change( account_name issuer,
 }
 
 
-void token::issue( account_name to, asset quantity, string memo )
+void token::issue( name to, asset quantity, string memo )
 {
     auto sym = quantity.symbol;
-    eosio_assert( sym.is_valid(), "invalid symbol name" );
-    eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
+    check( sym.is_valid(), "invalid symbol name" );
+    check( memo.size() <= 256, "memo has more than 256 bytes" );
 
     auto sym_name = sym.name();
     stat statstable( _self, sym_name );
     auto existing = statstable.find( sym_name );
-    eosio_assert( existing != statstable.end(), "token with symbol does not exist, create token before issue" );
+    check( existing != statstable.end(), "token with symbol does not exist, create token before issue" );
     const auto& st = *existing;
 
     require_auth( st.issuer );
-    eosio_assert( quantity.is_valid(), "invalid quantity" );
-    eosio_assert( quantity.amount > 0, "must issue positive quantity" );
+    check( quantity.is_valid(), "invalid quantity" );
+    check( quantity.amount > 0, "must issue positive quantity" );
 
-    eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
-    eosio_assert( quantity.amount <= st.max_supply.amount - st.supply.amount, "quantity exceeds available supply");
+    check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    check( quantity.amount <= st.max_supply.amount - st.supply.amount, "quantity exceeds available supply");
 
     statstable.modify( st, 0, [&]( auto& s ) {
        s.supply += quantity;
@@ -136,60 +136,60 @@ void token::issue( account_name to, asset quantity, string memo )
     }
 }
 
-void token::transfer( account_name from,
-                      account_name to,
+void token::transfer( name from,
+                      name to,
                       asset        quantity,
                       string       memo )
 {
-    eosio_assert( from != to, "cannot transfer to self" );
+    check( from != to, "cannot transfer to self" );
   
 //Prevent non-negotiated listing (S) 2018.11.27
 	
 //Newdex Case
-    eosio_assert( to != N(newdexpocket), "You can not transfer to Newdex in a certain period");	
+    check( to != "newdexpocket"_n, "You can not transfer to Newdex in a certain period");	
 
 //WhaleEX
-	eosio_assert( to != N(whaleextrust), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(heydcmjrhege), "You can not transfer to this exchange in a certain period");
+	check( to != "whaleextrust"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "heydcmjrhege"_n, "You can not transfer to this exchange in a certain period");
 	
-	eosio_assert( from != N(whaleextrust), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(heydcmjrhege), "You can not transfer to this exchange in a certain period");
+	check( from != "whaleextrust"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "heydcmjrhege, "You can not transfer to this exchange in a certain period");
 	//Btex
-	eosio_assert( to != N(eosbtexbonus), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(eosconvertbt), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(eosbtexteams), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(btexexchange), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(eosbtextoken), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(eosbtexfunds), "You can not transfer to this exchange in a certain period");
+	check( to != eosbtexbonus, "You can not transfer to this exchange in a certain period");
+	check( to != eosconvertbt, "You can not transfer to this exchange in a certain period");
+	check( to != eosbtexteams, "You can not transfer to this exchange in a certain period");
+	check( to != btexexchange, "You can not transfer to this exchange in a certain period");
+	check( to != eosbtextoken, "You can not transfer to this exchange in a certain period");
+	check( to != eosbtexfunds, "You can not transfer to this exchange in a certain period");
 	
-	eosio_assert( from != N(eosbtexbonus), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(eosconvertbt), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(eosbtexteams), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(btexexchange), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(eosbtextoken), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(eosbtexfunds), "You can not transfer to this exchange in a certain period");
+	check( from != eosbtexbonus, "You can not transfer to this exchange in a certain period");
+	check( from != eosconvertbt, "You can not transfer to this exchange in a certain period");
+	check( from != eosbtexteams, "You can not transfer to this exchange in a certain period");
+	check( from != btexexchange, "You can not transfer to this exchange in a certain period");
+	check( from != eosbtextoken, "You can not transfer to this exchange in a certain period");
+	check( from != eosbtexfunds, "You can not transfer to this exchange in a certain period");
 	
 	//lockup
-	eosio_assert( to != N(locktooktook), "You can not transfer to this exchange in a certain period");
-	eosio_assert( to != N(goodtooktook), "You can not transfer to this exchange in a certain period");
+	check( to != locktooktook), "You can not transfer to this exchange in a certain period");
+	check( to != goodtooktook), "You can not transfer to this exchange in a certain period");
 	
-	eosio_assert( from != N(locktooktook), "You can not transfer to this exchange in a certain period");
-	eosio_assert( from != N(goodtooktook), "You can not transfer to this exchange in a certain period");
+	check( from != locktooktook), "You can not transfer to this exchange in a certain period");
+	check( from != goodtooktook), "You can not transfer to this exchange in a certain period");
 	
 	//Prevent non-negotiated listing (E)
 	
 	//checking lockup(S)
 	locktbl2 lockuptable( _self, _self );
 	auto lockup_from = lockuptable.find(from);
-	eosio_assert(lockup_from == lockuptable.end(), "From acocunt is locked, ask tooktook admin");
+	check(lockup_from == lockuptable.end(), "From acocunt is locked, ask tooktook admin");
 	auto lockup_to = lockuptable.find(to);
-	eosio_assert(lockup_to == lockuptable.end(), "To cocunt is locked, ask tooktook admin");
+	check(lockup_to == lockuptable.end(), "To cocunt is locked, ask tooktook admin");
 
 
 	//checking lockup(E)
 
     require_auth( from );
-    eosio_assert( is_account( to ), "to account does not exist");
+    check( is_account( to ), "to account does not exist");
     auto sym = quantity.symbol.code();
     stat statstable( _self, sym.raw() );
     const auto& st = statstable.get( sym.raw() );
@@ -197,19 +197,19 @@ void token::transfer( account_name from,
     require_recipient( from );
     require_recipient( to );
 
-    eosio_assert( quantity.is_valid(), "invalid quantity" );
-    eosio_assert( quantity.amount > 0, "must transfer positive quantity" );
-    eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
-    eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
+    check( quantity.is_valid(), "invalid quantity" );
+    check( quantity.amount > 0, "must transfer positive quantity" );
+    check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    check( memo.size() <= 256, "memo has more than 256 bytes" );
 
 
     sub_balance( from, quantity );
     add_balance( to, quantity, from );
 }
 
-void token::lock( account_name user, uint32_t period, string memo){
+void token::lock( name user, uint32_t period, string memo){
 	
-	eosio_assert( is_account( user ), "lock account does not exist");
+	check( is_account( user ), "lock account does not exist");
 
 	require_auth( _self ); //only contract owner can do this
 	locktbl2 lockuptable( _self, _self );
@@ -227,26 +227,26 @@ void token::lock( account_name user, uint32_t period, string memo){
 			lockuptable.memo = memo;
 		});
 	}else{
-		eosio_assert(iter==lockuptable.end(), "lock account already exists in the table");
+		check(iter==lockuptable.end(), "lock account already exists in the table");
 	}
 }
 
-void token::unlock( account_name user){
-	eosio_assert( is_account( user ), "unlock account does not exist");
+void token::unlock( name user){
+	check( is_account( user ), "unlock account does not exist");
 	require_auth( _self );
 	locktbl2 lockuptable(_self, _self);
 	auto itr = lockuptable.find(user);
-	eosio_assert(itr != lockuptable.end(), "there is no matched unlock account in the table");
+	check(itr != lockuptable.end(), "there is no matched unlock account in the table");
 	lockuptable.erase(itr);	
 }
 
-void token::delaccount(account_name euser){
+void token::delaccount(name euser){
 	require_auth(_self);
 	maptbl maptable(_self, _self);
 	auto iterMap = maptable.find(euser);
-	eosio_assert(iterMap != maptable.end(), "nothing to delete");
+	check(iterMap != maptable.end(), "nothing to delete");
 	
-	account_name iuser = iterMap-> iuser;
+	name iuser = iterMap-> iuser;
 	tooktbl3 tooktable(_self, iuser);
 	auto iter = tooktable.find(iuser);
 	if(iter != tooktable.end()){
@@ -260,13 +260,13 @@ void token::delaccount(account_name euser){
 
 }
 
-void token::newaccount(account_name iuser){
+void token::newaccount(name iuser){
 	require_auth( _self );
 	
 	tooktbl3 tooktable(_self, iuser);
 	auto iter = tooktable.find(iuser);
 	
-	eosio_assert(iter == tooktable.end(), "account already exist");
+	check(iter == tooktable.end(), "account already exist");
 	
 	tooktable.emplace(_self, [&]( auto& tooktable){
 		tooktable.user = iuser;
@@ -278,16 +278,16 @@ void token::newaccount(account_name iuser){
 	});	
 }
 
-void token::stake(account_name from, account_name to, asset quantity){
+void token::stake(name from, name to, asset quantity){
 	require_auth( _self );
 	
 	tooktbl3 tookTableTo(_self, to);
 	auto iterTo = tookTableTo.find(to);
-	eosio_assert(iterTo != tookTableTo.end(), "to account does not exist");
+	check(iterTo != tookTableTo.end(), "to account does not exist");
 	
 	tooktbl3 tookTableFrom(_self, from);
 	auto iterFrom = tookTableFrom.find(from);
-	eosio_assert(iterFrom != tookTableFrom.end(), "from account does not exist");
+	check(iterFrom != tookTableFrom.end(), "from account does not exist");
 	
 	staketbl stakeTable(_self, from);
 	auto iterStake = stakeTable.find(to);
@@ -318,22 +318,22 @@ void token::stake(account_name from, account_name to, asset quantity){
 	}
 }
 	
-void token::unstake(account_name from, account_name to, asset quantity){
+void token::unstake(name from, name to, asset quantity){
 	require_auth( _self );
 	
 	tooktbl3 tookTableTo(_self, to);
 	auto iterTo = tookTableTo.find(to);
-	eosio_assert(iterTo != tookTableTo.end(), "to account does not exist");
+	check(iterTo != tookTableTo.end(), "to account does not exist");
 	
 	tooktbl3 tookTableFrom(_self, from);
 	auto iterFrom = tookTableFrom.find(from);
-	eosio_assert(iterFrom != tookTableFrom.end(), "from account does not exist");
+	check(iterFrom != tookTableFrom.end(), "from account does not exist");
 	
 	staketbl stakeTable(_self, from);
 	auto iterStake = stakeTable.find(to);
-	eosio_assert(iterStake != stakeTable.end(), "there is no staked amount to unstake");
+	check(iterStake != stakeTable.end(), "there is no staked amount to unstake");
 	
-	eosio_assert(iterStake->balance.amount >= quantity.amount, "unstake amount overdue");
+	check(iterStake->balance.amount >= quantity.amount, "unstake amount overdue");
 	
 	//decrease stake amount
 	stakeTable.modify(iterStake, _self, [&]( auto& a ) {
@@ -367,7 +367,7 @@ void token::unstake(account_name from, account_name to, asset quantity){
 
 }
 	
-void token::refund(account_name from, account_name to){
+void token::refund(name from, name to){
 	require_auth( _self );
 	
 	unstaketbl unstakeTable(_self, from);
@@ -377,49 +377,49 @@ void token::refund(account_name from, account_name to){
 	auto iterTo = tookTableFrom.find(from);
 	
 	if(iterTo->eos_account == N("")){
-		eosio_assert(0,"refund will not work for internal account");
+		check(0,"refund will not work for internal account");
 	}else{
 		itransfer(N(taketooktook), iterTo->eos_account , iterUnstake->balance, "refund");
 	}
 	unstakeTable.erase(iterUnstake);
 }
 
-void token::updatetp(account_name user, asset quantity){
+void token::updatetp(name user, asset quantity){
 	require_auth( _self );
 	
 	tooktbl3 tooktable(_self, user);
 	auto iter = tooktable.find(user);
-	eosio_assert(iter != tooktable.end(), "account does not exist");
+	check(iter != tooktable.end(), "account does not exist");
 	
 	tooktable.modify(iter, _self, [&]( auto& tooktable ) {
 		tooktable.tookp_balance = quantity;
 	});
 }
 	
-void token::give(account_name from, account_name to, asset quantity, string event_case, string ttconid){
+void token::give(name from, name to, asset quantity, string event_case, string ttconid){
 	require_auth( _self );
 }
 
-void token::itransfer( account_name from,
-                     account_name to,
+void token::itransfer( name from,
+                     name to,
                      asset        quantity,
                      string       memo )
 {
 	
 
 	//require_auth( _self );
-    eosio_assert( from != to, "cannot transfer to self" );
-    eosio_assert( is_account( to ), "to account does not exist");
+    check( from != to, "cannot transfer to self" );
+    check( is_account( to ), "to account does not exist");
     
 	
     auto sym = quantity.symbol.code().raw();
     stat statstable( _self, sym );
     const auto& st = statstable.get( sym );
 	
-    eosio_assert( quantity.is_valid(), "invalid quantity" );
-    eosio_assert( quantity.amount > 0, "must transfer positive quantity" );
-    eosio_assert( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
-    eosio_assert( memo.size() <= 256, "memo has more than 256 bytes" );
+    check( quantity.is_valid(), "invalid quantity" );
+    check( quantity.amount > 0, "must transfer positive quantity" );
+    check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    check( memo.size() <= 256, "memo has more than 256 bytes" );
 
 
 
@@ -428,11 +428,11 @@ void token::itransfer( account_name from,
 
 }
 	
-void token::sub_balance2( account_name owner, asset value ) {
+void token::sub_balance2( name owner, asset value ) {
    accounts from_acnts( _self, owner );
 
 	   const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
-   eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
+   check( from.balance.amount >= value.amount, "overdrawn balance" );
 
    //from_acnts.modify( from, owner, [&]( auto& a ) {
    if( from.balance.amount == value.amount ) {
@@ -444,7 +444,7 @@ void token::sub_balance2( account_name owner, asset value ) {
    }
 }
 
-void token::add_balance2( account_name owner, asset value, account_name ram_payer )
+void token::add_balance2( name owner, asset value, name ram_payer )
 {
    accounts to_acnts( _self, owner );
    auto to = to_acnts.find( value.symbol.code().raw() );
@@ -461,11 +461,11 @@ void token::add_balance2( account_name owner, asset value, account_name ram_paye
 }
 	
 
-void token::sub_balance( account_name owner, asset value ) {
+void token::sub_balance( name owner, asset value ) {
    accounts from_acnts( _self, owner );
 
    const auto& from = from_acnts.get( value.symbol.code().raw, "no balance object found" );
-   eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
+   check( from.balance.amount >= value.amount, "overdrawn balance" );
 
 
    if( from.balance.amount == value.amount ) {
@@ -477,7 +477,7 @@ void token::sub_balance( account_name owner, asset value ) {
    }
 }
 
-void token::add_balance( account_name owner, asset value, account_name ram_payer )
+void token::add_balance( name owner, asset value, name ram_payer )
 {
    accounts to_acnts( _self, owner );
    auto to = to_acnts.find( value.symbol.code().waw() );
