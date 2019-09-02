@@ -190,9 +190,9 @@ void token::transfer( account_name from,
 
     require_auth( from );
     eosio_assert( is_account( to ), "to account does not exist");
-    auto sym = quantity.symbol.name();
-    stat statstable( _self, sym );
-    const auto& st = statstable.get( sym );
+    auto sym = quantity.symbol.code();
+    stat statstable( _self, sym.raw() );
+    const auto& st = statstable.get( sym.raw() );
 
     require_recipient( from );
     require_recipient( to );
@@ -412,7 +412,7 @@ void token::itransfer( account_name from,
     eosio_assert( is_account( to ), "to account does not exist");
     
 	
-    auto sym = quantity.symbol.name();
+    auto sym = quantity.symbol.code().raw();
     stat statstable( _self, sym );
     const auto& st = statstable.get( sym );
 	
@@ -431,7 +431,7 @@ void token::itransfer( account_name from,
 void token::sub_balance2( account_name owner, asset value ) {
    accounts from_acnts( _self, owner );
 
-   const auto& from = from_acnts.get( value.symbol.name(), "no balance object found" );
+	   const auto& from = from_acnts.get( value.symbol.code(.raw(), "no balance object found" );
    eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
 
    //from_acnts.modify( from, owner, [&]( auto& a ) {
@@ -447,7 +447,7 @@ void token::sub_balance2( account_name owner, asset value ) {
 void token::add_balance2( account_name owner, asset value, account_name ram_payer )
 {
    accounts to_acnts( _self, owner );
-   auto to = to_acnts.find( value.symbol.name() );
+   auto to = to_acnts.find( value.symbol.code().raw() );
    if( to == to_acnts.end() ) {
       //to_acnts.emplace( ram_payer, [&]( auto& a ){
 	   to_acnts.emplace( _self, [&]( auto& a ){
@@ -464,7 +464,7 @@ void token::add_balance2( account_name owner, asset value, account_name ram_paye
 void token::sub_balance( account_name owner, asset value ) {
    accounts from_acnts( _self, owner );
 
-   const auto& from = from_acnts.get( value.symbol.name(), "no balance object found" );
+   const auto& from = from_acnts.get( value.symbol.code().raw, "no balance object found" );
    eosio_assert( from.balance.amount >= value.amount, "overdrawn balance" );
 
 
@@ -480,7 +480,7 @@ void token::sub_balance( account_name owner, asset value ) {
 void token::add_balance( account_name owner, asset value, account_name ram_payer )
 {
    accounts to_acnts( _self, owner );
-   auto to = to_acnts.find( value.symbol.name() );
+   auto to = to_acnts.find( value.symbol.code().waw() );
    if( to == to_acnts.end() ) {
       to_acnts.emplace( ram_payer, [&]( auto& a ){
         a.balance = value;
