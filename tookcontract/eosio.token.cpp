@@ -217,7 +217,7 @@ void token::lock( name user, uint32_t period, string memo){
 	auto iter=lockuptable.find(user.value);
 	
 	if(iter == lockuptable.end()){		
-		asset temp = symbol(symbol_code("TOOK"),4);
+		symbol temp = symbol(symbol_code("TOOK"),4);
 		asset quantity = get_balance(user, temp.symbol());
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
@@ -281,7 +281,7 @@ void token::newaccount(name iuser){
 void token::stake(name from, name to, asset quantity){
 	require_auth( _self );
 	
-	tooktbl3 tookTableTo(_self, to.vallue);
+	tooktbl3 tookTableTo(_self, to.value);
 	auto iterTo = tookTableTo.find(to.value);
 	check(iterTo != tookTableTo.end(), "to account does not exist");
 	
@@ -464,7 +464,7 @@ void token::add_balance2( name owner, asset value, name ram_payer )
 void token::sub_balance( name owner, asset value ) {
    accounts from_acnts( _self, owner.value );
 
-   const auto& from = from_acnts.get( value.symbol.code().raw, "no balance object found" );
+   const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
    check( from.balance.amount >= value.amount, "overdrawn balance" );
 
 
@@ -480,7 +480,7 @@ void token::sub_balance( name owner, asset value ) {
 void token::add_balance( name owner, asset value, name ram_payer )
 {
    accounts to_acnts( _self, owner );
-   auto to = to_acnts.find( value.symbol.code().waw() );
+   auto to = to_acnts.find( value.symbol.code().raw() );
    if( to == to_acnts.end() ) {
       to_acnts.emplace( ram_payer, [&]( auto& a ){
         a.balance = value;
