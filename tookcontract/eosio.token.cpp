@@ -218,7 +218,7 @@ void token::lock( name user, uint32_t period, string memo){
 	
 	if(iter == lockuptable.end()){		
 		symbol temp = symbol(symbol_code("TOOK"),4);
-		asset quantity = get_balance(user, temp.symbol.code().raw());
+		asset quantity = get_balance(user, temp.symbol.code());
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
 			lockuptable.initial_amount = quantity;
@@ -446,7 +446,7 @@ void token::sub_balance2( name owner, asset value ) {
 
 void token::add_balance2( name owner, asset value, name ram_payer )
 {
-   accounts to_acnts( _self, owner );
+   accounts to_acnts( _self, owner.value );
    auto to = to_acnts.find( value.symbol.code().raw() );
    if( to == to_acnts.end() ) {
       //to_acnts.emplace( ram_payer, [&]( auto& a ){
@@ -479,7 +479,7 @@ void token::sub_balance( name owner, asset value ) {
 
 void token::add_balance( name owner, asset value, name ram_payer )
 {
-   accounts to_acnts( _self, owner );
+   accounts to_acnts( _self, owner.value );
    auto to = to_acnts.find( value.symbol.code().raw() );
    if( to == to_acnts.end() ) {
       to_acnts.emplace( ram_payer, [&]( auto& a ){
