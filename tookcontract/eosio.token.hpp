@@ -56,7 +56,7 @@ namespace eosio {
 	 [[eosio::action]]
 	 void delaccount(name euser);
 	 [[eosio::action]]
-	 void check(name euser, name iuser, string memo);
+	 void check2(name euser, name iuser, string memo);
 	   
 	 [[eosio::action]]
 	 void give(name from, name to, asset quantity, string event_case, string ttconid);
