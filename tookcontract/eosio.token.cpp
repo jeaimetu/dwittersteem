@@ -74,7 +74,7 @@ void token::create( name issuer,
     check( maximum_supply.amount > 0, "max-supply must be positive");
 
     stat statstable( _self, sym.code().raw() );
-    auto existing = statstable.find( sym.code().raw );
+    auto existing = statstable.find( sym.code().raw() );
     check( existing == statstable.end(), "token with symbol already exists" );
 
     statstable.emplace( _self, [&]( auto& s ) {
@@ -494,4 +494,4 @@ void token::add_balance( name owner, asset value, name ram_payer )
 
 } /// namespace eosio
 
-EOSIO_DISPATCH( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(stake)(unstake)(refund)(updatetp)(give)(prepare)(check)(delaccount)(change))
+EOSIO_DISPATCH( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(stake)(unstake)(refund)(updatetp)(give)(prepare)(check2)(delaccount)(change))
