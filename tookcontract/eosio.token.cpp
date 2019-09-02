@@ -74,7 +74,7 @@ void token::create( name issuer,
     check( maximum_supply.amount > 0, "max-supply must be positive");
 
     stat statstable( _self, sym.code().raw() );
-    auto existing = statstable.find( sym.core().raw );
+    auto existing = statstable.find( sym.code().raw );
     check( existing == statstable.end(), "token with symbol already exists" );
 
     statstable.emplace( _self, [&]( auto& s ) {
@@ -170,11 +170,11 @@ void token::transfer( name from,
 	check( from != "eosbtexfunds"_n, "You can not transfer to this exchange in a certain period");
 	
 	//lockup
-	check( to != "locktooktook"_n), "You can not transfer to this exchange in a certain period");
-	check( to != "goodtooktook"_n), "You can not transfer to this exchange in a certain period");
+	check( to != "locktooktook"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "goodtooktook"_n, "You can not transfer to this exchange in a certain period");
 	
-	check( from != "locktooktook"_n), "You can not transfer to this exchange in a certain period");
-	check( from != "goodtooktook"_n), "You can not transfer to this exchange in a certain period");
+	check( from != "locktooktook"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "goodtooktook"_n, "You can not transfer to this exchange in a certain period");
 	
 	//Prevent non-negotiated listing (E)
 	
@@ -217,8 +217,8 @@ void token::lock( name user, uint32_t period, string memo){
 	auto iter=lockuptable.find(user);
 	
 	if(iter == lockuptable.end()){		
-		symbol_type temp = symbol(symbol_code("TOOK")a,4);
-		asset quantity = get_balance(user, temp.name());
+		symbol_type temp = symbol(symbol_code("TOOK"),4);
+		asset quantity = get_balance(user, temp.symbol());
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
 			lockuptable.initial_amount = quantity;
@@ -271,9 +271,9 @@ void token::newaccount(name iuser){
 	tooktable.emplace(_self, [&]( auto& tooktable){
 		tooktable.user = iuser;
 		tooktable.eos_account = N("");
-		tooktable.tookp_balance = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOKP")));
-		tooktable.stake_sum = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "TOOK")));
-		tooktable.air = asset(0, eosio::symbol_type(eosio::string_to_symbol(4, "AIR")));
+		tooktable.tookp_balance = asset(0, symbol(symbol_code("TOOKP"),4));
+		tooktable.stake_sum = asset(0, symbol(symbol_code("TOOK"),4));
+		tooktable.air = asset(0, symbol(symbol_code("AIR"),4));
 		tooktable.status = 0;
 	});	
 }
@@ -379,7 +379,7 @@ void token::refund(name from, name to){
 	if(iterTo->eos_account == N("")){
 		check(0,"refund will not work for internal account");
 	}else{
-		itransfer(N(taketooktook), iterTo->eos_account , iterUnstake->balance, "refund");
+		itransfer("taketooktook"_n, iterTo->eos_account , iterUnstake->balance, "refund");
 	}
 	unstakeTable.erase(iterUnstake);
 }
