@@ -218,7 +218,7 @@ void token::lock( name user, uint32_t period, string memo){
 	
 	if(iter == lockuptable.end()){		
 		symbol temp = symbol(symbol_code("TOOK"),4);
-		asset quantity = get_balance(user, temp);
+		asset quantity = get_balance(user, tempa.code());
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
 			lockuptable.initial_amount = quantity;
