@@ -223,7 +223,7 @@ void token::lock( name user, uint32_t period, string memo){
 			lockuptable.user = user;
 			lockuptable.initial_amount = quantity;
 			lockuptable.lockup_period = period;
-			lockuptable.start_time = now();
+			lockuptable.start_time = eosio::current_time_point().sec_since_epoch();
 			lockuptable.memo = memo;
 		});
 	}else{
@@ -252,7 +252,7 @@ void token::delaccount(name euser){
 	if(iter != tooktable.end()){
 		tooktable.modify(iter, _self, [&]( auto& a ) {
 			a.status = 0;
-			a.eos_account = N("");
+			a.eos_account = ""_n;
 		});
 	}
 	maptable.erase(iterMap);
@@ -270,7 +270,7 @@ void token::newaccount(name iuser){
 	
 	tooktable.emplace(_self, [&]( auto& tooktable){
 		tooktable.user = iuser;
-		tooktable.eos_account = N("");
+		tooktable.eos_account = ""_n;
 		tooktable.tookp_balance = asset(0, symbol(symbol_code("TOOKP"),4));
 		tooktable.stake_sum = asset(0, symbol(symbol_code("TOOK"),4));
 		tooktable.air = asset(0, symbol(symbol_code("AIR"),4));
@@ -313,7 +313,7 @@ void token::stake(name from, name to, asset quantity){
 	}else{
 		stakeTable.modify(iterStake, _self, [&]( auto& a ) {
 			a.balance += quantity;
-			a.staked_at = now();
+			a.staked_at = eosio::current_time_point().sec_since_epoch();
 		});
 	}
 }
@@ -355,13 +355,13 @@ void token::unstake(name from, name to, asset quantity){
 	if(iterUnstake == unstakeTable.end()){
 		unstakeTable.emplace( _self, [&]( auto& a) {
 			a.balance = quantity;
-			a.unstaked_at = now();
+			a.unstaked_at = eosio::current_time_point().sec_since_epoch();
 			a.user = to;				
 		});
 	}else{
 		unstakeTable.modify(iterUnstake, _self, [&]( auto& a ) {
 			a.balance += quantity;
-			a.unstaked_at = now();
+			a.unstaked_at = eosio::current_time_point().sec_since_epoch();
 		});
 	}
 
@@ -462,7 +462,7 @@ void token::add_balance2( name owner, asset value, name ram_payer )
 	
 
 void token::sub_balance( name owner, asset value ) {
-   accounts from_acnts( _self, owner );
+   accounts from_acnts( _self, owner.value );
 
    const auto& from = from_acnts.get( value.symbol.code().raw, "no balance object found" );
    check( from.balance.amount >= value.amount, "overdrawn balance" );
