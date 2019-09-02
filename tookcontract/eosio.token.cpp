@@ -21,7 +21,7 @@ void token::prepare(name euser, name iuser, string memo){
 		a.euser = euser;
 	});
 	
-	tooktbl3 tooktable(_self, iuser.value);
+	tooktbl3 tooktable(get_self(), iuser.value);
 	auto iter = tooktable.find(iuser.value);
 	tooktable.modify(iter, _self, [&]( auto& a ) {
 		a.eos_account = euser;
@@ -33,12 +33,12 @@ void token::check(name euser, name iuser, string memo){
 	require_auth(_self);
 	check(is_account(euser), "euser account does not exist");
 	
-	maptbl maptable(_self, _self);
-	auto iterMap = maptable.find(euser);
+	maptbl maptable(_self, _self.value);
+	auto iterMap = maptable.find(euser.value);
 	check(iterMap != maptable.end(), "external account does not exist");
 	
-	tooktbl3 tooktable(_self, iuser);
-	auto iter = tooktable.find(iuser);
+	tooktbl3 tooktable(_self, iuser.value);
+	auto iter = tooktable.find(iuser.value);
 	
 	//transfer TookP to TOOK from internal account to external account
 	if(iter->tookp_balance.amount > 0){
@@ -73,8 +73,8 @@ void token::create( name issuer,
     check( maximum_supply.is_valid(), "invalid supply");
     check( maximum_supply.amount > 0, "max-supply must be positive");
 
-    stat statstable( _self, sym.name() );
-    auto existing = statstable.find( sym.name() );
+    stat statstable( _self, sym.code().raw() );
+    auto existing = statstable.find( sym.core().raw );
     check( existing == statstable.end(), "token with symbol already exists" );
 
     statstable.emplace( _self, [&]( auto& s ) {
@@ -94,8 +94,8 @@ void token::change( name issuer,
     check( maximum_supply.is_valid(), "invalid supply");
     check( maximum_supply.amount > 0, "max-supply must be positive");
 
-    stat statstable( _self, sym.name() );
-    auto existing = statstable.find( sym.name() );
+    stat statstable( _self, sym.code().raw() );
+    auto existing = statstable.find( sym.code().raw() );
     
 
     statstable.modify( existing, _self, [&]( auto& s ) {
