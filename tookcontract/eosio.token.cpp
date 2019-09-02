@@ -125,7 +125,7 @@ void token::issue( name to, asset quantity, string memo )
     check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
     check( quantity.amount <= st.max_supply.amount - st.supply.amount, "quantity exceeds available supply");
 
-    statstable.modify( st, 0, [&]( auto& s ) {
+    statstable.modify( st, same_payer, [&]( auto& s ) {
        s.supply += quantity;
     });
 
@@ -214,10 +214,10 @@ void token::lock( name user, uint32_t period, string memo){
 	require_auth( _self ); //only contract owner can do this
 	locktbl2 lockuptable( _self, _self.value );
 	
-	auto iter=lockuptable.find(user);
+	auto iter=lockuptable.find(user.value);
 	
 	if(iter == lockuptable.end()){		
-		symbol_type temp = symbol(symbol_code("TOOK"),4);
+		asset temp = symbol(symbol_code("TOOK"),4);
 		asset quantity = get_balance(user, temp.symbol());
 		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
 			lockuptable.user = user;
@@ -454,7 +454,7 @@ void token::add_balance2( name owner, asset value, name ram_payer )
         a.balance = value;
       });
    } else {
-      to_acnts.modify( to, 0, [&]( auto& a ) {
+      to_acnts.modify( to, owner, [&]( auto& a ) {
         a.balance += value;
       });
    }
@@ -486,7 +486,7 @@ void token::add_balance( name owner, asset value, name ram_payer )
         a.balance = value;
       });
    } else {
-      to_acnts.modify( to, 0, [&]( auto& a ) {
+      to_acnts.modify( to, owner, [&]( auto& a ) {
         a.balance += value;
       });
    }
