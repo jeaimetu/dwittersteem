@@ -20,7 +20,7 @@ namespace eosio {
 
    class token : public contract {
       public:
-         token( name self ):contract(self){}
+         using contract::contract;
 
          void create( name issuer,
                       asset        maximum_supply);
@@ -155,17 +155,17 @@ namespace eosio {
          };
    };
 
-   asset token::get_supply( symbol_code sym )const
+   asset token::get_supply( symbol_code sym )
    {
-      stat statstable( get_self(), sym.code().raw() );
-      const auto& st = statstable.get( sym.code().raw() );
+      stat statstable( get_self(), sym.raw() );
+      const auto& st = statstable.get( sym.raw() );
       return st.supply;
    }
 
-   asset token::get_balance( name owner, symbol_code sym )const
+   asset token::get_balance( name owner, symbol_code sym )
    {
       accounts accountstable( get_self(), owner );
-      const auto& ac = accountstable.get( sym.code().raw() );
+      const auto& ac = accountstable.get( sym.raw() );
       return ac.balance;
    }
 
