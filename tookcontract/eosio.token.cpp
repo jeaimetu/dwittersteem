@@ -450,7 +450,7 @@ void token::add_balance2( name owner, asset value, name ram_payer )
    auto to = to_acnts.find( value.symbol.code().raw() );
    if( to == to_acnts.end() ) {
       //to_acnts.emplace( ram_payer, [&]( auto& a ){
-	   to_acnts.emplace( _self, [&]( auto& a ){
+	   to_acnts.emplace( ram_payer, [&]( auto& a ){
         a.balance = value;
       });
    } else {
