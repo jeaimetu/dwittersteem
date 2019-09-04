@@ -1,7 +1,7 @@
-const wasmUrl = "./lghackerthon/lifelog.wasm";
-const abiUrl = "./lghackerthon/lifelog.abi";
+const wasmUrl = "./tookcontract/eosio.token.wasm";
+const abiUrl = "./tookcontract/eosio.token.abi";
 
-const account = "lghackerthon";
+const account = "taketooktook";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -16,7 +16,7 @@ var url = process.env.MONGODB_URI;
 
 
 config = {
-  chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",//mainnet
+  //chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",//mainnet
   chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",//testnet
   //chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",// 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
@@ -80,7 +80,7 @@ transfer("eoscafekorea","gyydoojzgige","0.0001", "test").then((output)=>{
 
 
 
-
+/*
 eos.transaction(tr => {
 	  tr.buyrambytes({
     payer: 'lghackerthon',
@@ -88,7 +88,7 @@ eos.transaction(tr => {
     bytes: 400*1024
   })
 });
-
+*/
 
   
 
@@ -97,8 +97,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("lghackerthon", 0, 0, wasm) // @returns {Promise}
-eos.setabi("lghackerthon", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("taketooktook", 0, 0, wasm) // @returns {Promise}
+eos.setabi("taketooktook", JSON.parse(abi)) // @returns {Promise}
 
 
 async function getTransaction(){
