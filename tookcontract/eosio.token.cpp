@@ -454,7 +454,7 @@ void token::add_balance2( name owner, asset value, name ram_payer )
         a.balance = value;
       });
    } else {
-      to_acnts.modify( to, owner, [&]( auto& a ) {
+      to_acnts.modify( to, ram_payer, [&]( auto& a ) {
         a.balance += value;
       });
    }
