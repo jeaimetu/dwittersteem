@@ -14,6 +14,24 @@
             ]
         },
         {
+            "name": "activity",
+            "base": "",
+            "fields": [
+                {
+                    "name": "activity",
+                    "type": "string"
+                },
+                {
+                    "name": "time",
+                    "type": "string"
+                },
+                {
+                    "name": "remark",
+                    "type": "string"
+                }
+            ]
+        },
+        {
             "name": "change",
             "base": "",
             "fields": [
@@ -317,6 +335,11 @@
         }
     ],
     "actions": [
+        {
+            "name": "activity",
+            "type": "activity",
+            "ricardian_contract": ""
+        },
         {
             "name": "change",
             "type": "change",

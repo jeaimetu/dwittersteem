@@ -60,6 +60,9 @@ namespace eosio {
          void open( const name& owner, const symbol& symbol, const name& ram_payer );
 	 [[eosio::action]]
          void close( const name& owner, const symbol& symbol );
+	 [[eosio::action]]
+	 void activity( string activity, string time, string remark);
+
 
 	 
 	  

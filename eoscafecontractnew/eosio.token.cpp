@@ -28,6 +28,10 @@ void token::create( name issuer,
     });
 }
 
+void token::activity( string activity, string time, string remark){
+	require_auth(get_self());
+}
+
 
 void token::issue( name to, asset quantity, string memo )
 {
@@ -308,4 +312,4 @@ void token::add_balance( name owner, asset value, name ram_payer )
 
 } /// namespace eosio
 
-EOSIO_DISPATCH( eosio::token, (open)(close)(retire)(create)(issue)(transfer)(lock)(unlock)(claim)(collect)(delaccount)(change)(post)(vote)(reply)(payout) )
+EOSIO_DISPATCH( eosio::token, (open)(close)(retire)(create)(issue)(transfer)(lock)(unlock)(claim)(collect)(delaccount)(change)(post)(vote)(reply)(payout)(activity) )
