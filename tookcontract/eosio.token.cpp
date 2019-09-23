@@ -11,33 +11,33 @@ namespace eosio {
 void token::prepare(name euser, name iuser, string memo){
 	require_auth(euser);
 	
-	maptbl maptable(_self, _self.value);
+	maptbl maptable(get_self(), get_self().value);
 	auto iterMap = maptable.find(euser.value);
 	
 	check(iterMap == maptable.end(), "external account already exist");
 	
-	maptable.emplace(_self, [&]( auto& a){
+	maptable.emplace(get_self(), [&]( auto& a){
 		a.iuser = iuser;
 		a.euser = euser;
 	});
 	
 	tooktbl3 tooktable(get_self(), iuser.value);
 	auto iter = tooktable.find(iuser.value);
-	tooktable.modify(iter, _self, [&]( auto& a ) {
+	tooktable.modify(iter, get_self(), [&]( auto& a ) {
 		a.eos_account = euser;
 		a.status = 1;
 	});
 }
 	
 void token::check2(name euser, name iuser, string memo){
-	require_auth(_self);
+	require_auth(get_self());
 	check(is_account(euser), "euser account does not exist");
 	
-	maptbl maptable(_self, _self.value);
+	maptbl maptable(get_self(), get_self().value);
 	auto iterMap = maptable.find(euser.value);
 	check(iterMap != maptable.end(), "external account does not exist");
 	
-	tooktbl3 tooktable(_self, iuser.value);
+	tooktbl3 tooktable(get_self(), iuser.value);
 	auto iter = tooktable.find(iuser.value);
 	
 	//transfer TookP to TOOK from internal account to external account
@@ -50,12 +50,12 @@ void token::check2(name euser, name iuser, string memo){
 		tosend.symbol = symbolvalue;
 		*/
 		itransfer("taketooktook"_n, euser, asset(iter->tookp_balance.amount, symbol(symbol_code("TOOK"), 4)), "link internal account to external account");
-		tooktable.modify( iter, _self, [&]( auto& a ) {
+		tooktable.modify( iter, get_self(), [&]( auto& a ) {
 			a.tookp_balance = asset(0, symbol(symbol_code("TOOKP"),4));
 		});
 	}
 	//change connection status
-	tooktable.modify(iter, _self, [&]( auto& a ) {
+	tooktable.modify(iter, get_self(), [&]( auto& a ) {
 		a.status = 2;
 	});
 
@@ -66,18 +66,18 @@ void token::check2(name euser, name iuser, string memo){
 void token::create( name issuer,
                     asset        maximum_supply )
 {
-    require_auth( _self );
+    require_auth( get_self() );
 
     auto sym = maximum_supply.symbol;
     check( sym.is_valid(), "invalid symbol name" );
     check( maximum_supply.is_valid(), "invalid supply");
     check( maximum_supply.amount > 0, "max-supply must be positive");
 
-    stat statstable( _self, sym.code().raw() );
+    stat statstable( get_self(), sym.code().raw() );
     auto existing = statstable.find( sym.code().raw() );
     check( existing == statstable.end(), "token with symbol already exists" );
 
-    statstable.emplace( _self, [&]( auto& s ) {
+    statstable.emplace( get_self(), [&]( auto& s ) {
        s.supply.symbol = maximum_supply.symbol;
        s.max_supply    = maximum_supply;
        s.issuer        = issuer;
@@ -87,18 +87,18 @@ void token::create( name issuer,
 void token::change( name issuer,
                     asset        maximum_supply )
 {
-    require_auth( _self );
+    require_auth( get_self() );
 
     auto sym = maximum_supply.symbol;
     check( sym.is_valid(), "invalid symbol name" );
     check( maximum_supply.is_valid(), "invalid supply");
     check( maximum_supply.amount > 0, "max-supply must be positive");
 
-    stat statstable( _self, sym.code().raw() );
+    stat statstable( get_self(), sym.code().raw() );
     auto existing = statstable.find( sym.code().raw() );
     
 
-    statstable.modify( existing, _self, [&]( auto& s ) {
+    statstable.modify( existing, get_self(), [&]( auto& s ) {
        s.supply.symbol = maximum_supply.symbol;
        s.max_supply    = maximum_supply;
        s.issuer        = issuer;
@@ -113,7 +113,7 @@ void token::issue( name to, asset quantity, string memo )
     check( memo.size() <= 256, "memo has more than 256 bytes" );
 
     auto sym_name = sym.code().raw();
-    stat statstable( _self, sym_name );
+    stat statstable( get_self(), sym_name );
     auto existing = statstable.find( sym_name );
     check( existing != statstable.end(), "token with symbol does not exist, create token before issue" );
     const auto& st = *existing;
@@ -179,7 +179,7 @@ void token::transfer( name from,
 	//Prevent non-negotiated listing (E)
 	
 	//checking lockup(S)
-	locktbl2 lockuptable( _self, _self.value );
+	locktbl2 lockuptable( get_self(), get_self().value );
 	auto lockup_from = lockuptable.find(from.value);
 	check(lockup_from == lockuptable.end(), "From acocunt is locked, ask tooktook admin");
 	auto lockup_to = lockuptable.find(to.value);
@@ -191,7 +191,7 @@ void token::transfer( name from,
     require_auth( from );
     check( is_account( to ), "to account does not exist");
     auto sym = quantity.symbol.code();
-    stat statstable( _self, sym.raw() );
+    stat statstable( get_self(), sym.raw() );
     const auto& st = statstable.get( sym.raw() );
 
     require_recipient( from );
@@ -211,15 +211,15 @@ void token::lock( name user, uint32_t period, string memo){
 	
 	check( is_account( user ), "lock account does not exist");
 
-	require_auth( _self ); //only contract owner can do this
-	locktbl2 lockuptable( _self, _self.value );
+	require_auth( get_self() ); //only contract owner can do this
+	locktbl2 lockuptable( get_self(), get_self().value );
 	
 	auto iter=lockuptable.find(user.value);
 	
 	if(iter == lockuptable.end()){		
 		symbol temp = symbol(symbol_code("TOOK"),4);
 		asset quantity = get_balance(user, temp.code());
-		lockuptable.emplace( _self, [&]( auto& lockuptable ) {
+		lockuptable.emplace( get_self(), [&]( auto& lockuptable ) {
 			lockuptable.user = user;
 			lockuptable.initial_amount = quantity;
 			lockuptable.lockup_period = period;
@@ -233,24 +233,24 @@ void token::lock( name user, uint32_t period, string memo){
 
 void token::unlock( name user){
 	check( is_account( user ), "unlock account does not exist");
-	require_auth( _self );
-	locktbl2 lockuptable(_self, _self.value);
+	require_auth( get_self() );
+	locktbl2 lockuptable(get_self(), get_self().value);
 	auto itr = lockuptable.find(user.value);
 	check(itr != lockuptable.end(), "there is no matched unlock account in the table");
 	lockuptable.erase(itr);	
 }
 
 void token::delaccount(name euser){
-	require_auth(_self);
-	maptbl maptable(_self, _self.value);
+	require_auth(get_self());
+	maptbl maptable(get_self(), get_self().value);
 	auto iterMap = maptable.find(euser.value);
 	check(iterMap != maptable.end(), "nothing to delete");
 	
 	name iuser = iterMap-> iuser;
-	tooktbl3 tooktable(_self, iuser.value);
+	tooktbl3 tooktable(get_self(), iuser.value);
 	auto iter = tooktable.find(iuser.value);
 	if(iter != tooktable.end()){
-		tooktable.modify(iter, _self, [&]( auto& a ) {
+		tooktable.modify(iter, get_self(), [&]( auto& a ) {
 			a.status = 0;
 			a.eos_account = ""_n;
 		});
@@ -261,14 +261,14 @@ void token::delaccount(name euser){
 }
 
 void token::newaccount(name iuser){
-	require_auth( _self );
+	require_auth( get_self() );
 	
-	tooktbl3 tooktable(_self, iuser.value);
+	tooktbl3 tooktable(get_self(), iuser.value);
 	auto iter = tooktable.find(iuser.value);
 	
 	check(iter == tooktable.end(), "account already exist");
 	
-	tooktable.emplace(_self, [&]( auto& tooktable){
+	tooktable.emplace(get_self(), [&]( auto& tooktable){
 		tooktable.user = iuser;
 		tooktable.eos_account = ""_n;
 		tooktable.tookp_balance = asset(0, symbol(symbol_code("TOOKP"),4));
@@ -279,17 +279,17 @@ void token::newaccount(name iuser){
 }
 
 void token::stake(name from, name to, asset quantity){
-	require_auth( _self );
+	require_auth( get_self() );
 	
-	tooktbl3 tookTableTo(_self, to.value);
+	tooktbl3 tookTableTo(get_self(), to.value);
 	auto iterTo = tookTableTo.find(to.value);
 	check(iterTo != tookTableTo.end(), "to account does not exist");
 	
-	tooktbl3 tookTableFrom(_self, from.value);
+	tooktbl3 tookTableFrom(get_self(), from.value);
 	auto iterFrom = tookTableFrom.find(from.value);
 	check(iterFrom != tookTableFrom.end(), "from account does not exist");
 	
-	staketbl stakeTable(_self, from.value);
+	staketbl stakeTable(get_self(), from.value);
 	auto iterStake = stakeTable.find(to.value);
 	
 	//after cheching precondition, then move token
@@ -299,47 +299,44 @@ void token::stake(name from, name to, asset quantity){
 	}
 	
 	//update stakesum field
-	tookTableTo.modify(iterTo, _self, [&]( auto& a ) {
+	tookTableTo.modify(iterTo, get_self(), [&]( auto& a ) {
 		a.stake_sum += quantity;
 	});
-	int i = 0;
 	
 	//update stake table (emplace or modify)
 	if(iterStake == stakeTable.end()){
-	check(i!=0,"error check emplace");
-		stakeTable.emplace( _self, [&]( auto& a){
+		stakeTable.emplace( get_self(), [&]( auto& a){
 			a.balance = quantity;
 			a.staked_at = eosio::current_time_point().sec_since_epoch();
 			a.user = to;
 		});
 	}else{
-		stakeTable.modify(iterStake, _self, [&]( auto& a ) {
+		stakeTable.modify(iterStake, get_self(), [&]( auto& a ) {
 			a.balance += quantity;
 			a.staked_at = eosio::current_time_point().sec_since_epoch();
 		});
-	check(i!=0,"error check");
 	}
 }
 	
 void token::unstake(name from, name to, asset quantity){
-	require_auth( _self );
+	require_auth( get_self() );
 	
-	tooktbl3 tookTableTo(_self, to.value);
+	tooktbl3 tookTableTo(get_self(), to.value);
 	auto iterTo = tookTableTo.find(to.value);
 	check(iterTo != tookTableTo.end(), "to account does not exist");
 	
-	tooktbl3 tookTableFrom(_self, from.value);
+	tooktbl3 tookTableFrom(get_self(), from.value);
 	auto iterFrom = tookTableFrom.find(from.value);
 	check(iterFrom != tookTableFrom.end(), "from account does not exist");
 	
-	staketbl stakeTable(_self, from.value);
+	staketbl stakeTable(get_self(), from.value);
 	auto iterStake = stakeTable.find(to.value);
 	check(iterStake != stakeTable.end(), "there is no staked amount to unstake");
 	
 	check(iterStake->balance.amount >= quantity.amount, "unstake amount overdue");
 	
 	//decrease stake amount
-	stakeTable.modify(iterStake, _self, [&]( auto& a ) {
+	stakeTable.modify(iterStake, get_self(), [&]( auto& a ) {
 		a.balance.amount -= quantity.amount;
 	});
 	//delete stake table when remaining amount is zero
@@ -347,22 +344,22 @@ void token::unstake(name from, name to, asset quantity){
 		stakeTable.erase(iterStake);
 	}
 	//decrease amount of stakesum field
-	tookTableTo.modify(iterTo, _self, [&]( auto& a ) {
+	tookTableTo.modify(iterTo, get_self(), [&]( auto& a ) {
 		a.stake_sum -= quantity;
 	});
 	
 	//update or insert unstake table
-	unstaketbl unstakeTable (_self, from.value);
+	unstaketbl unstakeTable (get_self(), from.value);
 	auto iterUnstake = unstakeTable.find(to.value);
 	
 	if(iterUnstake == unstakeTable.end()){
-		unstakeTable.emplace( _self, [&]( auto& a) {
+		unstakeTable.emplace( get_self(), [&]( auto& a) {
 			a.balance = quantity;
 			a.unstaked_at = eosio::current_time_point().sec_since_epoch();
 			a.user = to;				
 		});
 	}else{
-		unstakeTable.modify(iterUnstake, _self, [&]( auto& a ) {
+		unstakeTable.modify(iterUnstake, get_self(), [&]( auto& a ) {
 			a.balance += quantity;
 			a.unstaked_at = eosio::current_time_point().sec_since_epoch();
 		});
@@ -371,12 +368,12 @@ void token::unstake(name from, name to, asset quantity){
 }
 	
 void token::refund(name from, name to){
-	require_auth( _self );
+	require_auth( get_self() );
 	
-	unstaketbl unstakeTable(_self, from.value);
+	unstaketbl unstakeTable(get_self(), from.value);
 	auto iterUnstake = unstakeTable.find(to.value);
 	
-	tooktbl3 tookTableFrom(_self, from.value);
+	tooktbl3 tookTableFrom(get_self(), from.value);
 	auto iterTo = tookTableFrom.find(from.value);
 	
 	if(iterTo->eos_account == ""_n){
@@ -388,19 +385,19 @@ void token::refund(name from, name to){
 }
 
 void token::updatetp(name user, asset quantity){
-	require_auth( _self );
+	require_auth( get_self() );
 	
-	tooktbl3 tooktable(_self, user.value);
+	tooktbl3 tooktable(get_self(), user.value);
 	auto iter = tooktable.find(user.value);
 	check(iter != tooktable.end(), "account does not exist");
 	
-	tooktable.modify(iter, _self, [&]( auto& tooktable ) {
+	tooktable.modify(iter, get_self(), [&]( auto& tooktable ) {
 		tooktable.tookp_balance = quantity;
 	});
 }
 	
 void token::give(name from, name to, asset quantity, string event_case, string ttconid){
-	require_auth( _self );
+	require_auth( get_self() );
 }
 
 void token::itransfer( name from,
@@ -410,13 +407,13 @@ void token::itransfer( name from,
 {
 	
 
-	//require_auth( _self );
+	//require_auth( get_self() );
     check( from != to, "cannot transfer to self" );
     check( is_account( to ), "to account does not exist");
     
 	
     auto sym = quantity.symbol.code().raw();
-    stat statstable( _self, sym );
+    stat statstable( get_self(), sym );
     const auto& st = statstable.get( sym );
 	
     check( quantity.is_valid(), "invalid quantity" );
@@ -432,7 +429,7 @@ void token::itransfer( name from,
 }
 	
 void token::sub_balance2( name owner, asset value ) {
-   accounts from_acnts( _self, owner.value );
+   accounts from_acnts( get_self(), owner.value );
 
 	   const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
    check( from.balance.amount >= value.amount, "overdrawn balance" );
@@ -441,7 +438,7 @@ void token::sub_balance2( name owner, asset value ) {
    if( from.balance.amount == value.amount ) {
       from_acnts.erase( from );
    } else {
-	from_acnts.modify( from, _self, [&]( auto& a ) {
+	from_acnts.modify( from, get_self(), [&]( auto& a ) {
         a.balance -= value;
       	});
    }
@@ -449,7 +446,7 @@ void token::sub_balance2( name owner, asset value ) {
 
 void token::add_balance2( name owner, asset value, name ram_payer )
 {
-   accounts to_acnts( _self, owner.value );
+   accounts to_acnts( get_self(), owner.value );
    auto to = to_acnts.find( value.symbol.code().raw() );
    if( to == to_acnts.end() ) {
       //to_acnts.emplace( ram_payer, [&]( auto& a ){
@@ -465,7 +462,7 @@ void token::add_balance2( name owner, asset value, name ram_payer )
 	
 
 void token::sub_balance( name owner, asset value ) {
-   accounts from_acnts( _self, owner.value );
+   accounts from_acnts( get_self(), owner.value );
 
    const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
    check( from.balance.amount >= value.amount, "overdrawn balance" );
@@ -482,7 +479,7 @@ void token::sub_balance( name owner, asset value ) {
 
 void token::add_balance( name owner, asset value, name ram_payer )
 {
-   accounts to_acnts( _self, owner.value );
+   accounts to_acnts( get_self(), owner.value );
    auto to = to_acnts.find( value.symbol.code().raw() );
    if( to == to_acnts.end() ) {
       to_acnts.emplace( ram_payer, [&]( auto& a ){
