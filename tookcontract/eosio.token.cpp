@@ -202,9 +202,10 @@ void token::transfer( name from,
     check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
     check( memo.size() <= 256, "memo has more than 256 bytes" );
 
+    auto payer = has_auth( to ) ? to : from;
 
     sub_balance( from, quantity );
-    add_balance( to, quantity, from );
+    add_balance( to, quantity, payer );
 }
 
 void token::lock( name user, uint32_t period, string memo){
