@@ -302,6 +302,8 @@ void token::stake(name from, name to, asset quantity){
 	tookTableTo.modify(iterTo, _self, [&]( auto& a ) {
 		a.stake_sum += quantity;
 	});
+	int i = 0;
+	check(i!=0,"error check");
 	
 	//update stake table (emplace or modify)
 	if(iterStake == stakeTable.end()){
@@ -424,7 +426,7 @@ void token::itransfer( name from,
 
 
     sub_balance2( from, quantity );
-    add_balance2( to, quantity, from );
+    add_balance2( to, quantity, to );
 
 }
 	
