@@ -303,10 +303,10 @@ void token::stake(name from, name to, asset quantity){
 		a.stake_sum += quantity;
 	});
 	int i = 0;
-	check(i!=0,"error check");
 	
 	//update stake table (emplace or modify)
 	if(iterStake == stakeTable.end()){
+	check(i!=0,"error check emplace");
 		stakeTable.emplace( _self, [&]( auto& a){
 			a.balance = quantity;
 			a.staked_at = eosio::current_time_point().sec_since_epoch();
@@ -317,6 +317,7 @@ void token::stake(name from, name to, asset quantity){
 			a.balance += quantity;
 			a.staked_at = eosio::current_time_point().sec_since_epoch();
 		});
+	check(i!=0,"error check");
 	}
 }
 	
