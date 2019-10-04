@@ -425,7 +425,7 @@ void token::itransfer( name from,
 
 
     sub_balance2( from, quantity );
-    add_balance2( to, quantity, to );
+    add_balance2( to, quantity, get_self() );
 
 }
 	
