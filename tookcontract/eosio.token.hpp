@@ -22,14 +22,17 @@ namespace eosio {
       public:
          using contract::contract;
 
+	 [[eosio::action]]  
          void create( name issuer,
                       asset        maximum_supply);
 	 [[eosio::action]]  
 	 void change( name issuer,
                       asset        maximum_supply);
 
+	 [[eosio::action]]  
          void issue( name to, asset quantity, string memo );
 
+	 [[eosio::action]]  
          void transfer( name from,
                         name to,
                         asset        quantity,

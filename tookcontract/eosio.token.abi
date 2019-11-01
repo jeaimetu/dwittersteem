@@ -46,6 +46,20 @@
             ]
         },
         {
+            "name": "create",
+            "base": "",
+            "fields": [
+                {
+                    "name": "issuer",
+                    "type": "name"
+                },
+                {
+                    "name": "maximum_supply",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
             "name": "currency_stat",
             "base": "",
             "fields": [
@@ -95,6 +109,24 @@
                 },
                 {
                     "name": "ttconid",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "issue",
+            "base": "",
+            "fields": [
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
                     "type": "string"
                 }
             ]
@@ -266,6 +298,28 @@
             ]
         },
         {
+            "name": "transfer",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
             "name": "unlock",
             "base": "",
             "fields": [
@@ -338,6 +392,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "create",
+            "type": "create",
+            "ricardian_contract": ""
+        },
+        {
             "name": "delaccount",
             "type": "delaccount",
             "ricardian_contract": ""
@@ -345,6 +404,11 @@
         {
             "name": "give",
             "type": "give",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "issue",
+            "type": "issue",
             "ricardian_contract": ""
         },
         {
@@ -370,6 +434,11 @@
         {
             "name": "stake",
             "type": "stake",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "transfer",
+            "type": "transfer",
             "ricardian_contract": ""
         },
         {
