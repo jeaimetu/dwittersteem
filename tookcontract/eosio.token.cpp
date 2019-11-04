@@ -472,7 +472,7 @@ void token::sub_balance( name owner, asset value ) {
    if( from.balance.amount == value.amount ) {
       from_acnts.erase( from );
    } else {
-      from_acnts.modify( from, owner, [&]( auto& a ) {
+      from_acnts.modify( from, same_payer, [&]( auto& a ) {
           a.balance -= value;
       });
    }
@@ -487,7 +487,7 @@ void token::add_balance( name owner, asset value, name ram_payer )
         a.balance = value;
       });
    } else {
-      to_acnts.modify( to, owner, [&]( auto& a ) {
+      to_acnts.modify( to, ram_payer, [&]( auto& a ) {
         a.balance += value;
       });
    }
