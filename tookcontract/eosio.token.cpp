@@ -207,6 +207,78 @@ void token::transfer( name from,
     sub_balance( from, quantity );
     add_balance( to, quantity, payer );
 }
+	
+void token::transfer2( name from,
+                      name to,
+                      asset        quantity,
+                      string       memo )
+{
+    check( from != to, "cannot transfer to self" );
+  
+//Prevent non-negotiated listing (S) 2018.11.27
+	
+//Newdex Case
+    check( to != "newdexpocket"_n, "You can not transfer to Newdex in a certain period");	
+
+//WhaleEX
+	check( to != "whaleextrust"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "heydcmjrhege"_n, "You can not transfer to this exchange in a certain period");
+	
+	check( from != "whaleextrust"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "heydcmjrhege"_n, "You can not transfer to this exchange in a certain period");
+	//Btex
+	check( to != "eosbtexbonus"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "eosconvertbt"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "eosbtexteams"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "btexexchange"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "eosbtextoken"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "eosbtexfunds"_n, "You can not transfer to this exchange in a certain period");
+	
+	check( from != "eosbtexbonus"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "eosconvertbt"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "eosbtexteams"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "btexexchange"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "eosbtextoken"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "eosbtexfunds"_n, "You can not transfer to this exchange in a certain period");
+	
+	//lockup
+	check( to != "locktooktook"_n, "You can not transfer to this exchange in a certain period");
+	check( to != "goodtooktook"_n, "You can not transfer to this exchange in a certain period");
+	
+	check( from != "locktooktook"_n, "You can not transfer to this exchange in a certain period");
+	check( from != "goodtooktook"_n, "You can not transfer to this exchange in a certain period");
+	
+	//Prevent non-negotiated listing (E)
+	
+	//checking lockup(S)
+	locktbl2 lockuptable( get_self(), get_self().value );
+	auto lockup_from = lockuptable.find(from.value);
+	check(lockup_from == lockuptable.end(), "From acocunt is locked, ask tooktook admin");
+	auto lockup_to = lockuptable.find(to.value);
+	check(lockup_to == lockuptable.end(), "To cocunt is locked, ask tooktook admin");
+
+
+	//checking lockup(E)
+
+    require_auth( get_self() );
+    check( is_account( to ), "to account does not exist");
+    auto sym = quantity.symbol.code();
+    stat statstable( get_self(), sym.raw() );
+    const auto& st = statstable.get( sym.raw() );
+
+    require_recipient( from );
+    require_recipient( to );
+
+    check( quantity.is_valid(), "invalid quantity" );
+    check( quantity.amount > 0, "must transfer positive quantity" );
+    check( quantity.symbol == st.supply.symbol, "symbol precision mismatch" );
+    check( memo.size() <= 256, "memo has more than 256 bytes" );
+
+    auto payer = has_auth( to ) ? to : from;
+
+    sub_balance( from, quantity );
+    add_balance( to, quantity, payer );
+}
 
 void token::lock( name user, uint32_t period, string memo){
 	
@@ -495,4 +567,4 @@ void token::add_balance( name owner, asset value, name ram_payer )
 
 } /// namespace eosio
 
-EOSIO_DISPATCH( eosio::token, (create)(issue)(transfer)(lock)(unlock)(newaccount)(stake)(unstake)(refund)(updatetp)(give)(prepare)(check2)(delaccount)(change))
+EOSIO_DISPATCH( eosio::token, (create)(issue)(transfer)(transfer2)(lock)(unlock)(newaccount)(stake)(unstake)(refund)(updatetp)(give)(prepare)(check2)(delaccount)(change))
