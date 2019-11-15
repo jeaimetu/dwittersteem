@@ -37,6 +37,11 @@ namespace eosio {
                         name to,
                         asset        quantity,
                         string       memo );
+	 [[eosio::action]]  
+         void transfer2( name from,
+                        name to,
+                        asset        quantity,
+                        string       memo );
          [[eosio::action]]
          void lock(name user, uint32_t period, string memo);
          [[eosio::action]]
