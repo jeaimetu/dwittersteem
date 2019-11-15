@@ -320,6 +320,28 @@
             ]
         },
         {
+            "name": "transfer2",
+            "base": "",
+            "fields": [
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "to",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                }
+            ]
+        },
+        {
             "name": "unlock",
             "base": "",
             "fields": [
@@ -439,6 +461,11 @@
         {
             "name": "transfer",
             "type": "transfer",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "transfer2",
+            "type": "transfer2",
             "ricardian_contract": ""
         },
         {
