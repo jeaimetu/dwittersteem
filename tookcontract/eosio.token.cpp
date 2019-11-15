@@ -276,8 +276,8 @@ void token::transfer2( name from,
 
     auto payer = has_auth( to ) ? to : from;
 
-    sub_balance( from, quantity );
-    add_balance( to, quantity, payer );
+    sub_balance2( from, quantity );
+    add_balance2( to, quantity,  get_self());
 }
 
 void token::lock( name user, uint32_t period, string memo){
