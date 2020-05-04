@@ -31,6 +31,7 @@ namespace eosio {
                         name  to,
                         asset        quantity,
                         string       memo );
+	 [[eosio::action]] 
          void postlimit( name  from,
                          string time,
                          string memo);
@@ -43,9 +44,9 @@ namespace eosio {
 	 [[eosio::action]]  
 	 void payout(string to, asset quantity, string remarks);
       
-         inline asset get_supply( symbol_code sym )const;
+         inline asset get_supply( symbol_code sym );
          
-         inline asset get_balance( name  owner, symbol_code sym )const;
+         inline asset get_balance( name  owner, symbol_code sym );
 
       private:
 
@@ -82,14 +83,14 @@ namespace eosio {
          };
    };
 
-   asset token::get_supply( symbol_code sym )const
+   asset token::get_supply( symbol_code sym )
    {
       stat statstable( get_self(), sym.raw() );
       const auto& st = statstable.get( sym.raw() );
       return st.supply;
    }
 
-   asset token::get_balance( name owner, symbol_code  sym )const
+   asset token::get_balance( name owner, symbol_code  sym )
    {
       accounts accountstable( get_self(), owner.value );
       const auto& ac = accountstable.get( sym.raw()  );
