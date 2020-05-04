@@ -24,7 +24,7 @@ namespace eosio {
          void create( const name&  issuer,
                       const asset&        maximum_supply);
 	 [[eosio::action]]  
-         void issue( const name&  to, const asset& quantity,const  string& memo );
+         void issue( const name&  to, const asset& quantity,  string memo );
 	 
 	 [[eosio::action]]  
          void transfer(const  name&  from,
