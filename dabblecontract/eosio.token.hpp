@@ -6,9 +6,7 @@
 
 #include <eosio/asset.hpp>
 #include <eosio/eosio.hpp>
-#include <eosio/system.hpp>
 
-#include <string>
 
 namespace eosiosystem {
    class system_contract;
