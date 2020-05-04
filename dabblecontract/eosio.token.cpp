@@ -7,8 +7,8 @@
 
 namespace eosio {
 
-void token::create( name  issuer,
-                    asset        maximum_supply )
+void token::create( const name&  issuer,
+                    const asset&        maximum_supply )
 {
     require_auth( get_self() );
 
@@ -29,7 +29,7 @@ void token::create( name  issuer,
 }
 
 
-void token::issue( name  to, asset quantity, string memo )
+void token::issue(const  name&  to, const asset& quantity, const string& memo )
 {
     auto sym = quantity.symbol;
     check( sym.is_valid(), "invalid symbol name" );
@@ -81,10 +81,10 @@ void token::postlimit( name  from,
   check( time.size() <= 256, "time has more than 256 bytes" );  
 }
 
-void token::transfer( name  from,
-                      name  to,
-                      asset        quantity,
-                      string      memo )
+void token::transfer(const  name&  from,
+                     const  name&  to,
+                     const  asset&        quantity,
+                     const  string&      memo )
 {
     check( from != to, "cannot transfer to self" );
     require_auth( from );

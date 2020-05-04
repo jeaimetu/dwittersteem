@@ -21,16 +21,16 @@ namespace eosio {
 	   
       public:
          [[eosio::action]]  
-         void create( name  issuer,
-                      asset        maximum_supply);
+         void create( const name&  issuer,
+                      const asset&        maximum_supply);
 	 [[eosio::action]]  
-         void issue( name  to, asset quantity, string memo );
+         void issue( const name&  to, const asset& quantity,const  string& memo );
 	 
 	 [[eosio::action]]  
-         void transfer( name  from,
-                        name  to,
-                        asset        quantity,
-                        string       memo );
+         void transfer(const  name&  from,
+                        const name&  to,
+                        const asset&        quantity,
+                        const string&       memo );
 	 [[eosio::action]] 
          void postlimit( name  from,
                          string time,
