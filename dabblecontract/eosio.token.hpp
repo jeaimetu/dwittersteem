@@ -23,32 +23,32 @@ namespace eosio {
 	   
       public:
          [[eosio::action]]  
-         void create( name&  issuer,
-                      asset&        maximum_supply);
+         void create( name  issuer,
+                      asset        maximum_supply);
 	 [[eosio::action]]  
-         void issue( name&  to, asset& quantity, string& memo );
+         void issue( name  to, asset quantity, string memo );
 	 
 	 [[eosio::action]]  
-         void transfer( name&  from,
-                        name&  to,
-                        asset&        quantity,
-                        string&       memo );
+         void transfer( name  from,
+                        name  to,
+                        asset        quantity,
+                        string       memo );
 	 [[eosio::action]] 
-         void postlimit( name&  from,
-                         string& time,
-                         string& memo);
+         void postlimit( name  from,
+                         string time,
+                         string memo);
 	 [[eosio::action]]  
-	 void post(string& author, string& content, string& link);
+	 void post(string author, string content, string link);
 	 [[eosio::action]]  
-	 void vote(string& from, string& to, string& link);
+	 void vote(string from, string to, string link);
 	 [[eosio::action]]  
-	 void reply(string& author, string& to, string& content, string& link);
+	 void reply(string author, string to, string content, string link);
 	 [[eosio::action]]  
-	 void payout(string& to, asset& quantity, string& remarks);
+	 void payout(string to, asset quantity, strin& remarks);
       
-         inline asset get_supply( symbol_code& sym );
+         inline asset get_supply( symbol_code sym );
          
-         inline asset get_balance( name&  owner, symbol_code& sym );
+         inline asset get_balance( name  owner, symbol_code sym );
 
       private:
 
@@ -73,8 +73,8 @@ namespace eosio {
       
 
 
-         void sub_balance( name& owner, asset& value );
-         void add_balance( name& owner, asset& value, name& ram_payer );
+         void sub_balance( name owner, asset value );
+         void add_balance( name owner, asset value, name ram_payer );
 
       public:
          struct transfer_args {
@@ -85,14 +85,14 @@ namespace eosio {
          };
    };
 
-   asset token::get_supply( symbol_code& sym )
+   asset token::get_supply( symbol_code sym )
    {
       stat statstable( get_self(), sym.raw() );
       const auto& st = statstable.get( sym.raw() );
       return st.supply;
    }
 
-   asset token::get_balance( name& owner, symbol_code&  sym )
+   asset token::get_balance( name owner, symbol_code  sym )
    {
       accounts accountstable( get_self(), owner.value );
       const auto& ac = accountstable.get( sym.raw()  );
