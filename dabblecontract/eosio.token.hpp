@@ -44,7 +44,7 @@ namespace eosio {
 	 [[eosio::action]]  
 	 void reply(string author, string to, string content, string link);
 	 [[eosio::action]]  
-	 void payout(string to, asset quantity, strin& remarks);
+	 void payout(string to, asset quantity, strin remarks);
       
          inline asset get_supply( symbol_code sym );
          
