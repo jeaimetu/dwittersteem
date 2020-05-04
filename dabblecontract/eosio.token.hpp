@@ -36,7 +36,7 @@ namespace eosio {
                          string time,
                          string memo);
 	 [[eosio::action]]  
-	 void post(const string& author, const string& content, const string& link);
+	 void post( string author,  string content,  string link);
 	 [[eosio::action]]  
 	 void vote(string from, string to, string link);
 	 [[eosio::action]]  
