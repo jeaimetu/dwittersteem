@@ -59,7 +59,7 @@ void token::issue(const  name&  to, const asset& quantity, const string& memo )
     }
 }
   
-void token::post(string author, string content, string link){
+void token::post(const string& author, const string& content, const string& link){
     require_auth( _self );
 }
 void token::vote(string from, string to, string link){
