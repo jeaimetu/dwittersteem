@@ -21,17 +21,17 @@ namespace eosio {
    class [[eosio::contract("eosio.token")]] token : public contract {
       public:
          [[eosio::action]]  
-         void create( account_name issuer,
+         void create( name  issuer,
                       asset        maximum_supply);
 	 [[eosio::action]]  
-         void issue( account_name to, asset quantity, string memo );
+         void issue( name  to, asset quantity, string memo );
 	 
 	 [[eosio::action]]  
-         void transfer( account_name from,
-                        account_name to,
+         void transfer( name  from,
+                        name  to,
                         asset        quantity,
                         string       memo );
-         void postlimit( account_name from,
+         void postlimit( name  from,
                          string time,
                          string memo);
 	 [[eosio::action]]  
@@ -45,7 +45,7 @@ namespace eosio {
       
          inline asset get_supply( symbol_code sym )const;
          
-         inline asset get_balance( account_name owner, symbol_code sym )const;
+         inline asset get_balance( name  owner, symbol_code sym )const;
 
       private:
 
