@@ -128,7 +128,7 @@ void token::sub_balance( name  owner, asset value ) {
 
 void token::add_balance( name  owner, asset value, account_name ram_payer )
 {
-   accounts to_acnts( _get_self(), owner.value );
+   accounts to_acnts( get_self(), owner.value );
    auto to = to_acnts.find( value.symbol.code().raw() );
    if( to == to_acnts.end() ) {
       to_acnts.emplace( ram_payer, [&]( auto& a ){
