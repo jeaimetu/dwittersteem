@@ -7,8 +7,8 @@
 
 namespace eosio {
 
-void token::create( name&  issuer,
-                    asset&        maximum_supply )
+void token::create( name  issuer,
+                    asset        maximum_supply )
 {
     require_auth( get_self() );
 
@@ -29,7 +29,7 @@ void token::create( name&  issuer,
 }
 
 
-void token::issue( name&  to, asset& quantity, string& memo )
+void token::issue( name  to, asset quantity, string memo )
 {
     auto sym = quantity.symbol;
     check( sym.is_valid(), "invalid symbol name" );
@@ -59,32 +59,32 @@ void token::issue( name&  to, asset& quantity, string& memo )
     }
 }
   
-void token::post(string& author, string& content, string& link){
+void token::post(string author, string content, string link){
     require_auth( _self );
 }
-void token::vote(string& from, string& to, string& link){
+void token::vote(string from, string to, string link){
     require_auth( _self );
 }
-void token::reply(string& author, string& to, string& content, string& link){
+void token::reply(string author, string to, string content, string link){
     require_auth( _self );
 }
-void token::payout(string& to, asset& quantity, string& remarks){
+void token::payout(string to, asset quantity, string remarks){
     require_auth( _self );
 }
   
-void token::postlimit( name&  from,
-                       string& time,
-                       string& memo)
+void token::postlimit( name  from,
+                       string time,
+                       string memo)
 {
   require_auth( from );
   check( memo.size() <= 256, "memo has more than 256 bytes" );
   check( time.size() <= 256, "time has more than 256 bytes" );  
 }
 
-void token::transfer( name&  from,
-                      name&  to,
-                      asset&        quantity,
-                      string&       memo )
+void token::transfer( name  from,
+                      name  to,
+                      asset        quantity,
+                      string      memo )
 {
     check( from != to, "cannot transfer to self" );
     require_auth( from );
@@ -110,7 +110,7 @@ void token::transfer( name&  from,
 }
   
 
-void token::sub_balance( name&  owner, asset& value ) {
+void token::sub_balance( name  owner, asset value ) {
    accounts from_acnts( get_self(), owner.value );
 
    const auto& from = from_acnts.get( value.symbol.code().raw(), "no balance object found" );
@@ -126,7 +126,7 @@ void token::sub_balance( name&  owner, asset& value ) {
    }
 }
 
-void token::add_balance( name&  owner, asset& value, name& ram_payer )
+void token::add_balance( name  owner, asset value, name ram_payer )
 {
    accounts to_acnts( get_self(), owner.value );
    auto to = to_acnts.find( value.symbol.code().raw() );
