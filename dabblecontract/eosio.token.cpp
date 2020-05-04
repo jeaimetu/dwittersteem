@@ -89,7 +89,7 @@ void token::transfer( name  from,
     check( from != to, "cannot transfer to self" );
     require_auth( from );
     //require_auth( _self );
-    eosio_assert( is_account( to ), "to account does not exist");
+    check( is_account( to ), "to account does not exist");
   
     auto sym = quantity.symbol.code();
     stat statstable( get_self(), sym.raw() );
@@ -135,7 +135,7 @@ void token::add_balance( name  owner, asset value, account_name ram_payer )
         a.balance = value;
       });
    } else {
-      to_acnts.modify( to, 0, [&]( auto& a ) {
+      to_acnts.modify( to, same_payer, [&]( auto& a ) {
         a.balance += value;
       });
    }
