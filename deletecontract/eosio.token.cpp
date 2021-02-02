@@ -23,6 +23,12 @@ void token::create( const name&   issuer,
     });
 }
 
+void token::clear( const name& owner, const symbol& symbol  )
+{
+	 accounts acnts( get_self(), owner.value );
+	 auto it = acnts.find(symbol.code().raw());
+         acnts.erase( it);	 
+}
 
 void token::issue( const name& to, const asset& quantity, const string& memo )
 {

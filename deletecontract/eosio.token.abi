@@ -14,6 +14,20 @@
             ]
         },
         {
+            "name": "clear",
+            "base": "",
+            "fields": [
+                {
+                    "name": "owner",
+                    "type": "name"
+                },
+                {
+                    "name": "symbol",
+                    "type": "symbol"
+                }
+            ]
+        },
+        {
             "name": "close",
             "base": "",
             "fields": [
@@ -133,6 +147,11 @@
         }
     ],
     "actions": [
+        {
+            "name": "clear",
+            "type": "clear",
+            "ricardian_contract": ""
+        },
         {
             "name": "close",
             "type": "close",
