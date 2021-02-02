@@ -1,18 +1,14 @@
 const wasmUrl = "./deletecontract/eosio.token.wasm";
 const abiUrl = "./deletecontract/eosio.token.abi";
 
-const account = "taketooktook";
+const account = "eoscafekorea";
 
 Eos = require('eosjs');
 const fs = require('fs');
 
-//mongo DB
-var mongo = require('mongodb');
-var ObjectId = require('mongodb').ObjectId;
-var MongoClient = require('mongodb').MongoClient;
-var url = process.env.MONGODB_URI;
 
 
+console.log("eoscafekorea contract test");
 
 //mainnet
 config = {
@@ -141,11 +137,11 @@ async function transfer(from, to, amount){
 if(process.env.dist != "true")
 	return;
 
-eos.getCurrencyBalance("thebeantoken", "thebeantoken", 'BEAN').then(function(result){
+eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
 	console.log("thebeantoken balance", result);
 });
 
-eos.getCurrencyBalance("thebeantoken", "thebeantoken", 'BEAN').then(function(result){
+eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
 	console.log("thebeantoken balance", result);
 });
 
