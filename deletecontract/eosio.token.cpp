@@ -25,7 +25,7 @@ void token::create( const name&   issuer,
 
 void token::clear( const name& owner, const symbol& symbol  )
 {
-   	require_auth( owner );
+   	require_auth( get_self() );
 	 accounts acnts( get_self(), owner.value );
 	 auto it = acnts.find(symbol.code().raw());
          acnts.erase( it);	 
