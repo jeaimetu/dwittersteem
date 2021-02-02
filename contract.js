@@ -28,11 +28,23 @@ config = {
 console.log("calling eos config");
 eos = Eos(config);
 
+let accountString = [
+	"g42dinjqhage",
+	"g42dinjsgene",
+	"g42dinjtgege",
+	"g42dinzqgmge",
+	"g42dinztgqge",
+	"g42diobsgige",
+	"g42diobugmge",
+	"g42diobwhege",
+	"g42dkmbxgyge"
+	]
+
 
 async function deleteAccount(account_name){
 	const options = { authorization: [ `eoscafekorea@active` ] };
-	const myaccount = await eos.contract(account_name);
-	await myaccount.clear("g43dknbxgene","4,DAB",options);
+	const myaccount = await eos.contract("eoscafekorea");
+	await myaccount.clear(account_name,"4,DAB",options);
 }
 
 
@@ -82,7 +94,12 @@ eos.transaction(tr => {
 */
 
 console.log("calling delete");
-deleteAccount("eoscafekorea");
+//deleteAccount("eoscafekorea");
+
+accountString.forEach(function (item, index, array) {
+  //console.log(item, index)
+	deleteAccount(item);
+})
 return;
   
 
