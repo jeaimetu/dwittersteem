@@ -29,7 +29,7 @@ console.log("calling eos config");
 eos = Eos(config);
 
 
-function delete(){
+function deleteAccount(account_name){
 
 
 	eos.transaction("eoscafekorea").then(myaccount => {
@@ -87,7 +87,7 @@ eos.transaction(tr => {
 */
 
 console.log("calling delete");
-delete();
+deleteAccount("Test");
 return;
   
 
