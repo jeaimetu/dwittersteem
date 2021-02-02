@@ -1,30 +1,17 @@
-const wasmUrl = "./tookcontract/eosio.token.wasm";
-const abiUrl = "./tookcontract/eosio.token.abi";
+const { Api, JsonRpc } = require('eosjs');
+const { JsSignatureProvider } = require('eosjs/dist/eosjs-jssig');  // development only
+const fetch = require('node-fetch'); //node only
+const { TextDecoder, TextEncoder } = require('util'); //node only
 
-const account = "taketooktook";
+const privateKeys = [privateKey1];
 
-Eos = require('eosjs');
-const fs = require('fs');
-
-
-//mainnet
-config = {
-  chainId: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906",//mainnet
-  //chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",//testnet
-  //chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",// 32 byte (64 char) hex string
-  keyProvider: process.env.key, // WIF string or array of keys..
-  httpEndpoint: 'https://user-api.eoseoul.io:443',
-  //httpEndpoint:	"https://jungle2.cryptolions.io:443",
-  expireInSeconds: 60,
-  broadcast: true,
-  verbose: false, // API activity
-  sign: true
-}
+const signatureProvider = new JsSignatureProvider(privateKeys);
+const rpc = new JsonRpc('https://user-api.eoseoul.io:443', { fetch }); //required to read blockchain state
+const api = new Api({ rpc, signatureProvider, textDecoder: new TextDecoder(), textEncoder: new TextEncoder() }); //required to submit transactions
 
 
-eos = Eos(config);
 
-  const wasmFilePath = '/deletecontract/eosio.token.wasm'
+const wasmFilePath = '/deletecontract/eosio.token.wasm'
 const abiFilePath = '/deletecontract/eosio.token.abi'
 
 const wasmHexString = fs.readFileSync(wasmFilePath).toString('hex')
