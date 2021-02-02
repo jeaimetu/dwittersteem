@@ -25,6 +25,7 @@ config = {
 }
 
 
+console.log("calling eos config");
 eos = Eos(config);
 
 /*
