@@ -1,1 +1,1 @@
-web: node contract.js
+web: node contractnew.js
