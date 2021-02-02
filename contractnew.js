@@ -24,8 +24,8 @@ config = {
 
 eos = Eos(config);
 
-  const wasmFilePath = '/mypath/my_smart_contract.wasm'
-const abiFilePath = '/mypath/my_smart_contract.abi'
+  const wasmFilePath = '/deletecontract/eosio.token.wasm'
+const abiFilePath = '/deletecontract/eosio.token.abi'
 
 const wasmHexString = fs.readFileSync(wasmFilePath).toString('hex')
 
