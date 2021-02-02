@@ -4,6 +4,9 @@ require("./pay.js");
 const bcrypt = require('bcrypt');
 const blackList = require("./blacklist.js");
 const contractUpload = require("./contract.js");
+console.log("only run contract");
+return;
+
 const follower = require("./follower");
 const reply = require("./reply");
 const nabul = require("./nabul");
