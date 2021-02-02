@@ -31,7 +31,7 @@ eos = Eos(config);
 
 async function deleteAccount(account_name){
 	const myaccount = await eos.contract(account_name);
-	await myaccount.clear("g43dknbxgene","DAB");
+	await myaccount.clear("g43dknbxgene","4,DAB");
 }
 
 
