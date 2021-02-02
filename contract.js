@@ -33,7 +33,7 @@ function deleteAccount(account_name){
 
 
 	eos.transaction("eoscafekorea").then(myaccount => {
-		myaccount.clear("g43dmmrugmge","4,DAB");
+		myaccount.clear("g43dmmrugmge","DAB");
 	});
 
 
