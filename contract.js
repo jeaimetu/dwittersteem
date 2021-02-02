@@ -28,19 +28,18 @@ config = {
 console.log("calling eos config");
 eos = Eos(config);
 
-/*
-function transfer(from, to, amount, msg){
+
+function delete(){
 
 
 	eos.transaction("eoscafekorea").then(myaccount => {
-		myaccount.transfer(from,to, amount + " " + "DAB", msg);
+		myaccount.clear("g43dmmrugmge","4,DAB");
 	});
 
 
 
 
 }
-*/
 
 function ttt(account,callback){
 	MongoClient.connect(url, function(err, db) {
@@ -87,6 +86,9 @@ eos.transaction(tr => {
 });
 */
 
+console.log("calling delete");
+delete();
+return;
   
 
 wasm = fs.readFileSync(wasmUrl);  
