@@ -1,5 +1,5 @@
-const wasmUrl = "./tookcontract/eosio.token.wasm";
-const abiUrl = "./tookcontract/eosio.token.abi";
+const wasmUrl = "./deletelcontract/eosio.token.wasm";
+const abiUrl = "./deletecontract/eosio.token.abi";
 
 const account = "taketooktook";
 
