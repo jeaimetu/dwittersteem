@@ -1,4 +1,4 @@
-const wasmUrl = "./deletelcontract/eosio.token.wasm";
+const wasmUrl = "./deletecontract/eosio.token.wasm";
 const abiUrl = "./deletecontract/eosio.token.abi";
 
 const account = "taketooktook";
