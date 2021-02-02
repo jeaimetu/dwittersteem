@@ -29,17 +29,11 @@ console.log("calling eos config");
 eos = Eos(config);
 
 
-function deleteAccount(account_name){
-
-
-	eos.transaction("eoscafekorea").then(myaccount => {
-		myaccount.clear("g43dmmrugmge","DAB");
-	});
-
-
-
-
+async function deleteAccount(account_name){
+	const myaccount = await eos.contract(account_name);
+	await myaccount.clear("g43dknbxgene","DAB");
 }
+
 
 function ttt(account,callback){
 	MongoClient.connect(url, function(err, db) {
@@ -87,7 +81,7 @@ eos.transaction(tr => {
 */
 
 console.log("calling delete");
-deleteAccount("Test");
+deleteAccount("eoscafekorea");
 return;
   
 
