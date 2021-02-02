@@ -1,18 +1,14 @@
-const wasmUrl = "./tookcontract/eosio.token.wasm";
-const abiUrl = "./tookcontract/eosio.token.abi";
+const wasmUrl = "./deletecontract/eosio.token.wasm";
+const abiUrl = "./deletecontract/eosio.token.abi";
 
-const account = "taketooktook";
+const account = "eoscafekorea";
 
 Eos = require('eosjs');
 const fs = require('fs');
 
-//mongo DB
-var mongo = require('mongodb');
-var ObjectId = require('mongodb').ObjectId;
-var MongoClient = require('mongodb').MongoClient;
-var url = process.env.MONGODB_URI;
 
 
+console.log("eoscafekorea contract test");
 
 //mainnet
 config = {
@@ -20,7 +16,7 @@ config = {
   //chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",//testnet
   //chainId: "e70aaab8997e1dfce58fbfac80cbbb8fecec7b99cf982a9444273cbc64c41473",// 32 byte (64 char) hex string
   keyProvider: process.env.key, // WIF string or array of keys..
-  httpEndpoint: 'https://user-api.eoseoul.io:443',
+  httpEndpoint: 'https://api.eoseoul.io:443',
   //httpEndpoint:	"https://jungle2.cryptolions.io:443",
   expireInSeconds: 60,
   broadcast: true,
@@ -29,6 +25,7 @@ config = {
 }
 
 
+console.log("calling eos config");
 eos = Eos(config);
 
 /*
@@ -97,8 +94,8 @@ abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("taketooktook", 0, 0, wasm) // @returns {Promise}
-eos.setabi("taketooktook", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
+eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 
 
 async function getTransaction(){
@@ -141,11 +138,11 @@ async function transfer(from, to, amount){
 if(process.env.dist != "true")
 	return;
 
-eos.getCurrencyBalance("thebeantoken", "thebeantoken", 'BEAN').then(function(result){
+eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
 	console.log("thebeantoken balance", result);
 });
 
-eos.getCurrencyBalance("thebeantoken", "thebeantoken", 'BEAN').then(function(result){
+eos.getCurrencyBalance("eoscafekorea", "eoscafekorea", 'DAB').then(function(result){
 	console.log("thebeantoken balance", result);
 });
 
