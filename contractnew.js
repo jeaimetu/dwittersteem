@@ -31,7 +31,7 @@ abiJSON = abiDefinitions.fields.reduce(
 abiDefinitions.serialize(buffer, abiJSON)
 serializedAbiHexString = Buffer.from(buffer.asUint8Array()).toString('hex')
 
-await api.transact(
+api.transact(
     {
       actions: [
         {
