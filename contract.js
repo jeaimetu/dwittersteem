@@ -40,7 +40,8 @@ let accountString = [
 	"g42tcobzguge",
 	"g42tcojsgige",
 	"g42tcojvgqge",
-	"g42tcojvguge",
+	"g42tcojvguge"]
+/*
 	"g42temjsgmge",
 	"g42temjuhege",
 	"g42temryhege",
@@ -70,7 +71,7 @@ let accountString = [
 	"g42tgnzvgege",
 	"g42tgobsgege"
 	]
-
+*/
 
 async function deleteAccount(account_name){
 	const options = { authorization: [ `eoscafekorea@active` ] };
