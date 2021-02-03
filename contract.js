@@ -29,22 +29,6 @@ console.log("calling eos config");
 eos = Eos(config);
 
 let accountString = [
-	"g42temjsgmge",
-	"g42temjuhege",
-	"g42temryhege",
-	"g42tenigenes",
-	"g42tenjwg4ge",
-	"g42tenjzgage",
-	"g42tenjzguge",
-	"g42tenrsgege",
-	"g42tenrsgyge",
-	"g42tenrwgige",
-	"g42tenzsgyge",
-	"g42tenzxgage",
-	"g42teobygyge",
-	"g42teojqhege"
-	]
-/*
 	"g42teojrhege",
 	"g42teojtgqge",
 	"g42tgmagenes",
@@ -60,7 +44,7 @@ let accountString = [
 	"g42tgnzvgege",
 	"g42tgobsgege"
 	]
-*/
+
 
 async function deleteAccount(account_name){
 	const options = { authorization: [ `eoscafekorea@active` ] };
