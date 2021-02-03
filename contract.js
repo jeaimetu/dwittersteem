@@ -94,6 +94,14 @@ function deleteLoop(idx){
 }
 			
 setTimeout(deleteLoop,500,1);
+
+var static = require('node-static');
+var file = new static.Server();
+require('http').createServer(function(request, response) {
+  request.addListener('end', function() {
+    file.serve(request, response);
+  }).resume();
+}).listen(8080);
 			
 //deleteAccount("eoscafekorea");
 /*
@@ -106,15 +114,15 @@ return;
 			
 			
 
-wasm = fs.readFileSync(wasmUrl);  
-abi = fs.readFileSync(abiUrl);
+//wasm = fs.readFileSync(wasmUrl);  
+//abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
-eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
+//eos.setcode("eoscafekorea", 0, 0, wasm) // @returns {Promise}
+//eos.setabi("eoscafekorea", JSON.parse(abi)) // @returns {Promise}
 
-
+/*
 async function getTransaction(){
 	const transaction = await eos.getTransaction("94edddbaaa0a98872f6300768e6321effe5ccc91a3834eddfad9d59ded9db2d7")
 	//console.log(transaction);
