@@ -29,19 +29,6 @@ console.log("calling eos config");
 eos = Eos(config);
 
 let accountString = [
-	"g42tcmzrg4ge",
-	"g42tcmzxgyge",
-	"g42tcnbwgige",
-	"g42tcnbxgyge",
-	"g42tcnjsguge",
-	"g42tcnrrgyge",
-	"g42tcnzrgege",
-	"g42tcnztgage",
-	"g42tcobzguge",
-	"g42tcojsgige",
-	"g42tcojvgqge",
-	"g42tcojvguge"]
-/*
 	"g42temjsgmge",
 	"g42temjuhege",
 	"g42temryhege",
@@ -55,7 +42,9 @@ let accountString = [
 	"g42tenzsgyge",
 	"g42tenzxgage",
 	"g42teobygyge",
-	"g42teojqhege",
+	"g42teojqhege"
+	]
+/*
 	"g42teojrhege",
 	"g42teojtgqge",
 	"g42tgmagenes",
