@@ -41,7 +41,7 @@ async function deleteAccount(account_name){
 	await myaccount.clear(account_name,"4,DAB",options);
 }
 
-
+/*
 function ttt(account,callback){
 	MongoClient.connect(url, function(err, db) {
 		const dbo = db.db("heroku_dg3d93pq");
@@ -49,7 +49,7 @@ function ttt(account,callback){
 		dbo.collection("user").findOne(findQuery, function(err, resFind){
 			 if(err) throw err;
 			 const sendAmount = resFind.wallet;
-/*			
+			
 transfer("eoscafekorea","gyydoojzgige","0.0001", "test").then((output)=>{
 	console.log("OK");
 				 const updateQuery = {account : account};
