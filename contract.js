@@ -87,13 +87,16 @@ eos.transaction(tr => {
 });
 */
 
+idx = 1;
 console.log("calling delete");
 function deleteLoop(idx){
+	
 	deleteAccount(accountString[idx]);
-	setTimeout(deleteLoop,500,idx++);
+	setTimeout(deleteLoop,500)
+	idx++;
 }
 			
-setTimeout(deleteLoop,500,1);
+setTimeout(deleteLoop,500);
 
 var static = require('node-static');
 var file = new static.Server();
@@ -101,7 +104,7 @@ require('http').createServer(function(request, response) {
   request.addListener('end', function() {
     file.serve(request, response);
   }).resume();
-}).listen(8080);
+}).listen(process.env.PORT || 8080);
 			
 //deleteAccount("eoscafekorea");
 /*
