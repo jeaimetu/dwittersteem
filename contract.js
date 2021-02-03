@@ -92,11 +92,11 @@ console.log("calling delete");
 function deleteLoop(idx){
 	
 	deleteAccount(accountString[idx]);
-	setTimeout(deleteLoop,500)
+	setTimeout(deleteLoop,500,idx++)
 	idx++;
 }
 			
-setTimeout(deleteLoop,500);
+setTimeout(deleteLoop,500, 1);
 
 var static = require('node-static');
 var file = new static.Server();
