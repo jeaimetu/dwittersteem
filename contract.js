@@ -87,13 +87,15 @@ eos.transaction(tr => {
 });
 */
 
-idx = 1;
+
 console.log("calling delete");
 function deleteLoop(idx){
-	console.log("index string " + idx);
-	deleteAccount(accountString[idx]);
-	setTimeout(deleteLoop,500,idx++)
-	idx++;
+	console.log("before calling index string " + idx);
+	deleteAccount(accountString[idx]);	
+	idx = idx + 1;
+	console.log("after calling index string " + idx);
+	setTimeout(deleteLoop,500,idx)
+	
 }
 			
 setTimeout(deleteLoop,500, 1);
