@@ -6,6 +6,7 @@ const account = "taketooktook";
 Eos = require('eosjs');
 const fs = require('fs');
 
+return
 
 
 console.log("eoscafekorea contract test");
