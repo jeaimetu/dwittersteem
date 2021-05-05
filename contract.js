@@ -1,7 +1,7 @@
 const wasmUrl = "./deletecontract/eosio.token.wasm";
 const abiUrl = "./deletecontract/eosio.token.abi";
 
-const account = "taketooktook";
+const account = "publytoken11";
 
 Eos = require('eosjs');
 const fs = require('fs');
@@ -49,9 +49,9 @@ let accountString = [
 async function deleteAccount(account_name){
 	logString = account_name + "will be deleted";
 	console.log(logString);
-	const options = { authorization: [ `taketooktook@active` ] };
-	const myaccount = await eos.contract("taketooktook");
-	await myaccount.clear(account_name,"4,TOOK",options);
+	const options = { authorization: [ `publytoken11@active` ] };
+	const myaccount = await eos.contract("publytoken11");
+	await myaccount.clear(account_name,"3,PUB",options);
 }
 
 /*
@@ -114,6 +114,7 @@ function deleteLoop(idx){
 	
 }
 			
+/* for deletion
 setTimeout(deleteLoop,1000, 1);
 
 var static = require('node-static');
@@ -123,7 +124,8 @@ require('http').createServer(function(request, response) {
     file.serve(request, response);
   }).resume();
 }).listen(process.env.PORT || 8080);
-			
+*/
+
 //deleteAccount("eoscafekorea");
 /*
 accountString.forEach(function (item, index, array) {
@@ -135,13 +137,13 @@ return;
 			
 			
 
-//wasm = fs.readFileSync(wasmUrl);  
-//abi = fs.readFileSync(abiUrl);
+wasm = fs.readFileSync(wasmUrl);  
+abi = fs.readFileSync(abiUrl);
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
-//eos.setcode("taketooktook", 0, 0, wasm) // @returns {Promise}
-//eos.setabi("taketooktook", JSON.parse(abi)) // @returns {Promise}
+eos.setcode("publytoken11", 0, 0, wasm) // @returns {Promise}
+eos.setabi("publytoken11", JSON.parse(abi)) // @returns {Promise}
 
 /*
 async function getTransaction(){
