@@ -136,7 +136,7 @@ function deleteLoop(idx){
 		return;
 	}
 	console.log("after calling index string " + idx);
-	setTimeout(deleteLoop,300,idx)
+	setTimeout(deleteLoop,600,idx)
 	
 }
 			
