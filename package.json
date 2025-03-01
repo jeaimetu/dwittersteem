@@ -1,7 +1,7 @@
 {
   "name": "node-example",
     "engines": {
-    "node": "22.x"
+    "node": "22.x" },
   "version": "0.0.1",
   "dependencies": {
     "body-parser": "^1.8.1",
