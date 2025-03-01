@@ -102,7 +102,7 @@ function deleteLoop(idx){
 }
 			
 
-// here setTimeout(deleteLoop,1000, 1);
+setTimeout(deleteLoop,1000, 1);
 
 
 //deleteAccount("eoscafekorea");
