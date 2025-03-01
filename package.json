@@ -4,6 +4,6 @@
     "node": "22.x" },
   "version": "0.0.1",
   "dependencies": {
-    "eosjs"  : "16.0.0",
+    "eosjs"  : "16.0.0"
   }
 }
