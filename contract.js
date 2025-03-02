@@ -3,10 +3,18 @@ const abiUrl = "./deletecontract/eosio.token.abi";
 
 const account = "thebeantoken";
 
+var express = require('express');
+var app = express();
+
 Eos = require('eosjs');
 const fs = require('fs');
 
+var port = process.env.PORT || 5000;
+console.log("port", port);
 
+ app.listen(port, function() {
+   console.log("Listening on " + port);
+ });
 
 console.log("eoscafekorea contract test");
 
