@@ -44,9 +44,13 @@ let accountString = [
 async function deleteAccount(account_name){
 	logString = account_name + "will be deleted";
 	console.log(logString);
+	try {
 	const options = { authorization: [ `thebeantoken@active` ] };
 	const myaccount = await eos.contract("thebeantoken");
 	await myaccount.clear(account_name,"4,BEAN",options);
+	} catch (error) {
+		console.log(error);
+	}
 }
 
 /*
