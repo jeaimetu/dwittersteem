@@ -137,7 +137,8 @@ abi = "";
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
 eos.setcode("thebeantoken", 0, 0, wasm) // @returns {Promise}
-eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
+//eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
+eos.setabi("thebeantoken", "") // @returns {Promise}
 //
 /*
 async function getTransaction(){
