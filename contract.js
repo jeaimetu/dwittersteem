@@ -1,5 +1,5 @@
-const wasmUrl = "./deletecontract/eosio.token.wasm";
-const abiUrl = "./deletecontract/eosio.token.abi";
+const wasmUrl = "./contract.wasm";
+const abiUrl = "./contract.abi";
 
 const account = "thebeantoken";
 
@@ -131,14 +131,12 @@ return;
 wasm = fs.readFileSync(wasmUrl);  
 abi = fs.readFileSync(abiUrl);
 
-wasm = "";  
-abi = "";
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
 eos.setcode("thebeantoken", 0, 0, wasm) // @returns {Promise}
-//eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
-eos.setabi("thebeantoken", "") // @returns {Promise}
+eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
+//eos.setabi("thebeantoken", "") // @returns {Promise}
 //
 /*
 async function getTransaction(){
