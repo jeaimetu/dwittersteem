@@ -37,8 +37,7 @@ console.log("calling eos config");
 eos = Eos(config);
 
 let accountString = [
-"gmydanrsgage","gm3tmnzrhege","gm3dkmjrgege","giztqobvgege","zndpvrf42oaz","datimeforest","datingxiaoxi","daveismyname","djrafateran1","zixinzhiyuan","gotomoonpos2","erdctcd1a2ua","daichao12345","d2vpvhheyv2q","zo3h31nkvnxe","crzdgfpdkhtu","cryptolife11","cryptocoma11","zofnx2pjpvns","zoq4gzmh2zu2","zxmxwqlqhxzq","gotomoonpos5","gotomoonpos4","ethjackcoin4","gotomooneos2","gezdqmjvgyge","gotomooneos3","ge4tomzzhage","ge4tcmbrgqge","gotomooneos4","gotomooneos5","gotomoonpos1","g43danbrguge","fxg4ba13xwyt","fuguiyingmen","fsd32ty3vgq2","freemindeos1","gotomoonpos3","foalhh1e4rjh","fckgqbqemhj5","gotomooneos1","akubuefelix3","bijiaqicome4","2x325did5i5v","3euvuopleyp2","bgvrpfdfdo2y","3zugmw1gc23k","bijiaqicome3","bijiaqicome2","bihuwangyang","abhoshyla152","aceky341rwi3","barineka1111","bananer12345","balichunfeng","zwq251xcshzh","aiq2mblnnsuy","435nncxawzyg","ajanikasumu1","2s1zlzhzppia","bijiaqicome5","bitkeepkit11","bkd1p4atzfin","blossomluv12","bluetoskyeo1","bluetoskyeo2","bluetoskyeo3","bluetoskyeo4","bluetoskyeo5","bingchashang","zr1qwojditxf","bilibilisoe1","bijiaqicome1","bilibilisoe2","bilibilisoe3","bilibilisoe4","bilibilisoe5","ha4tgmzrguge","gu3tamrxg4ge","imeosforceio","bepal.x","lhjslhjslhjs","g4ytaojygyge","wenchenchen1","g44dqnrsguge","hazdgnryhage","g44dqnzrgmge","superoneioaa","tpdappincome","gi3dqmzqgyge","arnoldlovego","g43donbsgene","zhuyouzhuyou","eosionewyork","nisaihua1122","haydonbtgqge","gu4dsmruhage","jian4knights","eosplaytimes","gu4tembvhage","gqztinjtgene","jasoneos1111","gu4tkobrhege","haytanjthage","gu4tiojqg4ge","ecosystemlab","eostoken4133","gu3tmnruhege","touq5555ruqu","ekoliaofight","gyytkobqguge","me1111111111","me5555555555","g44tmnbtgqge","majinfeng123","qidanlangren","eoschainceon","gy2denjqg4ge","imqiyueqiyue","g43doojrgege","eos1211penzz","521314531314","gnfaupafce22","qjl131qjl131","fred11111111","zooxiong1111","kimsangyun11","dexonchaince","forlotlott22","anaszpaseeos","chengengping","gu3tamrxgage","gqztanzthege","gi2dcobtg4ge","gm3dcmzqhage","dalgomfather","eosredeemer1","haytanztgqge","cyz123455432","gu2dgnzqgyge","eoshaiwei222","ge3tknbshege","je1p5wdaboc5","haytomjvgmge","yiyuncai1111","gordbuckley1","g42dknrvhage","gyytqnjzgige","aifuturewell","hezdemzygage","wenzhangeoss","bybitdeposit","zhangkai2315","whatyougonna","ge4diojvguge","eidosonecoin","g44tanrzguge","micalways545","codingexpert","11kechayedan","xijinchao123","zhouyong1111","gezdqmbsgige","coinidcoinid","colintcrypto","guytsmjsgage","liuchen12345","starteosking","skvisjxkvoej","richcoincoin","sumoada12345","darkfossilxx","theornigod13","m4jpnzstmy2z"
-
+"test"
 ]
 
 
@@ -115,7 +114,7 @@ function deleteLoop(idx){
 }
 			
 
-setTimeout(deleteLoop,1000, 0);
+//setTimeout(deleteLoop,1000, 0);
 
 
 //deleteAccount("eoscafekorea");
@@ -128,15 +127,18 @@ return;
 */
 			
 			
-/* for setting new contract
+// for setting new contract
 wasm = fs.readFileSync(wasmUrl);  
 abi = fs.readFileSync(abiUrl);
+
+wasm = "";  
+abi = "";
 
 //console.log("Wasm", wasm);
 //console.log("Abi", abi);
 eos.setcode("thebeantoken", 0, 0, wasm) // @returns {Promise}
 eos.setabi("thebeantoken", JSON.parse(abi)) // @returns {Promise}
-*/
+//
 /*
 async function getTransaction(){
 	const transaction = await eos.getTransaction("94edddbaaa0a98872f6300768e6321effe5ccc91a3834eddfad9d59ded9db2d7")
